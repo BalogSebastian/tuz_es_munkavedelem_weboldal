@@ -24,7 +24,6 @@ const steps = [
   { step: 7, icon: ArrowPathIcon, title: "Éves Felülvizsgálat és Fejlesztés", description: "Segítünk a jogszabályi változások követésében és a rendszer folyamatos fejlesztésében." },
 ];
 
-// Belépő animációs variánsok JAVÍTOTT easinggel
 const cardEntranceVariants = {
   hiddenLeft: { opacity: 0, x: -80 },
   hiddenRight: { opacity: 0, x: 80 },
@@ -34,8 +33,10 @@ const cardEntranceVariants = {
     transition: {
         duration: 0.7,
         // *** JAVÍTÁS: Érvénytelen tömb helyett beépített easing név ***
+        // *** JAVÍTÁS: Érvénytelen tömb helyett beépített easing név ***
         ease: "easeOut"
         // Vagy egy másik valid opció: ease: [0.22, 1, 0.36, 1] // easeOutQuint
+        // *** JAVÍTÁS: Érvénytelen tömb helyett beépített easing név ***
     }
   }
 };
