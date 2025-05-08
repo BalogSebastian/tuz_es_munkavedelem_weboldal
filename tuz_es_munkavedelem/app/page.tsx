@@ -1,17 +1,31 @@
 // app/page.tsx
 import HeaderHero from './components/HeaderHero';
 import IntroSection from './components/IntroSection';
-import CallToActionSection from './components/CallToActionSection'; // Új komponens importálása
+import CallToActionSection from './components/CallToActionSection';
 import ServiceHighlightCards from './components/ServiceHighlightCards';
 import ProcessSteps from './components/ProcessSteps';
+import StatsCounterSection from './components/StatsCounterSection';
+import DownloadableDocsSection from './components/DownloadableDocsSection';
+import FreeConsultationCtaSection from './components/FreeConsultationCtaSection'; // ÚJ KOMPONENS IMPORTÁLÁSA
+import FaqAccordion from './components/FaqAccordion';
+import PreConsultationForm from './components/PreConsultationForm';
+import TestimonialSlider from './components/TestimonialSlider';
+
 export default function HomePage() {
   return (
     <main>
       <HeaderHero />
       <IntroSection />
-      <CallToActionSection />
-      <ServiceHighlightCards/>
-      <ProcessSteps/>
+      <CallToActionSection /> {/* Általános ajánlatkérés */}
+      <ServiceHighlightCards />
+      <ProcessSteps />
+      <StatsCounterSection />
+      <DownloadableDocsSection />
+      <FreeConsultationCtaSection />
+      <FaqAccordion/>
+      <PreConsultationForm/>
+      <TestimonialSlider/>
+       {/* Ingyenes konzultáció CTA */}
       {/*
         Ide jöhetnek majd további szakaszok vagy komponensek.
       */}
