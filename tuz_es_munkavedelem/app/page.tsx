@@ -10,11 +10,13 @@ import FreeConsultationCtaSection from './components/FreeConsultationCtaSection'
 import FaqAccordion from './components/FaqAccordion';
 import PreConsultationForm from './components/PreConsultationForm';
 import TestimonialSlider from './components/TestimonialSlider';
+import CreativeBlogSection from './components/CreativeBlogSection';
 
 export default function HomePage() {
   return (
     <main>
       <HeaderHero />
+      <PreConsultationForm/>
       <IntroSection />
       <CallToActionSection /> {/* Általános ajánlatkérés */}
       <ServiceHighlightCards />
@@ -22,8 +24,8 @@ export default function HomePage() {
       <StatsCounterSection />
       <DownloadableDocsSection />
       <FreeConsultationCtaSection />
+      <CreativeBlogSection/>
       <FaqAccordion/>
-      <PreConsultationForm/>
       <TestimonialSlider/>
        {/* Ingyenes konzultáció CTA */}
       {/*
