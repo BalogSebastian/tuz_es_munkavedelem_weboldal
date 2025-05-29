@@ -1,6 +1,7 @@
+// components/sections/PreConsultationFormClean.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   CalendarDaysIcon,
@@ -11,7 +12,7 @@ import {
   ShoppingCartIcon,
 } from '@heroicons/react/24/outline';
 
-// --- TÍPUSDEFINÍCIÓK KEZDETE ---
+// --- TÍPUSDEFINÍCIÓK (változatlan) ---
 type EstablishmentPhaseValue = 'HAS_COMPANY' | 'OPENING_SOON' | 'NO_COMPANY';
 interface AnswerSummary {
   questionId: keyof AnswersState;
@@ -50,8 +51,6 @@ interface BooleanQuestionConfig extends BaseQuestionConfig {
   isMultiChoice: false;
 }
 type QuestionConfig = MultiChoiceQuestionConfig | BooleanQuestionConfig;
-// --- TÍPUSDEFINÍCIÓK VÉGE ---
-
 const initialQuestionConfig: MultiChoiceQuestionConfig = {
   id: 'establishmentPhase',
   text: "Kérjük, válassza ki vállalkozása jelenlegi helyzetét:",
@@ -64,20 +63,25 @@ const initialQuestionConfig: MultiChoiceQuestionConfig = {
   ],
   isMultiChoice: true,
 };
-
 const companySpecificQuestionsConfig: BooleanQuestionConfig[] = [
   { id: 'hasEmployees', text: "Vannak alkalmazottai?", icon: UsersIcon, detail: "A létszám fontos tényező a munkavédelmi előírások szempontjából.", isMultiChoice: false },
   { id: 'hasPremise', text: "Van fizikai telephelye, irodája vagy üzlete?", icon: HomeModernIcon, detail: "A telephely megléte alapvető a helyszíni felmérésekhez.", isMultiChoice: false },
   { id: 'dealsWithFood', text: "Foglalkozik élelmiszerrel (pl. vendéglátás, élelmiszerbolt)?", icon: ShoppingCartIcon, detail: "Az élelmiszerkezelés speciális előírásokat (pl. HACCP) von maga után.", isMultiChoice: false },
 ];
+// --- TÍPUSDEFINÍCIÓK VÉGE ---
 
 const accentColor = {
+  base: '#DD520F',
   bg: 'bg-[#DD520F]',
-  text: 'text-[#DD520F]',
+  textOnLight: 'text-[#DD520F]',
+  textOnAccent: 'text-white',
   hoverBg: 'hover:bg-orange-700',
   ring: 'focus:ring-orange-500',
-  border: 'border-orange-600',
-  fill: 'fill-orange-500'
+  borderSelected: 'border-orange-600',
+  borderHoverUnselected: 'hover:border-orange-400',
+  progressShimmerFrom: 'rgba(255,255,255,0.1)',
+  progressShimmerVia: 'rgba(255,255,255,0.4)',
+  progressShimmerTo: 'rgba(255,255,255,0.1)',
 };
 
 const PreConsultationFormClean: React.FC = () => {
@@ -109,19 +113,19 @@ const PreConsultationFormClean: React.FC = () => {
         const newFlow: QuestionConfig[] = [initialQuestionConfig, ...companySpecificQuestionsConfig];
         setQuestionFlow(newFlow);
         if (currentStep < newFlow.length - 1) {
-            setTimeout(() => setCurrentStep(currentStep + 1), 200);
+            setTimeout(() => setCurrentStep(currentStep + 1), 300);
         } else {
-            setTimeout(() => setShowBookingOption(true), 300);
+            setTimeout(() => setShowBookingOption(true), 400);
         }
       } else { 
         setQuestionFlow([initialQuestionConfig]);
-        setTimeout(() => setShowBookingOption(true), 300);
+        setTimeout(() => setShowBookingOption(true), 400);
       }
     } else {
       if (currentStep < questionFlow.length - 1) {
-        setTimeout(() => setCurrentStep(currentStep + 1), 200);
+        setTimeout(() => setCurrentStep(currentStep + 1), 300);
       } else {
-        setTimeout(() => setShowBookingOption(true), 300);
+        setTimeout(() => setShowBookingOption(true), 400);
       }
     }
   };
@@ -129,11 +133,8 @@ const PreConsultationFormClean: React.FC = () => {
   const currentQuestion = questionFlow[currentStep];
   const progress = questionFlow.length > 0 && currentQuestion ? Math.min(((currentStep + (answers[currentQuestion.id] !== null ? 1 : 0)) / questionFlow.length) * 100, 100) : 0;
 
-  const handleBookConsultation = () => {
-    alert('Köszönjük! Hamarosan átirányítjuk az időpontfoglaló oldalra. (Ez egy minta akció)');
-  };
-
-  const resetForm = () => {
+  const handleBookConsultation = () => { alert('Köszönjük! Hamarosan átirányítjuk az időpontfoglaló oldalra. (Ez egy minta akció)'); };
+  const resetForm = () => { 
     setAnimationDirection(-1); 
     setCurrentStep(0);
     setAnswers(initialAnswersState);
@@ -143,42 +144,58 @@ const PreConsultationFormClean: React.FC = () => {
   };
 
   const cardAnimationVariants = {
-    enter: (direction: number) => ({ x: direction > 0 ? 80 : -80, opacity: 0 }),
-    center: { x: 0, opacity: 1, transition: { duration: 0.4, ease: "circOut" } },
-    exit: (direction: number) => ({ x: direction < 0 ? 80 : -80, opacity: 0, transition: { duration: 0.3, ease: "circIn" } })
+    enter: (direction: number) => ({ x: direction > 0 ? 60 : -60, opacity: 0, scale: 0.98 }),
+    center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.5, ease: "circOut" } },
+    exit: (direction: number) => ({ x: direction < 0 ? 60 : -60, opacity: 0, scale: 0.98, transition: { duration: 0.3, ease: "circIn" } })
   };
 
-  if (!currentQuestion) {
-    return (
-        <section className="py-16 sm:py-24 bg-slate-100"> {/* MÓDOSÍTVA: bg-slate-50 -> bg-slate-100 */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-lg mx-auto bg-white p-6 sm:p-10 rounded-xl shadow-xl border border-gray-200/80 text-center">
-                    <p>Hiba történt a kérdések betöltése közben. Kérjük, próbálja újra később.</p>
-                    <button onClick={resetForm} className={`mt-5 text-sm ${accentColor.text} hover:underline`}>Vissza</button>
-                </div>
+  if (!currentQuestion) { return (
+    <section className="py-16 sm:py-24 bg-slate-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-lg mx-auto bg-white p-6 sm:p-10 rounded-xl shadow-xl border border-gray-200/80 text-center">
+                <p>Hiba történt a kérdések betöltése közben. Kérjük, próbálja újra később.</p>
+                <button onClick={resetForm} className={`mt-5 text-sm ${accentColor.textOnLight} hover:underline`}>Vissza</button>
             </div>
-        </section>
-    );
-  }
+        </div>
+    </section>
+  )};
 
   return (
-    // MÓDOSÍTVA: Szekció háttér bg-slate-50 -> bg-slate-100
     <section className="py-16 sm:py-24 bg-slate-100"> 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto bg-white p-6 sm:p-10 rounded-xl shadow-xl border border-gray-200/80">
           {!showBookingOption ? (
             <>
-              <div className="mb-8"> {/* Progress bar és kérdésszámláló stílusa maradt */}
+              <div className="mb-8">
                 <div className="flex justify-between items-end mb-1.5 text-xs font-medium text-gray-500">
                   <span>{currentStep + 1}. Kérdés / {questionFlow.length}</span>
                 </div>
-                <div className={`w-full bg-gray-200 rounded-full h-1.5`}>
+                <div className={`w-full bg-gray-200 rounded-full h-2 relative overflow-hidden`}>
                   <motion.div
-                    className={`${accentColor.bg} h-1.5 rounded-full`}
+                    className={`${accentColor.bg} h-full rounded-full`}
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                  />
+                    transition={{ width: { duration: 0.5, ease: "easeOut" } }}
+                  >
+                    {progress > 0 && (
+                        <motion.div
+                        className="absolute top-0 left-0 h-full opacity-50"
+                        style={{
+                            width: '100%',
+                            backgroundImage: `linear-gradient(90deg, ${accentColor.progressShimmerFrom} 0%, ${accentColor.progressShimmerVia} 50%, ${accentColor.progressShimmerTo} 100%)`,
+                            backgroundSize: '250px 100%',
+                        }}
+                        initial={{ backgroundPosition: '-250px 0' }}
+                        animate={{ backgroundPosition: ['-250px 0', `${progress}% 0`] }}
+                        transition={{
+                            duration: 1.8,
+                            repeat: Infinity,
+                            ease: 'linear',
+                            delay: 0.2,
+                        }}
+                        />
+                    )}
+                  </motion.div>
                 </div>
               </div>
 
@@ -191,8 +208,16 @@ const PreConsultationFormClean: React.FC = () => {
                   animate="center"
                   exit="exit"
                   className="text-center"
-                > {/* Kérdés megjelenítés stílusa maradt */}
-                  <currentQuestion.icon className={`w-12 h-12 ${accentColor.text} mx-auto mb-5`} />
+                >
+                  <motion.div
+                    key={`icon-${currentStep}`}
+                    initial={{ scale: 0.6, opacity: 0, y: -10 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 12, delay: 0.15 }}
+                  >
+                    <currentQuestion.icon className={`w-14 h-14 ${accentColor.textOnLight} mx-auto mb-5`} />
+                  </motion.div>
+                  
                   <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">
                     {currentQuestion.text}
                   </h2>
@@ -204,36 +229,36 @@ const PreConsultationFormClean: React.FC = () => {
                         <motion.button
                           key={opt.value}
                           onClick={() => handleAnswer(currentQuestion.id, opt.value, currentQuestion.text, opt.text)}
-                          className={` /* Opciógombok stílusa maradt, már most is jó */
-                            p-4 rounded-lg text-base font-medium border-2 transition-colors duration-150 ease-in-out
+                          className={`
+                            p-4 rounded-lg text-base font-medium border-2 transition-all duration-200 ease-in-out
                             focus:outline-none focus:ring-2 ${accentColor.ring} focus:ring-offset-2
                             ${answers[currentQuestion.id] === opt.value
-                              ? `${accentColor.bg} ${accentColor.border} text-white shadow-md`
-                              : `bg-white hover:border-gray-400 border-gray-300 text-gray-700 hover:text-gray-900`
+                              ? `${accentColor.bg} ${accentColor.borderSelected} ${accentColor.textOnAccent} shadow-md scale-105`
+                              : `bg-white border-gray-300 text-gray-700 ${accentColor.borderHoverUnselected} hover:text-gray-900 hover:shadow-sm`
                             }
                           `}
-                          whileHover={{ scale: answers[currentQuestion.id] === opt.value ? 1 : 1.03 }}
+                          whileHover={{ scale: answers[currentQuestion.id] === opt.value ? 1.05 : 1.03, y: -2 }}
                           whileTap={{ scale: 0.97 }}
                         >
                           {opt.text}
                         </motion.button>
                       ))}
                     </div>
-                  ) : ( /* Igen/Nem gombok stílusa maradt */
+                  ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       {[true, false].map((value) => (
                         <motion.button
                           key={value ? 'yes' : 'no'}
                           onClick={() => handleAnswer(currentQuestion.id, value, currentQuestion.text, value ? 'Igen' : 'Nem')}
                           className={`
-                            p-4 rounded-lg text-base font-medium border-2 transition-colors duration-150 ease-in-out
+                            p-4 rounded-lg text-base font-medium border-2 transition-all duration-200 ease-in-out
                             focus:outline-none focus:ring-2 ${accentColor.ring} focus:ring-offset-2
                             ${answers[currentQuestion.id] === value
-                              ? `${accentColor.bg} ${accentColor.border} text-white shadow-md`
-                              : `bg-white hover:border-gray-400 border-gray-300 text-gray-700 hover:text-gray-900`
+                              ? `${accentColor.bg} ${accentColor.borderSelected} ${accentColor.textOnAccent} shadow-md scale-105`
+                              : `bg-white border-gray-300 text-gray-700 ${accentColor.borderHoverUnselected} hover:text-gray-900 hover:shadow-sm`
                             }
                           `}
-                          whileHover={{ scale: answers[currentQuestion.id] === value ? 1 : 1.03 }}
+                          whileHover={{ scale: answers[currentQuestion.id] === value ? 1.05 : 1.03, y: -2 }}
                           whileTap={{ scale: 0.97 }}
                         >
                           {value ? 'Igen' : 'Nem'}
@@ -246,26 +271,39 @@ const PreConsultationFormClean: React.FC = () => {
             </>
           ) : (
             <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="text-center"
-            > {/* Összefoglaló stílusa maradt */}
-              <CheckIcon className={`w-16 h-16 ${accentColor.text} mx-auto mb-5`} />
+            >
+              <motion.div
+                initial={{ scale: 0, rotate: -180, opacity: 0 }}
+                animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 250, damping: 18, delay: 0.1, duration: 0.7 }}
+              >
+                <CheckIcon className={`w-20 h-20 ${accentColor.textOnLight} mx-auto mb-6`} />
+              </motion.div>
+              
               <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-4">
                 Köszönjük a válaszait!
               </h2>
               <p className="text-gray-600 mb-6 text-sm sm:text-base max-w-md mx-auto">
                 Ez alapján jobban felkészülhetünk a személyes konzultációra:
               </p>
-              <div className="text-left bg-slate-100 p-3 sm:p-4 rounded-lg mb-6 max-w-sm mx-auto space-y-1.5 border border-gray-200/80">
+              <div className="text-left bg-slate-100 p-3 sm:p-4 rounded-lg mb-6 max-w-sm mx-auto space-y-1.5 border border-gray-200/80 shadow">
+                {/* JAVÍTÁS: Az összefoglaló map tartalma visszaállítva */}
                 {summaryAnswers.map(ans => (
                     <div key={ans.questionId} className="flex justify-between items-center text-xs sm:text-sm">
-                        <span className="text-gray-600 truncate pr-2" title={ans.questionText}>{ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}</span>
-                        <span className={`font-semibold px-2 py-0.5 rounded ${
+                        <span className="text-gray-600 truncate pr-2" title={ans.questionText}>
+                            {ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}
+                        </span>
+                        <span className={`font-semibold px-2 py-0.5 rounded-md text-xs ${
                             typeof ans.answerValue === 'boolean' ? 
-                                (ans.answerValue ? `${accentColor.bg} bg-opacity-20 ${accentColor.text}` : 'bg-red-500 bg-opacity-20 text-red-700') :
-                                `${accentColor.bg} bg-opacity-20 ${accentColor.text}`
+                                (ans.answerValue 
+                                    ? `${accentColor.bg} bg-opacity-20 ${accentColor.textOnLight}` // Pl. Narancs szöveg világos narancs alapon
+                                    : 'bg-red-100 text-red-700' // Külön stílus a "Nem" válaszra
+                                ) 
+                                : `${accentColor.bg} bg-opacity-20 ${accentColor.textOnLight}` // Szöveges válaszok (pl. "Működő cégem van")
                             }`}>
                             {ans.answerText}
                         </span>
@@ -275,13 +313,12 @@ const PreConsultationFormClean: React.FC = () => {
               <p className="text-gray-600 mb-8 text-sm sm:text-base max-w-md mx-auto">
                 Készen áll a következő lépésre? Foglaljon egy ingyenes, kötelezettségmentes konzultációs időpontot.
               </p>
-              {/* MÓDOSÍTVA: Fő CTA gomb stílusa */}
               <button
                 onClick={handleBookConsultation}
-                type="button" // Explicit type a gombnak
+                type="button"
                 className={`
                   w-full sm:w-auto inline-flex items-center justify-center 
-                  ${accentColor.bg} ${accentColor.hoverBg} text-white 
+                  ${accentColor.bg} ${accentColor.hoverBg} ${accentColor.textOnAccent}
                   font-semibold py-4 px-10 rounded-lg text-lg sm:text-xl 
                   shadow-md hover:shadow-lg 
                   transition-all duration-300 ease-in-out 
@@ -292,9 +329,9 @@ const PreConsultationFormClean: React.FC = () => {
                 <CalendarDaysIcon className="w-5 h-5 mr-2.5" />
                 Ingyenes Konzultáció Foglalása
               </button>
-              <button /* Vissza gomb stílusa maradt */
+              <button
                 onClick={resetForm}
-                className={`mt-5 text-xs sm:text-sm ${accentColor.text} hover:underline transition-colors`}
+                className={`mt-5 text-xs sm:text-sm ${accentColor.textOnLight} hover:underline transition-colors`}
               >
                 Vissza a kezdéshez
               </button>

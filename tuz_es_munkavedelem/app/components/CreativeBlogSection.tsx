@@ -1,13 +1,13 @@
 // app/components/sections/CreativeBlogSection.tsx
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef } from 'react'; // useRef itt valójában nem használt, eltávolítható, ha csak ebben a fájlban van
 import { motion } from 'framer-motion';
 import { ArrowRightIcon, EyeIcon } from '@heroicons/react/24/outline';
 
 const accentColor = {
   bg: 'bg-[#DD520F]',
-  text: 'text-white',
+  text: 'text-white', // A BlogCard kategóriájához és gombjához használtuk
   hoverBg: 'hover:bg-orange-700',
   ring: 'focus:ring-orange-500',
 };
@@ -41,6 +41,7 @@ const cardVariants = {
 };
 
 const BlogCard: React.FC<{ post: BlogPost }> = ({ post }) => {
+  // Ez a komponens változatlan maradt az előző verzióhoz képest
   return (
     <motion.div
       className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group relative"
@@ -83,75 +84,116 @@ const BlogCard: React.FC<{ post: BlogPost }> = ({ post }) => {
 
 const WavyLineBackground: React.FC = () => {
   const lineConfigs = [
-    { // Eredeti 1
+    {
       d: "M -200,150 Q -100,50 0,150 T 200,150 Q 300,250 400,150 T 600,150 Q 700,50 800,150 T 1000,150 Q 1100,250 1200,150 T 1400,150 Q 1500,50 1600,150 T 1800,150 Q 1900,250 2000,150 T 2200,150",
-      stroke: "rgba(203, 213, 225, 0.25)", // slate-300, enyhébb opacitás
+      stroke: "rgba(203, 213, 225, 0.22)", // slate-300, enyhébb opacitás
       strokeWidth: 2.5,
-      duration: 80, // Lassabb
+      durationX: 75, // Külön X és Y duration
+      durationY: 10 + Math.random() * 8, // Egyedi Y duration
       yOffset: "15%",
+      yAmplitude: 8 + Math.random() * 8, // Egyedi Y amplitúdó
       animateX: ["0%", "-100%"],
     },
-    { // Eredeti 2
+    {
       d: "M -200,100 Q -100,200 0,100 T 200,100 Q 300,0 400,100 T 600,100 Q 700,200 800,100 T 1000,100 Q 1100,0 1200,100 T 1400,100 Q 1500,200 1600,100 T 1800,100 Q 1900,0 2000,100 T 2200,100",
-      stroke: "rgba(199, 210, 254, 0.2)", // indigo-200, enyhébb opacitás
+      stroke: "rgba(199, 210, 254, 0.18)", // indigo-200, enyhébb opacitás
       strokeWidth: 3,
-      duration: 95, // Lassabb
+      durationX: 90,
+      durationY: 12 + Math.random() * 10,
       yOffset: "40%",
+      yAmplitude: 10 + Math.random() * 10,
       animateX: ["-100%", "0%"],
     },
-    { // Eredeti 3
+    {
       d: "M -200,200 Q -100,100 0,200 T 200,200 Q 300,300 400,200 T 600,200 Q 700,100 800,200 T 1000,200 Q 1100,300 1200,200 T 1400,200 Q 1500,100 1600,200 T 1800,200 Q 1900,300 2000,200 T 2200,200",
-      stroke: "rgba(254, 202, 202, 0.2)", // red-200 (narancsos), enyhébb opacitás
-      strokeWidth: 2,
-      duration: 110, // Lassabb
+      stroke: "rgba(254, 202, 202, 0.15)", // red-200 (narancsos), enyhébb opacitás
+      strokeWidth: 2.2,
+      durationX: 105,
+      durationY: 9 + Math.random() * 7,
       yOffset: "65%",
+      yAmplitude: 7 + Math.random() * 6,
       animateX: ["0%", "-100%"],
     },
-    // --- ÚJ VONALAK ---
-    { // Új 4: Gyorsabb, vékonyabb, más y-pozíció
+    {
       d: "M -200,120 Q -125,180 -50,120 T 100,120 Q 175,60 250,120 T 400,120 Q 475,180 550,120 T 700,120 Q 775,60 850,120 T 1000,120 Q 1075,180 1150,120 T 1300,120 Q 1375,60 1450,120 T 1600,120 Q 1675,180 1750,120 T 1900,120 Q 1975,60 2050,120 T 2200,120",
-      stroke: "rgba(165, 243, 252, 0.25)", // cyan-200 áttetszően
-      strokeWidth: 1.5,
-      duration: 55, // Gyorsabb
+      stroke: "rgba(165, 243, 252, 0.22)", // cyan-200
+      strokeWidth: 1.8,
+      durationX: 60,
+      durationY: 8 + Math.random() * 8,
       yOffset: "80%",
+      yAmplitude: 9 + Math.random() * 7,
       animateX: ["-100%", "0%"],
     },
-    { // Új 5: Közepes, más hullámforma, más y-pozíció
-      d: "M -200,180 C -100,280 100,-20 200,180 S 300,280 400,180 S 500,-20 600,180 S 700,280 800,180 S 900,-20 1000,180 S 1100,280 1200,180 S 1300,-20 1400,180 S 1500,280 1600,180 S 1700,-20 1800,180 S 1900,280 2000,180 S 2100,-20 2200,180", // 'C' és 'S' görbékkel a nagyobb hullámokért
-      stroke: "rgba(221, 214, 254, 0.2)", // violet-200 áttetszően
-      strokeWidth: 2.5,
-      duration: 70,
-      yOffset: "5%", // Közelebb a tetejéhez
+    {
+      d: "M -200,180 C -100,280 100,-20 200,180 S 300,280 400,180 S 500,-20 600,180 S 700,280 800,180 S 900,-20 1000,180 S 1100,280 1200,180 S 1300,-20 1400,180 S 1500,280 1600,180 S 1700,-20 1800,180 S 1900,280 2000,180 S 2100,-20 2200,180",
+      stroke: "rgba(221, 214, 254, 0.18)", // violet-200
+      strokeWidth: 2.8,
+      durationX: 85,
+      durationY: 11 + Math.random() * 9,
+      yOffset: "5%",
+      yAmplitude: 12 + Math.random() * 8,
       animateX: ["0%", "-100%"],
     }
   ];
 
   return (
     <>
-      {lineConfigs.map((config, index) => (
-        <motion.svg
-          key={index}
-          className="absolute left-0 w-[220%] h-full pointer-events-none" // Kicsit szélesebb, hogy biztosan ne legyen vége látható
-          style={{ top: config.yOffset, x: config.animateX[0] }}
-          animate={{ x: config.animateX }}
-          transition={{
-            duration: config.duration,
-            ease: "linear",
-            repeat: Infinity,
-            repeatType: "loop",
-          }}
-          viewBox="0 0 2200 300" // ViewBox igazítva a path hosszához
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <path
-            d={config.d}
-            stroke={config.stroke}
-            strokeWidth={config.strokeWidth}
-            fill="none"
-            strokeLinecap="round" // Lekerekített vonalvégek a lágyabb megjelenésért
-          />
-        </motion.svg>
-      ))}
+      {lineConfigs.map((config, index) => {
+        // Dinamikusan generált y kulcskockák a hullámzáshoz
+        const yKeyframes = [
+            `${config.yOffset}`, // Kezdeti pozíció
+            `calc(${config.yOffset} + ${config.yAmplitude}px)`,
+            `${config.yOffset}`,
+            `calc(${config.yOffset} - ${config.yAmplitude}px)`,
+            `${config.yOffset}`, // Vissza a kezdetihez a sima ismétlődésért
+        ];
+
+        return (
+            <motion.svg
+            key={index}
+            className="absolute left-0 w-[220%] h-auto pointer-events-none" // h-auto, hogy a viewBox és a path magassága irányítson
+            // A style.top-ot és style.x-et most az animate fogja kezelni
+            initial={{ x: config.animateX[0], y: yKeyframes[0] }} // Kezdeti x és y
+            animate={{ 
+                x: config.animateX,
+                y: yKeyframes, // Vertikális hullámzás
+            }}
+            transition={{
+                x: {
+                duration: config.durationX,
+                ease: "linear",
+                repeat: Infinity,
+                repeatType: "loop",
+                delay: Math.random() * 2, // Egyedi késleltetés a horizontális mozgáshoz
+                },
+                y: {
+                duration: config.durationY,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "mirror",
+                delay: Math.random() * 3, // Egyedi késleltetés a vertikális mozgáshoz
+                }
+            }}
+            viewBox="0 0 2200 300" // Tartsd meg a viewBox-ot a path koordinátáihoz
+            preserveAspectRatio="none" // Fontos, hogy ne torzuljon a path
+            style={{ 
+                // A top yOffset helyett az y animáció kezdőértéke lesz az irányadó.
+                // Ha az SVG magasságát a path alapján szeretnéd, akkor a h-full helyett
+                // a viewBox magasságához arányos értéket kellene adni, de a h-auto + preserveAspectRatio="none"
+                // és egy explicit yOffset a keyframe-ekben jobban működhet.
+                // Az SVG-t a top: config.yOffset helyett az y animációval pozícionáljuk.
+            }}
+            >
+            <path
+                d={config.d}
+                stroke={config.stroke}
+                strokeWidth={config.strokeWidth}
+                fill="none"
+                strokeLinecap="round"
+            />
+            </motion.svg>
+        );
+      })}
     </>
   );
 };

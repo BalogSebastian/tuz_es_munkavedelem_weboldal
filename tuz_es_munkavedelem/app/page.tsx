@@ -24,7 +24,6 @@ export default function HomePage() {
       <StatsCounterSection />
       <DownloadableDocsSection />
       <FreeConsultationCtaSection />
-      <CreativeBlogSection/>
       <FaqAccordion/>
       <TestimonialSlider/>
        {/* Ingyenes konzultáció CTA */}
