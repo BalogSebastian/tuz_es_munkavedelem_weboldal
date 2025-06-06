@@ -1,38 +1,20 @@
 // app/page.tsx
+// Itt már csak a HeaderHero és PreConsultationForm marad
 import HeaderHero from './components/HeaderHero';
-import IntroSection from './components/IntroSection';
-import CallToActionSection from './components/CallToActionSection';
-import ServiceHighlightCards from './components/ServiceHighlightCards';
-import ProcessSteps from './components/ProcessSteps';
-import StatsCounterSection from './components/StatsCounterSection';
-import DownloadableDocsSection from './components/DownloadableDocsSection';
-import FreeConsultationCtaSection from './components/FreeConsultationCtaSection'; // ÚJ KOMPONENS IMPORTÁLÁSA
-import FaqAccordion from './components/FaqAccordion';
 import PreConsultationForm from './components/PreConsultationForm';
-import TestimonialSlider from './components/TestimonialSlider';
-import Footer from './components/Footer';
+
+// Az új kliens komponenst importáljuk, ami a dinamikus betöltéseket tartalmazza
+import HomePageClientContent from './components/HomePageClientContent';
 
 export default function HomePage() {
   return (
     <main>
+      {/* Ezek maradnak szerver komponensek, így a leggyorsabban renderelődnek */}
       <HeaderHero />
       <PreConsultationForm/>
-      <IntroSection />
-      <CallToActionSection /> {/* Általános ajánlatkérés */}
-      <ServiceHighlightCards />
 
-      
-      <ProcessSteps />
-      <StatsCounterSection />
-      <DownloadableDocsSection />
-      <FreeConsultationCtaSection />
-      <FaqAccordion/>
-      <TestimonialSlider/>
-      <Footer/>
-       {/* Ingyenes konzultáció CTA */}
-      {/*
-        Ide jöhetnek majd további szakaszok vagy komponensek.
-      */}
+      {/* A többi komponenst a kliens komponens rendereli, dinamikusan */}
+      <HomePageClientContent />
     </main>
   );
 }
