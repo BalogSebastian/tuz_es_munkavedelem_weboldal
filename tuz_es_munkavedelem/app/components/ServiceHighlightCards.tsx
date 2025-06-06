@@ -1,8 +1,8 @@
 // components/sections/ServiceHighlightCards.tsx
 'use client';
 
-import React, { useState, useRef } from 'react'; // useRef hozzáadva a 3D tilt-hez
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'; // További hook-ok importálva
+import React, { useState, useRef } from 'react';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import {
   ShieldCheckIcon,
   AcademicCapIcon,
@@ -13,15 +13,65 @@ import {
   GlobeAltIcon,
 } from '@heroicons/react/24/outline';
 
-const accentColor = {
-  bg: 'bg-[#DD520F]',
-  textOnAccent: 'text-white',
-  hoverBg: 'hover:bg-orange-700',
-  ring: 'focus:ring-orange-500',
-  focusRingOpacity: 'focus:ring-opacity-75',
+// --- ÚJ: PIROS PAJZS IKON AZ INTRO SECTION-BŐL ---
+const RedShieldIcon = ({ className }: { className?: string }) => {
+  return (
+    <motion.div
+        className={className}
+        initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+        whileInView={{ 
+            opacity: 1, 
+            scale: 1, 
+            rotate: -15,
+            transition: { type: 'spring', stiffness: 100, damping: 15, delay: 0.3 }
+        }}
+        viewport={{ once: true }}
+        animate={{ // Folyamatos lebegés
+            y: [-4, 4, -4],
+            rotate: [-15, -10, -15],
+        }}
+        transition={{
+            duration: 8,
+            repeat: Infinity,
+            repeatType: 'mirror',
+            ease: 'easeInOut'
+        }}
+    >
+        <svg viewBox="0 0 100 125" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_d_101_2)">
+                <path d="M50 0L95 20V55C95 85 50 110 50 110C50 110 5 85 5 55V20L50 0Z" fill="#E53E3E"/>
+                <path d="M50 0L5 20V55C5 85 50 110 50 110V0Z" fill="#C53030"/>
+                <path d="M25 55L45 75L75 45" stroke="white" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
+            <defs>
+                <filter id="filter0_d_101_2" x="0" y="0" width="100" height="125" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset dy="5"/>
+                    <feGaussianBlur stdDeviation="5"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.7729167 0 0 0 0 0.1875 0 0 0 0 0.1875 0 0 0 0.25 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_101_2"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_101_2" result="shape"/>
+                </filter>
+            </defs>
+        </svg>
+    </motion.div>
+  );
 };
 
-const servicesData = [ /* ... Az adatok változatlanok, ahogy az előző kódban ... */ 
+
+const accentColor = {
+  base: '#03BABE',
+  bg: 'bg-[#03BABE]',
+  text: 'text-[#03BABE]',
+  hoverBg: 'hover:bg-cyan-600',
+  ring: 'focus:ring-cyan-500',
+  shadow: 'shadow-cyan-500/40',
+  hoverShadow: 'hover:shadow-cyan-400/60',
+  focusRingOffset: 'focus:ring-offset-slate-100',
+};
+
+const servicesData = [ 
   { id: 1, title: "Kockázatértékelés", description: "Veszélyek azonosítása, kockázatok elemzése, megelőzési intézkedések kidolgozása.", icon: ExclamationTriangleIcon, colorName: "red", gradientClasses: "from-red-500 to-rose-500", textColor: "text-red-700", backSideText: "Teljes körű munkahelyi kockázatértékelés készítése a jogszabályi előírásoknak megfelelően, javaslatokkal a kockázatok csökkentésére.", price: "Egyedi árajánlat" },
   { id: 2, title: "Érintésvédelem", description: "Elektromos rendszerek és berendezések biztonsági felülvizsgálata, jegyzőkönyvvel.", icon: BoltIcon, colorName: "blue", gradientClasses: "from-blue-500 to-cyan-500", textColor: "text-blue-700", backSideText: "Szabványossági felülvizsgálat, érintésvédelmi mérések elvégzése és dokumentálása minősítő irattal.", price: "12.000 Ft-tól" },
   { id: 3, title: "Tűz- és Balesetvédelmi Oktatás", description: "Interaktív elméleti és gyakorlati képzések a biztonságos munkavégzésért.", icon: AcademicCapIcon, colorName: "yellow", gradientClasses: "from-amber-400 to-orange-500", textColor: "text-amber-700", backSideText: "A munkakörhöz és munkahelyhez igazított tematika, hatékony ismeretátadás, dokumentált oktatás.", price: "20.000 Ft/csoporttól" },
@@ -36,21 +86,20 @@ const cardListVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 }, // Kisebb stagger a gyorsabb, de lépcsőzetes megjelenésért
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
   },
 };
 
-// MÓDOSÍTOTT KÁRTYA BELÉPŐ ANIMÁCIÓ
 const cardItemVariants = {
-  hidden: { opacity: 0, y: 60, scale: 0.85, rotateX: -45 }, // Kezdeti dőlés és kisebb skála
+  hidden: { opacity: 0, y: 60, scale: 0.85, rotateX: -45 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     rotateX: 0,
     transition: {
-      duration: 0.7, // Kicsit hosszabb az összetettebb animációhoz
-      ease: [0.165, 0.84, 0.44, 1], // "easeOutQuart" - elegáns, gyorsuló majd lassuló
+      duration: 0.7,
+      ease: [0.165, 0.84, 0.44, 1],
     },
   },
 };
@@ -61,16 +110,14 @@ interface ServiceCardProps {
 
 const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null); // Ref a kártya elemhez
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  // Egérmozgás figyelése a 3D tilt effekthez
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    // Egér pozíciója a kártya közepéhez képest (-0.5 to 0.5 tartományban)
     mouseX.set((event.clientX - rect.left - rect.width / 2) / (rect.width / 2));
     mouseY.set((event.clientY - rect.top - rect.height / 2) / (rect.height / 2));
   };
@@ -80,32 +127,31 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     mouseY.set(0);
   };
 
-  // Transzformációk az egérmozgás alapján
-  const tiltIntensity = 8; // Dőlés mértéke (fokban)
+  const tiltIntensity = 8;
   const rotateX = useSpring(useTransform(mouseY, [-1, 1], [tiltIntensity, -tiltIntensity]), { stiffness: 250, damping: 25 });
   const rotateY = useSpring(useTransform(mouseX, [-1, 1], [-tiltIntensity, tiltIntensity]), { stiffness: 250, damping: 25 });
 
 
   return (
     <motion.div
-      ref={cardRef} // Ref hozzáadása
+      ref={cardRef}
       className="relative w-full h-[320px] sm:h-[340px] md:h-[360px] cursor-pointer group"
-      style={{ perspective: '1000px' }} // Csökkentett perspektíva a finomabb hatáshoz
+      style={{ perspective: '1000px' }}
       onClick={() => setIsFlipped(!isFlipped)}
       variants={cardItemVariants}
-      whileHover={{ y: -10, scale: 1.05 }} // Alap hover emelkedés és skálázódás
-      transition={{ type: 'spring', stiffness: 300, damping: 15 }} // A whileHover-hez tartozó transition
+      whileHover={{ y: -10, scale: 1.05 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 15 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <motion.div // Ez a div kapja a 3D dőlést
+      <motion.div
         className="relative w-full h-full"
         style={{ 
             transformStyle: 'preserve-3d',
-            rotateX, // Alkalmazzuk a dinamikus dőlést
+            rotateX,
             rotateY,
         }}
-        animate={{ rotateY: isFlipped ? (rotateY.get() + 180) : rotateY.get() }} // A flip animáció most hozzáadódik az egér dőléséhez
+        animate={{ rotateY: isFlipped ? (rotateY.get() + 180) : rotateY.get() }}
         transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
       >
         {/* Kártya Előlapja */}
@@ -154,42 +200,66 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
 
 const ServiceHighlightCards: React.FC = () => {
   return (
-    <section className="py-16 lg:py-24 bg-slate-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 lg:mb-20">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-4">Főbb Szolgáltatásaink</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">Ismerje meg, hogyan járulhatunk hozzá vállalkozása biztonságos és szabályos működéséhez.</p>
-        </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+      `}</style>
+      <section className="py-16 lg:py-24 bg-slate-100 font-['Poppins',_sans-serif] overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* --- MÓDOSÍTOTT CÍMSOR KONTÉNER --- */}
+          <div className="relative text-center mb-16 lg:mb-20">
+            <RedShieldIcon className="absolute -top-12 right-4 lg:right-20 w-32 h-32 opacity-20 -z-0 hidden lg:block" />
+            <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
+              Főbb <span className={accentColor.text}>Szolgáltatásaink</span>
+            </h2>
+            <p className="relative z-10 text-xl text-slate-600 max-w-3xl mx-auto">Ismerje meg, hogyan járulhatunk hozzá vállalkozása biztonságos és szabályos működéséhez.</p>
+          </div>
 
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10"
-          variants={cardListVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.05 }} // Kicsit hamarabb induljon
-        >
-          {servicesData.map((service) => (
-            <FlippableServiceCard key={service.id} service={service} />
-          ))}
-        </motion.div>
-
-        <div className="text-center mt-16 lg:mt-20">
-          <button
-            type="button"
-            className={`
-              ${accentColor.bg} ${accentColor.hoverBg} ${accentColor.textOnAccent} 
-              font-semibold py-4 px-10 rounded-lg text-lg sm:text-xl 
-              shadow-lg hover:shadow-xl 
-              transition-all duration-300 ease-in-out 
-              focus:outline-none focus:ring-2 ${accentColor.ring} ${accentColor.focusRingOpacity} 
-              transform hover:scale-105 active:scale-95
-            `}
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10"
+            variants={cardListVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
           >
-            Megkérdezem mire van szükségem!
-          </button>
+            {servicesData.map((service) => (
+              <FlippableServiceCard key={service.id} service={service} />
+            ))}
+          </motion.div>
+
+          <div className="text-center mt-16 lg:mt-20">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.4)' }}
+              whileTap={{ scale: 0.98 }}
+              type="button"
+              className={`
+                ${accentColor.bg} text-white
+                font-bold py-4 px-10 rounded-xl text-lg sm:text-xl 
+                shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
+                transition-all duration-300 ease-in-out 
+                focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
+              `}
+            >
+              Ajánlatot Kérek
+            </motion.button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
-// components/sections/PreConsultationFormClean.tsx
+// components/sections/PreConsultationFormFinal_V3.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, Variants, useInView } from 'framer-motion'; // Hozzáadtam a useInView-t
 import {
   CalendarDaysIcon,
   CheckIcon,
@@ -12,7 +12,7 @@ import {
   ShoppingCartIcon,
 } from '@heroicons/react/24/outline';
 
-// --- TÍPUSDEFINÍCIÓK (változatlan) ---
+// --- TÍPUSDEFINÍCIÓK (Változatlan) ---
 type EstablishmentPhaseValue = 'HAS_COMPANY' | 'OPENING_SOON' | 'NO_COMPANY';
 interface AnswerSummary {
   questionId: keyof AnswersState;
@@ -36,7 +36,7 @@ interface QuestionOption {
   value: EstablishmentPhaseValue;
   text: string;
 }
-type HeroIconType = React.ComponentType<React.SVGProps<SVGSVGElement> & { title?: string; titleId?: string }>;
+type HeroIconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 interface BaseQuestionConfig {
   id: keyof AnswersState;
   text: string;
@@ -66,281 +66,367 @@ const initialQuestionConfig: MultiChoiceQuestionConfig = {
 const companySpecificQuestionsConfig: BooleanQuestionConfig[] = [
   { id: 'hasEmployees', text: "Vannak alkalmazottai?", icon: UsersIcon, detail: "A létszám fontos tényező a munkavédelmi előírások szempontjából.", isMultiChoice: false },
   { id: 'hasPremise', text: "Van fizikai telephelye, irodája vagy üzlete?", icon: HomeModernIcon, detail: "A telephely megléte alapvető a helyszíni felmérésekhez.", isMultiChoice: false },
-  { id: 'dealsWithFood', text: "Foglalkozik élelmiszerrel (pl. vendéglátás, élelmiszerbolt)?", icon: ShoppingCartIcon, detail: "Az élelmiszerkezelés speciális előírásokat (pl. HACCP) von maga után.", isMultiChoice: false },
+  { id: 'dealsWithFood', text: "Foglalkozik élelmiszerrel?", icon: ShoppingCartIcon, detail: "Az élelmiszerkezelés speciális előírásokat (pl. HACCP) von maga után.", isMultiChoice: false },
 ];
 // --- TÍPUSDEFINÍCIÓK VÉGE ---
 
-const accentColor = {
-  base: '#DD520F',
-  bg: 'bg-[#DD520F]',
-  textOnLight: 'text-[#DD520F]',
-  textOnAccent: 'text-white',
-  hoverBg: 'hover:bg-orange-700',
-  ring: 'focus:ring-orange-500',
-  borderSelected: 'border-orange-600',
-  borderHoverUnselected: 'hover:border-orange-400',
-  progressShimmerFrom: 'rgba(255,255,255,0.1)',
-  progressShimmerVia: 'rgba(255,255,255,0.4)',
-  progressShimmerTo: 'rgba(255,255,255,0.1)',
+
+// --- PRÉMIUM, DINAMIKUS IKONOK ---
+const AnimatedDecorativeArrow = ({ className }: { className?: string }) => {
+    return (
+        <motion.svg
+            viewBox="0 0 100 100"
+            fill="none"
+            className={className}
+            initial="hidden"
+            animate="visible"
+        >
+            <motion.path
+                d="M20 20C48.33 22.17 73.33 45.17 80 80"
+                stroke="currentColor"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                variants={{
+                    hidden: { pathLength: 0, opacity: 0 },
+                    visible: { pathLength: 1, opacity: 1, transition: { duration: 1, ease: "circOut", delay: 0.5 } }
+                }}
+            />
+            <motion.path
+                d="M70 73L80 80L87 70"
+                stroke="currentColor"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                variants={{
+                    hidden: { pathLength: 0, opacity: 0 },
+                    visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: "circOut", delay: 1.2 } }
+                }}
+            />
+        </motion.svg>
+    );
 };
 
-const PreConsultationFormClean: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [answers, setAnswers] = useState<AnswersState>(initialAnswersState);
-  const [showBookingOption, setShowBookingOption] = useState(false);
-  const [summaryAnswers, setSummaryAnswers] = useState<AnswerSummary[]>([]);
-  const [animationDirection, setAnimationDirection] = useState(1);
-  const [questionFlow, setQuestionFlow] = useState<QuestionConfig[]>([initialQuestionConfig]);
+const AnimatedCheckIcon = ({ className }: { className?: string }) => (
+    <motion.svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className={className}
+    >
+        <motion.path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4.5 12.75l6 6 9-13.5"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+        />
+    </motion.svg>
+);
 
-  const handleAnswer = (
-    questionId: keyof AnswersState,
-    value: boolean | EstablishmentPhaseValue,
-    questionText: string,
-    answerText: string
-  ) => {
-    setAnimationDirection(1);
-    setAnswers(prev => ({ ...prev, [questionId]: value as any }));    
-    setSummaryAnswers(prev => {
-        const existing = prev.find(a => a.questionId === questionId);
-        if (existing) {
-            return prev.map(a => a.questionId === questionId ? {...a, answerValue: value, answerText } : a);
-        }
-        return [...prev, { questionId, questionText, answerValue: value, answerText }];
-    });
+// --- ÚJ: LEBEGŐ HÁTTÉR ELEMEK ---
+const FloatingShapes = () => (
+    <div className="absolute inset-0 -z-10 overflow-hidden">
+        <motion.div
+            className="absolute top-[10%] left-[5%] w-48 h-48 bg-cyan-400/10 rounded-full"
+            animate={{
+                y: [0, 20, 0],
+                x: [0, -15, 0],
+                rotate: [0, 180, 360],
+            }}
+            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+            className="absolute bottom-[15%] right-[8%] w-40 h-40 border-[1.5rem] border-teal-400/10 rounded-lg"
+            animate={{
+                y: [0, -25, 0],
+                x: [0, 10, 0],
+                rotate: [0, -120, -360],
+            }}
+            transition={{ duration: 50, repeat: Infinity, ease: "linear", delay: 5 }}
+        />
+         <motion.div
+            className="absolute top-[20%] right-[20%] w-12 h-12 bg-indigo-300/10"
+            style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} // Háromszög
+            animate={{
+                y: [0, 30, 0],
+                x: [0, -30, 0],
+            }}
+            transition={{ duration: 35, repeat: Infinity, ease: "easeInOut", repeatType: 'mirror' }}
+        />
+    </div>
+);
 
-    if (questionId === 'establishmentPhase') {
-      if (value === 'HAS_COMPANY') {
-        const newFlow: QuestionConfig[] = [initialQuestionConfig, ...companySpecificQuestionsConfig];
-        setQuestionFlow(newFlow);
-        if (currentStep < newFlow.length - 1) {
-            setTimeout(() => setCurrentStep(currentStep + 1), 300);
+
+// --- FŐ KOMPONENS ---
+const PreConsultationFormFinal: React.FC = () => {
+    const [currentStep, setCurrentStep] = useState(0);
+    const [answers, setAnswers] = useState<AnswersState>(initialAnswersState);
+    const [showBookingOption, setShowBookingOption] = useState(false);
+    const [summaryAnswers, setSummaryAnswers] = useState<AnswerSummary[]>([]);
+    const [animationDirection, setAnimationDirection] = useState(1);
+    const [questionFlow, setQuestionFlow] = useState<QuestionConfig[]>([initialQuestionConfig]);
+    
+    // Hozzáadva: ref és useInView a komponens láthatóságának figyeléséhez
+    const sectionRef = useRef<HTMLElement>(null);
+    const isInView = useInView(sectionRef, { once: true, amount: 0.2 }); // Amikor a szekció 20%-a láthatóvá válik
+
+    const handleAnswer = (questionId: keyof AnswersState, value: boolean | EstablishmentPhaseValue, questionText: string, answerText: string) => {
+        setAnimationDirection(1);
+        setAnswers(prev => ({ ...prev, [questionId]: value as any }));
+        setSummaryAnswers(prev => {
+            const existing = prev.find(a => a.questionId === questionId);
+            if (existing) {
+                return prev.map(a => a.questionId === questionId ? { ...a, answerValue: value, answerText } : a);
+            }
+            return [...prev, { questionId, questionText, answerValue: value, answerText }];
+        });
+
+        const isFirstQuestion = questionId === 'establishmentPhase';
+        const leadsToMoreQuestions = isFirstQuestion && value === 'HAS_COMPANY';
+
+        if (isFirstQuestion) {
+            const newFlow = leadsToMoreQuestions
+                ? [initialQuestionConfig, ...companySpecificQuestionsConfig]
+                : [initialQuestionConfig];
+            setQuestionFlow(newFlow);
+            setTimeout(() => {
+                if (leadsToMoreQuestions) {
+                    setCurrentStep(currentStep + 1);
+                } else {
+                    setShowBookingOption(true);
+                }
+            }, 350);
         } else {
-            setTimeout(() => setShowBookingOption(true), 400);
+            setTimeout(() => {
+                if (currentStep < questionFlow.length - 1) {
+                    setCurrentStep(currentStep + 1);
+                } else {
+                    setShowBookingOption(true);
+                }
+            }, 350);
         }
-      } else { 
-        setQuestionFlow([initialQuestionConfig]);
-        setTimeout(() => setShowBookingOption(true), 400);
-      }
-    } else {
-      if (currentStep < questionFlow.length - 1) {
-        setTimeout(() => setCurrentStep(currentStep + 1), 300);
-      } else {
-        setTimeout(() => setShowBookingOption(true), 400);
-      }
+    };
+
+    const resetForm = () => {
+        setAnimationDirection(-1);
+        setShowBookingOption(false);
+        // Adjunk egy kis időt a kilépő animációnak, mielőtt resetelünk
+        setTimeout(() => {
+            setCurrentStep(0);
+            setAnswers(initialAnswersState);
+            setSummaryAnswers([]);
+            setQuestionFlow([initialQuestionConfig]);
+        }, 400);
+    };
+
+    const handleBookConsultation = () => {
+        alert('Köszönjük! Hamarosan átirányítjuk az időpontfoglaló oldalra. (Ez egy minta akció)');
+    };
+
+    const currentQuestion = questionFlow[currentStep];
+    const progress = questionFlow.length > 0 && currentQuestion ? ((currentStep + (showBookingOption ? 1 : 0)) / questionFlow.length) * 100 : 0;
+    
+    // --- ANIMÁCIÓS VARIÁNSOK ---
+    const questionWrapperVariants: Variants = {
+        enter: (direction: number) => ({ x: direction > 0 ? 80 : -80, opacity: 0 }),
+        center: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.21, 1.02, 0.73, 1] } },
+        exit: (direction: number) => ({ x: direction < 0 ? 80 : -80, opacity: 0, transition: { duration: 0.4, ease: [0.83, 0, 0.17, 1] } })
+    };
+    
+    const contentStaggerVariants: Variants = {
+        center: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } },
+    };
+
+    const contentItemVariants: Variants = {
+        enter: { y: 20, opacity: 0 },
+        center: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "circOut" } }
+    };
+
+    const summaryListVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.5 } }
+    };
+    
+    const summaryItemVariants: Variants = {
+        hidden: { x: -20, opacity: 0 },
+        visible: { x: 0, opacity: 1, transition: { ease: 'easeOut', duration: 0.5 } }
+    };
+
+    // Fő szekció beúszó animációs variánsok
+    const sectionEnterVariants: Variants = {
+        hidden: { opacity: 0, y: 100, scale: 0.95 },
+        visible: { 
+            opacity: 1, 
+            y: 0, 
+            scale: 1, 
+            transition: { 
+                duration: 0.9, 
+                ease: [0.22, 1, 0.36, 1],
+                delay: 0.2 // Kis késleltetés, hogy ne azonnal jelenjen meg görgetéskor
+            } 
+        },
+    };
+
+
+    if (!currentQuestion && !showBookingOption) {
+        return (
+            <section className="py-24 sm:py-32 bg-slate-50 font-['Poppins',_sans-serif] relative">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <p className="text-slate-800">Hiba történt a kérdések betöltése közben.</p>
+                    <button onClick={resetForm} className="mt-5 text-sm font-semibold text-cyan-600 hover:underline">Vissza a kezdéshez</button>
+                </div>
+            </section>
+        );
     }
-  };
-
-  const currentQuestion = questionFlow[currentStep];
-  const progress = questionFlow.length > 0 && currentQuestion ? Math.min(((currentStep + (answers[currentQuestion.id] !== null ? 1 : 0)) / questionFlow.length) * 100, 100) : 0;
-
-  const handleBookConsultation = () => { alert('Köszönjük! Hamarosan átirányítjuk az időpontfoglaló oldalra. (Ez egy minta akció)'); };
-  const resetForm = () => { 
-    setAnimationDirection(-1); 
-    setCurrentStep(0);
-    setAnswers(initialAnswersState);
-    setShowBookingOption(false);
-    setSummaryAnswers([]);
-    setQuestionFlow([initialQuestionConfig]);
-  };
-
-  const cardAnimationVariants = {
-    enter: (direction: number) => ({ x: direction > 0 ? 60 : -60, opacity: 0, scale: 0.98 }),
-    center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.5, ease: "circOut" } },
-    exit: (direction: number) => ({ x: direction < 0 ? 60 : -60, opacity: 0, scale: 0.98, transition: { duration: 0.3, ease: "circIn" } })
-  };
-
-  if (!currentQuestion) { return (
-    <section className="py-16 sm:py-24 bg-slate-100">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-lg mx-auto bg-white p-6 sm:p-10 rounded-xl shadow-xl border border-gray-200/80 text-center">
-                <p>Hiba történt a kérdések betöltése közben. Kérjük, próbálja újra később.</p>
-                <button onClick={resetForm} className={`mt-5 text-sm ${accentColor.textOnLight} hover:underline`}>Vissza</button>
-            </div>
-        </div>
-    </section>
-  )};
-
-  return (
-    <section className="py-16 sm:py-24 bg-slate-100"> 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-lg mx-auto bg-white p-6 sm:p-10 rounded-xl shadow-xl border border-gray-200/80">
-          {!showBookingOption ? (
-            <>
-              <div className="mb-8">
-                <div className="flex justify-between items-end mb-1.5 text-xs font-medium text-gray-500">
-                  <span>{currentStep + 1}. Kérdés / {questionFlow.length}</span>
-                </div>
-                <div className={`w-full bg-gray-200 rounded-full h-2 relative overflow-hidden`}>
-                  <motion.div
-                    className={`${accentColor.bg} h-full rounded-full`}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${progress}%` }}
-                    transition={{ width: { duration: 0.5, ease: "easeOut" } }}
-                  >
-                    {progress > 0 && (
-                        <motion.div
-                        className="absolute top-0 left-0 h-full opacity-50"
-                        style={{
-                            width: '100%',
-                            backgroundImage: `linear-gradient(90deg, ${accentColor.progressShimmerFrom} 0%, ${accentColor.progressShimmerVia} 50%, ${accentColor.progressShimmerTo} 100%)`,
-                            backgroundSize: '250px 100%',
-                        }}
-                        initial={{ backgroundPosition: '-250px 0' }}
-                        animate={{ backgroundPosition: ['-250px 0', `${progress}% 0`] }}
-                        transition={{
-                            duration: 1.8,
-                            repeat: Infinity,
-                            ease: 'linear',
-                            delay: 0.2,
-                        }}
-                        />
-                    )}
-                  </motion.div>
-                </div>
-              </div>
-
-              <AnimatePresence initial={false} custom={animationDirection} mode="wait">
-                <motion.div
-                  key={currentStep}
-                  custom={animationDirection}
-                  variants={cardAnimationVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  className="text-center"
-                >
-                  <motion.div
-                    key={`icon-${currentStep}`}
-                    initial={{ scale: 0.6, opacity: 0, y: -10 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 12, delay: 0.15 }}
-                  >
-                    <currentQuestion.icon className={`w-14 h-14 ${accentColor.textOnLight} mx-auto mb-5`} />
-                  </motion.div>
-                  
-                  <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">
-                    {currentQuestion.text}
-                  </h2>
-                  <p className="text-gray-500 text-sm mb-8 px-2">{currentQuestion.detail}</p>
-
-                  {currentQuestion.isMultiChoice ? (
-                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                      {currentQuestion.options.map((opt) => (
-                        <motion.button
-                          key={opt.value}
-                          onClick={() => handleAnswer(currentQuestion.id, opt.value, currentQuestion.text, opt.text)}
-                          className={`
-                            p-4 rounded-lg text-base font-medium border-2 transition-all duration-200 ease-in-out
-                            focus:outline-none focus:ring-2 ${accentColor.ring} focus:ring-offset-2
-                            ${answers[currentQuestion.id] === opt.value
-                              ? `${accentColor.bg} ${accentColor.borderSelected} ${accentColor.textOnAccent} shadow-md scale-105`
-                              : `bg-white border-gray-300 text-gray-700 ${accentColor.borderHoverUnselected} hover:text-gray-900 hover:shadow-sm`
-                            }
-                          `}
-                          whileHover={{ scale: answers[currentQuestion.id] === opt.value ? 1.05 : 1.03, y: -2 }}
-                          whileTap={{ scale: 0.97 }}
-                        >
-                          {opt.text}
-                        </motion.button>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                      {[true, false].map((value) => (
-                        <motion.button
-                          key={value ? 'yes' : 'no'}
-                          onClick={() => handleAnswer(currentQuestion.id, value, currentQuestion.text, value ? 'Igen' : 'Nem')}
-                          className={`
-                            p-4 rounded-lg text-base font-medium border-2 transition-all duration-200 ease-in-out
-                            focus:outline-none focus:ring-2 ${accentColor.ring} focus:ring-offset-2
-                            ${answers[currentQuestion.id] === value
-                              ? `${accentColor.bg} ${accentColor.borderSelected} ${accentColor.textOnAccent} shadow-md scale-105`
-                              : `bg-white border-gray-300 text-gray-700 ${accentColor.borderHoverUnselected} hover:text-gray-900 hover:shadow-sm`
-                            }
-                          `}
-                          whileHover={{ scale: answers[currentQuestion.id] === value ? 1.05 : 1.03, y: -2 }}
-                          whileTap={{ scale: 0.97 }}
-                        >
-                          {value ? 'Igen' : 'Nem'}
-                        </motion.button>
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-center"
+    
+    return (
+        <>
+            <style>{`
+              @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
+              .gradient-text {
+                background: linear-gradient(to right, #06b6d4, #2dd4bf);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-fill-color: transparent;
+              }
+              .gradient-bg {
+                background: linear-gradient(to right, #06b6d4, #2dd4bf);
+              }
+            `}</style>
+            <motion.section 
+                ref={sectionRef} 
+                className="relative py-24 sm:py-32 bg-slate-50 font-['Poppins',_sans-serif] overflow-hidden"
+                variants={sectionEnterVariants} // Alkalmazom a beúszó animációt
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"} // Csak akkor animáljon, ha láthatóvá válik
+                viewport={{ once: true, amount: 0.2 }} // Módosítottam a viewport beállítást
             >
-              <motion.div
-                initial={{ scale: 0, rotate: -180, opacity: 0 }}
-                animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 250, damping: 18, delay: 0.1, duration: 0.7 }}
-              >
-                <CheckIcon className={`w-20 h-20 ${accentColor.textOnLight} mx-auto mb-6`} />
-              </motion.div>
-              
-              <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-4">
-                Köszönjük a válaszait!
-              </h2>
-              <p className="text-gray-600 mb-6 text-sm sm:text-base max-w-md mx-auto">
-                Ez alapján jobban felkészülhetünk a személyes konzultációra:
-              </p>
-              <div className="text-left bg-slate-100 p-3 sm:p-4 rounded-lg mb-6 max-w-sm mx-auto space-y-1.5 border border-gray-200/80 shadow">
-                {/* JAVÍTÁS: Az összefoglaló map tartalma visszaállítva */}
-                {summaryAnswers.map(ans => (
-                    <div key={ans.questionId} className="flex justify-between items-center text-xs sm:text-sm">
-                        <span className="text-gray-600 truncate pr-2" title={ans.questionText}>
-                            {ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}
-                        </span>
-                        <span className={`font-semibold px-2 py-0.5 rounded-md text-xs ${
-                            typeof ans.answerValue === 'boolean' ? 
-                                (ans.answerValue 
-                                    ? `${accentColor.bg} bg-opacity-20 ${accentColor.textOnLight}` // Pl. Narancs szöveg világos narancs alapon
-                                    : 'bg-red-100 text-red-700' // Külön stílus a "Nem" válaszra
-                                ) 
-                                : `${accentColor.bg} bg-opacity-20 ${accentColor.textOnLight}` // Szöveges válaszok (pl. "Működő cégem van")
-                            }`}>
-                            {ans.answerText}
-                        </span>
+                <FloatingShapes />
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-center items-center gap-4 lg:gap-12">
+                        <motion.div 
+                            className="flex-1 hidden xl:flex justify-end items-center self-start mt-10"
+                            initial={{ opacity: 0, x: -100 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                        >
+                             <AnimatedDecorativeArrow className="w-40 h-40 text-blue-500 transform -scale-x-100" />
+                        </motion.div>
+                        
+                        <div className="w-full max-w-lg shrink-0">
+                            <motion.div 
+                                className="w-full bg-white/60 p-6 sm:p-8 rounded-2xl shadow-2xl shadow-cyan-500/5 ring-1 ring-black/5 backdrop-blur-xl"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                                transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
+                            >
+                                <AnimatePresence initial={false} mode="wait">
+                                    {!showBookingOption ? (
+                                        <motion.div key="questions">
+                                            <div className="mb-8">
+                                                <div className="flex justify-between items-end mb-1.5 text-xs font-medium text-slate-500">
+                                                    <span>{currentStep + 1}. Kérdés / {questionFlow.length}</span>
+                                                </div>
+                                                <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                                                    <motion.div
+                                                        className="h-full rounded-full gradient-bg"
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: `${progress}%` }}
+                                                        transition={{ duration: 0.6, ease: "easeOut" }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <AnimatePresence initial={false} custom={animationDirection} mode="wait">
+                                                <motion.div key={currentStep} custom={animationDirection} variants={questionWrapperVariants} initial="enter" animate="center" exit="exit" className="text-center">
+                                                    <motion.div variants={contentStaggerVariants}>
+                                                        <motion.div variants={contentItemVariants}>
+                                                            <currentQuestion.icon className="w-14 h-14 gradient-text mx-auto mb-5" />
+                                                        </motion.div>
+                                                        <motion.h2 variants={contentItemVariants} className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">{currentQuestion.text}</motion.h2>
+                                                        <motion.p variants={contentItemVariants} className="text-slate-500 text-sm mb-8 px-2">{currentQuestion.detail}</motion.p>
+                                                    </motion.div>
+
+                                                    {currentQuestion.isMultiChoice ? (
+                                                        <div className="grid grid-cols-1 gap-3">
+                                                            {currentQuestion.options.map((opt, i) => (
+                                                                <motion.button key={opt.value} onClick={() => handleAnswer(currentQuestion.id, opt.value, currentQuestion.text, opt.text)}
+                                                                    className={`p-4 rounded-lg font-semibold border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-white/80
+                                                                        ${answers[currentQuestion.id] === opt.value
+                                                                            ? 'gradient-bg text-white border-transparent shadow-lg shadow-cyan-500/20'
+                                                                            : 'bg-white/50 border-slate-300 text-slate-700 hover:border-cyan-400 hover:text-slate-900 hover:shadow-md'}`
+                                                                    }
+                                                                    initial={{ opacity: 0, y: 20 }}
+                                                                    animate={{ opacity: 1, y: 0, transition: { delay: 0.4 + i * 0.07 } }}
+                                                                    whileHover={{ scale: 1.03, y: -4 }}
+                                                                    whileTap={{ scale: 0.98 }}
+                                                                >{opt.text}</motion.button>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            {[ {v: true, t: 'Igen'}, {v: false, t: 'Nem'} ].map((val, i) => (
+                                                                <motion.button key={String(val.v)} onClick={() => handleAnswer(currentQuestion.id, val.v, currentQuestion.text, val.t)}
+                                                                     className={`p-4 rounded-lg font-semibold border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-white/80
+                                                                        ${answers[currentQuestion.id] === val.v
+                                                                            ? 'gradient-bg text-white border-transparent shadow-lg shadow-cyan-500/20'
+                                                                            : 'bg-white/50 border-slate-300 text-slate-700 hover:border-cyan-400 hover:text-slate-900 hover:shadow-md'}`
+                                                                    }
+                                                                    initial={{ opacity: 0, y: 20 }}
+                                                                    animate={{ opacity: 1, y: 0, transition: { delay: 0.4 + i * 0.1 } }}
+                                                                    whileHover={{ scale: 1.05, y: -5 }}
+                                                                    whileTap={{ scale: 0.98 }}
+                                                                >{val.t}</motion.button>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </motion.div>
+                                            </AnimatePresence>
+                                        </motion.div>
+                                    ) : (
+                                        <motion.div key="summary" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}} className="text-center">
+                                            <AnimatedCheckIcon className="w-20 h-20 gradient-text mx-auto mb-4" />
+                                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">Köszönjük a válaszait!</h2>
+                                            <p className="text-slate-600 mb-6 text-sm sm:text-base max-w-md mx-auto">Ez alapján jobban felkészülhetünk a személyes konzultációra.</p>
+                                            <motion.div variants={summaryListVariants} initial="hidden" animate="visible" className="text-left bg-slate-50/70 p-4 rounded-lg mb-8 max-w-sm mx-auto space-y-2 border border-slate-200/80 shadow-inner">
+                                                {summaryAnswers.map(ans => (
+                                                    <motion.div variants={summaryItemVariants} key={ans.questionId} className="flex justify-between items-center text-sm">
+                                                        <span className="text-slate-600 truncate pr-2" title={ans.questionText}>{ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}</span>
+                                                        <span className={`font-bold px-2 py-0.5 rounded-md text-xs ${typeof ans.answerValue === 'boolean' ? (ans.answerValue ? `bg-cyan-100 text-cyan-800` : 'bg-red-100 text-red-800') : `bg-cyan-100 text-cyan-800`}`}>{ans.answerText}</span>
+                                                    </motion.div>
+                                                ))}
+                                            </motion.div>
+                                            <p className="text-slate-600 mb-8 text-sm sm:text-base max-w-md mx-auto">Készen áll a következő lépésre? Foglaljon egy ingyenes, kötelezettségmentes konzultációs időpontot.</p>
+                                            
+                                            <motion.button onClick={handleBookConsultation} whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 20px -5px rgb(6 182 212 / 0.4)' }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto inline-flex items-center justify-center gradient-bg text-white font-bold py-4 px-10 rounded-lg text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-50">
+                                                <CalendarDaysIcon className="w-5 h-5 mr-2.5" />
+                                                Ingyenes Konzultáció Foglalása
+                                            </motion.button>
+                                            
+                                            <button onClick={resetForm} className="mt-6 block w-full text-sm font-semibold text-cyan-600 hover:text-cyan-800 hover:underline transition-colors">Újrakezdés</button>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        </div>
+
+                        <motion.div 
+                            className="flex-1 hidden xl:flex justify-start items-center self-end mb-10"
+                            initial={{ opacity: 0, x: 100 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+                        >
+                           <AnimatedDecorativeArrow className="w-32 h-32 text-blue-500" />
+                        </motion.div>
                     </div>
-                ))}
-              </div>
-              <p className="text-gray-600 mb-8 text-sm sm:text-base max-w-md mx-auto">
-                Készen áll a következő lépésre? Foglaljon egy ingyenes, kötelezettségmentes konzultációs időpontot.
-              </p>
-              <button
-                onClick={handleBookConsultation}
-                type="button"
-                className={`
-                  w-full sm:w-auto inline-flex items-center justify-center 
-                  ${accentColor.bg} ${accentColor.hoverBg} ${accentColor.textOnAccent}
-                  font-semibold py-4 px-10 rounded-lg text-lg sm:text-xl 
-                  shadow-md hover:shadow-lg 
-                  transition-all duration-300 ease-in-out 
-                  focus:outline-none focus:ring-2 ${accentColor.ring} focus:ring-opacity-75 
-                  transform hover:scale-105 active:scale-95
-                `}
-              >
-                <CalendarDaysIcon className="w-5 h-5 mr-2.5" />
-                Ingyenes Konzultáció Foglalása
-              </button>
-              <button
-                onClick={resetForm}
-                className={`mt-5 text-xs sm:text-sm ${accentColor.textOnLight} hover:underline transition-colors`}
-              >
-                Vissza a kezdéshez
-              </button>
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
+                </div>
+            </motion.section>
+        </>
+    );
 };
 
-export default PreConsultationFormClean;
+export default PreConsultationFormFinal;

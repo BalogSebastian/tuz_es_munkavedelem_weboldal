@@ -1,202 +1,391 @@
 // app/components/HeaderHero.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion'; // AnimatePresence nem volt használva, eltávolítottam
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import {
+    ArrowRightIcon,
+    ShieldCheckIcon as ShieldCheckIconSolid,
+    DocumentCheckIcon
+} from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
-// Brand színek és stílusok
-const accentColor = {
-  baseHex: '#DD520F',
-  bg: 'bg-[#DD520F]',
-  textOnAccent: 'text-white',
-  hoverBg: 'hover:bg-orange-700',
-  ring: 'focus:ring-orange-500',
-  textDark: 'text-orange-700', // Narancs szöveg világos alapon (pl. fehér gombon)
+// --- STÍLUS ÉS KONFIGURÁCIÓS KONSTANSOK ---
+
+const ACCENT_COLOR = {
+    baseHex: '#03BABE',
+    baseRgb: '3, 186, 190',
+    bg: 'bg-[#03BABE]',
+    hoverBg: 'hover:bg-cyan-600',
+    ring: 'focus-visible:ring-cyan-500',
+    textOnAccent: 'text-white',
+    textDark: 'text-cyan-800',
+    textLight: 'text-cyan-300',
 };
 
-// Szöveg animációhoz variánsok
-const sentenceVariants = {
-  hidden: { opacity: 0 },
-  visible: (i: number = 1) => ({
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: i * 0.2 }, // Finomított időzítés
-  }),
-};
-
-const wordVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 100, damping: 13 },
-  },
-};
-
-// Lebegő dekoratív elemekhez variánsok
-const floatingElementVariants = {
-  float: (i: number) => ({
-    y: [0, Math.random() * 12 - 6, 0],
-    x: [0, Math.random() * 10 - 5, 0],
-    rotate: [0, Math.random() * 12 - 6, 0],
-    scale: [1, 1 + Math.random() * 0.1, 1], // Finom skálázódás
-    opacity: [0.05 + Math.random() * 0.05, 0.1 + Math.random() * 0.1, 0.05 + Math.random() * 0.05], // Finom opacitás pulzálás
-    transition: {
-      duration: 6 + Math.random() * 6,
-      repeat: Infinity,
-      repeatType: "mirror" as const,
-      ease: "easeInOut",
-      delay: i * 0.7,
+const ANIMATION_VARIANTS = {
+    sentence: {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.08, delayChildren: 0.8 },
+        },
     },
-  }),
+    word: {
+        hidden: { opacity: 0, y: 25, filter: 'blur(10px)' },
+        visible: {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            transition: { type: 'spring', stiffness: 120, damping: 20 },
+        },
+    },
 };
 
-// Típus a lebegő elemek stílusához
-interface FloatingStyle extends React.CSSProperties {}
+// --- RÉSZECSKE OSZTÁLY (VÁLTOZATLAN) ---
+class Particle {
+    x: number; y: number; z: number;
+    vx: number; vy: number; vz: number;
+    iconPath: Path2D;
+    trail: { x: number, y: number, z: number }[];
+    baseAlpha: number;
 
+    constructor(canvasWidth: number, canvasHeight: number, iconPaths: Record<string, Path2D>, maxDepth: number) {
+        this.x = (Math.random() - 0.5) * canvasWidth;
+        this.y = (Math.random() - 0.5) * canvasHeight;
+        this.z = Math.random() * maxDepth;
+        this.vx = (Math.random() - 0.5) * 1.5;
+        this.vy = (Math.random() - 0.5) * 1.5;
+        this.vz = (Math.random() - 0.5) * 0.2;
+        const iconTypes = Object.keys(iconPaths);
+        this.iconPath = iconPaths[iconTypes[Math.floor(Math.random() * iconTypes.length)]];
+        this.trail = [];
+        this.baseAlpha = 0.3 + Math.random() * 0.5;
+    }
+    project(fov: number, canvasCenter: { x: number, y: number }): { x: number, y: number, scale: number } {
+        const perspective = fov / (fov + this.z);
+        return {
+            x: canvasCenter.x + this.x * perspective,
+            y: canvasCenter.y + this.y * perspective,
+            scale: perspective
+        };
+    }
+
+    update(mouse: { x: number, y: number }, repelRadius: number, repelStrength: number, maxDepth: number, canvasWidth: number, canvasHeight: number, centerPull: number) {
+        const dxMouse = this.x - (mouse.x - canvasWidth / 2);
+        const dyMouse = this.y - (mouse.y - canvasHeight / 2);
+        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+        if (distMouse < repelRadius) {
+            const force = (repelRadius - distMouse) / repelRadius;
+            this.vx += (dxMouse / distMouse) * force * repelStrength;
+            this.vy += (dyMouse / distMouse) * force * repelStrength;
+        }
+
+        this.vx -= this.x * centerPull;
+        this.vy -= this.y * centerPull;
+        this.vx *= 0.97;
+        this.vy *= 0.97;
+        this.vz *= 0.99;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.z += this.vz;
+
+        if (this.z < 0) { this.z = 0; this.vz *= -1; }
+        if (this.z > maxDepth) { this.z = maxDepth; this.vz *= -1; }
+        this.trail.push({ x: this.x, y: this.y, z: this.z });
+        if (this.trail.length > 8) this.trail.shift();
+    }
+
+    draw(ctx: CanvasRenderingContext2D, fov: number, canvasCenter: {x: number, y: number}) {
+        const proj = this.project(fov, canvasCenter);
+        if (proj.x < 0 || proj.x > canvasCenter.x * 2 || proj.y < 0 || proj.y > canvasCenter.y * 2) return;
+
+        const alpha = this.baseAlpha * proj.scale;
+
+        // --- ÚJ --- Ragyogás effekt hozzáadása a részecskékhez és a csóvához
+        ctx.shadowColor = `rgba(${ACCENT_COLOR.baseRgb}, ${alpha * 0.8})`;
+        ctx.shadowBlur = 8;
+
+
+        if (this.trail.length > 1) {
+            ctx.beginPath();
+            const firstProj = new Particle(0,0,{},0).project.call({ ...this.trail[0] }, fov, canvasCenter);
+            ctx.moveTo(firstProj.x, firstProj.y);
+            for(let i = 1; i < this.trail.length; i++) {
+                const currentProj = new Particle(0,0,{},0).project.call({ ...this.trail[i] }, fov, canvasCenter);
+                ctx.lineTo(currentProj.x, currentProj.y);
+            }
+            ctx.strokeStyle = `rgba(${ACCENT_COLOR.baseRgb}, ${alpha * 0.4})`;
+            ctx.lineWidth = proj.scale * 1.2;
+            ctx.stroke();
+        }
+
+        ctx.save();
+        ctx.translate(proj.x, proj.y);
+        ctx.scale(proj.scale * 1.4, proj.scale * 1.4);
+        ctx.translate(-12, -12);
+        ctx.fillStyle = `rgba(${ACCENT_COLOR.baseRgb}, ${alpha})`;
+        ctx.fill(this.iconPath);
+        ctx.restore();
+
+        // --- ÚJ --- Ragyogás effekt eltávolítása, hogy más elemekre ne hasson
+        ctx.shadowBlur = 0;
+    }
+}
+
+// --- EGYEDI HOOK A VÁSZON ANIMÁCIÓHOZ (MÓDOSÍTOTT) ---
+function useInteractiveConstellation(canvasRef: React.RefObject<HTMLCanvasElement>) {
+    useEffect(() => {
+        const iconPaths = {
+            shield: new Path2D('M12 2.5 L4 6 L4 13 C4 18 12 22 12 22 C12 22 20 18 20 13 L20 6 Z'),
+            check: new Path2D('M9 22l-7-7 2-2 5 5 11-11 2 2z'),
+            secure: new Path2D('M12 2L4.5 5v6c0 5.55 3.84 10.74 7.5 12 3.66-1.26 7.5-6.45 7.5-12V5L12 2z')
+        };
+
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d', { alpha: true });
+        if (!ctx) return;
+
+        let animationFrameId: number;
+        const particles: Particle[] = [];
+        const mouse = { x: 9999, y: 9999 };
+        const fov = 350;
+        const maxDepth = 450;
+        const repelRadius = 160;
+        const repelStrength = 0.6;
+        const centerPull = 0.0002;
+
+        let canvasCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+        const setCanvasSize = () => {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            canvas.style.width = `${window.innerWidth}px`;
+            canvas.style.height = `${window.innerHeight}px`;
+            ctx.scale(dpr, dpr);
+            canvasCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        };
+
+        const init = () => {
+            particles.length = 0;
+            const particleCount = Math.floor(window.innerWidth / 22);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(canvas.width, canvas.height, iconPaths, maxDepth));
+            }
+        };
+        setCanvasSize();
+        init();
+
+        const connect = () => {
+            // --- MÓDOSÍTOTT --- Ragyogás hozzáadása a vonalakhoz is
+            ctx.shadowColor = `rgba(${ACCENT_COLOR.baseRgb}, 0.5)`;
+            ctx.shadowBlur = 5;
+
+            ctx.beginPath();
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+                    const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2) + Math.pow(p1.z - p2.z, 2));
+
+                    if (dist < 180) {
+                        const p1Proj = p1.project(fov, canvasCenter);
+                        const p2Proj = p2.project(fov, canvasCenter);
+                        const opacity = Math.max(0, 1 - dist / 180);
+                        ctx.moveTo(p1Proj.x, p1Proj.y);
+                        ctx.lineTo(p2Proj.x, p2Proj.y);
+                        ctx.strokeStyle = `rgba(${ACCENT_COLOR.baseRgb}, ${opacity * p1Proj.scale * p2Proj.scale * 0.4})`;
+                    }
+                }
+            }
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+            // --- ÚJ --- Ragyogás effekt eltávolítása
+            ctx.shadowBlur = 0;
+        };
+
+        let auroraAngle = 0;
+        const animate = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            auroraAngle += 0.002;
+            
+            // --- MÓDOSÍTOTT --- Pulzáló "aurora" effekt
+            const pulse = 1 + Math.sin(auroraAngle) * 0.05;
+            const gradient = ctx.createRadialGradient(
+                canvasCenter.x, canvasCenter.y, 0,
+                canvasCenter.x, canvasCenter.y, Math.max(canvasCenter.x, canvasCenter.y) * 1.2 * pulse
+            );
+            gradient.addColorStop(0, `rgba(${ACCENT_COLOR.baseRgb}, 0.15)`);
+            gradient.addColorStop(0.3, `rgba(13, 48, 77, 0.1)`);
+            gradient.addColorStop(1, `rgba(8, 20, 39, 0)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            particles.sort((a, b) => b.z - a.z);
+
+            particles.forEach(p => {
+                p.update(mouse, repelRadius, repelStrength, maxDepth, window.innerWidth, window.innerHeight, centerPull);
+                p.draw(ctx, fov, canvasCenter);
+            });
+
+            connect();
+            animationFrameId = requestAnimationFrame(animate);
+        };
+        animate();
+
+        const handleMouseMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+        const handleResize = () => { setCanvasSize(); init(); };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('resize', handleResize);
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, [canvasRef]);
+}
+
+
+// --- FŐ KOMPONENS (MÓDOSÍTOTT) ---
 const HeaderHero = () => {
-  // FRISSÍTETT FŐCÍM a tűz- és munkavédelmi témához
-  const mainHeadline = "Profi Tűz- és Munkavédelem: Elkerülhető Bírságok, Biztonságos Működés, Nyugodt Vezetés!";
-  const mainHeadlineWords = mainHeadline.split(" ");
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [floatingStyles, setFloatingStyles] = useState<FloatingStyle[]>([]);
+    // @ts-ignore
+    useInteractiveConstellation(canvasRef);
 
-  useEffect(() => {
-    const styles: FloatingStyle[] = [...Array(4)].map(() => ({ // Növeltük a lebegő elemek számát 4-re
-      width: `${40 + Math.random() * 80}px`,
-      height: `${40 + Math.random() * 80}px`,
-      backgroundColor: `rgba(255, 255, 255, ${0.03 + Math.random() * 0.07})`, // Még finomabb áttetszőség
-      top: `${5 + Math.random() * 90}%`, // Teljesebb magasság kihasználása
-      left: `${5 + Math.random() * 90}%`, // Teljesebb szélesség kihasználása
-    }));
-    setFloatingStyles(styles);
-  }, []);
+    const mainHeadline = "Biztonság. Megfelelőség. Nyugalom.";
+    const mainHeadlineWords = mainHeadline.split(" ");
+    const headlineDurationEstimate = 0.8 + mainHeadlineWords.length * 0.08 + 0.8;
 
-  // Dinamikus késleltetések kiszámítása a főcím hossza alapján
-  const headlineAnimationDelay = 0.2; // Kezdeti késleltetés a P1 után
-  const headlineDurationEstimate = headlineAnimationDelay + mainHeadlineWords.length * 0.08 + 0.5; // Becsült idő, mire a H1 megjelenik
+    return (
+        <>
+            <style>
+                {`
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
+                .cta-glow {
+                  box-shadow: 0 0 15px ${ACCENT_COLOR.baseHex}40, 0 0 30px ${ACCENT_COLOR.baseHex}30, inset 0 0 10px ${ACCENT_COLOR.baseHex}20;
+                }
+                /* --- ÚJ --- Statikus "csillagpor" háttér textúra */
+                .bg-star-noise::before {
+                  content: '';
+                  position: absolute;
+                  top: 0; left: 0; right: 0; bottom: 0;
+                  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"%3E%3Crect fill="%230f172a" width="800" height="800"/%3E%3Cg fill-opacity="0.15"%3E%3Ccircle fill="%2303BABE" cx="400" cy="400" r="100"/%3E%3Ccircle fill="%231e293b" cx="400" cy="400" r="30"/%3E%3Ccircle fill="%23e2e8f0" cx="100" cy="100" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="700" cy="100" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="100" cy="700" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="700" cy="700" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="250" cy="250" r="2"/%3E%3Ccircle fill="%23e2e8f0" cx="550" cy="250" r="2"/%3E%3Ccircle fill="%23e2e8f0" cx="250" cy="550" r="2"/%3E%3Ccircle fill="%23e2e8f0" cx="550" cy="550" r="2"/%3E%3C/g%3E%3C/svg%3E');
+                  background-size: 400px;
+                  opacity: 0.2;
+                  z-index: -1;
+                }
+                `}
+            </style>
+            {/* --- MÓDOSÍTOTT --- Új 'bg-star-noise' osztály hozzáadva */}
+            <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] bg-star-noise">
+                <div className="fixed top-0 left-0 right-0 bg-slate-900/50 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50">
+                    <div className="font-bold text-lg tracking-wider">
+                        <span className={ACCENT_COLOR.textLight}>Tűz</span><span className="text-white">És</span><span className={ACCENT_COLOR.textLight}>Munka</span><span className="text-white">védelem</span>
+                    </div>
+                    <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
+                        <a href="mailto:markjani@janimark.hu" className="hover:text-cyan-300 transition-colors duration-300">info@markjani.hu</a>
+                        <a href="tel:+36209791719" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36 20 979 17 19</a>
+                    </div>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Link
+                            href="/#ajanlatkeres"
+                            className={`
+                            ${ACCENT_COLOR.bg} ${ACCENT_COLOR.hoverBg} ${ACCENT_COLOR.textOnAccent}
+                            font-bold py-2.5 px-5 rounded-lg text-sm
+                            transition-all duration-300 ease-in-out
+                            focus:outline-none focus-visible:ring-2 ${ACCENT_COLOR.ring}
+                            `}
+                        >
+                            Ajánlatkérés
+                        </Link>
+                    </motion.div>
+                </div>
 
-  return (
-    <div className="min-h-[85vh] sm:min-h-[75vh] w-screen flex flex-col text-white antialiased relative overflow-hidden">
-      {/* Felső sáv */}
-      <div className={`bg-black text-white py-3 px-4 sm:px-6 flex items-center text-xs sm:text-sm shadow-md z-20`}>
-        <div className="flex-1"></div>
-        <div className="text-center">
-          <div className="flex items-center justify-center flex-wrap space-x-2 sm:space-x-3 font-medium">
-            <span className="whitespace-nowrap">Ügyfélszolgálat:</span>
-            <a href="mailto:info@meggyesrev.hu" className="hover:underline">info@meggyesrev.hu</a>
-            <a href="tel:+36209791719" className="hover:underline whitespace-nowrap">+36 20 979 17 19</a>
-          </div>
-        </div>
-        <div className="flex-1 flex justify-end">
-          <motion.button
-             whileHover={{ scale: 1.05 }}
-             whileTap={{ scale: 0.95 }}
-             className={`
-                ${accentColor.bg} ${accentColor.hoverBg} ${accentColor.textOnAccent}
-                font-bold py-2 px-4 rounded-lg text-xs sm:text-sm
-                transition duration-300 ease-in-out
-                focus:outline-none focus:ring-2 ${accentColor.ring} focus:ring-opacity-50
-             `}
-          >
-            Ajánlatot kérek
-          </motion.button>
-        </div>
-      </div>
+                <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative pt-20">
+                    <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0" />
+                    <div className="max-w-5xl relative z-10 flex flex-col items-center">
+                        {/* --- MÓDOSÍTOTT --- A pajzs ikon kapott egy külső, folyamatosan animáló div-et */}
+                        <motion.div
+                            animate={{
+                                y: [0, -8, 0],
+                                scale: [1, 1.03, 1],
+                            }}
+                            transition={{
+                                duration: 4,
+                                ease: "easeInOut",
+                                repeat: Infinity,
+                            }}
+                        >
+                            <motion.div
+                                className="mb-6 p-4 bg-white/10 rounded-full shadow-2xl ring-1 ring-white/10 backdrop-blur-sm"
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ type: "spring", stiffness: 150, damping: 15, delay: 0.5 }}
+                            >
+                                <ShieldCheckIconSolid className="w-14 h-14 sm:w-16 sm:h-16 text-cyan-300" />
+                            </motion.div>
+                        </motion.div>
 
-      {/* Fő narancssárga tartalom terület */}
-      <div className={`flex-grow flex flex-col items-center justify-center ${accentColor.bg} p-4 sm:p-8 text-center relative`}>
-        <motion.div
-          className="absolute inset-0 opacity-10 z-0"
-          style={{
-            backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.05) 75%, transparent 75%, transparent), linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.03) 75%, transparent 75%, transparent)`,
-            backgroundSize: '80px 80px', // Nagyobb minta
-          }}
-          animate={{ backgroundPosition: ['0% 0%', '160px 80px'] }} // Kettős annyi elmozdulás
-          transition={{ duration: 25, ease: 'linear', repeat: Infinity, repeatType: 'loop' }}
-        />
-        
-        {floatingStyles.length > 0 && floatingStyles.map((style, i) => (
-          <motion.div
-            key={`float-${i}`}
-            className="absolute rounded-full z-0" // Opacity mostantól a style-ban van
-            style={{...style, opacity: 0.03 + Math.random() * 0.07}} // Egyedi opacitás itt, hogy ne legyen a className-ben fixen 0.1
-            variants={floatingElementVariants}
-            animate="float"
-            custom={i}
-          />
-        ))}
 
-        <div className="max-w-3xl relative z-10">
-          {/* ÚJ P1 SZÖVEG */}
-          <motion.p 
-            className="mb-6 text-lg sm:text-xl text-orange-100"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Éjszaka is nyugodtan aludna? Vagy a munkahelyi kockázatok és a közelgő ellenőrzés miatt fő a feje?
-          </motion.p>
-          
-          {/* ÚJ H1 SZÖVEG */}
-          <motion.h1
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 leading-tight text-white"
-            variants={sentenceVariants}
-            initial="hidden"
-            animate="visible"
-            custom={headlineAnimationDelay} // Átadva a késleltetés
-          >
-            {mainHeadlineWords.map((word, index) => (
-              <motion.span key={index} className="inline-block mr-[0.2em]" variants={wordVariants}>
-                {word}
-              </motion.span>
-            ))}
-          </motion.h1>
+                        <motion.h1
+                            className="text-5xl sm:text-7xl md:text-8xl font-black mb-6 leading-tight tracking-tighter text-white"
+                            variants={ANIMATION_VARIANTS.sentence}
+                            initial="hidden"
+                            animate="visible"
+                        >
+                            {mainHeadlineWords.map((word, index) => (
+                                <motion.span key={index} className="inline-block mr-[0.25em]" variants={ANIMATION_VARIANTS.word}>
+                                    {word}
+                                </motion.span>
+                            ))}
+                        </motion.h1>
 
-          {/* ÚJ P2 SZÖVEG */}
-          <motion.p 
-            className="text-base sm:text-lg md:text-xl mb-10 text-orange-50"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: headlineDurationEstimate }}
-          >
-            Levesszük válláról a tűz- és munkavédelem komplex terheit! Teljes körű megoldásainkkal – a kockázatértékeléstől az oktatásokon át a teljes dokumentációig – biztosítjuk cége jogszabályi megfelelőségét, hogy Ön nyugodtan a növekedésre koncentrálhasson.
-          </motion.p>
+                        <motion.p
+                            className="text-lg md:text-xl mb-12 text-slate-300 max-w-3xl font-medium"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: headlineDurationEstimate, ease: "easeOut" }}
+                        >
+                            Levesszük válláról a tűz- és munkavédelem komplex terheit. Szakértő megoldásainkkal garantáljuk a jogszabályi megfelelést, hogy Ön nyugodtan a növekedésre koncentrálhasson.
+                        </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: headlineDurationEstimate + 0.2 }}
-            className="space-y-6 sm:space-y-0 sm:space-x-6 flex flex-col sm:flex-row justify-center items-center mb-10"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0px 0px 20px rgba(255,255,255,0.25)" }} // Erősebb boxShadow
-              whileTap={{ scale: 0.95 }}
-              className={`bg-white hover:bg-gray-50 ${accentColor.textDark} font-semibold py-3 px-8 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-opacity-75`}
-            >
-              MIRŐL VAN SZÓ?
-            </motion.button>
-            <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0px 0px 20px rgba(255,255,255,0.2)" }}
-                whileTap={{ scale: 0.95 }}
-                className={`bg-black hover:bg-gray-800 text-white font-semibold py-3 px-8 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75`}
-            >
-                Megengeded hogy segítsünk?
-            </motion.button>
-          </motion.div>
-          
-          <motion.p 
-            className="text-base sm:text-lg text-orange-100"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: headlineDurationEstimate + 0.4 }}
-          >
-            'Kíváncsi vagy hogy milyen Tűz és Munkavédelmi előírásoknak kell megfelelned? Segítek abban, hogy pontosan mit kérhetnek a szakhatóságok.'
-          </motion.p>
-        </div>
-      </div>
-    </div>
-  );
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: headlineDurationEstimate + 0.2, ease: "easeOut" }}
+                            className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-6"
+                        >
+                            <motion.button
+                                whileHover={{ scale: 1.03, y: -4 }}
+                                whileTap={{ scale: 0.98, y: 0 }}
+                                className={`inline-flex items-center gap-3 ${ACCENT_COLOR.bg} ${ACCENT_COLOR.textOnAccent} font-bold py-4 px-8 rounded-xl text-lg shadow-lg cta-glow transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 ${ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+                            >
+                                <DocumentCheckIcon className="w-6 h-6" />
+                                Ingyenes Konzultáció Kérése
+                            </motion.button>
+                            {/* --- MÓDOSÍTOTT --- Finomhangolt hover effekt (border-color hozzáadva) */}
+                            <motion.a
+                                href="/#szolgaltatasok"
+                                whileHover={{ scale: 1.05, y: -4 }}
+                                whileTap={{ scale: 0.95, y: 0 }}
+                                className="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/15 border border-transparent hover:border-cyan-400/50 text-slate-200 font-semibold py-4 px-7 rounded-xl transition-all duration-300"
+                            >
+                                Szolgáltatásaink
+                                <motion.span animate={{ x: [0, 3, 0] }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}>
+                                    <ArrowRightIcon className="w-5 h-5" />
+                                </motion.span>
+                            </motion.a>
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default HeaderHero;
