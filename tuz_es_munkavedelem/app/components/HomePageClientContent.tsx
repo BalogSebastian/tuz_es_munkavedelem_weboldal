@@ -30,14 +30,13 @@ export default function HomePageClientContent() {
           hogy szerver oldalon renderelődjön, ha lehetséges. */}
 
       <IntroSection />
-      <CallToActionSection />
+      
       <ServiceHighlightCards />
       <ProcessSteps />
       <StatsCounterSection />
       <DownloadableDocsSection />
-      <FreeConsultationCtaSection />
+      <CallToActionSection />
       <FaqAccordion/>
-      <TestimonialSlider/>
       <Footer />
     </>
   );

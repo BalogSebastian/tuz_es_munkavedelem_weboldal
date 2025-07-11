@@ -1,12 +1,12 @@
-// app/components/HeaderHero.tsx
 'use client';
 
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
     ArrowRightIcon,
-    ShieldCheckIcon as ShieldCheckIconSolid,
-    DocumentCheckIcon
+    FireIcon,
+    DocumentCheckIcon,
+    ExclamationTriangleIcon
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
@@ -102,7 +102,6 @@ class Particle {
 
         const alpha = this.baseAlpha * proj.scale;
 
-        // --- ÚJ --- Ragyogás effekt hozzáadása a részecskékhez és a csóvához
         ctx.shadowColor = `rgba(${ACCENT_COLOR.baseRgb}, ${alpha * 0.8})`;
         ctx.shadowBlur = 8;
 
@@ -128,16 +127,15 @@ class Particle {
         ctx.fill(this.iconPath);
         ctx.restore();
 
-        // --- ÚJ --- Ragyogás effekt eltávolítása, hogy más elemekre ne hasson
         ctx.shadowBlur = 0;
     }
 }
 
-// --- EGYEDI HOOK A VÁSZON ANIMÁCIÓHOZ (MÓDOSÍTOTT) ---
+// --- EGYEDI HOOK A VÁSZON ANIMÁCIÓHOZ (VÁLTOZATLAN) ---
 function useInteractiveConstellation(canvasRef: React.RefObject<HTMLCanvasElement>) {
     useEffect(() => {
         const iconPaths = {
-            shield: new Path2D('M12 2.5 L4 6 L4 13 C4 18 12 22 12 22 C12 22 20 18 20 13 L20 6 Z'),
+            fire: new Path2D('M10.828 6.722L10 3L6 14.072A1.996 1.996 0 014 15a2 2 0 11-4 0c0-.898.447-1.716 1.172-2.181L10 0l-3 10h5l-2.457-8.19A3 3 0 0110 3v-.072c-.066-.462-.123-.92-.172-1.372a.001.001 0 00-.001-.001L10 0V.001z'), // Tűz ikon
             check: new Path2D('M9 22l-7-7 2-2 5 5 11-11 2 2z'),
             secure: new Path2D('M12 2L4.5 5v6c0 5.55 3.84 10.74 7.5 12 3.66-1.26 7.5-6.45 7.5-12V5L12 2z')
         };
@@ -179,7 +177,6 @@ function useInteractiveConstellation(canvasRef: React.RefObject<HTMLCanvasElemen
         init();
 
         const connect = () => {
-            // --- MÓDOSÍTOTT --- Ragyogás hozzáadása a vonalakhoz is
             ctx.shadowColor = `rgba(${ACCENT_COLOR.baseRgb}, 0.5)`;
             ctx.shadowBlur = 5;
 
@@ -202,7 +199,6 @@ function useInteractiveConstellation(canvasRef: React.RefObject<HTMLCanvasElemen
             }
             ctx.lineWidth = 0.7;
             ctx.stroke();
-            // --- ÚJ --- Ragyogás effekt eltávolítása
             ctx.shadowBlur = 0;
         };
 
@@ -212,7 +208,6 @@ function useInteractiveConstellation(canvasRef: React.RefObject<HTMLCanvasElemen
 
             auroraAngle += 0.002;
             
-            // --- MÓDOSÍTOTT --- Pulzáló "aurora" effekt
             const pulse = 1 + Math.sin(auroraAngle) * 0.05;
             const gradient = ctx.createRadialGradient(
                 canvasCenter.x, canvasCenter.y, 0,
@@ -260,6 +255,8 @@ const HeaderHero = () => {
     const mainHeadline = "Biztonság. Megfelelőség. Nyugalom.";
     const mainHeadlineWords = mainHeadline.split(" ");
     const headlineDurationEstimate = 0.8 + mainHeadlineWords.length * 0.08 + 0.8;
+    const todoListText = "Eddig megvan: Ügyfél értékelések áthelyezése, Készen áll a biztonságra? - áthelyezése, Főbb szolgáltatások (4 kocka), Eredményeink módosítása, Anyagaink letöltése (3db kell), Kérdőív szélesebbre húzása, Pajzs Matrica csere, Készen áll a következő lépésre nem kell, Question1 elkészítése, PajzsMatrica , TűzésMunkavédelmiSzaki oldalnév.";
+
 
     return (
         <>
@@ -269,7 +266,7 @@ const HeaderHero = () => {
                 .cta-glow {
                   box-shadow: 0 0 15px ${ACCENT_COLOR.baseHex}40, 0 0 30px ${ACCENT_COLOR.baseHex}30, inset 0 0 10px ${ACCENT_COLOR.baseHex}20;
                 }
-                /* --- ÚJ --- Statikus "csillagpor" háttér textúra */
+                /* Statikus "csillagpor" háttér textúra */
                 .bg-star-noise::before {
                   content: '';
                   position: absolute;
@@ -281,11 +278,12 @@ const HeaderHero = () => {
                 }
                 `}
             </style>
-            {/* --- MÓDOSÍTOTT --- Új 'bg-star-noise' osztály hozzáadva */}
-            <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] bg-star-noise">
+            {/* ===== MÓDOSÍTÁS: A fő konténer kap egy padding-top-ot a fix navbar miatt ===== */}
+            <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] bg-star-noise pt-[60px]">
+                {/* Fixed Header/Navbar - EZ MARAD RÖGZÍTVE */}
                 <div className="fixed top-0 left-0 right-0 bg-slate-900/50 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50">
                     <div className="font-bold text-lg tracking-wider">
-                        <span className={ACCENT_COLOR.textLight}>Tűz</span><span className="text-white">És</span><span className={ACCENT_COLOR.textLight}>Munka</span><span className="text-white">védelem</span>
+                        <span className={ACCENT_COLOR.textLight}>munka</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}>védelmi</span><span className="text-white">szaki</span>
                     </div>
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
                         <a href="mailto:markjani@janimark.hu" className="hover:text-cyan-300 transition-colors duration-300">info@markjani.hu</a>
@@ -293,7 +291,7 @@ const HeaderHero = () => {
                     </div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Link
-                            href="/#ajanlatkeres"
+                            href="https://calendly.com/"
                             className={`
                             ${ACCENT_COLOR.bg} ${ACCENT_COLOR.hoverBg} ${ACCENT_COLOR.textOnAccent}
                             font-bold py-2.5 px-5 rounded-lg text-sm
@@ -306,10 +304,51 @@ const HeaderHero = () => {
                     </motion.div>
                 </div>
 
-                <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative pt-20">
+                {/* ===== MÓDOSÍTÁS: A "fixed" és "top-[60px]" eltávolítva, így a sávok görgethetővé válnak ===== */}
+                <div className="w-full z-40 flex flex-col"> 
+                    
+                    {/* Eredeti Disclaimer Sáv - NAGYOBB MÉRET */}
+                    <div className="bg-red-800 py-4 px-4 sm:px-6 lg:px-8 shadow-md">
+                        <div className="max-w-full mx-auto flex items-center justify-center text-center">
+                            <motion.div
+                                className="flex items-center space-x-3"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut', delay: 1 }}
+                            >
+                                <ExclamationTriangleIcon className="h-7 w-7 sm:h-8 sm:w-8 text-white animate-pulse" />
+                                <p className="text-white font-bold text-lg sm:text-xl md:text-2xl animate-pulse">
+                                    Hamarosan elkészül a felületünk. Addig is türelmüket köszönjük!
+                                    <br className="sm:hidden" />
+                                    <span className="block mt-1 sm:inline sm:ml-2">Státusz változik: Július 13. 23:59-kor</span>
+                                </p>
+                            </motion.div>
+                        </div>
+                    </div>
+
+                    {/* ÚJ Disclaimer Sáv - NAGYOBB MÉRET */}
+                     <div className="bg-red-800/80 backdrop-blur-sm py-2 px-4 sm:px-6 lg:px-8 shadow-md border-t border-red-700/50">
+                        <div className="max-w-full mx-auto flex items-center justify-center text-center">
+                            <motion.div
+                                className="flex items-center space-x-3"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut', delay: 1.2 }}
+                            >
+                                <DocumentCheckIcon className="h-6 w-6 text-white flex-shrink-0" />
+                                <p className="text-white font-mono text-sm sm:text-base">
+                                    {todoListText}
+                                </p>
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {/* ===== MÓDOSÍTÁS: A "pt-20" eltávolítva, mert a szülő kapott padding-et ===== */}
+                <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative">
                     <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0" />
                     <div className="max-w-5xl relative z-10 flex flex-col items-center">
-                        {/* --- MÓDOSÍTOTT --- A pajzs ikon kapott egy külső, folyamatosan animáló div-et */}
                         <motion.div
                             animate={{
                                 y: [0, -8, 0],
@@ -327,7 +366,7 @@ const HeaderHero = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ type: "spring", stiffness: 150, damping: 15, delay: 0.5 }}
                             >
-                                <ShieldCheckIconSolid className="w-14 h-14 sm:w-16 sm:h-16 text-cyan-300" />
+                                <FireIcon className="w-14 h-14 sm:w-16 sm:h-16 text-cyan-300" />
                             </motion.div>
                         </motion.div>
 
@@ -368,7 +407,6 @@ const HeaderHero = () => {
                                 <DocumentCheckIcon className="w-6 h-6" />
                                 Ingyenes Konzultáció Kérése
                             </motion.button>
-                            {/* --- MÓDOSÍTOTT --- Finomhangolt hover effekt (border-color hozzáadva) */}
                             <motion.a
                                 href="/#szolgaltatasok"
                                 whileHover={{ scale: 1.05, y: -4 }}

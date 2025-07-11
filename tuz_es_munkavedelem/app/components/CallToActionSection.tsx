@@ -129,12 +129,20 @@ const CallToActionSection: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
         >
-            {/* A NYÍL: Abszolút pozícióval a bal oldalon, a szöveges tartalom mellett */}
+            {/* BAL OLDALI NYÍL: Abszolút pozícióval a bal oldalon, a szöveges tartalom mellett */}
             <motion.div
-              className="absolute top-1/2 -translate-y-1/2 left-0 w-60 h-60 hidden xl:block text-red-500"
+              className="absolute -top-20 left-0 w-24 h-24 hidden xl:block text-red-500"
               variants={itemVariants}
             >
               <AnimatedDecorativeArrow className="transform -scale-x-100" />
+            </motion.div>
+
+            {/* JOBB OLDALI NYÍL: Abszolút pozícióval a jobb oldalon, a szöveges tartalom mellett */}
+            <motion.div
+              className="absolute bottom-0 right-0 w-24 h-24 hidden xl:block text-red-500" // bottom-0 és right-0 a pozícióhoz
+              variants={itemVariants}
+            >
+              <AnimatedDecorativeArrow className="" /> {/* Nincs tükrözés, hogy a szöveg felé mutasson */}
             </motion.div>
 
             {/* A SZÖVEGES TARTALOM: Visszaállítva az eredeti, középre igazított állapotába */}

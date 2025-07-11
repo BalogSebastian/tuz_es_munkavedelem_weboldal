@@ -2,32 +2,32 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-    motion, 
-    useMotionValue, 
-    useTransform, 
-    useSpring 
+import {
+    motion,
+    useMotionValue,
+    useTransform,
+    useSpring
 } from 'framer-motion';
-import { 
-    DocumentArrowDownIcon, 
-    UserIcon, 
-    EnvelopeIcon, 
-    PhoneIcon, 
+import {
+    DocumentArrowDownIcon,
+    UserIcon,
+    EnvelopeIcon,
+    PhoneIcon,
     ArrowRightIcon,
-    CheckCircleIcon 
+    CheckCircleIcon
 } from '@heroicons/react/24/solid';
 
 // --- EGYSÉGESÍTETT CIÁN SZÍNSÉMA ---
 const accentColor = {
   baseHex: '#03BABE',
   bg: 'bg-[#03BABE]',
-  text: 'text-[#03BABE]', 
+  text: 'text-[#03BABE]',
   textOnAccent: 'text-white',
   hoverBg: 'hover:bg-cyan-600',
   ring: 'focus:ring-cyan-500',
-  borderFocus: 'focus:border-cyan-500', 
-  iconDefault: 'text-gray-400', 
-  successText: 'text-green-600', 
+  borderFocus: 'focus:border-cyan-500',
+  iconDefault: 'text-gray-400',
+  successText: 'text-green-600',
   successBg: 'bg-green-50',
 };
 
@@ -48,11 +48,11 @@ const AnimatedDecorativeArrow: React.FC<{ className?: string }> = ({ className }
     );
 };
 
+// CSAK AZ ELSŐ HÁROM DOKUMENTUM MARAD
 const downloadableDocs = [
   { id: 1, title: "Kávézó Nyitás feltételei", description: "Töltse le részletes útmutatónkat a sikeres kávézó indításához szükséges összes tűz- és munkavédelmi teendőről.", fileName: "kavezo_nyitas_feltetelei.pdf" },
   { id: 2, title: "Mire van szüksége egy irodának?", description: "Ismerje meg az irodák alapvető szükségleteit, a kötelező jelölésektől az ergonomikus munkaállomásokig.", fileName: "irodai_szuksegletek_lista.pdf" },
   { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Egy praktikus összefoglaló a legfontosabb tudnivalókról, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
-  { id: 4, title: "Tűzvédelmi Szabályzat Alapok", description: "Ismerje meg, milyen alapvető elemekből kell állnia egy jogszabályoknak megfelelő tűzvédelmi szabályzatnak.", fileName: "tuzvedelmi_szabalyzat_alapok.pdf" },
 ];
 
 interface FormDataState { name: string; email: string; phone: string; }
@@ -63,7 +63,7 @@ const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; hand
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => { if (!cardRef.current) return; const rect = cardRef.current.getBoundingClientRect(); mouseX.set(event.clientX - rect.left); mouseY.set(event.clientY - rect.top); };
   const handleMouseLeave = () => { mouseX.set(0); mouseY.set(0); };
-  
+
   const cardEntranceVariants = { hidden: { opacity: 0, y: 50, scale: 0.92, rotateX: -10 }, visible: { opacity: 1, y: 0, scale: 1, rotateX: 0, transition: { duration: 0.7, ease: [0.25, 0.85, 0.45, 1] } }, };
 
   return (
@@ -107,7 +107,7 @@ const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; hand
             </div>
         </div>
         <div className={`absolute top-0 left-0 w-full h-full p-6 sm:p-8 flex flex-col justify-center items-center text-center rounded-2xl ${accentColor.successBg} border border-green-200`} style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }} >
-            <CheckCircleIcon className={`w-20 h-20 ${accentColor.successText} mx-auto mb-4`} /> 
+            <CheckCircleIcon className={`w-20 h-20 ${accentColor.successText} mx-auto mb-4`} />
             <h4 className={`text-xl sm:text-2xl font-bold ${accentColor.successText} mb-2`}>Küldés Sikeres!</h4>
             <p className="text-gray-700 text-sm">Köszönjük! A kért dokumentumot hamarosan elküldjük a megadott email címre.</p>
         </div>
@@ -117,8 +117,17 @@ const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; hand
 }
 
 const DownloadableDocsSection: React.FC = () => {
-  const [formData, setFormDataState] = useState<Record<number, FormDataState>>({1: { name: '', email: '', phone: '' },2: { name: '', email: '', phone: '' },3: { name: '', email: '', phone: '' },4: { name: '', email: '', phone: '' },});
-  const [submitted, setSubmittedState] = useState<Record<number, boolean>>({1: false,2: false,3: false,4: false,});
+  // Frissítjük a useState inicializálást, hogy csak a 3 dokumentum adatait tartalmazza
+  const [formData, setFormDataState] = useState<Record<number, FormDataState>>({
+    1: { name: '', email: '', phone: '' },
+    2: { name: '', email: '', phone: '' },
+    3: { name: '', email: '', phone: '' },
+  });
+  const [submitted, setSubmittedState] = useState<Record<number, boolean>>({
+    1: false,
+    2: false,
+    3: false,
+  });
 
   const handleFormChange = (docId: number, e: React.ChangeEvent<HTMLInputElement>) => {setFormDataState(prev => ({ ...prev, [docId]: { ...prev[docId], [e.target.name]: e.target.value }}));};
   const handleFormSubmit = (docId: number, e: React.FormEvent<HTMLFormElement>) => {e.preventDefault(); console.log(`Adatok:`, formData[docId]); setSubmittedState(prev => ({ ...prev, [docId]: true }));};
@@ -131,16 +140,16 @@ const DownloadableDocsSection: React.FC = () => {
     `}</style>
     <section className="py-24 lg:py-32 bg-grid-pattern font-['Poppins',_sans-serif] relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
-        
+
         {/* JAVÍTOTT FEJLÉC, A REFERENCIA ALAPJÁN */}
         <div className="flex justify-center items-start gap-8 lg:gap-12">
-            {/* BAL OLDALI NYÍL */}
+            {/* BAL OLDALI NYÍL: Mostantól feleakkora */}
             <div className="flex-1 hidden xl:flex justify-end mt-10">
-                <AnimatedDecorativeArrow className="w-60 h-60 text-blue-500 transform -scale-x-100" />
+                <AnimatedDecorativeArrow className="w-30 h-30 text-blue-500 transform -scale-x-100" /> {/* w-30 h-30 helyett w-24 h-24 vagy w-20 h-20 */}
             </div>
 
             {/* KÖZÉPRE IGAZÍTOTT TARTALOM */}
-            <motion.div 
+            <motion.div
               className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
               initial={{opacity:0, y:-30}}
               whileInView={{opacity:1, y:0}}
@@ -155,22 +164,22 @@ const DownloadableDocsSection: React.FC = () => {
               </p>
             </motion.div>
 
-            {/* JOBB OLDALI NYÍL */}
+            {/* JOBB OLDALI NYÍL: Mostantól feleakkora */}
             <div className="flex-1 hidden xl:flex justify-start mt-10">
-                <AnimatedDecorativeArrow className="w-42 h-42 text-blue-500 " />
+                <AnimatedDecorativeArrow className="w-30 h-30 text-blue-500 " /> {/* w-30 h-30 helyett w-24 h-24 vagy w-20 h-20 */}
             </div>
         </div>
 
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-7xl mx-auto"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
           variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
         >
           {downloadableDocs.map((doc) => (
-            <DownloadCard 
+            <DownloadCard
               key={doc.id}
               doc={doc}
               formData={formData[doc.id]}

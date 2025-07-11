@@ -1,49 +1,9 @@
-// app/components/IntroSection.tsx
 'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FireIcon, ShieldCheckIcon as ShieldIconOutline } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-
-// --- Egyedi, 3D hatású Pajzs SVG komponens ---
-const RedShieldIcon = ({ className }: { className?: string }) => {
-  return (
-    <motion.div
-        className={className}
-        animate={{
-            y: [-4, 4, -4],
-            rotate: [-3, 3, -3],
-        }}
-        transition={{
-            duration: 8,
-            repeat: Infinity,
-            repeatType: 'mirror',
-            ease: 'easeInOut'
-        }}
-    >
-        <svg viewBox="0 0 100 125" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g filter="url(#filter0_d_101_2)">
-                <path d="M50 0L95 20V55C95 85 50 110 50 110C50 110 5 85 5 55V20L50 0Z" fill="#E53E3E"/>
-                <path d="M50 0L5 20V55C5 85 50 110 50 110V0Z" fill="#C53030"/>
-                <path d="M25 55L45 75L75 45" stroke="white" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round"/>
-            </g>
-            <defs>
-                <filter id="filter0_d_101_2" x="0" y="0" width="100" height="125" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                    <feOffset dy="5"/>
-                    <feGaussianBlur stdDeviation="5"/>
-                    <feColorMatrix type="matrix" values="0 0 0 0 0.7729167 0 0 0 0 0.1875 0 0 0 0 0.1875 0 0 0 0.25 0"/>
-                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_101_2"/>
-                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_101_2" result="shape"/>
-                </filter>
-            </defs>
-        </svg>
-    </motion.div>
-  );
-};
-
 
 // --- Színpaletta és animációs variánsok ---
 const accentColor = {
@@ -120,8 +80,22 @@ const IntroSection: React.FC = () => {
               whileHover={{ y: -8, scale: 1.03 }}
               className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl"
             >
-              {/* JAVÍTÁS: Most már itt is a pajzs ikon van */}
-              <RedShieldIcon className="absolute w-24 h-24 -top-8 -right-8" />
+              {/* Pajzs ikon cserélve FireIcon-ra, megtartva az animációt és stílust */}
+              <motion.div
+                  className="absolute w-24 h-24 -top-8 -right-8"
+                  animate={{
+                      y: [-4, 4, -4],
+                      rotate: [-3, 3, -3],
+                  }}
+                  transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      repeatType: 'mirror',
+                      ease: 'easeInOut'
+                  }}
+              >
+                  <FireIcon className="w-full h-full text-red-500 drop-shadow-lg" /> {/* Piros szín a FireIcon-nak */}
+              </motion.div>
 
               <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5">
                 <div className={`p-4 rounded-xl bg-gradient-to-br from-cyan-400 to-teal-500`}>
@@ -139,7 +113,22 @@ const IntroSection: React.FC = () => {
               whileHover={{ y: -8, scale: 1.03 }}
               className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl"
             >
-              <RedShieldIcon className="absolute w-24 h-24 -top-8 -right-8" />
+              {/* Pajzs ikon cserélve FireIcon-ra, megtartva az animációt és stílust */}
+              <motion.div
+                  className="absolute w-24 h-24 -top-8 -right-8"
+                  animate={{
+                      y: [-4, 4, -4],
+                      rotate: [-3, 3, -3],
+                  }}
+                  transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      repeatType: 'mirror',
+                      ease: 'easeInOut'
+                  }}
+              >
+                  <FireIcon className="w-full h-full text-red-500 drop-shadow-lg" /> {/* Piros szín a FireIcon-nak */}
+              </motion.div>
 
               <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5">
                 <div className={`p-4 rounded-xl bg-gradient-to-br from-cyan-400 to-teal-500`}>

@@ -8,8 +8,45 @@ import {
     DocumentCheckIcon,
     WrenchScrewdriverIcon,
     CreditCardIcon,
-    ExclamationTriangleIcon,
+    // ExclamationTriangleIcon, // Ezt már nem használjuk
 } from '@heroicons/react/24/outline';
+
+// --- DEKORATÍV ÍVES NYÍL KOMPONENS (a StatsCounterSection-ből adaptálva) ---
+const AnimatedDecorativeArrow: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.5 }) => {
+    return (
+        <motion.svg
+            viewBox="0 0 100 100" fill="none" className={className}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            style={{ overflow: 'visible' }} // Fontos, hogy a nyilak részei ne vágódjanak le
+        >
+            {/* Az íves vonal (kék) */}
+            <motion.path
+                d="M20 20C48.33 22.17 73.33 45.17 80 80"
+                stroke="#03BABE" // Kék szín
+                strokeWidth="6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                variants={{
+                    hidden: { pathLength: 0, opacity: 0 },
+                    visible: { pathLength: 1, opacity: 1, transition: { duration: 1, ease: "circOut", delay } }
+                }} />
+            {/* A nyíl hegye (piros) */}
+            <motion.path
+                d="M70 73L80 80L87 70"
+                stroke="#E53E3E" // Piros szín
+                strokeWidth="6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                variants={{
+                    hidden: { pathLength: 0, opacity: 0 },
+                    visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: "circOut", delay: delay + 0.7 } } // Kicsit később jön be a hegy
+                }} />
+        </motion.svg>
+    );
+};
+
 
 // --- DEKORATÍV SVG KOMPONENSEK ---
 const BlueprintCorner: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.5 }) => {
@@ -39,23 +76,7 @@ const SchematicCrosshair: React.FC<{ className?: string, delay?: number }> = ({ 
     );
 }
 
-const DesignedExclamationMark: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.4 }) => {
-    return (
-        <motion.div
-            className={className}
-            initial={{ opacity: 0, scale: 0.5}}
-            whileInView={{ opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 150, damping: 15, delay }}}
-            viewport={{ once: true, amount: 0.5 }}
-            animate={{ y: [-4, 4, -4], rotate: [-5, 5, -5] }}
-            transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut'}}
-        >
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-300 to-yellow-400 rounded-full blur-md opacity-70"></div>
-            <div className="relative flex items-center justify-center w-full h-full bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full shadow-lg ring-4 ring-white/50">
-                <ExclamationTriangleIcon className="w-[55%] h-[55%] text-white drop-shadow-md"/>
-            </div>
-        </motion.div>
-    );
-};
+// A DesignedExclamationMark komponenst kivettem, mert már nem használjuk.
 
 
 interface AnimatedNumberProps { to: number; className?: string; }
@@ -95,11 +116,11 @@ const ProcessSteps: React.FC = () => {
         {/* Minden abszolút pozícionált elem a fő szekción belül van a megbízhatóságért */}
         <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" delay={0.2} />
         <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" delay={0.3} />
-        
-        {/* ÚJ, ROBUSTUS POZÍCIÓK A FELKIÁLTÓJELEKNEK */}
-        <DesignedExclamationMark className="absolute top-[8%] left-[10%] w-20 h-20 transform -rotate-12 hidden xl:block" delay={0.4} />
-        <DesignedExclamationMark className="absolute top-[40%] right-[8%] w-16 h-16 transform rotate-12 hidden xl:block" delay={0.8} />
-        <DesignedExclamationMark className="absolute bottom-[15%] left-[20%] w-14 h-14 transform rotate-6 hidden xl:block" delay={1.0} />
+
+        {/* Íves nyilak */}
+        <AnimatedDecorativeArrow className="absolute top-[8%] left-[10%] w-24 h-24 transform -rotate-12 hidden xl:block" delay={0.4} /> {/* Nagyobb méret */}
+        <AnimatedDecorativeArrow className="absolute top-[40%] right-[8%] w-20 h-20 transform rotate-12 hidden xl:block" delay={0.8} /> {/* Nagyobb méret */}
+        <AnimatedDecorativeArrow className="absolute bottom-[15%] left-[20%] w-18 h-18 transform rotate-6 hidden xl:block" delay={1.0} /> {/* Nagyobb méret */}
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="relative text-center mb-16 lg:mb-20">
@@ -109,7 +130,7 @@ const ProcessSteps: React.FC = () => {
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">Átlátható lépések a sikeres és biztonságos munkakörnyezetért.</p>
           </div>
           <div className="relative max-w-xl mx-auto lg:max-w-4xl">
-            <motion.div 
+            <motion.div
                 className="hidden lg:block absolute left-1/2 top-10 bottom-10 w-1 bg-gradient-to-b from-cyan-200 via-cyan-300 to-cyan-200 rounded-full transform -translate-x-1/2"
                 style={{ transformOrigin: 'top' }}
                 initial={{ scaleY: 0 }}
@@ -135,7 +156,7 @@ const ProcessSteps: React.FC = () => {
                       viewport={{ once: true, amount: 0.6 }}
                       variants={iconContainerVariants}
                     >
-                      <motion.div 
+                      <motion.div
                            className="hidden lg:block absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
                            style={{ borderColor: accentColor.base, borderWidth: '2px', left: index % 2 === 0 ? 'auto' : 'calc(100% + 2rem)', right: index % 2 === 0 ? 'calc(100% + 2rem)' : 'auto' }}
                            animate={{ scale: [1, 1.6, 1], boxShadow: [ '0 0 0px rgba(3, 186, 190, 0)', '0 0 25px rgba(3, 186, 190, 0.4)', '0 0 0px rgba(3, 186, 190, 0)' ] }}
@@ -174,9 +195,9 @@ const ProcessSteps: React.FC = () => {
                 type="button"
                 className={`
                     ${accentColor.bg} ${accentColor.hoverBg} text-white
-                    font-bold py-4 px-10 rounded-xl text-lg sm:text-xl 
+                    font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
                     shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
-                    transition-all duration-300 ease-in-out 
+                    transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
                 `}
             >

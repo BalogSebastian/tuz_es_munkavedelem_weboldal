@@ -11,17 +11,20 @@ import {
   ClipboardDocumentCheckIcon,
   DocumentTextIcon,
   GlobeAltIcon,
-} from '@heroicons/react/24/outline';
+} from '@heroicons/react/24/outline'; // Megtartjuk az outline ikonokat
 
-// --- ÚJ: PIROS PAJZS IKON AZ INTRO SECTION-BŐL ---
-const RedShieldIcon = ({ className }: { className?: string }) => {
+// Importáljuk a solid (kitöltött) FireIcon-t
+import { FireIcon as FireIconSolid } from '@heroicons/react/24/solid'; // <-- Ezt importáltuk!
+
+// --- ÚJ: PIROS TŰZ IKON (KITÖLTÖTT) ---
+const FireFlameIcon = ({ className }: { className?: string }) => {
   return (
     <motion.div
         className={className}
         initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-        whileInView={{ 
-            opacity: 1, 
-            scale: 1, 
+        whileInView={{
+            opacity: 1,
+            scale: 1,
             rotate: -15,
             transition: { type: 'spring', stiffness: 100, damping: 15, delay: 0.3 }
         }}
@@ -37,24 +40,8 @@ const RedShieldIcon = ({ className }: { className?: string }) => {
             ease: 'easeInOut'
         }}
     >
-        <svg viewBox="0 0 100 125" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g filter="url(#filter0_d_101_2)">
-                <path d="M50 0L95 20V55C95 85 50 110 50 110C50 110 5 85 5 55V20L50 0Z" fill="#E53E3E"/>
-                <path d="M50 0L5 20V55C5 85 50 110 50 110V0Z" fill="#C53030"/>
-                <path d="M25 55L45 75L75 45" stroke="white" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round"/>
-            </g>
-            <defs>
-                <filter id="filter0_d_101_2" x="0" y="0" width="100" height="125" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                    <feOffset dy="5"/>
-                    <feGaussianBlur stdDeviation="5"/>
-                    <feColorMatrix type="matrix" values="0 0 0 0 0.7729167 0 0 0 0 0.1875 0 0 0 0 0.1875 0 0 0 0.25 0"/>
-                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_101_2"/>
-                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_101_2" result="shape"/>
-                </filter>
-            </defs>
-        </svg>
+        {/* Használjuk a Solid FireIcon-t és adjuk meg a piros színt */}
+        <FireIconSolid className="w-full h-full text-[#E53E3E]" />
     </motion.div>
   );
 };
@@ -71,15 +58,12 @@ const accentColor = {
   focusRingOffset: 'focus:ring-offset-slate-100',
 };
 
-const servicesData = [ 
+// CSAK AZ ELSŐ NÉGY SZOLGÁLTATÁS MARAD MEG
+const servicesData = [
   { id: 1, title: "Kockázatértékelés", description: "Veszélyek azonosítása, kockázatok elemzése, megelőzési intézkedések kidolgozása.", icon: ExclamationTriangleIcon, colorName: "red", gradientClasses: "from-red-500 to-rose-500", textColor: "text-red-700", backSideText: "Teljes körű munkahelyi kockázatértékelés készítése a jogszabályi előírásoknak megfelelően, javaslatokkal a kockázatok csökkentésére.", price: "Egyedi árajánlat" },
   { id: 2, title: "Érintésvédelem", description: "Elektromos rendszerek és berendezések biztonsági felülvizsgálata, jegyzőkönyvvel.", icon: BoltIcon, colorName: "blue", gradientClasses: "from-blue-500 to-cyan-500", textColor: "text-blue-700", backSideText: "Szabványossági felülvizsgálat, érintésvédelmi mérések elvégzése és dokumentálása minősítő irattal.", price: "12.000 Ft-tól" },
   { id: 3, title: "Tűz- és Balesetvédelmi Oktatás", description: "Interaktív elméleti és gyakorlati képzések a biztonságos munkavégzésért.", icon: AcademicCapIcon, colorName: "yellow", gradientClasses: "from-amber-400 to-orange-500", textColor: "text-amber-700", backSideText: "A munkakörhöz és munkahelyhez igazított tematika, hatékony ismeretátadás, dokumentált oktatás.", price: "20.000 Ft/csoporttól" },
   { id: 4, title: "HACCP Rendszer", description: "Élelmiszerbiztonsági (HACCP) rendszer kidolgozása, bevezetése és felülvizsgálata.", icon: ClipboardDocumentCheckIcon, colorName: "green", gradientClasses: "from-green-500 to-emerald-500", textColor: "text-green-700", backSideText: "Teljes körű HACCP dokumentáció elkészítése, helyszíni tanácsadás és belső auditok elvégzése.", price: "Egyedi árajánlat" },
-  { id: 5, title: "Munkavédelem", description: "Átfogó munkavédelmi szolgáltatások, szabályzatoktól a helyszíni bejárásig.", icon: ShieldCheckIcon, colorName: "cyan", gradientClasses: "from-cyan-500 to-sky-500", textColor: "text-cyan-700", backSideText: "Munkavédelmi szabályzatok elkészítése, munkabalesetek kivizsgálása, megelőzési stratégiák és tanácsadás.", price: "Egyedi árajánlat" },
-  { id: 6, title: "HACCP Oktatás", description: "Célzott képzés az élelmiszerbiztonsági előírások gyakorlati alkalmazásáról.", icon: AcademicCapIcon, colorName: "purple", gradientClasses: "from-purple-500 to-fuchsia-500", textColor: "text-purple-700", backSideText: "A HACCP rendszer alapelveinek és a helyes higiéniai gyakorlatnak (GHP) az oktatása, dokumentált képzés.", price: "18.000 Ft/csoporttól" },
-  { id: 7, title: "Munkahelyi Szabályzat", description: "Egyedi munkahelyi szabályzatok (pl. dohányzási, IT) elkészítése.", icon: DocumentTextIcon, colorName: "indigo", gradientClasses: "from-indigo-500 to-violet-500", textColor: "text-indigo-700", backSideText: "Vállalatra szabott belső szabályzatok kidolgozása a jogi megfelelőség és a hatékony működés érdekében.", price: "Egyedi árajánlat" },
-  { id: 8, title: "Környezetvédelem", description: "Környezetvédelmi tanácsadás, hulladékgazdálkodási tervek készítése.", icon: GlobeAltIcon, colorName: "lime", gradientClasses: "from-lime-400 to-green-500", textColor: "text-lime-700", backSideText: "Környezetvédelmi megbízotti feladatok ellátása, hatósági ügyintézés, környezetvédelmi auditok.", price: "Egyedi árajánlat" },
 ];
 
 const cardListVariants = {
@@ -146,7 +130,7 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     >
       <motion.div
         className="relative w-full h-full"
-        style={{ 
+        style={{
             transformStyle: 'preserve-3d',
             rotateX,
             rotateY,
@@ -159,7 +143,7 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
           className="absolute w-full h-full bg-white rounded-2xl shadow-xl p-6 sm:p-8 pt-16 text-center flex flex-col border border-slate-100"
           style={{ backfaceVisibility: 'hidden' }}
         >
-          <motion.div 
+          <motion.div
             className={`absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5 rounded-full inline-flex items-center justify-center bg-gradient-to-br ${service.gradientClasses} shadow-lg ring-4 ring-white transition-all duration-300 ease-out group-hover:ring-slate-100`}
             animate={{ scale: [1, 1.04, 1], boxShadow: ["0px 4px 12px rgba(0,0,0,0.12)", "0px 7px 18px rgba(0,0,0,0.18)", "0px 4px 12px rgba(0,0,0,0.12)"]}}
             transition={{ scale: { duration: 2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }, boxShadow: { duration: 2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" } }}
@@ -170,7 +154,7 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
           <p className="text-gray-600 text-sm leading-relaxed flex-grow mb-4 line-clamp-3 sm:line-clamp-4">
             {service.description}
           </p>
-          <motion.div 
+          <motion.div
             className="mt-auto text-xs text-gray-500 group-hover:text-gray-800 transition-colors flex items-center justify-center group-hover:font-medium"
             animate={{ opacity: isFlipped ? 0 : 1 }}
             transition={{duration: 0.2}}
@@ -222,7 +206,7 @@ const ServiceHighlightCards: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* --- MÓDOSÍTOTT CÍMSOR KONTÉNER --- */}
           <div className="relative text-center mb-16 lg:mb-20">
-            <RedShieldIcon className="absolute -top-12 right-4 lg:right-20 w-32 h-32 opacity-20 -z-0 hidden lg:block" />
+            <FireFlameIcon className="absolute -top-12 right-4 lg:right-20 w-32 h-32 opacity-20 -z-0 hidden lg:block" />
             <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
               Főbb <span className={accentColor.text}>Szolgáltatásaink</span>
             </h2>
@@ -248,9 +232,9 @@ const ServiceHighlightCards: React.FC = () => {
               type="button"
               className={`
                 ${accentColor.bg} text-white
-                font-bold py-4 px-10 rounded-xl text-lg sm:text-xl 
+                font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
                 shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
-                transition-all duration-300 ease-in-out 
+                transition-all duration-300 ease-in-out
                 focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
               `}
             >

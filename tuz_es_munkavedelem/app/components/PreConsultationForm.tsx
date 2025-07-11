@@ -1,8 +1,7 @@
-// components/sections/PreConsultationFormFinal_V3.tsx
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, Variants, useInView } from 'framer-motion'; // Hozzáadtam a useInView-t
+import { motion, AnimatePresence, Variants, useInView } from 'framer-motion';
 import {
   CalendarDaysIcon,
   CheckIcon,
@@ -10,66 +9,119 @@ import {
   HomeModernIcon,
   BuildingStorefrontIcon,
   ShoppingCartIcon,
+  LightBulbIcon,
+  BriefcaseIcon,
+  ClockIcon, // ClockIcon helyett ez volt a folyamatábránál a "Hány hónap múlva nyitok?" kérdésnél
+  TruckIcon, // Új ikon az információs kimenethez
 } from '@heroicons/react/24/outline';
 
-// --- TÍPUSDEFINÍCIÓK (Változatlan) ---
+// --- TÍPUSDEFINÍCIÓK ---
 type EstablishmentPhaseValue = 'HAS_COMPANY' | 'OPENING_SOON' | 'NO_COMPANY';
+type OpeningSoonTimelineValue = 'LESS_THAN_1_MONTH' | '1_2_MONTHS' | '3_5_MONTHS' | 'MORE_THAN_5_MONTHS'; // Neveztem át OpeningSoonTimelineValue-ra
+type NoCompanyInterestValue = 'BUSINESS_IDEA_EXISTS' | 'NO_BUSINESS_IDEA'; // Neveztem át NoCompanyInterestValue-ra
+
 interface AnswerSummary {
-  questionId: keyof AnswersState;
+  questionId: string;
   questionText: string;
-  answerValue: boolean | EstablishmentPhaseValue;
+  answerValue: boolean | EstablishmentPhaseValue | OpeningSoonTimelineValue | NoCompanyInterestValue | string;
   answerText: string;
 }
+
 interface AnswersState {
   establishmentPhase: EstablishmentPhaseValue | null;
   hasEmployees: boolean | null;
   hasPremise: boolean | null;
   dealsWithFood: boolean | null;
+  openingSoonTimeline: OpeningSoonTimelineValue | null;
+  noCompanyInterest: NoCompanyInterestValue | null;
+  [key: string]: any;
 }
+
 const initialAnswersState: AnswersState = {
   establishmentPhase: null,
   hasEmployees: null,
   hasPremise: null,
   dealsWithFood: null,
+  openingSoonTimeline: null,
+  noCompanyInterest: null,
 };
+
 interface QuestionOption {
-  value: EstablishmentPhaseValue;
+  value: EstablishmentPhaseValue | OpeningSoonTimelineValue | NoCompanyInterestValue | boolean;
   text: string;
 }
+
 type HeroIconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
 interface BaseQuestionConfig {
-  id: keyof AnswersState;
+  id: string;
   text: string;
   icon: HeroIconType;
   detail: string;
+  isMultiChoice: boolean;
+  options?: QuestionOption[];
 }
-interface MultiChoiceQuestionConfig extends BaseQuestionConfig {
-  isMultiChoice: true;
-  options: QuestionOption[];
-}
-interface BooleanQuestionConfig extends BaseQuestionConfig {
-  isMultiChoice: false;
-}
-type QuestionConfig = MultiChoiceQuestionConfig | BooleanQuestionConfig;
-const initialQuestionConfig: MultiChoiceQuestionConfig = {
-  id: 'establishmentPhase',
-  text: "Kérjük, válassza ki vállalkozása jelenlegi helyzetét:",
-  icon: BuildingStorefrontIcon,
-  detail: "Ez segít meghatározni az Önre vonatkozó tűz- és munkavédelmi teendőket.",
-  options: [
-    { value: 'HAS_COMPANY', text: 'Működő cégem van' },
-    { value: 'OPENING_SOON', text: 'Hamarosan nyitok / Cégalapítás alatt' },
-    { value: 'NO_COMPANY', text: 'Nincs cégem / Magánszemélyként érdeklődöm' },
-  ],
-  isMultiChoice: true,
-};
-const companySpecificQuestionsConfig: BooleanQuestionConfig[] = [
-  { id: 'hasEmployees', text: "Vannak alkalmazottai?", icon: UsersIcon, detail: "A létszám fontos tényező a munkavédelmi előírások szempontjából.", isMultiChoice: false },
-  { id: 'hasPremise', text: "Van fizikai telephelye, irodája vagy üzlete?", icon: HomeModernIcon, detail: "A telephely megléte alapvető a helyszíni felmérésekhez.", isMultiChoice: false },
-  { id: 'dealsWithFood', text: "Foglalkozik élelmiszerrel?", icon: ShoppingCartIcon, detail: "Az élelmiszerkezelés speciális előírásokat (pl. HACCP) von maga után.", isMultiChoice: false },
-];
-// --- TÍPUSDEFINÍCIÓK VÉGE ---
 
+// A kérdés konfigurációk
+const allQuestionsConfig: { [key: string]: BaseQuestionConfig } = {
+    establishmentPhase: {
+      id: 'establishmentPhase',
+      text: "Válassza ki vállalkozása jelenlegi helyzetét:",
+      icon: BuildingStorefrontIcon,
+      detail: "Ez segít meghatározni az Önre vonatkozó teendőket.",
+      options: [
+        { value: 'HAS_COMPANY', text: 'Működő cégem van' },
+        { value: 'OPENING_SOON', text: 'Hamarosan nyitok' },
+        { value: 'NO_COMPANY', text: 'Nincs cégem' },
+      ],
+      isMultiChoice: true,
+    },
+    hasEmployees: {
+      id: 'hasEmployees',
+      text: "Van munkavállalója?",
+      icon: UsersIcon,
+      detail: "A létszám fontos a munkavédelmi előírások szempontjából.",
+      isMultiChoice: false,
+    },
+    hasPremise: {
+      id: 'hasPremise',
+      text: "Van telephelye?",
+      icon: HomeModernIcon,
+      detail: "A telephely megléte alapvető a helyszíni felmérésekhez.",
+      isMultiChoice: false,
+    },
+    dealsWithFood: {
+      id: 'dealsWithFood',
+      text: "Foglalkozik élelmiszerrel?",
+      icon: ShoppingCartIcon,
+      detail: "Az élelmiszerkezelés speciális előírásokat (pl. HACCP) von maga után.",
+      isMultiChoice: false,
+    },
+    openingSoonTimeline: {
+        id: 'openingSoonTimeline',
+        text: "Hány hónap múlva nyitok?", // Folyamatábra alapján átírva
+        icon: ClockIcon, // ClockIcon használata a folyamatábra alapján
+        detail: "Ez segít nekünk felmérni a szükséges teendőket a nyitáshoz.",
+        options: [
+            { value: 'LESS_THAN_1_MONTH', text: 'Kevésbé mint 1 hónap' },
+            { value: '1_2_MONTHS', text: '1-2 hónap' },
+            { value: '3_5_MONTHS', text: '3-5 hónap' },
+            { value: 'MORE_THAN_5_MONTHS', text: 'Több mint 5 hónap' },
+        ],
+        isMultiChoice: true,
+    },
+    noCompanyInterest: {
+        id: 'noCompanyInterest',
+        text: "Milyen vállalkozásról van szó?", // Folyamatábra alapján átírva
+        icon: LightBulbIcon,
+        detail: "Ez segít nekünk, hogy a legrelevánsabb információkat nyújtsuk.",
+        options: [
+            { value: 'BUSINESS_IDEA_EXISTS', text: 'Értem, és milyen vállalkozásról van szó?' },
+            { value: 'NO_BUSINESS_IDEA', text: 'Nincs üzleti ötletem' },
+        ],
+        isMultiChoice: true,
+    },
+};
 
 // --- PRÉMIUM, DINAMIKUS IKONOK ---
 const AnimatedDecorativeArrow = ({ className }: { className?: string }) => {
@@ -165,18 +217,25 @@ const FloatingShapes = () => (
 const PreConsultationFormFinal: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [answers, setAnswers] = useState<AnswersState>(initialAnswersState);
-    const [showBookingOption, setShowBookingOption] = useState(false);
+    const [showFinalScreen, setShowFinalScreen] = useState(false);
+    const [finalMessage, setFinalMessage] = useState<{ type: 'booking' | 'info' | 'generic', text: string, buttonText?: string, buttonAction?: () => void } | null>(null);
     const [summaryAnswers, setSummaryAnswers] = useState<AnswerSummary[]>([]);
     const [animationDirection, setAnimationDirection] = useState(1);
-    const [questionFlow, setQuestionFlow] = useState<QuestionConfig[]>([initialQuestionConfig]);
-    
-    // Hozzáadva: ref és useInView a komponens láthatóságának figyeléséhez
-    const sectionRef = useRef<HTMLElement>(null);
-    const isInView = useInView(sectionRef, { once: true, amount: 0.2 }); // Amikor a szekció 20%-a láthatóvá válik
+    // Kezdeti kérdésfolyam: csak az első kérdés
+    const [questionFlow, setQuestionFlow] = useState<BaseQuestionConfig[]>([allQuestionsConfig.establishmentPhase]);
 
-    const handleAnswer = (questionId: keyof AnswersState, value: boolean | EstablishmentPhaseValue, questionText: string, answerText: string) => {
+    const sectionRef = useRef<HTMLElement>(null);
+    const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+    const handleAnswer = (
+      questionId: string,
+      value: boolean | EstablishmentPhaseValue | OpeningSoonTimelineValue | NoCompanyInterestValue | string,
+      questionText: string,
+      answerText: string
+    ) => {
         setAnimationDirection(1);
         setAnswers(prev => ({ ...prev, [questionId]: value as any }));
+
         setSummaryAnswers(prev => {
             const existing = prev.find(a => a.questionId === questionId);
             if (existing) {
@@ -185,41 +244,101 @@ const PreConsultationFormFinal: React.FC = () => {
             return [...prev, { questionId, questionText, answerValue: value, answerText }];
         });
 
-        const isFirstQuestion = questionId === 'establishmentPhase';
-        const leadsToMoreQuestions = isFirstQuestion && value === 'HAS_COMPANY';
+        // Kicsit rövidebb timeout, hogy gyorsabban haladjon a flow
+        setTimeout(() => {
+            handleNextQuestionLogic(questionId, value);
+        }, 300);
+    };
 
-        if (isFirstQuestion) {
-            const newFlow = leadsToMoreQuestions
-                ? [initialQuestionConfig, ...companySpecificQuestionsConfig]
-                : [initialQuestionConfig];
-            setQuestionFlow(newFlow);
-            setTimeout(() => {
-                if (leadsToMoreQuestions) {
-                    setCurrentStep(currentStep + 1);
-                } else {
-                    setShowBookingOption(true);
-                }
-            }, 350);
-        } else {
-            setTimeout(() => {
-                if (currentStep < questionFlow.length - 1) {
-                    setCurrentStep(currentStep + 1);
-                } else {
-                    setShowBookingOption(true);
-                }
-            }, 350);
+    const handleNextQuestionLogic = (questionId: string, value: any) => {
+        let newFinalMessage: typeof finalMessage = null;
+        let nextQuestions: BaseQuestionConfig[] = [];
+        let shouldAdvanceStep = true; // Jelzi, hogy lépjünk-e a következő kérdésre a folyamban
+
+        if (questionId === 'establishmentPhase') {
+            if (value === 'HAS_COMPANY') {
+                nextQuestions = [
+                    allQuestionsConfig.hasEmployees,
+                    allQuestionsConfig.hasPremise,
+                    allQuestionsConfig.dealsWithFood
+                ];
+                setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]);
+                // Mivel itt több kérdés következik, lépjünk a következőre
+                setCurrentStep(currentStep + 1);
+                shouldAdvanceStep = false; // Ne ugorjon előre a generikus lépésben
+            } else if (value === 'OPENING_SOON') {
+                nextQuestions = [allQuestionsConfig.openingSoonTimeline];
+                setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]);
+                setCurrentStep(currentStep + 1);
+                shouldAdvanceStep = false;
+            } else if (value === 'NO_COMPANY') {
+                nextQuestions = [allQuestionsConfig.noCompanyInterest];
+                setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]);
+                setCurrentStep(currentStep + 1);
+                shouldAdvanceStep = false;
+            }
+        } else if (questionId === 'openingSoonTimeline') {
+            // A folyamatábrán a "Hány hónap múlva nyitok?" kérdés után azonnal a "Foglalj időpontot" jön
+            newFinalMessage = {
+                type: 'booking',
+                text: 'Egy szakértő tud segíteni ebben, ha már van kész cég, és vannak konkrétumok. Kapsz tőlünk egy átlátszó ismertető anyagot, hogy ne kelljen tovább bogarásznod! Keress minket egy email, vagy telefonszám!',
+                buttonText: 'Ingyenes Konzultáció Foglalása',
+                buttonAction: handleBookConsultation,
+            };
+        } else if (questionId === 'noCompanyInterest') {
+            if (value === 'BUSINESS_IDEA_EXISTS') {
+                newFinalMessage = {
+                    type: 'booking',
+                    text: 'Értem, és milyen vállalkozásról van szó? (Ez alapján tudunk tovább segíteni). Keress minket egy email, vagy telefonszám!',
+                    buttonText: 'Ingyenes Konzultáció Foglalása',
+                    buttonAction: handleBookConsultation,
+                };
+            } else if (value === 'NO_BUSINESS_IDEA') {
+                newFinalMessage = {
+                    type: 'info',
+                    text: 'Mivel nincs vállalkozásod, így konkrétumokkal én sem tudok szolgálni, viszont ha szeretnéd küldök neked egy általános tájékoztatót email-ben, illetve egy elemezhető, amin keresztül lehetsz okosabb! Mi a célja?',
+                    buttonText: 'Kérjen tájékoztatót emailben',
+                    buttonAction: () => alert('Tájékoztató igénylése emailben (Minta akció)'),
+                };
+            }
+        }
+
+        // Speciális eset: Ha a "Működő cégem van" ág végére értünk (azaz a dealsWithFood kérdésre válaszoltunk)
+        if (questionId === 'dealsWithFood') {
+            newFinalMessage = {
+                type: 'booking',
+                text: 'Köszönjük a válaszokat! Az Ön esetében személyes konzultáció szükséges a további lépésekhez.',
+                buttonText: 'Ingyenes Konzultáció Foglalása',
+                buttonAction: handleBookConsultation,
+            };
+        }
+
+
+        if (newFinalMessage) {
+            setFinalMessage(newFinalMessage);
+            setShowFinalScreen(true);
+        } else if (shouldAdvanceStep && currentStep < questionFlow.length - 1) {
+            // Csak akkor lépünk előre, ha az aktuális kérdés nem vezetett új ágra VAGY nem az utolsó kérdés volt az ágban, ami kimenetre vezet
+            setCurrentStep(currentStep + 1);
+        } else if (questionFlow.length > 0 && !newFinalMessage) {
+            // Ez a fallback, ha nem találtunk specifikus kimenetet, de minden kérdésre válaszolt
+             // Itt lehet egy generic booking, ha nem történt explicit átirányítás
+             // Például, ha a HAS_COMPANY ág végén van, de még nincs definiálva a dealsWithFood utáni kimenet
+             // Ez már fentebb kezelve lett a 'dealsWithFood' ellenőrzésnél.
         }
     };
 
+
     const resetForm = () => {
         setAnimationDirection(-1);
-        setShowBookingOption(false);
+        setShowFinalScreen(false);
+        setFinalMessage(null);
         // Adjunk egy kis időt a kilépő animációnak, mielőtt resetelünk
         setTimeout(() => {
             setCurrentStep(0);
             setAnswers(initialAnswersState);
             setSummaryAnswers([]);
-            setQuestionFlow([initialQuestionConfig]);
+            setQuestionFlow([allQuestionsConfig.establishmentPhase]); // Vissza az első kérdéshez
         }, 400);
     };
 
@@ -228,15 +347,19 @@ const PreConsultationFormFinal: React.FC = () => {
     };
 
     const currentQuestion = questionFlow[currentStep];
-    const progress = questionFlow.length > 0 && currentQuestion ? ((currentStep + (showBookingOption ? 1 : 0)) / questionFlow.length) * 100 : 0;
-    
+    // A progressz bar számítása kicsit trükkösebb a dinamikus ágak miatt.
+    // Legjobb, ha a már megválaszolt kérdések számát használjuk a teljes questionFlow hossza arányában,
+    // vagy ha van explicit végpont, akkor azt is beleszámoljuk.
+    const progress = currentQuestion ? ((summaryAnswers.length) / (questionFlow.length)) * 100 : 0;
+
+
     // --- ANIMÁCIÓS VARIÁNSOK ---
     const questionWrapperVariants: Variants = {
         enter: (direction: number) => ({ x: direction > 0 ? 80 : -80, opacity: 0 }),
         center: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.21, 1.02, 0.73, 1] } },
         exit: (direction: number) => ({ x: direction < 0 ? 80 : -80, opacity: 0, transition: { duration: 0.4, ease: [0.83, 0, 0.17, 1] } })
     };
-    
+
     const contentStaggerVariants: Variants = {
         center: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } },
     };
@@ -250,7 +373,7 @@ const PreConsultationFormFinal: React.FC = () => {
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.5 } }
     };
-    
+
     const summaryItemVariants: Variants = {
         hidden: { x: -20, opacity: 0 },
         visible: { x: 0, opacity: 1, transition: { ease: 'easeOut', duration: 0.5 } }
@@ -259,20 +382,20 @@ const PreConsultationFormFinal: React.FC = () => {
     // Fő szekció beúszó animációs variánsok
     const sectionEnterVariants: Variants = {
         hidden: { opacity: 0, y: 100, scale: 0.95 },
-        visible: { 
-            opacity: 1, 
-            y: 0, 
-            scale: 1, 
-            transition: { 
-                duration: 0.9, 
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: {
+                duration: 0.9,
                 ease: [0.22, 1, 0.36, 1],
-                delay: 0.2 // Kis késleltetés, hogy ne azonnal jelenjen meg görgetéskor
-            } 
+                delay: 0.2
+            }
         },
     };
 
 
-    if (!currentQuestion && !showBookingOption) {
+    if (!currentQuestion && !showFinalScreen) {
         return (
             <section className="py-24 sm:py-32 bg-slate-50 font-['Poppins',_sans-serif] relative">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -282,7 +405,7 @@ const PreConsultationFormFinal: React.FC = () => {
             </section>
         );
     }
-    
+
     return (
         <>
             <style>{`
@@ -298,51 +421,53 @@ const PreConsultationFormFinal: React.FC = () => {
                 background: linear-gradient(to right, #06b6d4, #2dd4bf);
               }
             `}</style>
-            <motion.section 
-                ref={sectionRef} 
+            <motion.section
+                ref={sectionRef}
                 className="relative py-24 sm:py-32 bg-slate-50 font-['Poppins',_sans-serif] overflow-hidden"
-                variants={sectionEnterVariants} // Alkalmazom a beúszó animációt
+                variants={sectionEnterVariants}
                 initial="hidden"
-                animate={isInView ? "visible" : "hidden"} // Csak akkor animáljon, ha láthatóvá válik
-                viewport={{ once: true, amount: 0.2 }} // Módosítottam a viewport beállítást
+                animate={isInView ? "visible" : "hidden"}
+                viewport={{ once: true, amount: 0.2 }}
             >
                 <FloatingShapes />
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-center items-center gap-4 lg:gap-12">
-                        <motion.div 
-                            className="flex-1 hidden xl:flex justify-end items-center self-start mt-10"
+                        <motion.div
+                            className="flex-1 hidden xl:flex justify-end items-center self-start"
                             initial={{ opacity: 0, x: -100 }}
                             animate={isInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
                         >
-                             <AnimatedDecorativeArrow className="w-40 h-40 text-blue-500 transform -scale-x-100" />
+                             <AnimatedDecorativeArrow className="w-24 h-24 text-blue-500 transform -scale-x-100" />
                         </motion.div>
-                        
+
                         <div className="w-full max-w-lg shrink-0">
-                            <motion.div 
+                            <motion.div
                                 className="w-full bg-white/60 p-6 sm:p-8 rounded-2xl shadow-2xl shadow-cyan-500/5 ring-1 ring-black/5 backdrop-blur-xl"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                                 transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
                             >
                                 <AnimatePresence initial={false} mode="wait">
-                                    {!showBookingOption ? (
+                                    {!showFinalScreen ? (
                                         <motion.div key="questions">
                                             <div className="mb-8">
                                                 <div className="flex justify-between items-end mb-1.5 text-xs font-medium text-slate-500">
-                                                    <span>{currentStep + 1}. Kérdés / {questionFlow.length}</span>
+                                                    {/* Kicsit pontosabb progressz jelzés */}
+                                                    <span>{summaryAnswers.length + 1}. Kérdés / {questionFlow.length}</span>
                                                 </div>
                                                 <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
                                                     <motion.div
                                                         className="h-full rounded-full gradient-bg"
+                                                        // A progressz már a válaszok számától függ
                                                         initial={{ width: 0 }}
-                                                        animate={{ width: `${progress}%` }}
+                                                        animate={{ width: `${(summaryAnswers.length / questionFlow.length) * 100}%` }}
                                                         transition={{ duration: 0.6, ease: "easeOut" }}
                                                     />
                                                 </div>
                                             </div>
                                             <AnimatePresence initial={false} custom={animationDirection} mode="wait">
-                                                <motion.div key={currentStep} custom={animationDirection} variants={questionWrapperVariants} initial="enter" animate="center" exit="exit" className="text-center">
+                                                <motion.div key={currentQuestion.id} custom={animationDirection} variants={questionWrapperVariants} initial="enter" animate="center" exit="exit" className="text-center">
                                                     <motion.div variants={contentStaggerVariants}>
                                                         <motion.div variants={contentItemVariants}>
                                                             <currentQuestion.icon className="w-14 h-14 gradient-text mx-auto mb-5" />
@@ -353,8 +478,8 @@ const PreConsultationFormFinal: React.FC = () => {
 
                                                     {currentQuestion.isMultiChoice ? (
                                                         <div className="grid grid-cols-1 gap-3">
-                                                            {currentQuestion.options.map((opt, i) => (
-                                                                <motion.button key={opt.value} onClick={() => handleAnswer(currentQuestion.id, opt.value, currentQuestion.text, opt.text)}
+                                                            {currentQuestion.options!.map((opt, i) => (
+                                                                <motion.button key={String(opt.value)} onClick={() => handleAnswer(currentQuestion.id, opt.value, currentQuestion.text, opt.text)}
                                                                     className={`p-4 rounded-lg font-semibold border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-white/80
                                                                         ${answers[currentQuestion.id] === opt.value
                                                                             ? 'gradient-bg text-white border-transparent shadow-lg shadow-cyan-500/20'
@@ -390,23 +515,32 @@ const PreConsultationFormFinal: React.FC = () => {
                                     ) : (
                                         <motion.div key="summary" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}} className="text-center">
                                             <AnimatedCheckIcon className="w-20 h-20 gradient-text mx-auto mb-4" />
-                                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">Köszönjük a válaszait!</h2>
-                                            <p className="text-slate-600 mb-6 text-sm sm:text-base max-w-md mx-auto">Ez alapján jobban felkészülhetünk a személyes konzultációra.</p>
-                                            <motion.div variants={summaryListVariants} initial="hidden" animate="visible" className="text-left bg-slate-50/70 p-4 rounded-lg mb-8 max-w-sm mx-auto space-y-2 border border-slate-200/80 shadow-inner">
-                                                {summaryAnswers.map(ans => (
-                                                    <motion.div variants={summaryItemVariants} key={ans.questionId} className="flex justify-between items-center text-sm">
-                                                        <span className="text-slate-600 truncate pr-2" title={ans.questionText}>{ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}</span>
-                                                        <span className={`font-bold px-2 py-0.5 rounded-md text-xs ${typeof ans.answerValue === 'boolean' ? (ans.answerValue ? `bg-cyan-100 text-cyan-800` : 'bg-red-100 text-red-800') : `bg-cyan-100 text-cyan-800`}`}>{ans.answerText}</span>
+                                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">
+                                                {finalMessage?.type === 'booking' ? 'Köszönjük a válaszait!' : 'Tájékoztatás'}
+                                            </h2>
+                                            <p className="text-slate-600 mb-6 text-sm sm:text-base max-w-md mx-auto">{finalMessage?.text}</p>
+                                            {finalMessage?.type === 'booking' && (
+                                                <>
+                                                    <motion.div variants={summaryListVariants} initial="hidden" animate="visible" className="text-left bg-slate-50/70 p-4 rounded-lg mb-8 max-w-sm mx-auto space-y-2 border border-slate-200/80 shadow-inner">
+                                                        {summaryAnswers.map(ans => (
+                                                            <motion.div variants={summaryItemVariants} key={ans.questionId} className="flex justify-between items-center text-sm">
+                                                                <span className="text-slate-600 truncate pr-2" title={ans.questionText}>{ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}</span>
+                                                                <span className={`font-bold px-2 py-0.5 rounded-md text-xs ${typeof ans.answerValue === 'boolean' ? (ans.answerValue ? `bg-cyan-100 text-cyan-800` : 'bg-red-100 text-red-800') : `bg-cyan-100 text-cyan-800`}`}>{ans.answerText}</span>
+                                                            </motion.div>
+                                                        ))}
                                                     </motion.div>
-                                                ))}
-                                            </motion.div>
-                                            <p className="text-slate-600 mb-8 text-sm sm:text-base max-w-md mx-auto">Készen áll a következő lépésre? Foglaljon egy ingyenes, kötelezettségmentes konzultációs időpontot.</p>
-                                            
-                                            <motion.button onClick={handleBookConsultation} whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 20px -5px rgb(6 182 212 / 0.4)' }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto inline-flex items-center justify-center gradient-bg text-white font-bold py-4 px-10 rounded-lg text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-50">
-                                                <CalendarDaysIcon className="w-5 h-5 mr-2.5" />
-                                                Ingyenes Konzultáció Foglalása
-                                            </motion.button>
-                                            
+                                                    <motion.button onClick={finalMessage?.buttonAction} whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 20px -5px rgb(6 182 212 / 0.4)' }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto inline-flex items-center justify-center gradient-bg text-white font-bold py-4 px-10 rounded-lg text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-50">
+                                                        <CalendarDaysIcon className="w-5 h-5 mr-2.5" />
+                                                        {finalMessage?.buttonText}
+                                                    </motion.button>
+                                                </>
+                                            )}
+                                            {finalMessage?.type === 'info' && (
+                                                <motion.button onClick={finalMessage?.buttonAction} whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 20px -5px rgb(6 182 212 / 0.4)' }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto inline-flex items-center justify-center gradient-bg text-white font-bold py-4 px-10 rounded-lg text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-50">
+                                                    <TruckIcon className="w-5 h-5 mr-2.5" />
+                                                    {finalMessage?.buttonText}
+                                                </motion.button>
+                                            )}
                                             <button onClick={resetForm} className="mt-6 block w-full text-sm font-semibold text-cyan-600 hover:text-cyan-800 hover:underline transition-colors">Újrakezdés</button>
                                         </motion.div>
                                     )}
@@ -414,13 +548,13 @@ const PreConsultationFormFinal: React.FC = () => {
                             </motion.div>
                         </div>
 
-                        <motion.div 
-                            className="flex-1 hidden xl:flex justify-start items-center self-end mb-10"
+                        <motion.div
+                            className="flex-1 hidden xl:flex justify-start items-center self-end"
                             initial={{ opacity: 0, x: 100 }}
                             animate={isInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
                         >
-                           <AnimatedDecorativeArrow className="w-32 h-32 text-blue-500" />
+                           <AnimatedDecorativeArrow className="w-20 h-20 text-blue-500" />
                         </motion.div>
                     </div>
                 </div>

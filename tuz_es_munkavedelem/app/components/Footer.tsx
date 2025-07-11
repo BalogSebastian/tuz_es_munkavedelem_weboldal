@@ -1,5 +1,5 @@
 // components/Footer.tsx
-'use client';
+'use client'; // Marad a 'use client' direktíva, mert Canvas animációt tartalmaz!
 
 import React, { useRef, useEffect } from 'react';
 import { motion, Variants, useScroll, useTransform, useMotionValue } from 'framer-motion';
@@ -8,53 +8,53 @@ import {
   EnvelopeIcon,
   MapPinIcon,
   BuildingOfficeIcon,
-  ShieldCheckIcon, // Használt a lebegő ikonhoz
+  ShieldCheckIcon,
   BookOpenIcon,
-  ScaleIcon,
-  SparklesIcon, // Hozzáadva az extra csillogáshoz
-} from '@heroicons/react/24/outline'; // Outline ikonok a tisztább megjelenésért
+  ScaleIcon, // Ezt az ikont nem használtad, de itt hagytam, ha valaha mégis kellene
+  SparklesIcon,
+} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 // --- SZÍNPALETTA ÉS KONSTANSOK ---
 const accentColor = {
-  base: '#03BABE', // Eredeti cián
+  base: '#03BABE',
   baseRgb: '3, 186, 190',
   bg: 'bg-[#03BABE]',
   hoverBg: 'hover:bg-cyan-600',
   text: 'text-[#03BABE]',
   lightText: 'text-cyan-200',
-  darkBg: 'bg-slate-900', // Elsődleges sötét háttér
-  gradient: 'bg-gradient-to-r from-cyan-400 to-teal-500', // CTA gomb
-  gridLines: 'rgba(3, 186, 190, 0.08)', // Finomabb rácsvonalak
-  contactHoverBg: 'bg-white/5', // Finom hover háttér a kapcsolati sorokhoz
+  darkBg: 'bg-slate-900',
+  gradient: 'bg-gradient-to-r from-cyan-400 to-teal-500',
+  gridLines: 'rgba(3, 186, 190, 0.08)',
+  contactHoverBg: 'bg-white/5',
 };
 
 // --- GLOBÁLIS ANIMÁCIÓS VARIÁNSOK ---
 const footerVariants: Variants = {
-  hidden: { opacity: 0, y: 80 }, // Kicsit mélyebbről indul
+  hidden: { opacity: 0, y: 80 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.0, // Lassabb, súlyosabb beúszás
-      ease: [0.25, 0.85, 0.45, 1], // Egyedi easing a selymesebb mozgásért
-      delayChildren: 0.4, // Gyerekek kicsit később indulnak
-      staggerChildren: 0.15, // Kifejezettebb stagger hatás
+      duration: 1.0,
+      ease: [0.25, 0.85, 0.45, 1],
+      delayChildren: 0.4,
+      staggerChildren: 0.15,
     },
   },
 };
 
-const sectionItemVariants: Variants = { // A fő szekcióblokkok animációja
+const sectionItemVariants: Variants = {
   hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }, // Simább egyedi item animáció
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
-const linkItemVariants: Variants = { // A linklisták elemeinek animációja
+const linkItemVariants: Variants = {
     hidden: { opacity: 0, x: -20 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: 'easeOut' } },
 };
@@ -71,13 +71,12 @@ const buttonGlowStyles = {
 };
 
 const buttonGlowTransition = {
-    duration: 4, // Lassabb pulzálás
+    duration: 4,
     repeat: Infinity,
     ease: "easeInOut"
 };
 
 // --- HÁTTÉR ANIMÁCIÓ (PONT ÉS VONAL) ---
-// Ezt a részt a HeaderHero-ból inspiráltuk, de optimalizálva és leegyszerűsítve egy footerhez.
 class Particle {
     x: number; y: number; z: number;
     vx: number; vy: number; vz: number;
@@ -102,7 +101,6 @@ class Particle {
         // Egér taszító hatás
         const dxMouse = this.x - mouseX;
         const dyMouse = this.y - mouseY;
-        // JAVÍTÁS: dyMike helyett dyMouse
         const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
         if (distMouse < repelRadius) {
             const force = (repelRadius - distMouse) / repelRadius;
@@ -120,6 +118,9 @@ class Particle {
     }
 
     draw(ctx: CanvasRenderingContext2D, fov: number) {
+        // Ellenőrizze, hogy a ctx létezik-e, mielőtt használná
+        if (!ctx) return; 
+
         const perspective = fov / (fov + this.z);
         const x = this.x * perspective;
         const y = this.y * perspective;
@@ -132,27 +133,30 @@ class Particle {
     }
 }
 
-// Módosítottam a paraméterek típusát, hogy elfogadja a null-t
+// JAVÍTVA: A hook paraméterei elfogadják a null-t.
 const useFooterBackgroundAnimation = (canvasRef: React.RefObject<HTMLCanvasElement | null>, footerRef: React.RefObject<HTMLElement | null>) => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const footerElement = footerRef.current;
-        if (!canvas || !footerElement) return; // Korai kilépés, ha a ref-ek null-ok
+        if (!canvas || !footerElement) return;
 
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        // JAVÍTVA: Eltávolítva a willReadFrequently: true, ami lassíthatja. alpha: true maradt.
+        const ctx = canvas.getContext('2d', { alpha: true });
         if (!ctx) return;
 
         let animationFrameId: number;
         const particles: Particle[] = [];
-        const fov = 150; // Látómező a perspektívához
-        const maxDepth = 200; // Maximális mélység a részecskéknek
-        const particleCount = 40; // Kevesebb részecske a finomságért
-        const repelRadius = 100; // Egér taszítási sugár
+        const fov = 150;
+        const maxDepth = 200;
+        // JAVÍTVA: Csökkentett részecskeszám a jobb teljesítményért
+        const particleCount = 30; // Eredetileg 40
+        const repelRadius = 100;
 
-        let mouseX = 0; // Kezdeti egérpozíció inicializálva 0-val
+        let mouseX = 0;
         let mouseY = 0;
 
         const setCanvasSize = () => {
+            if (!footerElement) return; // Második ellenőrzés a függvényen belül
             const dpr = window.devicePixelRatio || 1;
             canvas.width = footerElement.clientWidth * dpr;
             canvas.height = footerElement.clientHeight * dpr;
@@ -162,7 +166,7 @@ const useFooterBackgroundAnimation = (canvasRef: React.RefObject<HTMLCanvasEleme
         };
 
         const init = () => {
-            particles.length = 0; // Törli a meglévő részecskéket
+            particles.length = 0;
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle(canvas.width, canvas.height, maxDepth));
             }
@@ -179,8 +183,8 @@ const useFooterBackgroundAnimation = (canvasRef: React.RefObject<HTMLCanvasEleme
                     const p2 = particles[j];
                     const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 
-                    if (dist < 100) { // Rövidebb kapcsolódási távolság
-                        const opacity = Math.max(0, 0.5 - dist / 200); // Finomabb vonalak
+                    if (dist < 100) {
+                        const opacity = Math.max(0, 0.5 - dist / 200);
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
                         ctx.strokeStyle = `rgba(${accentColor.baseRgb}, ${opacity * Math.min(p1.baseAlpha, p2.baseAlpha)})`;
@@ -192,12 +196,15 @@ const useFooterBackgroundAnimation = (canvasRef: React.RefObject<HTMLCanvasEleme
         };
 
         const handleMouseMove = (e: MouseEvent) => {
+            if (!footerElement) return; // Fontos ellenőrzés itt is
             const rect = footerElement.getBoundingClientRect();
             mouseX = e.clientX - rect.left;
             mouseY = e.clientY - rect.top;
         };
 
         const handleResize = () => {
+            // Hozzáadtam ezt a null ellenőrzést, mielőtt a setCanvasSize-t hívjuk resize esetén is.
+            if (!canvasRef.current || !footerRef.current) return; 
             setCanvasSize();
             init();
         };
@@ -208,7 +215,6 @@ const useFooterBackgroundAnimation = (canvasRef: React.RefObject<HTMLCanvasEleme
         const animateCanvas = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Görgetési faktor számítása a footer pozíciójához viszonyítva
             const scrollY = window.scrollY;
             const footerTop = footerElement.offsetTop;
             const footerHeight = footerElement.clientHeight;
@@ -217,12 +223,12 @@ const useFooterBackgroundAnimation = (canvasRef: React.RefObject<HTMLCanvasEleme
             let scrollFactor = 0;
             if (scrollY + viewportHeight > footerTop && scrollY < footerTop + footerHeight) {
                 const scrollProgress = (scrollY + viewportHeight - footerTop) / (viewportHeight + footerHeight);
-                scrollFactor = scrollProgress * 0.05; // Nagyon kicsi faktor
+                scrollFactor = scrollProgress * 0.05;
             }
 
             particles.forEach(p => p.update(scrollFactor, mouseX, mouseY, repelRadius, canvas.width, canvas.height, maxDepth));
             connect();
-            particles.forEach(p => p.draw(ctx, fov)); // Kirajzolás a vonalak után, hogy felül legyenek
+            particles.forEach(p => p.draw(ctx, fov));
 
             animationFrameId = requestAnimationFrame(animateCanvas);
         };
@@ -245,7 +251,6 @@ const Footer: React.FC = () => {
 
   useFooterBackgroundAnimation(canvasRef, footerRef);
 
-  // A logó animációjához szavak tömbbé alakítása
   const logoTextPart1 = "Tűz";
   const logoTextPart2 = "És";
   const logoTextPart3 = "Munka";
@@ -254,7 +259,7 @@ const Footer: React.FC = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+        /* A betűtípus importálását eltávolítottuk, a layout.tsx kezeli. */
         .footer-grid-pattern {
             background-image: linear-gradient(${accentColor.gridLines} 1px, transparent 1px),
                               linear-gradient(to right, ${accentColor.gridLines} 1px, transparent 1px);
@@ -272,7 +277,7 @@ const Footer: React.FC = () => {
         }
       `}</style>
       <motion.footer
-        ref={footerRef} // Ref hozzáadása a canvas méretezéséhez
+        ref={footerRef}
         className={`relative ${accentColor.darkBg} text-slate-300 py-16 sm:py-20 font-['Poppins',_sans-serif] overflow-hidden`}
         variants={footerVariants}
         initial="hidden"
@@ -318,23 +323,23 @@ const Footer: React.FC = () => {
                 repeatType: 'mirror',
                 ease: 'easeInOut'
             }}
-            variants={sectionItemVariants} // Öröklődik az első animáció a szülőtől
+            variants={sectionItemVariants}
         >
-             <ShieldCheckIcon className="w-full h-full text-glow-shadow" /> {/* Hozzáadtam árnyékot */}
+             <ShieldCheckIcon className="w-full h-full text-glow-shadow" />
         </motion.div>
 
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 sm:gap-y-16 gap-x-12"> {/* Igazított gap-x */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 sm:gap-y-16 gap-x-12">
             {/* Cég Logó és Rövid Leírás */}
-            <motion.div className="md:col-span-2 lg:col-span-1" variants={sectionItemVariants}> {/* Szélesebb md-n, normál lg-n+ */}
+            <motion.div className="md:col-span-2 lg:col-span-1" variants={sectionItemVariants}>
               <Link href="/" className="font-bold text-3xl tracking-wider mb-4 block text-gradient">
                 {/* Logó szöveg animálva szavanként */}
                 <motion.span
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.8, type: 'spring', stiffness: 100 }}
-                    className={accentColor.lightText} // A Tűz szó is megkapja az accent színt
+                    className={accentColor.lightText}
                 >
                     {logoTextPart1}
                 </motion.span>
@@ -350,7 +355,7 @@ const Footer: React.FC = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.1, duration: 0.8, type: 'spring', stiffness: 100 }}
-                    className={accentColor.lightText} // A Munka szó is megkapja az accent színt
+                    className={accentColor.lightText}
                 >
                     {logoTextPart3}
                 </motion.span>
@@ -450,7 +455,7 @@ const Footer: React.FC = () => {
                 whileHover={{ scale: 1.03, boxShadow: `0 0 40px rgba(${accentColor.baseRgb}, 0.4)` }}
               >
                  <Link href="/#ajanlatkeres">
-                    <motion.button // Ez most egy motion.button!
+                    <motion.button
                         className={`
                             relative inline-flex items-center justify-center w-full
                             ${accentColor.gradient} text-white
@@ -458,14 +463,14 @@ const Footer: React.FC = () => {
                             shadow-inner shadow-black/20
                             transition-all duration-300 ease-in-out
                             focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900
-                            hover:shadow-xl hover:shadow-cyan-500/50 /* Hozzáadtam egy extra hover árnyékot */
+                            hover:shadow-xl hover:shadow-cyan-500/50
                         `}
                         animate={buttonGlowStyles}
                         transition={buttonGlowTransition}
-                        whileHover={{ y: -2 }} // Kis ugrás hoverre
+                        whileHover={{ y: -2 }}
                         whileTap={{ scale: 0.98, y: 0 }}
                     >
-                        <SparklesIcon className="w-6 h-6 mr-3 text-yellow-300 animate-pulse" /> {/* Hozzáadtam Sparkles Ikont */}
+                        <SparklesIcon className="w-6 h-6 mr-3 text-yellow-300 animate-pulse" />
                         Ingyenes Ajánlatkérés
                     </motion.button>
                  </Link>
