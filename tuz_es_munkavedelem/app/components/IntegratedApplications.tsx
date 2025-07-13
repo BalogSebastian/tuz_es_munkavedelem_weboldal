@@ -769,7 +769,7 @@ const IntegratedApplication: React.FC = () => {
                                 </motion.div>
 
                                 <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5">
-                                    <div className={`p-4 rounded-xl bg-gradient-to-br from-cyan-400 to-teal-500`}>
+                                    <div className={`p-4 rounded-xl bg-gradient-to-br from-red-400 to-red-600`}>
                                         <FireIcon className="w-8 h-8 text-white" />
                                     </div>
                                     <h3 className="text-2xl font-bold text-slate-800">Tűzvédelem</h3>
