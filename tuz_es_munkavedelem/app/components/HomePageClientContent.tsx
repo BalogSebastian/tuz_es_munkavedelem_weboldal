@@ -32,9 +32,10 @@ export default function HomePageClientContent() {
       <IntroSection />
       
       <ServiceHighlightCards />
-      <ProcessSteps />
+     
       <StatsCounterSection />
       <DownloadableDocsSection />
+      <ProcessSteps />
       <CallToActionSection />
       <FaqAccordion/>
       <Footer />

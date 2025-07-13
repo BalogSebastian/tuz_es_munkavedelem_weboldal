@@ -23,6 +23,17 @@ const ACCENT_COLOR = {
     textLight: 'text-cyan-300',
 };
 
+// ÚJ: Piros színkonstans a CTA gombhoz
+const RED_ACCENT_COLOR = {
+    baseHex: '#DC2626', // Tailwind red-600
+    baseRgb: '220, 38, 38',
+    bg: 'bg-red-600',
+    hoverBg: 'hover:bg-red-700',
+    ring: 'focus-visible:ring-red-500',
+    textOnAccent: 'text-white',
+};
+
+
 const ANIMATION_VARIANTS = {
     sentence: {
         hidden: { opacity: 0 },
@@ -276,6 +287,10 @@ const HeaderHero = () => {
                   opacity: 0.2;
                   z-index: -1;
                 }
+                /* ÚJ: Piros CTA gomb glow effektje */
+                .cta-glow-red {
+                    box-shadow: 0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20;
+                }
                 `}
             </style>
             {/* ===== MÓDOSÍTÁS: A fő konténer kap egy padding-top-ot a fix navbar miatt ===== */}
@@ -283,11 +298,11 @@ const HeaderHero = () => {
                 {/* Fixed Header/Navbar - EZ MARAD RÖGZÍTVE */}
                 <div className="fixed top-0 left-0 right-0 bg-slate-900/50 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50">
                     <div className="font-bold text-lg tracking-wider">
-                        <span className={ACCENT_COLOR.textLight}>munka</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}>védelmi</span><span className="text-white">szaki</span>
+                        <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
                     </div>
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
-                        <a href="mailto:markjani@janimark.hu" className="hover:text-cyan-300 transition-colors duration-300">info@markjani.hu</a>
-                        <a href="tel:+36209791719" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36 20 979 17 19</a>
+                        <a href="mailto:markjani@janimark.hu" className="hover:text-cyan-300 transition-colors duration-300">info@tuz-munkavedelmiszaki.hu</a>
+                        <a href="tel:+36209791719" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36302722571</a>
                     </div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Link
@@ -321,6 +336,23 @@ const HeaderHero = () => {
                                     Hamarosan elkészül a felületünk. Addig is türelmüket köszönjük!
                                     <br className="sm:hidden" />
                                     <span className="block mt-1 sm:inline sm:ml-2">Státusz változik: Július 13. 23:59-kor</span>
+                                </p>
+                            </motion.div>
+                        </div>
+                    </div>
+                    <div className="bg-yellow-800 py-4 px-4 sm:px-6 lg:px-8 shadow-md">
+                        <div className="max-w-full mx-auto flex items-center justify-center text-center">
+                            <motion.div
+                                className="flex items-center space-x-3"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut', delay: 1 }}
+                            >
+                                <ExclamationTriangleIcon className="h-10 w-10 sm:h-8 sm:w-8 text-white animate-pulse" />
+                                <p className="text-white font-bold text-lg sm:text-xl md:text-2xl animate-pulse">
+                                    Változtatások : A munka során létrehoztam egy felugró ablakot, több szekció elrendezését lapozhatóvá alakítottam, egységesítettem az ikonokat, és a kérések alapján finomhangoltam a komponensek tartalmát, színeit és elrendezését.
+                                    <br className="sm:hidden" />
+                                    <span className="block mt-1 sm:inline sm:ml-2">Státusz változik: Július 15. 23:59-kor</span>
                                 </p>
                             </motion.div>
                         </div>
@@ -402,7 +434,7 @@ const HeaderHero = () => {
                             <motion.button
                                 whileHover={{ scale: 1.03, y: -4 }}
                                 whileTap={{ scale: 0.98, y: 0 }}
-                                className={`inline-flex items-center gap-3 ${ACCENT_COLOR.bg} ${ACCENT_COLOR.textOnAccent} font-bold py-4 px-8 rounded-xl text-lg shadow-lg cta-glow transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 ${ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+                                className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} font-bold py-4 px-8 rounded-xl text-lg shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
                             >
                                 <DocumentCheckIcon className="w-6 h-6" />
                                 Ingyenes Konzultáció Kérése

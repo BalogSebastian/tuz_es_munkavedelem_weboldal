@@ -4,37 +4,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useAnimationControls, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { StarIcon } from '@heroicons/react/24/solid';
+import { MdEmojiPeople } from 'react-icons/md'; // ÚJ: MdEmojiPeople importálása
 
-// --- JAVÍTOTT, STÍLUSOS IDÉZET IKON ---
-const StylizedQuoteIcon: React.FC<{ className?: string }> = ({ className }) => {
-    return (
-        <motion.div
-            className={className}
-            animate={{ y: [-3, 3, -3] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        >
-            {/* JAVÍTÁS: width és height attribútumok eltávolítva */}
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path 
-                    d="M16 10H19C19.5523 10 20 10.4477 20 11V14C20 16.2091 18.2091 18 16 18H15M15 18C15 15.7909 13.2091 14 11 14H8C7.44772 14 7 13.5523 7 13V10C7 7.79086 8.79086 6 11 6H12C12.5523 6 13 6.44772 13 7V10" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"/>
-                <path 
-                    d="M9 18C9 15.7909 7.20914 14 5 14H4M4 14V11C4 8.79086 5.79086 7 8 7" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"/>
-            </svg>
-        </motion.div>
-    )
-}
+// --- StylizedQuoteIcon ELTÁVOLÍTVA ---
+// Ez a komponens már nem lesz használva, mivel az MdEmojiPeople váltja fel.
+
 
 const accentColor = {
   starActive: 'text-cyan-400',
-  quoteMark: 'text-cyan-200/10',
+  quoteMark: 'text-cyan-200/10', // Ezt a színt megtartjuk, bár a quote ikont kivettük
+  primaryText: 'text-cyan-400', // Hozzáadtam, ha kellene a fő cím színéhez
 };
 
 const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => (
@@ -48,6 +27,13 @@ const testimonials = [
     { id: 4, name: "Horváth Mária", company: "Szolgáltató Centrum", quote: "A kockázatértékelésük rendkívül alapos volt, olyan dolgokra is felhívták a figyelmünket, amikre nem is gondoltunk.", rating: 5 },
     { id: 5, name: "Fehér Petra", company: "Innovatív Zrt.", quote: "Modern szemlélet, kiváló szakértelem. Mindenkinek csak ajánlani tudom őket, aki komolyan veszi a biztonságot.", rating: 5 },
     { id: 6, name: "Kovács István", company: "Építőipari Kft.", quote: "Már több projekten dolgoztunk együtt, mindig megbízható és profi partnerek voltak. Köszönjük a munkájukat!", rating: 5 },
+    // Hozzáadott extra értékelések a végtelenítéshez
+    { id: 7, name: "Tóth Gábor", company: "Logisztika Kft.", quote: "A tűzvédelmi felülvizsgálat rendkívül alapos volt, mindenre kiterjedő és érthető magyarázatokkal. Ajánlott!", rating: 5 },
+    { id: 8, name: "Varga Judit", company: "Élelmiszerbolt", quote: "A HACCP rendszer bevezetése simán ment, köszönhetően a szakértelemnek és a folyamatos támogatásnak. Remek munka!", rating: 4 },
+    { id: 9, name: "Molnár Dániel", company: "Építőanyag Kereskedés", quote: "A munkavédelmi dokumentáció rendezése gyorsan és hatékonyan történt. Jelentős terhet vettek le a vállunkról.", rating: 5 },
+    { id: 10, name: "Papp Andrea", company: "Vendéglátás Kft.", quote: "Az időszakos felülvizsgálatok mindig pontosan lezajlanak, és előzetesen emlékeztetnek is rá. Kiváló szolgáltatás!", rating: 5 },
+    { id: 11, name: "Fekete Zsolt", company: "Szoftverfejlesztő Zrt.", quote: "Online is megoldható volt az oktatás, ami nekünk nagyon fontos volt a rugalmasság miatt. Profik!", rating: 4 },
+    { id: 12, name: "Juhász Krisztina", company: "Mezőgazdasági Vállalat", quote: "A telephelyi felmérés és a tanácsadás sokat segített a specifikus kérdéseinkben. Külön köszönöm a részletes útmutatót!", rating: 5 },
 ];
 
 const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ testimonial }) => {
@@ -107,22 +93,52 @@ const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ te
 
 const TestimonialSlider: React.FC = () => {
     const sectionRef = useRef(null);
-    const sliderRef = useRef(null);
+    const sliderRef = useRef<HTMLDivElement>(null); // Pontosabb típus
     const controls = useAnimationControls();
     const sectionIsInView = useInView(sectionRef, { once: true, amount: 0.2 });
     
-    const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials];
-    const singleSetDuration = testimonials.length * 6;
+    // Duplázd meg a testimonials tömböt a zökkenőmentes végtelenítéshez
+    const combinedTestimonials = [...testimonials, ...testimonials];
+    
+    // Kiszámoljuk az egyetlen készlet szélességét a csúszás animációjához
+    // Ez a `testimonials.length` értékével van arányban, nem a `combinedTestimonials` értékével.
+    const itemWidth = 100 / (combinedTestimonials.length / 2); // Kártyák aránya a teljes szélességhez képest (1/2, 1/3, 1/4 attól függően, hány kártya látszik egyszerre)
+    
+    // Az animáció teljes időtartama - MÓDOSÍTVA: gyorsabb görgetés
+    const animationDuration = combinedTestimonials.length * 0.75; // Kétszer annyi kártya, kétszer annyi idő, hogy lassabb legyen.
 
     useEffect(() => {
-        if(sectionIsInView) {
+        if(sectionIsInView && sliderRef.current) {
+            // Számoljuk ki a teljes görgetési távolságot százalékban
+            // Ahhoz, hogy jobbra forogjon, az X értéke növekedjen, vagy a translateX maradjon negatív, de az érték csökkenjen (közelebb a 0-hoz)
+            // A "jobbra forogjon" azt jelenti, hogy a tartalmat balra kell tolni, azaz a translateX negatív érték felé halad.
+            // A végtelen ciklust úgy érjük el, hogy a combinedTestimonials feléig görgetünk, majd hirtelen visszaugorunk az elejére.
+            const totalWidthPercentage = 100 * (testimonials.length / (combinedTestimonials.length));
+
             controls.start({
-                x: `-${100 * (testimonials.length / (extendedTestimonials.length / testimonials.length))}%`,
-                transition: { ease: "linear", duration: singleSetDuration, repeat: Infinity, repeatType: "loop" }
+                x: [`0%`, `-${totalWidthPercentage}%`], // Balra görgetés a végtelen hatás eléréséhez
+                transition: { ease: "linear", duration: animationDuration, repeat: Infinity }
             });
         }
-    }, [sectionIsInView, controls, testimonials.length, extendedTestimonials.length, singleSetDuration]);
+    }, [sectionIsInView, controls, testimonials.length, combinedTestimonials.length, animationDuration]);
     
+    // Hover start/end animáció vezérlése (csak ha már látható a szekció)
+    const handleHoverStart = () => {
+        if (sectionIsInView) {
+            controls.stop();
+        }
+    };
+
+    const handleHoverEnd = () => {
+        if (sectionIsInView) {
+            controls.start({
+                x: [`0%`, `-${100 * (testimonials.length / (combinedTestimonials.length))}%`],
+                transition: { ease: "linear", duration: animationDuration, repeat: Infinity }
+            });
+        }
+    };
+
+
     return (
         <section ref={sectionRef} className="py-24 lg:py-32 bg-slate-900 font-['Poppins',_sans-serif] relative overflow-hidden cta-grid-pattern">
             <style>{`.cta-grid-pattern { background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px), linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px); background-size: 4rem 4rem; }`}</style>
@@ -137,25 +153,27 @@ const TestimonialSlider: React.FC = () => {
                     animate={sectionIsInView ? {opacity:1, y:0} : {}}
                     transition={{duration:0.6, delay:0.1}}
                 >
-                    <StylizedQuoteIcon className="w-12 h-12 text-red-500/90 shrink-0" />
+                    {/* MÓDOSÍTVA: MdEmojiPeople ikon színe pirosra */}
+                    <MdEmojiPeople className="w-12 h-12 text-red-500/90 shrink-0" /> {/* Piros árnyalat */}
                     <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
-                        Mit Mondanak <span className="text-cyan-400">Rólunk</span> Ügyfeleink?
+                        Mit Mondanak <span className={accentColor.primaryText}>Rólunk</span> Ügyfeleink?
                     </h2>
                 </motion.div>
 
                 <motion.div
                     ref={sliderRef}
-                    onHoverStart={() => controls.stop()}
-                    onHoverEnd={() => controls.start({
-                        x: `-${100 * (testimonials.length / (extendedTestimonials.length / testimonials.length))}%`,
-                        transition: { ease: "linear", duration: singleSetDuration, repeat: Infinity, repeatType: "loop" }
-                    })}
+                    onHoverStart={handleHoverStart}
+                    onHoverEnd={handleHoverEnd}
                     className="max-w-7xl mx-auto overflow-hidden relative"
-                    style={{ maskImage: "linear-gradient(to right, transparent, black 20%, black 80%, transparent)" }}
+                    // A maskImage a kártyák elhalványulását okozza a széleken
+                    style={{ maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)" }}
                 >
+                    {/* A combinedTestimonials tömb renderelése, hogy megvalósuljon a végtelenítés */}
                     <motion.div className="flex" animate={controls}>
-                        {extendedTestimonials.map((testimonial, index) => (
-                            <div key={testimonial.id + '-' + index} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 p-4">
+                        {combinedTestimonials.map((testimonial, index) => (
+                            // Minden kártya szélessége 100% / látható kártyák száma
+                            // sm:w-1/2, md:w-1/3, lg:w-1/4, XL-en is 1/4-et feltételezünk
+                            <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
                                 <TestimonialCard testimonial={testimonial} />
                             </div>
                         ))}

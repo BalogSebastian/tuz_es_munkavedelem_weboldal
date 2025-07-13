@@ -1,12 +1,10 @@
-// app/components/DownloadableDocsSection.tsx
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
     motion,
     useMotionValue,
     useTransform,
-    useSpring
 } from 'framer-motion';
 import {
     DocumentArrowDownIcon,
@@ -14,8 +12,12 @@ import {
     EnvelopeIcon,
     PhoneIcon,
     ArrowRightIcon,
-    CheckCircleIcon
+    CheckCircleIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon
 } from '@heroicons/react/24/solid';
+// ÚJ: Ikon importálása
+import { FaArrowTrendDown } from 'react-icons/fa6';
 
 // --- EGYSÉGESÍTETT CIÁN SZÍNSÉMA ---
 const accentColor = {
@@ -31,28 +33,20 @@ const accentColor = {
   successBg: 'bg-green-50',
 };
 
-// --- A KÉRT DEKORATÍV NYÍL KOMPONENS ---
-const AnimatedDecorativeArrow: React.FC<{ className?: string }> = ({ className }) => {
-    return (
-        <motion.svg
-            viewBox="0 0 100 100" fill="none" className={className}
-            initial="hidden" whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }} >
-            <motion.path
-                d="M20 20C48.33 22.17 73.33 45.17 80 80" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"
-                variants={{ hidden: { pathLength: 0, opacity: 0 }, visible: { pathLength: 1, opacity: 1, transition: { duration: 1, ease: "circOut", delay: 0.5 } } }} />
-            <motion.path
-                d="M70 73L80 80L87 70" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"
-                variants={{ hidden: { pathLength: 0, opacity: 0 }, visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: "circOut", delay: 1.2 } } }} />
-        </motion.svg>
-    );
-};
+// TÖRÖLVE: Az AnimatedDecorativeArrow komponens el lett távolítva
 
-// CSAK AZ ELSŐ HÁROM DOKUMENTUM MARAD
+// --- DOKUMENTUM LISTA (10 ELEM) ---
 const downloadableDocs = [
-  { id: 1, title: "Kávézó Nyitás feltételei", description: "Töltse le részletes útmutatónkat a sikeres kávézó indításához szükséges összes tűz- és munkavédelmi teendőről.", fileName: "kavezo_nyitas_feltetelei.pdf" },
+  { id: 1, title: "Kávézó Nyitás Feltételei", description: "Útmutató a sikeres kávézó indításához szükséges összes tűz- és munkavédelmi teendőről.", fileName: "kavezo_nyitas_feltetelei.pdf" },
   { id: 2, title: "Mire van szüksége egy irodának?", description: "Ismerje meg az irodák alapvető szükségleteit, a kötelező jelölésektől az ergonomikus munkaállomásokig.", fileName: "irodai_szuksegletek_lista.pdf" },
-  { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Egy praktikus összefoglaló a legfontosabb tudnivalókról, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
+  { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Praktikus összefoglaló, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
+  { id: 4, title: "Építkezési Munkavédelem", description: "Ellenőrző lista az építkezéseken betartandó legfontosabb munkavédelmi szabályokról.", fileName: "epitkezesi_ellenorzo_lista.pdf" },
+  { id: 5, title: "HACCP Útmutató Vendéglátóhelyeknek", description: "Részletes útmutató az élelmiszer-biztonsági rendszer (HACCP) kiépítéséhez.", fileName: "vendeglatos_haccp_utmutato.pdf" },
+  { id: 6, title: "Veszélyes Anyagok Kezelése", description: "Információs anyag a veszélyes anyagok tárolásának és kezelésének szabályairól.", fileName: "veszelyes_anyagok_kezelesi_utmutato.pdf" },
+  { id: 7, title: "Tűzvédelmi Szabályzat Minta", description: "Letölthető és személyre szabható tűzvédelmi szabályzat minta kisebb vállalkozások számára.", fileName: "tuzvedelmi_szabalyzat_minta.pdf" },
+  { id: 8, title: "Munkabalesetek Kivizsgálása", description: "Lépésről lépésre útmutató a munkabalesetek szakszerű kivizsgálásához és dokumentálásához.", fileName: "munkabaleset_kivizsgalasi_protokoll.pdf" },
+  { id: 9, title: "Raktárak Munkavédelme", description: "Gyakorlati tanácsok és előírások a biztonságos raktári munkavégzéshez.", fileName: "raktari_munkavedelem_kisokos.pdf" },
+  { id: 10, title: "Elsősegélynyújtás a Munkahelyen", description: "Azonnali teendők és alapvető elsősegélynyújtási ismeretek munkahelyi vészhelyzetek esetére.", fileName: "elsosegelynyujtas_munkahelyen.pdf" }
 ];
 
 interface FormDataState { name: string; email: string; phone: string; }
@@ -64,12 +58,10 @@ const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; hand
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => { if (!cardRef.current) return; const rect = cardRef.current.getBoundingClientRect(); mouseX.set(event.clientX - rect.left); mouseY.set(event.clientY - rect.top); };
   const handleMouseLeave = () => { mouseX.set(0); mouseY.set(0); };
 
-  const cardEntranceVariants = { hidden: { opacity: 0, y: 50, scale: 0.92, rotateX: -10 }, visible: { opacity: 1, y: 0, scale: 1, rotateX: 0, transition: { duration: 0.7, ease: [0.25, 0.85, 0.45, 1] } }, };
-
   return (
     <motion.div
-      ref={cardRef} className="bg-white rounded-2xl shadow-xl border border-gray-200/70 relative overflow-hidden"
-      variants={cardEntranceVariants} style={{ perspective: '1200px' }}
+      ref={cardRef} className="bg-white rounded-2xl shadow-xl border border-gray-200/70 relative overflow-hidden h-full"
+      style={{ perspective: '1200px' }}
       onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
       whileHover={{ y: -8, scale:1.02, boxShadow: "0 25px 40px -15px rgba(0,0,0,0.12)" }}
       transition={{type: "spring", stiffness:300, damping: 20}} >
@@ -79,14 +71,14 @@ const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; hand
       <motion.div
         className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}
         animate={{ rotateY: submitted ? -180 : 0 }} transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1] }} >
-        <div className="p-6 sm:p-8 flex flex-col" style={{ backfaceVisibility: 'hidden' }}>
-            <div className="flex-grow">
+        <div className="p-6 sm:p-8 flex flex-col h-full" style={{ backfaceVisibility: 'hidden' }}>
+            <div className="flex-grow flex flex-col">
                 <div className="w-fit mx-auto mb-5">
                     <DocumentArrowDownIcon className={`w-12 h-12 sm:w-14 sm:h-14 ${accentColor.text}`} />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3 text-center">{doc.title}</h3>
-                <p className="text-slate-600 leading-relaxed mb-6 text-center text-sm line-clamp-3">{doc.description}</p>
-                <form onSubmit={(e) => handleSubmit(doc.id, e)} className="space-y-4">
+                <p className="text-slate-600 leading-relaxed mb-6 text-center text-sm line-clamp-3 flex-grow">{doc.description}</p>
+                <form onSubmit={(e) => handleSubmit(doc.id, e)} className="space-y-4 mt-auto">
                     {(['name', 'email', 'phone'] as Array<keyof FormDataState>).map(fieldName => (
                     <div key={fieldName} className="relative group">
                         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
@@ -117,38 +109,82 @@ const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; hand
 }
 
 const DownloadableDocsSection: React.FC = () => {
-  // Frissítjük a useState inicializálást, hogy csak a 3 dokumentum adatait tartalmazza
-  const [formData, setFormDataState] = useState<Record<number, FormDataState>>({
-    1: { name: '', email: '', phone: '' },
-    2: { name: '', email: '', phone: '' },
-    3: { name: '', email: '', phone: '' },
-  });
-  const [submitted, setSubmittedState] = useState<Record<number, boolean>>({
-    1: false,
-    2: false,
-    3: false,
-  });
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const handleFormChange = (docId: number, e: React.ChangeEvent<HTMLInputElement>) => {setFormDataState(prev => ({ ...prev, [docId]: { ...prev[docId], [e.target.name]: e.target.value }}));};
-  const handleFormSubmit = (docId: number, e: React.FormEvent<HTMLFormElement>) => {e.preventDefault(); console.log(`Adatok:`, formData[docId]); setSubmittedState(prev => ({ ...prev, [docId]: true }));};
+    const [formData, setFormDataState] = useState<Record<number, FormDataState>>(() =>
+      downloadableDocs.reduce((acc, doc) => {
+        acc[doc.id] = { name: '', email: '', phone: '' };
+        return acc;
+      }, {} as Record<number, FormDataState>)
+    );
+
+    const [submitted, setSubmittedState] = useState<Record<number, boolean>>(() =>
+      downloadableDocs.reduce((acc, doc) => {
+        acc[doc.id] = false;
+        return acc;
+      }, {} as Record<number, boolean>)
+    );
+    
+    const handleFormChange = (docId: number, e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormDataState(prev => ({ ...prev, [docId]: { ...prev[docId], [e.target.name]: e.target.value } }));
+    };
+
+    const handleFormSubmit = (docId: number, e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(`Adatok:`, formData[docId]);
+        setSubmittedState(prev => ({ ...prev, [docId]: true }));
+    };
+
+    const checkScrollButtons = useCallback(() => {
+        const container = scrollContainerRef.current;
+        if (container) {
+            const { scrollLeft, scrollWidth, clientWidth } = container;
+            setCanScrollLeft(scrollLeft > 5);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
+        }
+    }, []);
+    
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        checkScrollButtons();
+        container?.addEventListener('scroll', checkScrollButtons);
+        window.addEventListener('resize', checkScrollButtons);
+        return () => {
+            container?.removeEventListener('scroll', checkScrollButtons);
+            window.removeEventListener('resize', checkScrollButtons);
+        };
+    }, [checkScrollButtons]);
+
+    const scroll = (direction: 'left' | 'right') => {
+        const container = scrollContainerRef.current;
+        if (container) {
+            const scrollAmount = container.clientWidth;
+            container.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
 
   return (
     <>
     <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
         .bg-grid-pattern { background-color: #f8fafc; background-image: linear-gradient(rgba(3, 186, 190, 0.07) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.07) 1px, transparent 1px); background-size: 3rem 3rem; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     `}</style>
     <section className="py-24 lg:py-32 bg-grid-pattern font-['Poppins',_sans-serif] relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        {/* JAVÍTOTT FEJLÉC, A REFERENCIA ALAPJÁN */}
         <div className="flex justify-center items-start gap-8 lg:gap-12">
-            {/* BAL OLDALI NYÍL: Mostantól feleakkora */}
+            {/* MÓDOSÍTVA */}
             <div className="flex-1 hidden xl:flex justify-end mt-10">
-                <AnimatedDecorativeArrow className="w-30 h-30 text-blue-500 transform -scale-x-100" /> {/* w-30 h-30 helyett w-24 h-24 vagy w-20 h-20 */}
+                <FaArrowTrendDown className="w-24 h-24 text-blue-500 transform -scale-x-100" />
             </div>
 
-            {/* KÖZÉPRE IGAZÍTOTT TARTALOM */}
             <motion.div
               className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
               initial={{opacity:0, y:-30}}
@@ -163,32 +199,58 @@ const DownloadableDocsSection: React.FC = () => {
                 Adja meg adatait, és férjen hozzá <span className={`font-semibold ${accentColor.text}`}>exkluzív útmutatóinkhoz</span>, amelyek segítenek megfelelni az előírásoknak.
               </p>
             </motion.div>
-
-            {/* JOBB OLDALI NYÍL: Mostantól feleakkora */}
+            
+            {/* MÓDOSÍTVA */}
             <div className="flex-1 hidden xl:flex justify-start mt-10">
-                <AnimatedDecorativeArrow className="w-30 h-30 text-blue-500 " /> {/* w-30 h-30 helyett w-24 h-24 vagy w-20 h-20 */}
+                <FaArrowTrendDown className="w-24 h-24 text-blue-500" />
             </div>
         </div>
-
-
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-7xl mx-auto"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
-        >
-          {downloadableDocs.map((doc) => (
-            <DownloadCard
-              key={doc.id}
-              doc={doc}
-              formData={formData[doc.id]}
-              submitted={submitted[doc.id]}
-              handleChange={handleFormChange}
-              handleSubmit={handleFormSubmit}
-            />
-          ))}
-        </motion.div>
+        
+        <div className="relative max-w-5xl mx-auto">
+             <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                <motion.div
+                    className="flex w-full"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+                >
+                    {downloadableDocs.map(doc => (
+                        <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
+                             <DownloadCard
+                                doc={doc}
+                                formData={formData[doc.id]}
+                                submitted={submitted[doc.id]}
+                                handleChange={handleFormChange}
+                                handleSubmit={handleFormSubmit}
+                            />
+                        </div>
+                    ))}
+                </motion.div>
+            </div>
+            
+             {/* Navigációs Gombok */}
+             <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-8 hidden sm:flex">
+                <button
+                    onClick={() => scroll('left')}
+                    disabled={!canScrollLeft}
+                    className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                    aria-label="Előző"
+                >
+                    <ChevronLeftIcon className="w-6 h-6 text-slate-700"/>
+                </button>
+            </div>
+            <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-8 hidden sm:flex">
+                <button
+                    onClick={() => scroll('right')}
+                    disabled={!canScrollRight}
+                    className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                    aria-label="Következő"
+                >
+                    <ChevronRightIcon className="w-6 h-6 text-slate-700"/>
+                </button>
+            </div>
+        </div>
       </div>
     </section>
     </>

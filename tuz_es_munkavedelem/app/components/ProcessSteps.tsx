@@ -1,4 +1,3 @@
-// components/sections/ProcessSteps.tsx
 'use client';
 
 import React, { useRef, useEffect } from 'react';
@@ -8,45 +7,11 @@ import {
     DocumentCheckIcon,
     WrenchScrewdriverIcon,
     CreditCardIcon,
-    // ExclamationTriangleIcon, // Ezt már nem használjuk
 } from '@heroicons/react/24/outline';
+// ÚJ: FaArrowTrendDown ikon importálása
+import { FaArrowTrendDown } from 'react-icons/fa6';
 
-// --- DEKORATÍV ÍVES NYÍL KOMPONENS (a StatsCounterSection-ből adaptálva) ---
-const AnimatedDecorativeArrow: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.5 }) => {
-    return (
-        <motion.svg
-            viewBox="0 0 100 100" fill="none" className={className}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            style={{ overflow: 'visible' }} // Fontos, hogy a nyilak részei ne vágódjanak le
-        >
-            {/* Az íves vonal (kék) */}
-            <motion.path
-                d="M20 20C48.33 22.17 73.33 45.17 80 80"
-                stroke="#03BABE" // Kék szín
-                strokeWidth="6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 1, ease: "circOut", delay } }
-                }} />
-            {/* A nyíl hegye (piros) */}
-            <motion.path
-                d="M70 73L80 80L87 70"
-                stroke="#E53E3E" // Piros szín
-                strokeWidth="6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: "circOut", delay: delay + 0.7 } } // Kicsit később jön be a hegy
-                }} />
-        </motion.svg>
-    );
-};
-
+// TÖRÖLVE: Az AnimatedDecorativeArrow komponenst eltávolítottuk.
 
 // --- DEKORATÍV SVG KOMPONENSEK ---
 const BlueprintCorner: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.5 }) => {
@@ -76,9 +41,6 @@ const SchematicCrosshair: React.FC<{ className?: string, delay?: number }> = ({ 
     );
 }
 
-// A DesignedExclamationMark komponenst kivettem, mert már nem használjuk.
-
-
 interface AnimatedNumberProps { to: number; className?: string; }
 const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ to, className }) => {
     const nodeRef = useRef<HTMLSpanElement>(null);
@@ -103,7 +65,6 @@ const TiltCard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return ( <motion.div ref={cardRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ perspective: "1000px" }}> <motion.div style={{ rotateX, rotateY }} className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 transform-style-3d h-full"> {children} </motion.div> </motion.div> );
 };
 
-
 const ProcessSteps: React.FC = () => {
   return (
     <>
@@ -113,14 +74,39 @@ const ProcessSteps: React.FC = () => {
         .transform-style-3d { transform-style: preserve-3d; }
       `}</style>
       <section className="py-20 lg:py-28 font-['Poppins',_sans-serif] bg-grid-pattern relative overflow-hidden">
-        {/* Minden abszolút pozícionált elem a fő szekción belül van a megbízhatóságért */}
         <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" delay={0.2} />
         <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" delay={0.3} />
 
-        {/* Íves nyilak */}
-        <AnimatedDecorativeArrow className="absolute top-[8%] left-[10%] w-24 h-24 transform -rotate-12 hidden xl:block" delay={0.4} /> {/* Nagyobb méret */}
-        <AnimatedDecorativeArrow className="absolute top-[40%] right-[8%] w-20 h-20 transform rotate-12 hidden xl:block" delay={0.8} /> {/* Nagyobb méret */}
-        <AnimatedDecorativeArrow className="absolute bottom-[15%] left-[20%] w-18 h-18 transform rotate-6 hidden xl:block" delay={1.0} /> {/* Nagyobb méret */}
+        {/* MÓDOSÍTVA: FaArrowTrendDown ikonok használata */}
+        <motion.div
+            className="absolute top-[8%] left-[10%] w-24 h-24 transform -rotate-12 hidden xl:block"
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+            viewport={{ once: true, amount: 0.5 }}
+        >
+            <FaArrowTrendDown className="w-full h-full text-black" />
+        </motion.div>
+
+        <motion.div
+            className="absolute top-[40%] right-[8%] w-20 h-20 transform rotate-12 hidden xl:block"
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+            viewport={{ once: true, amount: 0.5 }}
+        >
+            <FaArrowTrendDown className="w-full h-full text-black" />
+        </motion.div>
+        
+        <motion.div
+            className="absolute bottom-[15%] left-[8%] w-18 h-18 transform rotate-6 hidden xl:block"
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }}
+            viewport={{ once: true, amount: 0.5 }}
+        >
+            <FaArrowTrendDown className="w-full h-full text-black" />
+        </motion.div>
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="relative text-center mb-16 lg:mb-20">

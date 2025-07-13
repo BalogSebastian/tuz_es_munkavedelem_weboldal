@@ -1,9 +1,10 @@
-// components/sections/CallToActionSection.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SparklesIcon } from '@heroicons/react/24/solid';
+// ÚJ: Ikon importálása
+import { FaArrowTrendDown } from 'react-icons/fa6';
 
 // --- SZÍNPALETTA (Változatlan) ---
 const accentColor = {
@@ -18,62 +19,25 @@ const accentColor = {
 // --- Animációs variánsok (Változatlan) ---
 const sectionVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.2, delayChildren: 0.1 } 
+    transition: { staggerChildren: 0.2, delayChildren: 0.1 }
   },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { type: 'spring', stiffness: 100, damping: 15, duration: 0.6 } 
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 100, damping: 15, duration: 0.6 }
   },
 };
 
 // Típus a háttérelemek stílusához
 interface BackgroundElementStyle extends React.CSSProperties {}
 
-// --- PRÉMIUM ANIMÁLT NYÍL KOMPONENS ---
-const AnimatedDecorativeArrow = ({ className }: { className?: string }) => {
-    return (
-        <motion.svg
-            viewBox="0 0 100 100"
-            fill="none"
-            className={className}
-            initial="hidden"
-            animate="visible"
-            variants={{
-                visible: { transition: { staggerChildren: 0.4 } }
-            }}
-        >
-            <motion.path
-                d="M20 20C48.33 22.17 73.33 45.17 80 80"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 1, ease: "circOut" } }
-                }}
-            />
-            <motion.path
-                d="M70 73L80 80L87 70"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: "circOut" } }
-                }}
-            />
-        </motion.svg>
-    );
-};
+// TÖRÖLVE: Az AnimatedDecorativeArrow komponens el lett távolítva
 
 const CallToActionSection: React.FC = () => {
   const [backgroundElementStyles, setBackgroundElementStyles] = useState<BackgroundElementStyle[]>([]);
@@ -121,7 +85,6 @@ const CallToActionSection: React.FC = () => {
             />
         ))}
         
-        {/* A külső konténer szélesebb és relatív, hogy pozicionálni tudjuk benne a nyilat */}
         <motion.div
             className="relative max-w-7xl mx-auto"
             variants={sectionVariants}
@@ -129,23 +92,22 @@ const CallToActionSection: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
         >
-            {/* BAL OLDALI NYÍL: Abszolút pozícióval a bal oldalon, a szöveges tartalom mellett */}
+            {/* BAL OLDALI NYÍL: Módosítva */}
             <motion.div
               className="absolute -top-20 left-0 w-24 h-24 hidden xl:block text-red-500"
               variants={itemVariants}
             >
-              <AnimatedDecorativeArrow className="transform -scale-x-100" />
+              <FaArrowTrendDown className="w-full h-full transform -scale-x-100" />
             </motion.div>
 
-            {/* JOBB OLDALI NYÍL: Abszolút pozícióval a jobb oldalon, a szöveges tartalom mellett */}
+            {/* JOBB OLDALI NYÍL: Módosítva */}
             <motion.div
-              className="absolute bottom-0 right-0 w-24 h-24 hidden xl:block text-red-500" // bottom-0 és right-0 a pozícióhoz
+              className="absolute bottom-0 right-0 w-24 h-24 hidden xl:block text-red-500"
               variants={itemVariants}
             >
-              <AnimatedDecorativeArrow className="" /> {/* Nincs tükrözés, hogy a szöveg felé mutasson */}
+              <FaArrowTrendDown className="w-full h-full" />
             </motion.div>
 
-            {/* A SZÖVEGES TARTALOM: Visszaállítva az eredeti, középre igazított állapotába */}
             <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                 <motion.h2 
                     className={`text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r ${accentColor.textGradient} mb-6 tracking-tight`}

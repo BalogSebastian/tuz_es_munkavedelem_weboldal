@@ -3,9 +3,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
-import { UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'; // Csak a szükséges ikonok maradnak
+import { UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
-// --- A MEGFELELŐ, ÍVES NYÍL IKON ---
 const AnimatedDecorativeArrow: React.FC<{ className?: string }> = ({ className }) => {
     return (
         <motion.svg
@@ -33,7 +32,7 @@ const AnimatedDecorativeArrow: React.FC<{ className?: string }> = ({ className }
 
 const stats = [
   { value: 150, label: "Elégedett Ügyfél", suffix: "+", icon: UserGroupIcon },
-  { value: 150, label: "Elkerült Büntetés", suffix: "%", icon: ShieldCheckIcon }, // Módosított érték
+  { value: 150, label: "Elkerült Büntetés", suffix: "", icon: ShieldCheckIcon },
 ];
 
 function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean }) {
@@ -111,10 +110,7 @@ const StatsCounterSection: React.FC = () => {
             />
         ))}
 
-        {/* BAL OLDALI NYÍL: Befelé mutat, kicsi */}
         <AnimatedDecorativeArrow className="absolute top-1/3 -translate-y-1/2 left-4 md:left-8 lg:left-12 w-32 h-32 text-red-500 hidden lg:block transform -scale-x-100" />
-
-        {/* JOBB OLDALI NYÍL: Befelé mutat, kicsi */}
         <AnimatedDecorativeArrow className="absolute bottom-1/4 translate-y-1/2 right-4 md:right-8 lg:right-12 w-32 h-32 text-red-500 hidden lg:block" />
 
         <div className="container mx-auto px-6 relative z-10">
@@ -137,38 +133,39 @@ const StatsCounterSection: React.FC = () => {
               </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-16 sm:gap-y-12 gap-x-8 text-center justify-center">
-            {stats.map((stat, index) => (
-              <motion.div
-                  key={index}
-                  className="flex flex-col items-center"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.7, delay: index * 0.15 + 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ scale: 1.08, y: -8, transition: { type: "spring", stiffness: 300, damping:10 } }}
-              >
-                   <motion.div 
-                      className="relative mb-5 p-4 bg-white/10 rounded-full ring-2 ring-white/20 shadow-lg"
-                      initial={{scale:0}}
-                      animate={isInView ? {scale:1} : {}}
-                      transition={{type:'spring', stiffness:260, damping:20, delay: index * 0.15 + 0.6}}
-                   >
-                      <stat.icon className="w-10 h-10 text-cyan-400" />
-                      <IconShineEffect delay={index * 0.15 + 1} isParentInView={isInView} />
-                   </motion.div>
-                  
-                  {/* Itt módosítva a méret lg:text-7xl-re */}
-                  <div className="text-5xl lg:text-7xl font-extrabold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
-                      <AnimatedCounter value={stat.value} isInView={isInView} />
-                      {stat.suffix}
-                  </div>
-                  {/* Itt módosítva a méret lg:text-xl-re */}
-                  <div className="text-base lg:text-xl font-medium text-slate-400">{stat.label}</div>
-              </motion.div>
-            ))}
+          {/* --- MÓDOSÍTÁS ITT KEZDŐDIK --- */}
+          <div className="max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-16 sm:gap-y-12 gap-x-8 text-center">
+              {stats.map((stat, index) => (
+                <motion.div
+                    key={index}
+                    className="flex flex-col items-center"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.7, delay: index * 0.15 + 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ scale: 1.08, y: -8, transition: { type: "spring", stiffness: 300, damping:10 } }}
+                >
+                     <motion.div 
+                        className="relative mb-5 p-4 bg-white/10 rounded-full ring-2 ring-white/20 shadow-lg"
+                        initial={{scale:0}}
+                        animate={isInView ? {scale:1} : {}}
+                        transition={{type:'spring', stiffness:260, damping:20, delay: index * 0.15 + 0.6}}
+                     >
+                        <stat.icon className="w-10 h-10 text-cyan-400" />
+                        <IconShineEffect delay={index * 0.15 + 1} isParentInView={isInView} />
+                     </motion.div>
+                    
+                    <div className="text-5xl lg:text-7xl font-extrabold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
+                        <AnimatedCounter value={stat.value} isInView={isInView} />
+                        {stat.suffix}
+                    </div>
+                    <div className="text-base lg:text-xl font-medium text-slate-400">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
           </div>
+          {/* --- MÓDOSÍTÁS ITT ÉR VÉGET --- */}
 
-          {/* Büntetés figyelmeztetés */}
           <motion.div
             className="mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden"
             initial={{ opacity: 0, scale: 0.8 }}

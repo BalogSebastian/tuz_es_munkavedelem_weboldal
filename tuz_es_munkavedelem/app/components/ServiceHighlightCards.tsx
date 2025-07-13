@@ -202,7 +202,7 @@ const ServiceHighlightCards: React.FC = () => {
             background: rgba(255, 255, 255, 0.5);
         }
       `}</style>
-      <section className="py-16 lg:py-24 bg-slate-100 font-['Poppins',_sans-serif] overflow-hidden">
+      <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* --- MÓDOSÍTOTT CÍMSOR KONTÉNER --- */}
           <div className="relative text-center mb-16 lg:mb-20">

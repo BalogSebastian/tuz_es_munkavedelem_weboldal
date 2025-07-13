@@ -1,3 +1,4 @@
+// app/components/PreConsultationForm.tsx
 'use client';
 
 import React, { useState, useRef } from 'react';
@@ -11,14 +12,18 @@ import {
   ShoppingCartIcon,
   LightBulbIcon,
   BriefcaseIcon,
-  ClockIcon, // ClockIcon helyett ez volt a folyamatábránál a "Hány hónap múlva nyitok?" kérdésnél
-  TruckIcon, // Új ikon az információs kimenethez
+  ClockIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 
-// --- TÍPUSDEFINÍCIÓK ---
+// FaArrowTrendDown importálása a react-icons/fa6-ból
+import { FaArrowTrendDown } from 'react-icons/fa6';
+
+
+// --- TÍPUSDEFINÍCIÓK (Változatlan) ---
 type EstablishmentPhaseValue = 'HAS_COMPANY' | 'OPENING_SOON' | 'NO_COMPANY';
-type OpeningSoonTimelineValue = 'LESS_THAN_1_MONTH' | '1_2_MONTHS' | '3_5_MONTHS' | 'MORE_THAN_5_MONTHS'; // Neveztem át OpeningSoonTimelineValue-ra
-type NoCompanyInterestValue = 'BUSINESS_IDEA_EXISTS' | 'NO_BUSINESS_IDEA'; // Neveztem át NoCompanyInterestValue-ra
+type OpeningSoonTimelineValue = 'LESS_THAN_1_MONTH' | '1_2_MONTHS' | '3_5_MONTHS' | 'MORE_THAN_5_MONTHS';
+type NoCompanyInterestValue = 'BUSINESS_IDEA_EXISTS' | 'NO_BUSINESS_IDEA';
 
 interface AnswerSummary {
   questionId: string;
@@ -62,7 +67,7 @@ interface BaseQuestionConfig {
   options?: QuestionOption[];
 }
 
-// A kérdés konfigurációk
+// A kérdés konfigurációk (Változatlan)
 const allQuestionsConfig: { [key: string]: BaseQuestionConfig } = {
     establishmentPhase: {
       id: 'establishmentPhase',
@@ -99,8 +104,8 @@ const allQuestionsConfig: { [key: string]: BaseQuestionConfig } = {
     },
     openingSoonTimeline: {
         id: 'openingSoonTimeline',
-        text: "Hány hónap múlva nyitok?", // Folyamatábra alapján átírva
-        icon: ClockIcon, // ClockIcon használata a folyamatábra alapján
+        text: "Hány hónap múlva nyitok?",
+        icon: ClockIcon,
         detail: "Ez segít nekünk felmérni a szükséges teendőket a nyitáshoz.",
         options: [
             { value: 'LESS_THAN_1_MONTH', text: 'Kevésbé mint 1 hónap' },
@@ -112,7 +117,7 @@ const allQuestionsConfig: { [key: string]: BaseQuestionConfig } = {
     },
     noCompanyInterest: {
         id: 'noCompanyInterest',
-        text: "Milyen vállalkozásról van szó?", // Folyamatábra alapján átírva
+        text: "Milyen vállalkozásról van szó?",
         icon: LightBulbIcon,
         detail: "Ez segít nekünk, hogy a legrelevánsabb információkat nyújtsuk.",
         options: [
@@ -121,42 +126,6 @@ const allQuestionsConfig: { [key: string]: BaseQuestionConfig } = {
         ],
         isMultiChoice: true,
     },
-};
-
-// --- PRÉMIUM, DINAMIKUS IKONOK ---
-const AnimatedDecorativeArrow = ({ className }: { className?: string }) => {
-    return (
-        <motion.svg
-            viewBox="0 0 100 100"
-            fill="none"
-            className={className}
-            initial="hidden"
-            animate="visible"
-        >
-            <motion.path
-                d="M20 20C48.33 22.17 73.33 45.17 80 80"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 1, ease: "circOut", delay: 0.5 } }
-                }}
-            />
-            <motion.path
-                d="M70 73L80 80L87 70"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: "circOut", delay: 1.2 } }
-                }}
-            />
-        </motion.svg>
-    );
 };
 
 const AnimatedCheckIcon = ({ className }: { className?: string }) => (
@@ -179,7 +148,7 @@ const AnimatedCheckIcon = ({ className }: { className?: string }) => (
     </motion.svg>
 );
 
-// --- ÚJ: LEBEGŐ HÁTTÉR ELEMEK ---
+// --- LEBEGŐ HÁTTÉR ELEMEK (Változatlan) ---
 const FloatingShapes = () => (
     <div className="absolute inset-0 -z-10 overflow-hidden">
         <motion.div
@@ -221,7 +190,6 @@ const PreConsultationFormFinal: React.FC = () => {
     const [finalMessage, setFinalMessage] = useState<{ type: 'booking' | 'info' | 'generic', text: string, buttonText?: string, buttonAction?: () => void } | null>(null);
     const [summaryAnswers, setSummaryAnswers] = useState<AnswerSummary[]>([]);
     const [animationDirection, setAnimationDirection] = useState(1);
-    // Kezdeti kérdésfolyam: csak az első kérdés
     const [questionFlow, setQuestionFlow] = useState<BaseQuestionConfig[]>([allQuestionsConfig.establishmentPhase]);
 
     const sectionRef = useRef<HTMLElement>(null);
@@ -244,7 +212,6 @@ const PreConsultationFormFinal: React.FC = () => {
             return [...prev, { questionId, questionText, answerValue: value, answerText }];
         });
 
-        // Kicsit rövidebb timeout, hogy gyorsabban haladjon a flow
         setTimeout(() => {
             handleNextQuestionLogic(questionId, value);
         }, 300);
@@ -253,7 +220,7 @@ const PreConsultationFormFinal: React.FC = () => {
     const handleNextQuestionLogic = (questionId: string, value: any) => {
         let newFinalMessage: typeof finalMessage = null;
         let nextQuestions: BaseQuestionConfig[] = [];
-        let shouldAdvanceStep = true; // Jelzi, hogy lépjünk-e a következő kérdésre a folyamban
+        let shouldAdvanceStep = true;
 
         if (questionId === 'establishmentPhase') {
             if (value === 'HAS_COMPANY') {
@@ -263,9 +230,8 @@ const PreConsultationFormFinal: React.FC = () => {
                     allQuestionsConfig.dealsWithFood
                 ];
                 setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]);
-                // Mivel itt több kérdés következik, lépjünk a következőre
                 setCurrentStep(currentStep + 1);
-                shouldAdvanceStep = false; // Ne ugorjon előre a generikus lépésben
+                shouldAdvanceStep = false;
             } else if (value === 'OPENING_SOON') {
                 nextQuestions = [allQuestionsConfig.openingSoonTimeline];
                 setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]);
@@ -278,7 +244,6 @@ const PreConsultationFormFinal: React.FC = () => {
                 shouldAdvanceStep = false;
             }
         } else if (questionId === 'openingSoonTimeline') {
-            // A folyamatábrán a "Hány hónap múlva nyitok?" kérdés után azonnal a "Foglalj időpontot" jön
             newFinalMessage = {
                 type: 'booking',
                 text: 'Egy szakértő tud segíteni ebben, ha már van kész cég, és vannak konkrétumok. Kapsz tőlünk egy átlátszó ismertető anyagot, hogy ne kelljen tovább bogarásznod! Keress minket egy email, vagy telefonszám!',
@@ -303,7 +268,6 @@ const PreConsultationFormFinal: React.FC = () => {
             }
         }
 
-        // Speciális eset: Ha a "Működő cégem van" ág végére értünk (azaz a dealsWithFood kérdésre válaszoltunk)
         if (questionId === 'dealsWithFood') {
             newFinalMessage = {
                 type: 'booking',
@@ -318,13 +282,9 @@ const PreConsultationFormFinal: React.FC = () => {
             setFinalMessage(newFinalMessage);
             setShowFinalScreen(true);
         } else if (shouldAdvanceStep && currentStep < questionFlow.length - 1) {
-            // Csak akkor lépünk előre, ha az aktuális kérdés nem vezetett új ágra VAGY nem az utolsó kérdés volt az ágban, ami kimenetre vezet
             setCurrentStep(currentStep + 1);
         } else if (questionFlow.length > 0 && !newFinalMessage) {
-            // Ez a fallback, ha nem találtunk specifikus kimenetet, de minden kérdésre válaszolt
-             // Itt lehet egy generic booking, ha nem történt explicit átirányítás
-             // Például, ha a HAS_COMPANY ág végén van, de még nincs definiálva a dealsWithFood utáni kimenet
-             // Ez már fentebb kezelve lett a 'dealsWithFood' ellenőrzésnél.
+             // Fallback for generic booking if no specific path leads to a final message
         }
     };
 
@@ -333,12 +293,11 @@ const PreConsultationFormFinal: React.FC = () => {
         setAnimationDirection(-1);
         setShowFinalScreen(false);
         setFinalMessage(null);
-        // Adjunk egy kis időt a kilépő animációnak, mielőtt resetelünk
         setTimeout(() => {
             setCurrentStep(0);
             setAnswers(initialAnswersState);
             setSummaryAnswers([]);
-            setQuestionFlow([allQuestionsConfig.establishmentPhase]); // Vissza az első kérdéshez
+            setQuestionFlow([allQuestionsConfig.establishmentPhase]);
         }, 400);
     };
 
@@ -347,13 +306,10 @@ const PreConsultationFormFinal: React.FC = () => {
     };
 
     const currentQuestion = questionFlow[currentStep];
-    // A progressz bar számítása kicsit trükkösebb a dinamikus ágak miatt.
-    // Legjobb, ha a már megválaszolt kérdések számát használjuk a teljes questionFlow hossza arányában,
-    // vagy ha van explicit végpont, akkor azt is beleszámoljuk.
     const progress = currentQuestion ? ((summaryAnswers.length) / (questionFlow.length)) * 100 : 0;
 
 
-    // --- ANIMÁCIÓS VARIÁNSOK ---
+    // --- ANIMÁCIÓS VARIÁNSOK (Változatlan) ---
     const questionWrapperVariants: Variants = {
         enter: (direction: number) => ({ x: direction > 0 ? 80 : -80, opacity: 0 }),
         center: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.21, 1.02, 0.73, 1] } },
@@ -379,7 +335,6 @@ const PreConsultationFormFinal: React.FC = () => {
         visible: { x: 0, opacity: 1, transition: { ease: 'easeOut', duration: 0.5 } }
     };
 
-    // Fő szekció beúszó animációs variánsok
     const sectionEnterVariants: Variants = {
         hidden: { opacity: 0, y: 100, scale: 0.95 },
         visible: {
@@ -411,7 +366,7 @@ const PreConsultationFormFinal: React.FC = () => {
             <style>{`
               @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
               .gradient-text {
-                background: linear-gradient(to right, #06b6d4, #2dd4bf);
+                background: linear-gradient(to right, #06b6d4, #2dd4bf); /* Kékes-türkizes átmenet */
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -420,10 +375,18 @@ const PreConsultationFormFinal: React.FC = () => {
               .gradient-bg {
                 background: linear-gradient(to right, #06b6d4, #2dd4bf);
               }
+              /* Rácsminta háttér */
+              .bg-quiz-pattern {
+                background-color: #f8fafc; /* Világos háttér a rács alá */
+                background-image: 
+                    linear-gradient(rgba(3, 186, 190, 0.05) 1px, transparent 1px),
+                    linear-gradient(to right, rgba(3, 186, 190, 0.05) 1px, transparent 1px);
+                background-size: 3rem 3rem;
+              }
             `}</style>
             <motion.section
                 ref={sectionRef}
-                className="relative py-24 sm:py-32 bg-slate-50 font-['Poppins',_sans-serif] overflow-hidden"
+                className="relative py-24 sm:py-32 bg-quiz-pattern font-['Poppins',_sans-serif] overflow-hidden"
                 variants={sectionEnterVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
@@ -438,7 +401,8 @@ const PreConsultationFormFinal: React.FC = () => {
                             animate={isInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
                         >
-                             <AnimatedDecorativeArrow className="w-24 h-24 text-blue-500 transform -scale-x-100" />
+                             {/* MÓDOSÍTVA: FaArrowTrendDown ikon, kisebb méret, kékes színátmenet, forgatás */}
+                             <FaArrowTrendDown className="w-16 h-16 transform -scale-x-100 rotate-180 gradient-text" /> 
                         </motion.div>
 
                         <div className="w-full max-w-lg shrink-0">
@@ -453,13 +417,11 @@ const PreConsultationFormFinal: React.FC = () => {
                                         <motion.div key="questions">
                                             <div className="mb-8">
                                                 <div className="flex justify-between items-end mb-1.5 text-xs font-medium text-slate-500">
-                                                    {/* Kicsit pontosabb progressz jelzés */}
                                                     <span>{summaryAnswers.length + 1}. Kérdés / {questionFlow.length}</span>
                                                 </div>
                                                 <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
                                                     <motion.div
                                                         className="h-full rounded-full gradient-bg"
-                                                        // A progressz már a válaszok számától függ
                                                         initial={{ width: 0 }}
                                                         animate={{ width: `${(summaryAnswers.length / questionFlow.length) * 100}%` }}
                                                         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -554,7 +516,8 @@ const PreConsultationFormFinal: React.FC = () => {
                             animate={isInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
                         >
-                           <AnimatedDecorativeArrow className="w-20 h-20 text-blue-500" />
+                           {/* MÓDOSÍTVA: FaArrowTrendDown ikon, kisebb méret, kékes színátmenet */}
+                           <FaArrowTrendDown className="w-16 h-16 gradient-text" />
                         </motion.div>
                     </div>
                 </div>
