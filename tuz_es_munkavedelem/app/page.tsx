@@ -13,7 +13,7 @@ export default function HomePage() {
       {/* Ezek maradnak szerver komponensek, így a leggyorsabban renderelődnek */}
       <HeaderHero />
       <TestimonialSlider/>
-      <PreConsultationForm/>
+      
 
       {/* A többi komponenst a kliens komponens rendereli, dinamikusan */}
       <HomePageClientContent />

@@ -16,7 +16,6 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon
 } from '@heroicons/react/24/solid';
-// ÚJ: Ikon importálása
 import { FaArrowTrendDown } from 'react-icons/fa6';
 
 // --- EGYSÉGESÍTETT CIÁN SZÍNSÉMA ---
@@ -32,8 +31,6 @@ const accentColor = {
   successText: 'text-green-600',
   successBg: 'bg-green-50',
 };
-
-// TÖRÖLVE: Az AnimatedDecorativeArrow komponens el lett távolítva
 
 // --- DOKUMENTUM LISTA (10 ELEM) ---
 const downloadableDocs = [
@@ -141,14 +138,16 @@ const DownloadableDocsSection: React.FC = () => {
         const container = scrollContainerRef.current;
         if (container) {
             const { scrollLeft, scrollWidth, clientWidth } = container;
+            // A buffer of 5px to account for potential sub-pixel rendering or small inaccuracies
             setCanScrollLeft(scrollLeft > 5);
+            // Check if there's more content to scroll to the right
             setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
         }
     }, []);
     
     useEffect(() => {
         const container = scrollContainerRef.current;
-        checkScrollButtons();
+        checkScrollButtons(); // Initial check
         container?.addEventListener('scroll', checkScrollButtons);
         window.addEventListener('resize', checkScrollButtons);
         return () => {
@@ -158,15 +157,22 @@ const DownloadableDocsSection: React.FC = () => {
     }, [checkScrollButtons]);
 
     const scroll = (direction: 'left' | 'right') => {
-        const container = scrollContainerRef.current;
-        if (container) {
-            const scrollAmount = container.clientWidth;
-            container.scrollBy({
-                left: direction === 'left' ? -scrollAmount : scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-    };
+      const container = scrollContainerRef.current;
+      if (container) {
+          // A container teljes szélessége
+          const containerWidth = container.clientWidth;
+          
+          // Mobil nézeten (sm breakpoint alatt) egy kártya a teljes szélességet foglalja el
+          // Tablet/desktop nézeten (sm breakpoint felett) egy kártya a fél szélességet foglalja el
+          const isSmallScreen = window.innerWidth < 640; // 640px a Tailwind sm breakpoint
+          const scrollAmount = isSmallScreen ? containerWidth : containerWidth / 2;
+
+          container.scrollBy({
+              left: direction === 'left' ? -scrollAmount : scrollAmount,
+              behavior: 'smooth'
+          });
+      }
+  };
 
   return (
     <>
@@ -180,7 +186,6 @@ const DownloadableDocsSection: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         <div className="flex justify-center items-start gap-8 lg:gap-12">
-            {/* MÓDOSÍTVA */}
             <div className="flex-1 hidden xl:flex justify-end mt-10">
                 <FaArrowTrendDown className="w-24 h-24 text-blue-500 transform -scale-x-100" />
             </div>
@@ -200,7 +205,6 @@ const DownloadableDocsSection: React.FC = () => {
               </p>
             </motion.div>
             
-            {/* MÓDOSÍTVA */}
             <div className="flex-1 hidden xl:flex justify-start mt-10">
                 <FaArrowTrendDown className="w-24 h-24 text-blue-500" />
             </div>
@@ -216,6 +220,7 @@ const DownloadableDocsSection: React.FC = () => {
                     variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
                 >
                     {downloadableDocs.map(doc => (
+                        // Each card needs to snap to its start
                         <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
                              <DownloadCard
                                 doc={doc}

@@ -19,6 +19,7 @@ const Footer = dynamic(() => import('./Footer'), { ssr: false }); // A Footer is
 // Azonnali betöltésű komponensek (ha mégis ide kerülnek)
 import HeaderHero from './HeaderHero'; // A HeaderHero valószínűleg nem ide tartozik majd, hanem a page.tsx-be
 import PreConsultationForm from './PreConsultationForm'; // A PreConsultationForm valószínűleg nem ide tartozik majd, hanem a page.tsx-be
+import IntegratedApplication from './IntegratedApplications';
 
 export default function HomePageClientContent() {
   return (
@@ -29,8 +30,7 @@ export default function HomePageClientContent() {
           A HeaderHero és PreConsultationForm valószínűleg az app/page.tsx-ben marad,
           hogy szerver oldalon renderelődjön, ha lehetséges. */}
 
-      <IntroSection />
-      
+      <IntegratedApplication/>
       <ServiceHighlightCards />
      
       <StatsCounterSection />
