@@ -200,10 +200,10 @@ const DownloadableDocsSection: React.FC = () => {
               transition={{duration:0.7, ease:"easeOut"}}
             >
               <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
-              Töltsd le a számodra leghasznosabb anyagunkat!
+              <span>Töltsd le</span> <span className='text-black'>a számodra</span>  leghasznosabb <span className='text-black'>anyagunkat!</span>
               </h2>
-              <p className="text-xl text-slate-700 leading-relaxed max-w-xl mx-auto">
-              Add meg az elérhetőségedet, hogy a szakemberünk fel tudjon hívni, és tudjon tanácsot adni a te konkrét helyzetedre!
+              <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
+              Add meg az elérhetőségedet, hogy a <span className='text-cyan-500'>szakemberünk fel tudjon hívni</span>, és tudjon tanácsot adni<span className='text-cyan-500'> a te konkrét helyzetedre!</span> 
               </p>
             </motion.div>
             

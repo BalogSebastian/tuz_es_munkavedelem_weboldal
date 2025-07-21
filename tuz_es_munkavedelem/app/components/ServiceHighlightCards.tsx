@@ -208,7 +208,7 @@ const ServiceHighlightCards: React.FC = () => {
           <div className="relative text-center mb-16 lg:mb-20">
             <FireFlameIcon className="absolute -top-12 right-4 lg:right-20 w-32 h-32 opacity-20 -z-0 hidden lg:block" />
             <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
-              Főbb <span className={accentColor.text}>Szolgáltatásaink</span>
+              Főbb <span className={accentColor.text}>szolgáltatásaink:</span>
             </h2>
             <p className="relative z-10 text-xl text-slate-600 max-w-3xl mx-auto">Jó helyen jársz! Itt mindent egy helyen megtalálsz!</p>
           </div>

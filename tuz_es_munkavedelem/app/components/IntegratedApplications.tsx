@@ -400,7 +400,7 @@ const IntegratedApplication: React.FC = () => {
                             </motion.div>
                         </div>
                         <motion.div variants={introItemVariants} className="text-center mt-20">
-                            <p className="mb-6 text-lg text-slate-600">Beszélni szeretnék egy szakival!</p>
+                            <p className="mb-6 text-xl text-slate-600">Beszélni szeretnék egy <span className={accentColor.text}>jó</span> szakival!</p>
                             <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }}><button onClick={() => setIsModalOpen(true)} className={`inline-block ${accentColor.bg} ${accentColor.hoverBg} text-white font-bold py-4 px-10 rounded-xl text-lg shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow} transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring}`}>online konzultáció egy szakemberrel</button></motion.div>
                         </motion.div>
                     </div>
