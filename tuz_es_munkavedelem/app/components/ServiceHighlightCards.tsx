@@ -60,10 +60,10 @@ const accentColor = {
 
 // CSAK AZ ELSŐ NÉGY SZOLGÁLTATÁS MARAD MEG
 const servicesData = [
-  { id: 1, title: "Kockázatértékelés", description: "Veszélyek azonosítása, kockázatok elemzése, megelőzési intézkedések kidolgozása.", icon: ExclamationTriangleIcon, colorName: "red", gradientClasses: "from-red-500 to-rose-500", textColor: "text-red-700", backSideText: "Teljes körű munkahelyi kockázatértékelés készítése a jogszabályi előírásoknak megfelelően, javaslatokkal a kockázatok csökkentésére.", price: "Egyedi árajánlat" },
-  { id: 2, title: "Érintésvédelem", description: "Elektromos rendszerek és berendezések biztonsági felülvizsgálata, jegyzőkönyvvel.", icon: BoltIcon, colorName: "blue", gradientClasses: "from-blue-500 to-cyan-500", textColor: "text-blue-700", backSideText: "Szabványossági felülvizsgálat, érintésvédelmi mérések elvégzése és dokumentálása minősítő irattal.", price: "12.000 Ft-tól" },
-  { id: 3, title: "Tűz- és Balesetvédelmi Oktatás", description: "Interaktív elméleti és gyakorlati képzések a biztonságos munkavégzésért.", icon: AcademicCapIcon, colorName: "yellow", gradientClasses: "from-amber-400 to-orange-500", textColor: "text-amber-700", backSideText: "A munkakörhöz és munkahelyhez igazított tematika, hatékony ismeretátadás, dokumentált oktatás.", price: "20.000 Ft/csoporttól" },
-  { id: 4, title: "HACCP Rendszer", description: "Élelmiszerbiztonsági (HACCP) rendszer kidolgozása, bevezetése és felülvizsgálata.", icon: ClipboardDocumentCheckIcon, colorName: "green", gradientClasses: "from-green-500 to-emerald-500", textColor: "text-green-700", backSideText: "Teljes körű HACCP dokumentáció elkészítése, helyszíni tanácsadás és belső auditok elvégzése.", price: "Egyedi árajánlat" },
+  { id: 1, title: "Tűzvédelem ", description: "Teljes szabályzatok kidolgozása, elektromos rendszerek biztonsági vizsgálata.", icon: ExclamationTriangleIcon, colorName: "red", gradientClasses: "from-red-500 to-rose-500", textColor: "text-red-700", backSideText: "Teljes körű munkahelyi kockázatértékelés készítése a jogszabályi előírásoknak megfelelően, javaslatokkal a kockázatok csökkentésére.", price: "Egyedi árajánlat" },
+  { id: 2, title: "Munkavédelem", description: " Munkavédelemi kockázatok kezelése és elemzése, szabályzatok és a megelőzési intézkedések kidolgozása.", icon: BoltIcon, colorName: "blue", gradientClasses: "from-blue-500 to-cyan-500", textColor: "text-blue-700", backSideText: "Szabványossági felülvizsgálat, érintésvédelmi mérések elvégzése és dokumentálása minősítő irattal.", price: "12.000 Ft-tól" },
+  { id: 3, title: "HACCP", description: "Higiéniai előírások kidolgozása, bevezetése, és folyamatos felügyelete.", icon: ClipboardDocumentCheckIcon, colorName: "yellow", gradientClasses: "from-amber-400 to-orange-500", textColor: "text-amber-700", backSideText: "A munkakörhöz és munkahelyhez igazított tematika, hatékony ismeretátadás, dokumentált oktatás.", price: "20.000 Ft/csoporttól" },
+  { id: 4, title: "Oktatások", description: "Interaktív elméleti képzések, a biztonságért és a nyugalomért.", icon: AcademicCapIcon, colorName: "green", gradientClasses: "from-green-500 to-emerald-500", textColor: "text-green-700", backSideText: "Teljes körű HACCP dokumentáció elkészítése, helyszíni tanácsadás és belső auditok elvégzése.", price: "Egyedi árajánlat" },
 ];
 
 const cardListVariants = {
@@ -210,7 +210,7 @@ const ServiceHighlightCards: React.FC = () => {
             <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
               Főbb <span className={accentColor.text}>Szolgáltatásaink</span>
             </h2>
-            <p className="relative z-10 text-xl text-slate-600 max-w-3xl mx-auto">Ismerje meg, hogyan járulhatunk hozzá vállalkozása biztonságos és szabályos működéséhez.</p>
+            <p className="relative z-10 text-xl text-slate-600 max-w-3xl mx-auto">Jó helyen jársz! Itt mindent egy helyen megtalálsz!</p>
           </div>
 
           <motion.div
@@ -238,7 +238,7 @@ const ServiceHighlightCards: React.FC = () => {
                 focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
               `}
             >
-              Ajánlatot Kérek
+              Szolgáltatásaink Megtekintése
             </motion.button>
           </div>
         </div>

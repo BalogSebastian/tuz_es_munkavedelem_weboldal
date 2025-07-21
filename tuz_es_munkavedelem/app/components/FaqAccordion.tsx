@@ -1,63 +1,9 @@
-// app/components/FaqAccordion.tsx
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// --- A HÁTTÉR LOGIKÁJÁHOZ SZÜKSÉGES KONSTANS ÉS OSZTÁLY ---
-const ACCENT_COLOR_CANVAS = {
-    baseRgb: '3, 186, 190',
-};
-
-class Particle {
-    x: number; y: number; z: number;
-    vx: number; vy: number; vz: number;
-    trail: { x: number, y: number, z: number }[];
-    baseAlpha: number;
-
-    constructor(canvasWidth: number, canvasHeight: number, maxDepth: number) {
-        this.x = (Math.random() - 0.5) * canvasWidth;
-        this.y = (Math.random() - 0.5) * canvasHeight;
-        this.z = Math.random() * maxDepth;
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
-        this.vz = (Math.random() - 0.5) * 0.1;
-        this.trail = [];
-        this.baseAlpha = 0.4 + Math.random() * 0.5;
-    }
-    project(fov: number, canvasCenter: { x: number, y: number }): { x: number, y: number, scale: number } {
-        const perspective = fov / (fov + this.z);
-        return { x: canvasCenter.x + this.x * perspective, y: canvasCenter.y + this.y * perspective, scale: perspective };
-    }
-    update(mouse: { x: number, y: number }, repelRadius: number, repelStrength: number, maxDepth: number, canvasWidth: number, canvasHeight: number, centerPull: number) {
-        const dxMouse = this.x - (mouse.x - canvasWidth / 2);
-        const dyMouse = this.y - (mouse.y - canvasHeight / 2);
-        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-        if (distMouse < repelRadius) {
-            const force = (repelRadius - distMouse) / repelRadius;
-            this.vx += (dxMouse / distMouse) * force * repelStrength;
-            this.vy += (dyMouse / distMouse) * force * repelStrength;
-        }
-        this.vx -= this.x * centerPull; this.vy -= this.y * centerPull;
-        this.vx *= 0.98; this.vy *= 0.98; this.vz *= 0.99;
-        this.x += this.vx; this.y += this.vy; this.z += this.vz;
-        if (this.z < 0) { this.z = 0; this.vz *= -1; }
-        if (this.z > maxDepth) { this.z = maxDepth; this.vz *= -1; }
-        this.trail.push({ x: this.x, y: this.y, z: this.z });
-        if (this.trail.length > 5) this.trail.shift();
-    }
-    draw(ctx: CanvasRenderingContext2D, fov: number, canvasCenter: {x: number, y: number}) {
-        const proj = this.project(fov, canvasCenter);
-        if (proj.x < 0 || proj.x > canvasCenter.x * 2 || proj.y < 0 || proj.y > canvasCenter.y * 2) return;
-        const alpha = this.baseAlpha * proj.scale * 0.8;
-        ctx.beginPath();
-        ctx.arc(proj.x, proj.y, proj.scale * 1.5, 0, 2 * Math.PI);
-        ctx.fillStyle = `rgba(${ACCENT_COLOR_CANVAS.baseRgb}, ${alpha})`;
-        ctx.fill();
-    }
-}
 
 // --- FŐ KOMPONENS ---
 const accentColor = {
@@ -81,76 +27,6 @@ const answerVariants = { hidden: { opacity: 0, height: 0, y: -15, transition: { 
 
 const FaqAccordion: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  // A teljes animációs logika a komponensen belül, egy useEffect hook-ban
-  useEffect(() => {
-      if (typeof window === 'undefined') return;
-      const canvas = canvasRef.current;
-      if (!canvas || !canvas.parentElement) return;
-
-      const ctx = canvas.getContext('2d', { alpha: true });
-      if (!ctx) return;
-
-      let animationFrameId: number;
-      const particles: Particle[] = [];
-      const mouse = { x: 9999, y: 9999 };
-      const fov = 300, maxDepth = 400, repelRadius = 150, repelStrength = 0.5, centerPull = 0.0001;
-      let canvasCenter = { x: canvas.parentElement.clientWidth / 2, y: canvas.parentElement.clientHeight / 2 };
-
-      const setCanvasSize = () => {
-          if (!canvas.parentElement) return;
-          const dpr = window.devicePixelRatio || 1;
-          canvas.width = canvas.parentElement.clientWidth * dpr;
-          canvas.height = canvas.parentElement.clientHeight * dpr;
-          canvas.style.width = `${canvas.parentElement.clientWidth}px`;
-          canvas.style.height = `${canvas.parentElement.clientHeight}px`;
-          ctx.scale(dpr, dpr);
-          canvasCenter = { x: canvas.parentElement.clientWidth / 2, y: canvas.parentElement.clientHeight / 2 };
-      };
-
-      const init = () => {
-          particles.length = 0;
-          const particleCount = Math.floor(window.innerWidth / 40);
-          for (let i = 0; i < particleCount; i++) {
-              particles.push(new Particle(canvas.width, canvas.height, maxDepth));
-          }
-      };
-
-      const connect = () => {
-          ctx.beginPath();
-          for (let i = 0; i < particles.length; i++) { for (let j = i + 1; j < particles.length; j++) { const p1 = particles[i]; const p2 = particles[j]; const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2) + Math.pow(p1.z - p2.z, 2)); if (dist < 200) { const p1Proj = p1.project(fov, canvasCenter); const p2Proj = p2.project(fov, canvasCenter); const opacity = Math.max(0, 1 - dist / 200); ctx.moveTo(p1Proj.x, p1Proj.y); ctx.lineTo(p2Proj.x, p2Proj.y); ctx.strokeStyle = `rgba(${ACCENT_COLOR_CANVAS.baseRgb}, ${opacity * p1Proj.scale * p2Proj.scale * 0.5})`; } } }
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-      };
-
-      const animate = () => {
-          if (!ctx) return;
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          particles.sort((a, b) => b.z - a.z);
-          particles.forEach(p => { p.update(mouse, repelRadius, repelStrength, maxDepth, window.innerWidth, window.innerHeight, centerPull); p.draw(ctx, fov, canvasCenter); });
-          connect();
-          animationFrameId = requestAnimationFrame(animate);
-      };
-
-      setCanvasSize();
-      init();
-      animate();
-
-      const handleMouseMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
-      const handleResize = () => { setCanvasSize(); init(); };
-
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('resize', handleResize);
-
-      return () => {
-          window.removeEventListener('mousemove', handleMouseMove);
-          window.removeEventListener('resize', handleResize);
-          if (animationFrameId) {
-              cancelAnimationFrame(animationFrameId);
-          }
-      };
-  }, []); // Üres dependency array -> csak egyszer fut le
 
   const toggleItem = (index: number) => { setOpenIndex(openIndex === index ? null : index); };
 
@@ -158,13 +34,16 @@ const FaqAccordion: React.FC = () => {
     <>
     <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-        .bg-grid-pattern { background-color: #f8fafc; background-image: linear-gradient(rgba(3, 186, 190, 0.06) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.06) 1px, transparent 1px); background-size: 3.5rem 3.5rem; }
     `}</style>
-    <motion.section 
-      className="py-24 lg:py-32 bg-grid-pattern font-['Poppins',_sans-serif] relative"
+    <motion.section
+      className="py-24 lg:py-32 font-['Poppins',_sans-serif] relative"
+      style={{
+        backgroundColor: '#ffffff',
+        backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`,
+        backgroundSize: '3.5rem 3.5rem',
+      }}
       initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants}
     >
-      <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full -z-10" />
       <div className="container mx-auto px-6">
         <motion.div className="text-center mb-16 lg:mb-20" variants={faqItemVariants}>
           <h2 className={`text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4`}>
@@ -189,7 +68,7 @@ const FaqAccordion: React.FC = () => {
                 >
                   <span className={`flex items-center text-md sm:text-lg font-semibold transition-colors duration-200 ${isOpen ? accentColor.textDark : `text-slate-800 ${accentColor.textHover}`}`}>
                     {item.isImportant && (
-                        <motion.span 
+                        <motion.span
                             className="mr-3"
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1, transition: { delay: 0.3, type: 'spring', stiffness: 200, damping: 10 } }}
@@ -215,7 +94,7 @@ const FaqAccordion: React.FC = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div> 
+              </motion.div>
             );
           })}
         </div>
@@ -223,7 +102,7 @@ const FaqAccordion: React.FC = () => {
         <motion.div className="text-center mt-16 lg:mt-20" variants={faqItemVariants}>
             <p className="text-lg text-slate-600 mb-6">Nem találta a választ? Vegye fel velünk a kapcsolatot!</p>
             <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }} >
-                <Link href="/kapcsolat" 
+                <Link href="/kapcsolat"
                     className={`inline-block bg-[#03BABE] hover:bg-cyan-600 text-white font-semibold py-4 px-10 rounded-xl text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2`}
                 >
                     Kapcsolatfelvétel

@@ -34,16 +34,16 @@ const accentColor = {
 
 // --- DOKUMENTUM LISTA (10 ELEM) ---
 const downloadableDocs = [
-  { id: 1, title: "Kávézó Nyitás Feltételei", description: "Útmutató a sikeres kávézó indításához szükséges összes tűz- és munkavédelmi teendőről.", fileName: "kavezo_nyitas_feltetelei.pdf" },
-  { id: 2, title: "Mire van szüksége egy irodának?", description: "Ismerje meg az irodák alapvető szükségleteit, a kötelező jelölésektől az ergonomikus munkaállomásokig.", fileName: "irodai_szuksegletek_lista.pdf" },
-  { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Praktikus összefoglaló, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
-  { id: 4, title: "Építkezési Munkavédelem", description: "Ellenőrző lista az építkezéseken betartandó legfontosabb munkavédelmi szabályokról.", fileName: "epitkezesi_ellenorzo_lista.pdf" },
-  { id: 5, title: "HACCP Útmutató Vendéglátóhelyeknek", description: "Részletes útmutató az élelmiszer-biztonsági rendszer (HACCP) kiépítéséhez.", fileName: "vendeglatos_haccp_utmutato.pdf" },
-  { id: 6, title: "Veszélyes Anyagok Kezelése", description: "Információs anyag a veszélyes anyagok tárolásának és kezelésének szabályairól.", fileName: "veszelyes_anyagok_kezelesi_utmutato.pdf" },
-  { id: 7, title: "Tűzvédelmi Szabályzat Minta", description: "Letölthető és személyre szabható tűzvédelmi szabályzat minta kisebb vállalkozások számára.", fileName: "tuzvedelmi_szabalyzat_minta.pdf" },
-  { id: 8, title: "Munkabalesetek Kivizsgálása", description: "Lépésről lépésre útmutató a munkabalesetek szakszerű kivizsgálásához és dokumentálásához.", fileName: "munkabaleset_kivizsgalasi_protokoll.pdf" },
-  { id: 9, title: "Raktárak Munkavédelme", description: "Gyakorlati tanácsok és előírások a biztonságos raktári munkavégzéshez.", fileName: "raktari_munkavedelem_kisokos.pdf" },
-  { id: 10, title: "Elsősegélynyújtás a Munkahelyen", description: "Azonnali teendők és alapvető elsősegélynyújtási ismeretek munkahelyi vészhelyzetek esetére.", fileName: "elsosegelynyujtas_munkahelyen.pdf" }
+    { id: 1, title: "Kávézó Nyitás Feltételei", description: "Útmutató a sikeres kávézó indításához szükséges összes tűz- és munkavédelmi teendőről.", fileName: "kavezo_nyitas_feltetelei.pdf" },
+    { id: 2, title: "Mire van szüksége egy irodának?", description: "Ismerje meg az irodák alapvető szükségleteit, a kötelező jelölésektől az ergonomikus munkaállomásokig.", fileName: "irodai_szuksegletek_lista.pdf" },
+    { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Praktikus összefoglaló, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
+    { id: 4, title: "Építkezési Munkavédelem", description: "Ellenőrző lista az építkezéseken betartandó legfontosabb munkavédelmi szabályokról.", fileName: "epitkezesi_ellenorzo_lista.pdf" },
+    { id: 5, title: "HACCP Útmutató Vendéglátóhelyeknek", description: "Részletes útmutató az élelmiszer-biztonsági rendszer (HACCP) kiépítéséhez.", fileName: "vendeglatos_haccp_utmutato.pdf" },
+    { id: 6, title: "Veszélyes Anyagok Kezelése", description: "Információs anyag a veszélyes anyagok tárolásának és kezelésének szabályairól.", fileName: "veszelyes_anyagok_kezelesi_utmutato.pdf" },
+    { id: 7, title: "Tűzvédelmi Szabályzat Minta", description: "Letölthető és személyre szabható tűzvédelmi szabályzat minta kisebb vállalkozások számára.", fileName: "tuzvedelmi_szabalyzat_minta.pdf" },
+    { id: 8, title: "Munkabalesetek Kivizsgálása", description: "Lépésről lépésre útmutató a munkabalesetek szakszerű kivizsgálásához és dokumentálásához.", fileName: "munkabaleset_kivizsgalasi_protokoll.pdf" },
+    { id: 9, title: "Raktárak Munkavédelme", description: "Gyakorlati tanácsok és előírások a biztonságos raktári munkavégzéshez.", fileName: "raktari_munkavedelem_kisokos.pdf" },
+    { id: 10, title: "Elsősegélynyújtás a Munkahelyen", description: "Azonnali teendők és alapvető elsősegélynyújtási ismeretek munkahelyi vészhelyzetek esetére.", fileName: "elsosegelynyujtas_munkahelyen.pdf" }
 ];
 
 interface FormDataState { name: string; email: string; phone: string; }
@@ -138,16 +138,15 @@ const DownloadableDocsSection: React.FC = () => {
         const container = scrollContainerRef.current;
         if (container) {
             const { scrollLeft, scrollWidth, clientWidth } = container;
-            // A buffer of 5px to account for potential sub-pixel rendering or small inaccuracies
-            setCanScrollLeft(scrollLeft > 5);
-            // Check if there's more content to scroll to the right
-            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
+            const buffer = 5;
+            setCanScrollLeft(scrollLeft > buffer);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - buffer);
         }
     }, []);
     
     useEffect(() => {
         const container = scrollContainerRef.current;
-        checkScrollButtons(); // Initial check
+        checkScrollButtons();
         container?.addEventListener('scroll', checkScrollButtons);
         window.addEventListener('resize', checkScrollButtons);
         return () => {
@@ -159,12 +158,8 @@ const DownloadableDocsSection: React.FC = () => {
     const scroll = (direction: 'left' | 'right') => {
       const container = scrollContainerRef.current;
       if (container) {
-          // A container teljes szélessége
           const containerWidth = container.clientWidth;
-          
-          // Mobil nézeten (sm breakpoint alatt) egy kártya a teljes szélességet foglalja el
-          // Tablet/desktop nézeten (sm breakpoint felett) egy kártya a fél szélességet foglalja el
-          const isSmallScreen = window.innerWidth < 640; // 640px a Tailwind sm breakpoint
+          const isSmallScreen = window.innerWidth < 640;
           const scrollAmount = isSmallScreen ? containerWidth : containerWidth / 2;
 
           container.scrollBy({
@@ -178,16 +173,23 @@ const DownloadableDocsSection: React.FC = () => {
     <>
     <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-        .bg-grid-pattern { background-color: #f8fafc; background-image: linear-gradient(rgba(3, 186, 190, 0.07) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.07) 1px, transparent 1px); background-size: 3rem 3rem; }
+        /* A .bg-grid-pattern class már nem használatos, a stílus inline került */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     `}</style>
-    <section className="py-24 lg:py-32 bg-grid-pattern font-['Poppins',_sans-serif] relative overflow-hidden">
+    <section
+        className="py-24 lg:py-32 font-['Poppins',_sans-serif] relative overflow-hidden"
+        style={{
+            backgroundColor: '#ffffff',
+            backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`,
+            backgroundSize: '3rem 3rem',
+        }}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         <div className="flex justify-center items-start gap-8 lg:gap-12">
             <div className="flex-1 hidden xl:flex justify-end mt-10">
-                <FaArrowTrendDown className="w-24 h-24 text-blue-500 transform -scale-x-100" />
+                <FaArrowTrendDown className="w-24 h-24 text-cyan-400/80 transform -scale-x-100" />
             </div>
 
             <motion.div
@@ -198,15 +200,15 @@ const DownloadableDocsSection: React.FC = () => {
               transition={{duration:0.7, ease:"easeOut"}}
             >
               <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
-                Töltse Le Hasznos Anyagainkat!
+              Töltsd le a számodra leghasznosabb anyagunkat!
               </h2>
               <p className="text-xl text-slate-700 leading-relaxed max-w-xl mx-auto">
-                Adja meg adatait, és férjen hozzá <span className={`font-semibold ${accentColor.text}`}>exkluzív útmutatóinkhoz</span>, amelyek segítenek megfelelni az előírásoknak.
+              Add meg az elérhetőségedet, hogy a szakemberünk fel tudjon hívni, és tudjon tanácsot adni a te konkrét helyzetedre!
               </p>
             </motion.div>
             
             <div className="flex-1 hidden xl:flex justify-start mt-10">
-                <FaArrowTrendDown className="w-24 h-24 text-blue-500" />
+                <FaArrowTrendDown className="w-24 h-24 text-cyan-400/80" />
             </div>
         </div>
         
@@ -220,7 +222,6 @@ const DownloadableDocsSection: React.FC = () => {
                     variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
                 >
                     {downloadableDocs.map(doc => (
-                        // Each card needs to snap to its start
                         <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
                              <DownloadCard
                                 doc={doc}

@@ -8,10 +8,7 @@ import {
     WrenchScrewdriverIcon,
     CreditCardIcon,
 } from '@heroicons/react/24/outline';
-// ÚJ: FaArrowTrendDown ikon importálása
 import { FaArrowTrendDown } from 'react-icons/fa6';
-
-// TÖRÖLVE: Az AnimatedDecorativeArrow komponenst eltávolítottuk.
 
 // --- DEKORATÍV SVG KOMPONENSEK ---
 const BlueprintCorner: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.5 }) => {
@@ -70,14 +67,20 @@ const ProcessSteps: React.FC = () => {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-        .bg-grid-pattern { background-color: #f8fafc; background-image: linear-gradient(rgba(3, 186, 190, 0.07) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.07) 1px, transparent 1px); background-size: 3rem 3rem; }
+        /* A háttér stílusát az elem inline stílusában adjuk meg a felülírás érdekében. */
         .transform-style-3d { transform-style: preserve-3d; }
       `}</style>
-      <section className="py-20 lg:py-28 font-['Poppins',_sans-serif] bg-grid-pattern relative overflow-hidden">
+      <section 
+        className="py-20 lg:py-28 font-['Poppins',_sans-serif] relative overflow-hidden"
+        style={{
+            backgroundColor: '#ffffff',
+            backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`,
+            backgroundSize: '3rem 3rem',
+        }}
+    >
         <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" delay={0.2} />
         <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" delay={0.3} />
 
-        {/* MÓDOSÍTVA: FaArrowTrendDown ikonok használata */}
         <motion.div
             className="absolute top-[8%] left-[10%] w-24 h-24 transform -rotate-12 hidden xl:block"
             initial={{ opacity: 0, scale: 0.5 }}
@@ -85,7 +88,7 @@ const ProcessSteps: React.FC = () => {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
             viewport={{ once: true, amount: 0.5 }}
         >
-            <FaArrowTrendDown className="w-full h-full text-black" />
+            <FaArrowTrendDown className="w-full h-full text-black/50" />
         </motion.div>
 
         <motion.div
@@ -95,7 +98,7 @@ const ProcessSteps: React.FC = () => {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
             viewport={{ once: true, amount: 0.5 }}
         >
-            <FaArrowTrendDown className="w-full h-full text-black" />
+            <FaArrowTrendDown className="w-full h-full text-black/50" />
         </motion.div>
         
         <motion.div
@@ -105,7 +108,7 @@ const ProcessSteps: React.FC = () => {
             transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }}
             viewport={{ once: true, amount: 0.5 }}
         >
-            <FaArrowTrendDown className="w-full h-full text-black" />
+            <FaArrowTrendDown className="w-full h-full text-black/50" />
         </motion.div>
 
         <div className="container mx-auto px-6 relative z-10">

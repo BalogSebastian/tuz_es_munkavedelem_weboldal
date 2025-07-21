@@ -156,7 +156,7 @@ const TestimonialSlider: React.FC = () => {
                     {/* MÓDOSÍTVA: MdEmojiPeople ikon színe pirosra */}
                     <MdEmojiPeople className="w-12 h-12 text-cyan-400 shrink-0" /> {/* Piros árnyalat */}
                     <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
-                        Mit Mondanak <span className={accentColor.primaryText}>Rólunk</span> Ügyfeleink?
+                        Ők már  <span className={accentColor.primaryText}>jobban</span> alszanak:
                     </h2>
                 </motion.div>
 

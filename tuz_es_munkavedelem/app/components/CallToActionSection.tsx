@@ -113,13 +113,13 @@ const CallToActionSection: React.FC = () => {
                     className={`text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r ${accentColor.textGradient} mb-6 tracking-tight`}
                     variants={itemVariants}
                 >
-                    Készen áll a Biztonságra?
+                    Készen állsz a biztonságra?
                 </motion.h2>
                 <motion.p 
                     className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed"
                     variants={itemVariants}
                 >
-                    Tegye meg az első lépést egy biztonságosabb és szabálykonformebb munkakörnyezet felé. Kérjen díjmentes konzultációt még ma, és hagyja ránk a szakértelmet igénylő feladatokat!
+                    Tedd meg az első lépést, és tudd biztonságban minden értékedet, előzd meg az esetleges tüzet, és a baleseteket!
                 </motion.p>
                 
                 <motion.div variants={itemVariants}>
@@ -143,7 +143,7 @@ const CallToActionSection: React.FC = () => {
                         whileTap={{ scale: 0.98 }}
                     >
                         <SparklesIcon className="w-6 h-6" />
-                        Ingyenes Konzultációt Kérek
+                        Ingyenes Konzultáció szakemberrel
                     </motion.button>
                 </motion.div>
             </div>

@@ -121,7 +121,7 @@ const StatsCounterSection: React.FC = () => {
                   animate={isInView ? { opacity:1, y: 0 } : {}}
                   transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
               >
-                  Eredményeink Számokban
+                  Eredményeink <span className='text-white'>számokban:</span>
               </motion.h2>
               <motion.p 
                   className="text-lg text-slate-300 max-w-2xl mx-auto"
@@ -129,7 +129,7 @@ const StatsCounterSection: React.FC = () => {
                   animate={isInView ? { opacity:1, y: 0 } : {}}
                   transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
               >
-                  Büszkék vagyunk arra, amit ügyfeleinkkel közösen elértünk.
+                  Fontos számunkra, hogy az ügyfeleink ne stresszeljenek egy ellenőrzés során.
               </motion.p>
           </div>
 
