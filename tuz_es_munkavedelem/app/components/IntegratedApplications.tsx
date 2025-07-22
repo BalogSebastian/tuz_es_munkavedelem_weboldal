@@ -292,11 +292,38 @@ const IntegratedApplication: React.FC = () => {
               input[type="checkbox"] { flex-shrink: 0; transition: all 0.2s ease-in-out; }
               input[type="checkbox"]:checked { border-color: #03BABE; background-color: #03BABE; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); background-size: 100%; background-position: center; background-repeat: no-repeat; }
             `}</style>
-            <div style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '3rem 3rem' }} className="font-['Poppins',_sans-serif] min-h-screen">
-                <motion.section ref={preConsultationSectionRef} className="relative py-24 sm:py-32 overflow-hidden" variants={sectionEnterVariants} initial="hidden" animate={isPreConsultationInView ? "visible" : "hidden"} viewport={{ once: true, amount: 0.2 }}>
+
+            <div 
+              style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '3rem 3rem' }} 
+              className="font-['Poppins',_sans-serif] min-h-screen relative"
+            >
+                {/* === MÓDOSÍTÁS: ÚJ, LETISZTULT SVG ELVÁLASZTÓ === */}
+                <div 
+                  className="absolute top-0 left-0 w-full overflow-hidden leading-[0] text-slate-900" // Ez a Testimonial Slider sötét háttérszíne
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        className="relative block w-full h-[60px] sm:h-[100px]"
+                        fill="currentColor"
+                    >
+                        <path d="M1200 0L0 0 0 120 1200 120 1200 0z" className="hidden" /> {/* Eltartja a méretet */}
+                        <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"></path>
+                    </svg>
+                </div>
+                
+                <motion.section 
+                  ref={preConsultationSectionRef} 
+                  className="relative pt-28 sm:pt-40 pb-24 sm:pb-32 overflow-hidden" // A felső padding helyet ad a hullámnak
+                  variants={sectionEnterVariants} 
+                  initial="hidden" 
+                  animate={isPreConsultationInView ? "visible" : "hidden"} 
+                  viewport={{ once: true, amount: 0.2 }}
+                >
+                    {/* A komponens többi része változatlan */}
                     <FloatingShapes />
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        {/* === ÚJ SZEKCIÓ KEZDETE === */}
                         <motion.div 
                             className="text-center mb-16"
                             initial="hidden"
@@ -313,7 +340,6 @@ const IntegratedApplication: React.FC = () => {
                                 Töltsd ki <span className={accentColor.text}>ha nem vagy benne biztos</span>, hogy mire is van szükséged:
                             </p>
                         </motion.div>
-                        {/* === ÚJ SZEKCIÓ VÉGE === */}
                         <div className="flex justify-center items-center gap-4 lg:gap-12">
                             <motion.div className="flex-1 hidden xl:flex justify-end items-center self-start" initial={{ opacity: 0, x: -100 }} animate={isPreConsultationInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}>
                                  <FaArrowTrendDown className="w-16 h-16 transform -scale-x-100 rotate-180 gradient-text" />
@@ -367,7 +393,16 @@ const IntegratedApplication: React.FC = () => {
                         </div>
                     </div>
                 </motion.section>
-                <motion.section ref={introSectionRef} id="bemutatkozas" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 font-['Poppins',_sans-serif]" variants={introSectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+
+                <motion.section 
+                    ref={introSectionRef} 
+                    id="bemutatkozas" 
+                    className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 font-['Poppins',_sans-serif]" 
+                    variants={introSectionVariants} 
+                    initial="hidden" 
+                    whileInView="visible" 
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     <div className="max-w-6xl mx-auto flex flex-col items-center">
                         <motion.h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-16 text-center" variants={introItemVariants}>Erről <span className={accentColor.text}>jó</span> ha tudsz:</motion.h2>
                         <motion.p variants={introItemVariants} className="text-center text-lg lg:text-xl text-slate-600 max-w-3xl mb-16 leading-relaxed">Jó hogy ittvagy!  Fontos tudnod, hogy minden vállalkozásra más-más előírás vonatkozik, emiatt nem mindig egyszerű ennek megfelelni! Érdemes tisztában lenned azzal hogy mire is kell figyelmet fordítanod.</motion.p>
@@ -378,21 +413,21 @@ const IntegratedApplication: React.FC = () => {
                                 <p className="text-slate-600 leading-relaxed">Többről van szó mint a tűzoltó készülék meglétéről. A Tűzvédelem egy proaktív stratégia, ami a probléma megelőzésére, és gyors reagálására szolgál. Fontos: Kötelező, ha rendelkezel bármilyen telephellyel!</p>
                             </motion.div>
                             <motion.div variants={introItemVariants} whileHover={{ y: -8, scale: 1.03 }} className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl">
-    <motion.div className="absolute w-24 h-24 -top-8 -right-8" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}>
-        <FaHelmetSafety className="w-full h-full text-yellow-500 drop-shadow-lg" />
-    </motion.div>
-    <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5">
-        <div className={`p-4 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500`}>
-            <FaHelmetSafety className="w-8 h-8 text-white" />
-        </div>
-        <h3 className="text-2xl font-bold text-slate-800">Munkavédelem</h3>
-    </motion.div>
-    <p className="text-slate-600 leading-relaxed">
-        Munkaadóként felelősséggel tartozol a kollégák iránt, és ezt a hatóságok is így gondolják.
-        <br />
-        <span className="font-bold">Fontos:</span> A “legveszélytelenebb” munkahelyeken is elvárják az alapvető munkavédelmi előírások betartását, hiszen az emberi élet érték.
-    </p>
-</motion.div>
+                                <motion.div className="absolute w-24 h-24 -top-8 -right-8" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}>
+                                    <FaHelmetSafety className="w-full h-full text-yellow-500 drop-shadow-lg" />
+                                </motion.div>
+                                <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5">
+                                    <div className={`p-4 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-500`}>
+                                        <FaHelmetSafety className="w-8 h-8 text-white" />
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-slate-800">Munkavédelem</h3>
+                                </motion.div>
+                                <p className="text-slate-600 leading-relaxed">
+                                    Munkaadóként felelősséggel tartozol a kollégák iránt, és ezt a hatóságok is így gondolják.
+                                    <br />
+                                    <span className="font-bold">Fontos:</span> A “legveszélytelenebb” munkahelyeken is elvárják az alapvető munkavédelmi előírások betartását, hiszen az emberi élet érték.
+                                </p>
+                            </motion.div>
                             <motion.div variants={introItemVariants} whileHover={{ y: -8, scale: 1.03 }} className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl">
                                 <motion.div className="absolute w-24 h-24 -top-8 -right-8" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}><HiDocument className="w-full h-full text-blue-500 drop-shadow-lg" /></motion.div>
                                 <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5"><div className={`p-4 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500`}><HiDocument className="w-8 h-8 text-white" /></div><h3 className="text-2xl font-bold text-slate-800">HACCP</h3></motion.div>
