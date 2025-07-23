@@ -50,12 +50,8 @@ const ANIMATION_VARIANTS = {
     },
 };
 
-// --- FŐ KOMPONENS (MÓDOSÍTOTT) ---
+// --- FŐ KOMPONENS ---
 const HeaderHero = () => {
-    // Ezekre a változókra már nincs szükség az új dizájnnal
-    // const mainHeadline = "Biztonság. Megfelelőség. Nyugalom.";
-    // const mainHeadlineWords = mainHeadline.split(" ");
-    // const headlineDurationEstimate = 0.8 + mainHeadlineWords.length * 0.08 + 0.8;
     const todoListText = "Eddig megvan: Ügyfél értékelések áthelyezése, Készen áll a biztonságra? - áthelyezése, Főbb szolgáltatások (4 kocka), Eredményeink módosítása, Anyagaink letöltése (3db kell), Kérdőív szélesebbre húzása, Pajzs Matrica csere, Készen áll a következő lépésre nem kell, Question1 elkészítése, PajzsMatrica , TűzésMunkavédelmiSzaki oldalnév.";
 
     return (
@@ -82,8 +78,16 @@ const HeaderHero = () => {
             </style>
             <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] bg-star-noise pt-[60px]">
                 <div className="fixed top-0 left-0 right-0 bg-slate-900/50 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50">
-                    <div className="font-bold text-lg tracking-wider">
-                        <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
+                    <div className="flex items-center gap-2"> {/* Flexbox a logó és cím rendezéséhez */}
+                        <div className="font-bold text-lg tracking-wider">
+                            <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
+                        </div>
+                        {/* Logó beillesztése */}
+                        <img
+                            src="/munkavedelmiszakiLOGO.png" // Feltételezi, hogy a kép a public mappában van
+                            alt="Munkavédelmi Szaki Logó"
+                            className="h-8 w-auto" // Állítsd be a megfelelő méretet
+                        />
                     </div>
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
                         <a href="mailto:markjani@janimark.hu" className="hover:text-cyan-300 transition-colors duration-300">info@tuz-munkavedelmiszaki.hu</a>
@@ -127,8 +131,6 @@ const HeaderHero = () => {
                 <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative">
                     <div className="max-w-5xl relative z-10 flex flex-col items-center">
                         
-                        {/* A lebegő ikon eltávolítva */}
-
                         <motion.div
                           className="flex flex-col items-center"
                           variants={ANIMATION_VARIANTS.container}
