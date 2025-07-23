@@ -137,11 +137,11 @@ const Footer: React.FC = () => {
                 Kiemelt Szolgáltatások
               </h3>
               <ul className="space-y-3 text-slate-400 text-base">
-                <motion.li variants={linkItemVariants}><Link href="/szolgaltatasok/kockazatertekeles" className="hover:text-white transition-colors duration-200">Kockázatértékelés</Link></motion.li>
-                <motion.li variants={linkItemVariants}><Link href="/szolgaltatasok/munkavedelem" className="hover:text-white transition-colors duration-200">Munkavédelem</Link></motion.li>
-                <motion.li variants={linkItemVariants}><Link href="/szolgaltatasok/tuzvedelem" className="hover:text-white transition-colors duration-200">Tűzvédelem</Link></motion.li>
-                <motion.li variants={linkItemVariants}><Link href="/szolgaltatasok/haccp" className="hover:text-white transition-colors duration-200">HACCP Rendszer</Link></motion.li>
-                <motion.li variants={linkItemVariants}><Link href="/szolgaltatasok/oktatas" className="hover:text-white transition-colors duration-200">Oktatások</Link></motion.li>
+                <motion.li variants={linkItemVariants}><Link href="/KockazatErtekelesPage" className="hover:text-white transition-colors duration-200">Kockázatértékelés</Link></motion.li>
+                <motion.li variants={linkItemVariants}><Link href="/MunkavedelemPage" className="hover:text-white transition-colors duration-200">Munkavédelem</Link></motion.li>
+                <motion.li variants={linkItemVariants}><Link href="/TuzvedelemPage" className="hover:text-white transition-colors duration-200">Tűzvédelem</Link></motion.li>
+                <motion.li variants={linkItemVariants}><Link href="/HaccpPage" className="hover:text-white transition-colors duration-200">HACCP Rendszer</Link></motion.li>
+                <motion.li variants={linkItemVariants}><Link href="/OktatasokPage" className="hover:text-white transition-colors duration-200">Oktatások</Link></motion.li>
               </ul>
             </motion.div>
 
