@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 // Eddigi betűtípus importja (pl. Inter) helyett jön a Poppins
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
 
 // Poppins konfigurálása a kívánt súlyokkal és stílusokkal
 // A 'variable' opcióval CSS változót hozunk létre, amit a Tailwind könnyen használhat
@@ -29,6 +30,7 @@ export default function RootLayout({
     // A 'font-sans' osztályt a body-n hagyjuk, ezt majd a Tailwind konfigurációban állítjuk be Poppins-ra
     <html lang="hu" className={`${poppins.variable} scroll-smooth`}>
       <body className={`font-sans antialiased bg-white`}>
+        <Analytics/>
         {children}
       </body>
     </html>
