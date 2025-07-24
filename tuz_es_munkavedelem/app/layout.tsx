@@ -1,4 +1,3 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 // Eddigi betűtípus importja (pl. Inter) helyett jön a Poppins
 import { Poppins } from "next/font/google";
@@ -16,8 +15,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "TUZ_ES_MUNKAVEDELEM",
-  description: "Professzionális tűz- és munkavédelmi megoldások.",
+  // Optimalizált Title: Maximálisan kihasználva a karaktereket, kulcsszavakkal dúsítva
+  title: "Tűz- és Munkavédelem Országosan | HACCP, Oktatás, Kockázatértékelés - tuz-munkavedelmiszaki.hu",
+  // Optimalizált Description: Részletes, kulcsszavakkal teli, cselekvésre ösztönző
+  description: "Professzionális tűzvédelem és munkavédelem Magyarországon. Szakértői HACCP rendszer kiépítés, kötelező oktatások, kockázatértékelés és jogszabályi megfelelés KKV-knak, ipari vállalatoknak. Ingyenes konzultáció!",
 };
 
 export default function RootLayout({
