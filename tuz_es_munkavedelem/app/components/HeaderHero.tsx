@@ -9,6 +9,7 @@ import {
     ExclamationTriangleIcon
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
+import Image from 'next/image'; // Importáljuk az Image komponenst
 
 // --- STÍLUS ÉS KONFIGURÁCIÓS KONSTANSOK ---
 const ACCENT_COLOR = {
@@ -82,7 +83,7 @@ const HeaderHero = () => {
                         <div className="font-bold text-lg tracking-wider">
                             <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
                         </div>
-                        {/* Logó beillesztése */}
+                        {/* Logó beillesztése a fejlécbe */}
                         <img
                             src="/munkavedelmiszakiLOGO.png" // Feltételezi, hogy a kép a public mappában van
                             alt="Munkavédelmi Szaki Logó"
@@ -119,6 +120,17 @@ const HeaderHero = () => {
                           initial="hidden"
                           animate="visible"
                         >
+                          {/* LOGÓ A FŐ CÍM ELÉ HELYEZVE ÉS NAGYOBB MÉRETBEN */}
+                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-4">
+                              <Image
+                                  src="/munkavedelmiszakiLOGO.png" // Feltételezi, hogy a kép a public mappában van
+                                  alt="Munkavédelmi Szaki Logó"
+                                  width={200} // Példa méret: 200px széles
+                                  height={200} // Példa méret: 200px magas
+                                  className="mx-auto" // Középre igazítás Tailwind CSS-sel
+                              />
+                          </motion.div>
+
                           <motion.h2
                               className="text-3xl md:text-4xl text-slate-300 mb-2"
                               variants={ANIMATION_VARIANTS.item}
