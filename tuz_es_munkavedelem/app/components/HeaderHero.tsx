@@ -86,7 +86,7 @@ const HeaderHero = () => {
                         <img
                             src="/munkavedelmiszakiLOGO.png" // Feltételezi, hogy a kép a public mappában van
                             alt="Munkavédelmi Szaki Logó"
-                            className="h-8 w-auto" // Állítsd be a megfelelő méretet
+                            className="h-12 w-auto" // Állítsd be a megfelelő méretet
                         />
                     </div>
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
