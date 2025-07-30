@@ -81,7 +81,8 @@ const HeaderHero = () => {
                 {/* Navbar módosítások */}
                 <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50 border-b border-slate-700">
                     <div className="flex items-center gap-2">
-                        <div className="font-bold text-lg tracking-wider">
+                        {/* MunkavédelmiSzaki szöveg igazítása */}
+                        <div className="font-bold text-lg tracking-wider relative top-[2px]">
                             <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
                         </div>
                         <img
@@ -118,8 +119,8 @@ const HeaderHero = () => {
                           initial="hidden"
                           animate="visible"
                         >
-                          {/* Logó a fő cím felett, nagyobbra és beállóval */}
-                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-[-20px] z-20"> {/* Itt módosítottam az értéket! */}
+                          {/* Logó a fő cím felett, nagyobb méretben és elválasztva */}
+                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-8 z-20"> {/* Módosítva: pozitív margó */}
                               <Image
                                   src="/munkavedelmiszakiLOGO.png"
                                   alt="Munkavédelmi Szaki Logó"
