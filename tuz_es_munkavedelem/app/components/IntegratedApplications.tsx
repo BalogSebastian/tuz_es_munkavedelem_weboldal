@@ -26,6 +26,7 @@ import {
 } from '@heroicons/react/24/solid';
 
 import { FaArrowTrendDown, FaHelmetSafety } from 'react-icons/fa6';
+import { IoArrowUndoSharp} from 'react-icons/io5'; // Importálva az új ikon
 import { HiDocument } from 'react-icons/hi';
 
 import Link from 'next/link';
@@ -321,22 +322,16 @@ const IntegratedApplication: React.FC = () => {
                     </svg>
                 </div>
                 
-                {/* FaArrowTrendDown nyilak elhelyezése a hullám *fölött*, abszolút pozícionálva, sárgára színezve */}
+                {/* IoArrowUndoSharp nyilak elhelyezése a hullám *fölött*, abszolút pozícionálva, sárgára színezve */}
                 <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
-                    {/* Balról le jobbra mutató nyíl */}
+                    {/* Balról lefelé mutató nyíl */}
                     <div
-                        className="absolute w-24 h-24 text-yellow-500" // Nagyobb méret, sárga szín
-                        style={{ top: '45px', left: '15%', transform: 'translateY(-50%)' }} // Pozíció és rotáció (alapértelmezett FaArrowTrendDown irány)
+                        className="absolute w-36 h-36 text-cyan-500" // Nagyobb méret, sárga szín
+                        style={{ top: '60px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} // Pozíció és rotáció lefelé és jobbra
                     >
-                        <FaArrowTrendDown className="w-full h-full" />
+                        <IoArrowUndoSharp className="w-full h-full" />
                     </div>
-                    {/* Jobbról le balra mutató nyíl */}
-                    <div
-                        className="absolute w-24 h-24 text-yellow-500" // Nagyobb méret, sárga szín
-                        style={{ top: '45px', right: '15%', transform: 'translateY(-50%) scaleX(-1)' }} // Pozíció és horizontális tükrözés
-                    >
-                        <FaArrowTrendDown className="w-full h-full" />
-                    </div>
+                    {/* Jobbról lefelé mutató nyíl */}
                 </div>
 
                 <motion.section 
@@ -368,7 +363,6 @@ const IntegratedApplication: React.FC = () => {
                         </motion.div>
                         <div className="flex justify-center items-center gap-4 lg:gap-12">
                             <motion.div className="flex-1 hidden xl:flex justify-end items-center self-start" initial={{ opacity: 0, x: -100 }} animate={isPreConsultationInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}>
-                                 <FaArrowTrendDown className="w-16 h-16 transform -scale-x-100 rotate-180 gradient-text" />
                             </motion.div>
                             <div className="w-full max-w-lg shrink-0">
                                 <motion.div className="w-full bg-white/60 p-6 sm:p-8 rounded-2xl shadow-2xl shadow-cyan-500/5 ring-1 ring-black/5 backdrop-blur-xl" initial={{ opacity: 0, scale: 0.9 }} animate={isPreConsultationInView ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}>
@@ -414,7 +408,6 @@ const IntegratedApplication: React.FC = () => {
                                 </motion.div>
                             </div>
                             <motion.div className="flex-1 hidden xl:flex justify-start items-center self-end" initial={{ opacity: 0, x: 100 }} animate={isPreConsultationInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}>
-                               <FaArrowTrendDown className="w-16 h-16 gradient-text" />
                             </motion.div>
                         </div>
                     </div>
