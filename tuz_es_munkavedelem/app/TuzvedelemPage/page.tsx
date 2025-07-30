@@ -137,14 +137,14 @@ const TuzvedelemPage: React.FC = () => {
           className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold ${customAccentColor.lightText} mb-6 text-center`}
           variants={itemVariants}
         >
-          Komplex <span className={customAccentColor.primary}>Tűzvédelmi</span> Megoldások Vállalkozása Számára
+          Országos <span className={customAccentColor.primary}>Tűzvédelem</span> és Tűzbiztonság Vállalkozásoknak
         </motion.h1>
 
         <motion.p
           className={`${customAccentColor.lightText} text-lg sm:text-xl leading-relaxed mb-12 text-center max-w-4xl mx-auto`}
           variants={itemVariants}
         >
-          A **tűzvédelem** nem pusztán szabályok összessége, hanem egy átfogó, életmentő stratégia, amely a jogszabályi megfelelésen túl, az Ön értékeinek és munkatársai biztonságának védelmét szolgálja. Egyetlen gyufa is elegendő lehet egy katasztrófához – mi segítünk, hogy felkészült legyen.
+          A **tűzvédelem** nem pusztán szabályok összessége, hanem egy átfogó, életmentő stratégia, amely a jogszabályi megfelelésen túl, az Ön értékeinek és munkatársai biztonságának védelmét szolgálja **Magyarországon**. Szakértőink országosan segítenek a tűzbiztonság megteremtésében, hogy vállalkozása felkészült legyen a váratlan helyzetekre. Egyetlen gyufa is elegendő lehet egy katasztrófához – mi segítünk, hogy felkészült legyen.
         </motion.p>
 
         {/* Célok szekció */}
