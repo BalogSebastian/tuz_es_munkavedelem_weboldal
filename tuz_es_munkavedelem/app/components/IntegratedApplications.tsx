@@ -26,7 +26,7 @@ import {
 } from '@heroicons/react/24/solid';
 
 import { FaArrowTrendDown, FaHelmetSafety } from 'react-icons/fa6';
-import { IoArrowUndoSharp} from 'react-icons/io5'; // Importálva az új ikon
+import { IoArrowUndoSharp} from 'react-icons/io5'; 
 import { HiDocument } from 'react-icons/hi';
 
 import Link from 'next/link';
@@ -322,27 +322,26 @@ const IntegratedApplication: React.FC = () => {
                     </svg>
                 </div>
                 
-                {/* IoArrowUndoSharp nyilak elhelyezése a hullám *fölött*, abszolút pozícionálva, sárgára színezve */}
+                {/* IoArrowUndoSharp nyilak elhelyezése a hullám *fölött* */}
                 <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
                     {/* Balról lefelé mutató nyíl */}
                     <div
-                        className="absolute w-36 h-36 text-cyan-500" // Nagyobb méret, sárga szín
-                        style={{ top: '60px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} // Pozíció és rotáció lefelé és jobbra
+                        className="absolute w-36 h-36 text-cyan-500" 
+                        style={{ top: '60px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} 
                     >
                         <IoArrowUndoSharp className="w-full h-full" />
                     </div>
-                    {/* Jobbról lefelé mutató nyíl */}
                 </div>
 
+                {/* Section 1: Quiz */}
                 <motion.section 
                   ref={preConsultationSectionRef} 
-                  className="relative pt-28 sm:pt-40 pb-24 sm:pb-32 overflow-hidden" // A felső padding helyet ad a hullámnak
+                  className="relative pt-28 sm:pt-40 pb-24 sm:pb-32 overflow-hidden" 
                   variants={sectionEnterVariants} 
                   initial="hidden" 
                   animate={isPreConsultationInView ? "visible" : "hidden"} 
                   viewport={{ once: true, amount: 0.2 }}
                 >
-                    {/* A komponens többi része változatlan */}
                     <FloatingShapes />
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                         <motion.div 
@@ -413,6 +412,18 @@ const IntegratedApplication: React.FC = () => {
                     </div>
                 </motion.section>
 
+                {/* ÚJ: FaArrowTrendDown nyíl a szekciók közötti résben */}
+                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20" 
+                    style={{ 
+                        top: '50%', 
+                        right: '15%', 
+                        transform: 'translateY(-50%) rotate(300deg)' // Felfelé és jobbra mutat
+                    }}
+                >
+                    <IoArrowUndoSharp className="w-full h-full" />
+                </div>
+
+                {/* Section 2: Intro (Erről jó ha tudsz) */}
                 <motion.section 
                     ref={introSectionRef} 
                     id="bemutatkozas" 
