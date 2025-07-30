@@ -9,7 +9,7 @@ import {
     ExclamationTriangleIcon
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import Image from 'next/image'; // Importáljuk az Image komponenst
+import Image from 'next/image';
 
 // --- STÍLUS ÉS KONFIGURÁCIÓS KONSTANSOK ---
 const ACCENT_COLOR = {
@@ -78,16 +78,16 @@ const HeaderHero = () => {
                 `}
             </style>
             <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] bg-star-noise pt-[60px]">
-                <div className="fixed top-0 left-0 right-0 bg-slate-900/50 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50">
-                    <div className="flex items-center gap-2"> {/* Flexbox a logó és cím rendezéséhez */}
+                {/* Navbar módosítások */}
+                <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50 border-b border-slate-700">
+                    <div className="flex items-center gap-2">
                         <div className="font-bold text-lg tracking-wider">
                             <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
                         </div>
-                        {/* Logó beillesztése a fejlécbe */}
                         <img
-                            src="/munkavedelmiszakiLOGO.png" // Feltételezi, hogy a kép a public mappában van
+                            src="/munkavedelmiszakiLOGO.png"
                             alt="Munkavédelmi Szaki Logó"
-                            className="h-12 w-auto" // Állítsd be a megfelelő méretet
+                            className="h-10 w-auto"
                         />
                     </div>
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
@@ -109,8 +109,6 @@ const HeaderHero = () => {
                     </motion.div>
                 </div>
 
-              
-
                 <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative">
                     <div className="max-w-5xl relative z-10 flex flex-col items-center">
                         
@@ -120,33 +118,33 @@ const HeaderHero = () => {
                           initial="hidden"
                           animate="visible"
                         >
-                          {/* LOGÓ A FŐ CÍM ELÉ HELYEZVE ÉS NAGYOBB MÉRETBEN */}
-                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-4">
+                          {/* Logó a fő cím felett, nagyobbra és beállóval */}
+                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-[-20px] z-20"> {/* Itt módosítottam az értéket! */}
                               <Image
-                                  src="/munkavedelmiszakiLOGO.png" // Feltételezi, hogy a kép a public mappában van
+                                  src="/munkavedelmiszakiLOGO.png"
                                   alt="Munkavédelmi Szaki Logó"
-                                  width={200} // Példa méret: 200px széles
-                                  height={200} // Példa méret: 200px magas
-                                  className="mx-auto" // Középre igazítás Tailwind CSS-sel
+                                  width={300}
+                                  height={300}
+                                  className="mx-auto"
                               />
                           </motion.div>
 
                           <motion.h2
-                              className="text-3xl md:text-4xl text-slate-300 mb-2"
+                              className="text-3xl md:text-4xl text-slate-300 mb-2 z-10"
                               variants={ANIMATION_VARIANTS.item}
                           >
                               Nem tudod hogyan tovább?
                           </motion.h2>
 
                           <motion.h1
-                              className="text-5xl sm:text-7xl md:text-8xl font-black mb-8 leading-tight tracking-tighter text-white"
+                              className="text-5xl sm:text-7xl md:text-8xl font-black mb-8 leading-tight tracking-tighter text-white z-10"
                               variants={ANIMATION_VARIANTS.item}
                           >
                               Nyugalom, mi tudjuk.
                           </motion.h1>
 
                           <motion.p
-                              className="text-lg md:text-xl mb-12 text-slate-300 max-w-3xl font-medium"
+                              className="text-lg md:text-xl mb-12 text-slate-300 max-w-3xl font-medium z-10"
                               variants={ANIMATION_VARIANTS.item}
                           >
                               Segítünk kijutni a jogszabályi útvesztőből, és átláthatóvá tenni a Tűz, Munkavédelem, vagy akár a HACCP kérdéseit!
