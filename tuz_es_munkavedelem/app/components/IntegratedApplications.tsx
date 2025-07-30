@@ -28,6 +28,7 @@ import {
 import { FaArrowTrendDown, FaHelmetSafety } from 'react-icons/fa6';
 import { IoArrowUndoSharp} from 'react-icons/io5'; 
 import { HiDocument } from 'react-icons/hi';
+import { IoArrowRedo } from "react-icons/io5";
 
 import Link from 'next/link';
 
@@ -417,10 +418,10 @@ const IntegratedApplication: React.FC = () => {
                     style={{ 
                         top: '50%', 
                         right: '15%', 
-                        transform: 'translateY(-50%) rotate(300deg)' // Felfelé és jobbra mutat
+                        transform: 'translateY(-50%) rotate(150deg)' // Felfelé és jobbra mutat
                     }}
                 >
-                    <IoArrowUndoSharp className="w-full h-full" />
+                    <IoArrowRedo className="w-full h-full" />
                 </div>
 
                 {/* Section 2: Intro (Erről jó ha tudsz) */}
