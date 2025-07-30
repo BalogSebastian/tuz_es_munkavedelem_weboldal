@@ -80,9 +80,10 @@ const HeaderHero = () => {
             <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] bg-star-noise pt-[60px]">
                 {/* Navbar módosítások */}
                 <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50 border-b border-slate-700">
-                    <div className="flex items-center gap-2">
+                    {/* Itt módosítottam a gap-et gap-1-re */}
+                    <div className="flex items-center gap-1">
                         {/* MunkavédelmiSzaki szöveg igazítása */}
-                        <div className="font-bold text-lg tracking-wider relative top-[2px]">
+                        <div className="font-bold text-lg tracking-wider relative top-[5px]">
                             <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
                         </div>
                         <img
@@ -110,7 +111,8 @@ const HeaderHero = () => {
                     </motion.div>
                 </div>
 
-                <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative">
+                {/* Fő tartalom feljebb mozgatva */}
+                <div className="flex-grow flex flex-col items-center p-4 sm:p-8 text-center relative pt-[10vh] pb-[10vh]">
                     <div className="max-w-5xl relative z-10 flex flex-col items-center">
                         
                         <motion.div
@@ -119,8 +121,8 @@ const HeaderHero = () => {
                           initial="hidden"
                           animate="visible"
                         >
-                          {/* Logó a fő cím felett, nagyobb méretben és elválasztva */}
-                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-8 z-20"> {/* Módosítva: pozitív margó */}
+                          {/* Logó a fő cím felett, közelebb a szöveghez */}
+                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-2 z-20">
                               <Image
                                   src="/munkavedelmiszakiLOGO.png"
                                   alt="Munkavédelmi Szaki Logó"
