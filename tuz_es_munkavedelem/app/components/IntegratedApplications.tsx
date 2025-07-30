@@ -321,6 +321,24 @@ const IntegratedApplication: React.FC = () => {
                     </svg>
                 </div>
                 
+                {/* FaArrowTrendDown nyilak elhelyezése a hullám *fölött*, abszolút pozícionálva, sárgára színezve */}
+                <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
+                    {/* Balról le jobbra mutató nyíl */}
+                    <div
+                        className="absolute w-24 h-24 text-yellow-500" // Nagyobb méret, sárga szín
+                        style={{ top: '45px', left: '15%', transform: 'translateY(-50%)' }} // Pozíció és rotáció (alapértelmezett FaArrowTrendDown irány)
+                    >
+                        <FaArrowTrendDown className="w-full h-full" />
+                    </div>
+                    {/* Jobbról le balra mutató nyíl */}
+                    <div
+                        className="absolute w-24 h-24 text-yellow-500" // Nagyobb méret, sárga szín
+                        style={{ top: '45px', right: '15%', transform: 'translateY(-50%) scaleX(-1)' }} // Pozíció és horizontális tükrözés
+                    >
+                        <FaArrowTrendDown className="w-full h-full" />
+                    </div>
+                </div>
+
                 <motion.section 
                   ref={preConsultationSectionRef} 
                   className="relative pt-28 sm:pt-40 pb-24 sm:pb-32 overflow-hidden" // A felső padding helyet ad a hullámnak
@@ -441,7 +459,7 @@ const IntegratedApplication: React.FC = () => {
                                 <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5"><div className={`p-4 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500`}><HiDocument className="w-8 h-8 text-white" /></div><h3 className="text-2xl font-bold text-slate-800">HACCP</h3></motion.div>
                                 <p className="text-slate-600 leading-relaxed">A HACCP az élelmiszer biztonság alapköve. Minden esetben ki kell dolgozni ha valaki élelmiszerrel foglalkozik, és természetesen e-szerint kell eljárni a későbbiekben. Fontos tudni, hogy nem üzemelhetsz HACCP rendszer nélkül, különben bármikor bezárathatják az egységedet!</p>
                             </motion.div>
-                        </div>
+                        </div>  
                         <motion.div variants={introItemVariants} className="text-center mt-20">
                             <p className="mb-6 text-xl text-slate-600">Beszélni szeretnék egy <span className={accentColor.text}>jó</span> szakival!</p>
                             <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }}><button onClick={() => setIsModalOpen(true)} className={`inline-block ${accentColor.bg} ${accentColor.hoverBg} text-white font-bold py-4 px-10 rounded-xl text-lg shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow} transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring}`}>online konzultáció egy szakemberrel</button></motion.div>
