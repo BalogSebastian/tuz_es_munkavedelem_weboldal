@@ -1,12 +1,11 @@
+// components/sections/HeaderHero.tsx
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-    ArrowRightIcon,
-    FireIcon,
-    DocumentCheckIcon,
-    ExclamationTriangleIcon
+    ExclamationTriangleIcon,
+    XMarkIcon
 } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -49,11 +48,15 @@ const ANIMATION_VARIANTS = {
             transition: { type: 'spring', stiffness: 100, damping: 20 },
         },
     },
+    disclaimer: {
+        hidden: { opacity: 0, scale: 0.9 },
+        visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } }
+    }
 };
 
 // --- FŐ KOMPONENS ---
 const HeaderHero = () => {
-    const todoListText = "Eddig megvan: Ügyfél értékelések áthelyezése, Készen áll a biztonságra? - áthelyezése, Főbb szolgáltatások (4 kocka), Eredményeink módosítása, Anyagaink letöltése (3db kell), Kérdőív szélesebbre húzása, Pajzs Matrica csere, Készen áll a következő lépésre nem kell, Question1 elkészítése, PajzsMatrica , TűzésMunkavédelmiSzaki oldalnév.";
+    const [showDisclaimer, setShowDisclaimer] = useState(true);
 
     return (
         <>
@@ -63,28 +66,75 @@ const HeaderHero = () => {
                 .cta-glow {
                   box-shadow: 0 0 15px ${ACCENT_COLOR.baseHex}40, 0 0 30px ${ACCENT_COLOR.baseHex}30, inset 0 0 10px ${ACCENT_COLOR.baseHex}20;
                 }
-                .bg-star-noise::before {
-                  content: '';
-                  position: absolute;
-                  top: 0; left: 0; right: 0; bottom: 0;
-                  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"%3E%3Crect fill="%230f172a" width="800" height="800"/%3E%3Cg fill-opacity="0.15"%3E%3Ccircle fill="%2303BABE" cx="400" cy="400" r="100"/%3E%3Ccircle fill="%231e293b" cx="400" cy="400" r="30"/%3E%3Ccircle fill="%23e2e8f0" cx="100" cy="100" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="700" cy="100" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="100" cy="700" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="700" cy="700" r="5"/%3E%3Ccircle fill="%23e2e8f0" cx="250" cy="250" r="2"/%3E%3Ccircle fill="%23e2e8f0" cx="550" cy="250" r="2"/%3E%3Ccircle fill="%23e2e8f0" cx="250" cy="550" r="2"/%3E%3Ccircle fill="%23e2e8f0" cx="550" cy="550" r="2"/%3E%3C/g%3E%3C/svg%3E');
-                  background-size: 400px;
-                  opacity: 0.2;
-                  z-index: -1;
-                }
                 .cta-glow-red {
                     box-shadow: 0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20;
                 }
+                .cta-grid-pattern { 
+                  background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px), linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px); 
+                  background-size: 4rem 4rem; 
+                }
+                .loading-dots span {
+                    animation: blink 1.4s infinite both;
+                }
+                .loading-dots span:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+                .loading-dots span:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+                @keyframes blink {
+                    0% { opacity: .2; }
+                    20% { opacity: 1; }
+                    100% { opacity: .2; }
+                }
                 `}
             </style>
-            <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] bg-star-noise pt-[60px]">
-                {/* Navbar módosítások */}
+
+            {/* Disclaimer / Tájékoztató ablak */}
+            {showDisclaimer && (
+                 <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[100] p-4 font-['Poppins',_sans-serif]">
+                    <motion.div 
+                        className="relative bg-slate-900 border-2 border-red-500/50 rounded-2xl shadow-2xl shadow-red-500/20 max-w-lg w-full p-8 text-white text-center overflow-hidden"
+                        variants={ANIMATION_VARIANTS.disclaimer}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                    >
+                         <div className="absolute top-0 left-0 w-full h-1 bg-red-600 cta-glow-red"></div>
+                         <button 
+                            onClick={() => setShowDisclaimer(false)}
+                            className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"
+                            aria-label="Bezárás"
+                         >
+                            <XMarkIcon className="h-7 w-7" />
+                         </button>
+                         <div className="flex flex-col items-center">
+                            <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mb-4"/>
+                            <h3 className="text-2xl font-bold text-red-400 mb-2">Rendszerinformáció</h3>
+                            <p className="text-slate-300 mb-4">
+                                A háttérben a rendszer stabilizálása és frissítése zajlik. Kérjük türelmét.
+                            </p>
+                            <div className="flex items-center justify-center space-x-2 my-4">
+                               <p className="text-lg font-medium text-slate-400">Betöltés</p>
+                               <div className="loading-dots text-2xl font-bold text-red-400">
+                                   <span>.</span><span>.</span><span>.</span>
+                               </div>
+                            </div>
+                            <div className="mt-4 p-3 bg-slate-800/50 border border-slate-700 rounded-lg w-full">
+                                <p className="text-sm text-slate-400">Várható éles indulás:</p>
+                                <p className="text-lg font-bold text-cyan-300">Augusztus 4. 23:59</p>
+                            </div>
+                         </div>
+                    </motion.div>
+                </div>
+            )}
+
+            <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px]">
+                {/* Navbar */}
                 <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50 border-b border-slate-700">
-                    {/* Itt módosítottam a gap-et gap-1-re */}
                     <div className="flex items-center gap-1">
-                        {/* MunkavédelmiSzaki szöveg igazítása */}
                         <div className="font-bold text-lg tracking-wider relative top-[5px]">
-                            <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white"></span><span className={ACCENT_COLOR.textLight}></span><span className="text-white">Szaki</span>
+                            <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white">Szaki</span>
                         </div>
                         <img
                             src="/munkavedelmiszakiLOGO.png"
@@ -93,8 +143,8 @@ const HeaderHero = () => {
                         />
                     </div>
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
-                        <a href="mailto:markjani@janimark.hu" className="hover:text-cyan-300 transition-colors duration-300">info@tuz-munkavedelmiszaki.hu</a>
-                        <a href="tel:+36209791719" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36302722571</a>
+                        <a href="mailto:info@tuz-munkavedelmiszaki.hu" className="hover:text-cyan-300 transition-colors duration-300">info@tuz-munkavedelmiszaki.hu</a>
+                        <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36302722571</a>
                     </div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Link
@@ -111,8 +161,8 @@ const HeaderHero = () => {
                     </motion.div>
                 </div>
 
-                {/* Fő tartalom feljebb mozgatva */}
-                <div className="flex-grow flex flex-col items-center p-4 sm:p-8 text-center relative pt-[10vh] pb-[10vh]">
+                {/* Fő tartalom */}
+                <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative">
                     <div className="max-w-5xl relative z-10 flex flex-col items-center">
                         
                         <motion.div
@@ -121,7 +171,6 @@ const HeaderHero = () => {
                           initial="hidden"
                           animate="visible"
                         >
-                          {/* Logó a fő cím felett, közelebb a szöveghez */}
                           <motion.div variants={ANIMATION_VARIANTS.item} className="mb-2 z-20">
                               <Image
                                   src="/munkavedelmiszakiLOGO.png"
@@ -129,6 +178,7 @@ const HeaderHero = () => {
                                   width={300}
                                   height={300}
                                   className="mx-auto"
+                                  priority
                               />
                           </motion.div>
 

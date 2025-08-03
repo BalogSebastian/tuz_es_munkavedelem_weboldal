@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SparklesIcon } from '@heroicons/react/24/solid';
-// ÚJ: Ikon importálása
-import { FaArrowTrendDown } from 'react-icons/fa6';
+// MÓDOSÍTÁS: Ikon importálása
+import { IoArrowRedo } from 'react-icons/io5';
 
 // --- SZÍNPALETTA (Változatlan) ---
 const accentColor = {
@@ -37,8 +37,6 @@ const itemVariants = {
 // Típus a háttérelemek stílusához
 interface BackgroundElementStyle extends React.CSSProperties {}
 
-// TÖRÖLVE: Az AnimatedDecorativeArrow komponens el lett távolítva
-
 const CallToActionSection: React.FC = () => {
   const [backgroundElementStyles, setBackgroundElementStyles] = useState<BackgroundElementStyle[]>([]);
 
@@ -65,7 +63,39 @@ const CallToActionSection: React.FC = () => {
             background-size: 4rem 4rem;
         }
       `}</style>
-      <section className="bg-slate-900 py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative font-['Poppins',_sans-serif] overflow-hidden">
+      <section className="bg-slate-900 pt-24 sm:pt-32 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 relative font-['Poppins',_sans-serif] overflow-hidden">
+        
+        {/* === MÓDOSÍTÁS KEZDETE === */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                className="relative block w-full h-[100px] sm:h-[150px]"
+            >
+                <defs>
+                    <pattern id="gridPatternLight" patternUnits="userSpaceOnUse" width="48" height="48">
+                        <rect width="48" height="48" fill="#ffffff" />
+                        <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(3, 186, 190, 0.15)" strokeWidth="1" />
+                    </pattern>
+                </defs>
+                <path
+                    d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
+                    fill="url(#gridPatternLight)"
+                ></path>
+            </svg>
+        </div>
+
+        <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
+            <div
+                className="absolute w-36 h-36 text-cyan-400"
+                style={{ top: '50%', right: '15%', transform: 'translateY(-50%) rotate(150deg)' }}
+            >
+                <IoArrowRedo className="w-full h-full" />
+            </div>
+        </div>
+        {/* === MÓDOSÍTÁS VÉGE === */}
+
         <div className="absolute inset-0 cta-grid-pattern z-0"></div>
 
         {backgroundElementStyles.map((style, i) => (
@@ -92,21 +122,7 @@ const CallToActionSection: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
         >
-            {/* BAL OLDALI NYÍL: Módosítva */}
-            <motion.div
-              className="absolute -top-20 left-0 w-24 h-24 hidden xl:block text-red-500"
-              variants={itemVariants}
-            >
-              <FaArrowTrendDown className="w-full h-full transform -scale-x-100" />
-            </motion.div>
-
-            {/* JOBB OLDALI NYÍL: Módosítva */}
-            <motion.div
-              className="absolute bottom-0 right-0 w-24 h-24 hidden xl:block text-red-500"
-              variants={itemVariants}
-            >
-              <FaArrowTrendDown className="w-full h-full" />
-            </motion.div>
+            {/* TÖRÖLVE: Eredeti nyilak eltávolítva */}
 
             <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                 <motion.h2 

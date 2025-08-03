@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import { ChevronDownIcon, ExclamationCircleIcon, SparklesIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -44,7 +44,27 @@ const FaqAccordion: React.FC = () => {
       }}
       initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={sectionVariants}
     >
-      <div className="container mx-auto px-6">
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1200 120"
+              preserveAspectRatio="none"
+              className="relative block w-full h-[100px] sm:h-[150px]"
+          >
+              <defs>
+                  <pattern id="gridPatternDarkFaq" patternUnits="userSpaceOnUse" width="64" height="64">
+                      <rect width="64" height="64" fill="#0f172a" />
+                      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" />
+                  </pattern>
+              </defs>
+              <path
+                  d="M-0.00,49.98 C149.99,150.00 249.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,0.00 L-0.00,0.00 Z"
+                  fill="url(#gridPatternDarkFaq)"
+              ></path>
+          </svg>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div className="text-center mb-16 lg:mb-20" variants={faqItemVariants}>
           <h2 className={`text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4`}>
             Gyakran Ismételt <span className={accentColor.text}>Kérdések</span>
@@ -103,8 +123,9 @@ const FaqAccordion: React.FC = () => {
             <p className="text-lg text-slate-600 mb-6">Nem találta a választ? Vegye fel velünk a kapcsolatot!</p>
             <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }} >
                 <Link href="/kapcsolat"
-                    className={`inline-block bg-[#03BABE] hover:bg-cyan-600 text-white font-semibold py-4 px-10 rounded-xl text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2`}
+                    className={`inline-flex items-center bg-[#03BABE] hover:bg-cyan-600 text-white font-semibold py-4 px-10 rounded-xl text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2`}
                 >
+                    <SparklesIcon className="w-6 h-6 mr-2" />
                     Kapcsolatfelvétel
                 </Link>
             </motion.div>

@@ -17,6 +17,7 @@ import {
     ChevronRightIcon
 } from '@heroicons/react/24/solid';
 import { FaArrowTrendDown } from 'react-icons/fa6';
+import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5'; // MÓDOSÍTÁS: Új nyilak importálása
 
 // --- EGYSÉGESÍTETT CIÁN SZÍNSÉMA ---
 const accentColor = {
@@ -173,24 +174,60 @@ const DownloadableDocsSection: React.FC = () => {
     <>
     <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-        /* A .bg-grid-pattern class már nem használatos, a stílus inline került */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     `}</style>
     <section
-        className="py-24 lg:py-32 font-['Poppins',_sans-serif] relative overflow-hidden"
+        className="pt-24 lg:py-32 font-['Poppins',_sans-serif] relative"
         style={{
             backgroundColor: '#ffffff',
             backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`,
             backgroundSize: '3rem 3rem',
         }}
     >
+      {/* === MÓDOSÍTÁS KEZDETE === */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1200 120"
+              preserveAspectRatio="none"
+              className="relative block w-full h-[100px] sm:h-[150px]"
+          >
+              <defs>
+                  <pattern id="gridPatternDark" patternUnits="userSpaceOnUse" width="64" height="64">
+                      {/* bg-slate-900 szín */}
+                      <rect width="64" height="64" fill="#0f172a" />
+                      {/* Halvány rácsvonalak */}
+                      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" />
+                  </pattern>
+              </defs>
+              <path
+                  d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
+                  fill="url(#gridPatternDark)"
+              ></path>
+          </svg>
+      </div>
+
+      <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
+          <div
+              className="absolute w-36 h-36 text-cyan-500"
+              style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
+          >
+              <IoArrowUndoSharp className="w-full h-full" />
+          </div>
+          <div
+              className="absolute w-36 h-36 text-cyan-400"
+              style={{ top: '180%', right: '10%', transform: 'translateY(-50%) rotate(150deg)' }}
+          >
+              <IoArrowRedo className="w-full h-full" />
+          </div>
+      </div>
+      {/* === MÓDOSÍTÁS VÉGE === */}
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         <div className="flex justify-center items-start gap-8 lg:gap-12">
-            <div className="flex-1 hidden xl:flex justify-end mt-10">
-                <FaArrowTrendDown className="w-24 h-24 text-cyan-400/80 transform -scale-x-100" />
-            </div>
+            
 
             <motion.div
               className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
@@ -207,9 +244,7 @@ const DownloadableDocsSection: React.FC = () => {
               </p>
             </motion.div>
             
-            <div className="flex-1 hidden xl:flex justify-start mt-10">
-                <FaArrowTrendDown className="w-24 h-24 text-cyan-400/80" />
-            </div>
+            
         </div>
         
         <div className="relative max-w-5xl mx-auto">

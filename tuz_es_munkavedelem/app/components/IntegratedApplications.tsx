@@ -19,6 +19,7 @@ import {
   CheckCircleIcon,
   PhoneIcon
 } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/solid';
 import {
     FireIcon as FireIconSolid,
     ShieldCheckIcon as ShieldIconSolid,
@@ -467,7 +468,22 @@ const IntegratedApplication: React.FC = () => {
                         </div>  
                         <motion.div variants={introItemVariants} className="text-center mt-20">
                             <p className="mb-6 text-xl text-slate-600">Beszélni szeretnék egy <span className={accentColor.text}>jó</span> szakival!</p>
-                            <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }}><button onClick={() => setIsModalOpen(true)} className={`inline-block ${accentColor.bg} ${accentColor.hoverBg} text-white font-bold py-4 px-10 rounded-xl text-lg shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow} transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring}`}>online konzultáció egy szakemberrel</button></motion.div>
+                            <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }}>
+    <button 
+        onClick={() => setIsModalOpen(true)} 
+        className={`
+            inline-flex items-center 
+            ${accentColor.bg} ${accentColor.hoverBg} text-white 
+            font-bold py-4 px-10 rounded-xl text-lg 
+            shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow} 
+            transition-all duration-300 ease-in-out 
+            focus:outline-none focus:ring-4 ${accentColor.ring}
+        `}
+    >
+        <SparklesIcon className="w-6 h-6 mr-2" />
+        online konzultáció egy szakemberrel
+    </button>
+</motion.div>
                         </motion.div>
                     </div>
                 </motion.section>

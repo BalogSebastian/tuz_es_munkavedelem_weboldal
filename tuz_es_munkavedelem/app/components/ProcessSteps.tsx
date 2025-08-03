@@ -9,6 +9,7 @@ import {
     CreditCardIcon,
 } from '@heroicons/react/24/outline';
 import { FaArrowTrendDown } from 'react-icons/fa6';
+import { SparklesIcon } from '@heroicons/react/24/solid';
 
 // --- DEKORATÍV SVG KOMPONENSEK ---
 const BlueprintCorner: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.5 }) => {
@@ -177,22 +178,24 @@ const ProcessSteps: React.FC = () => {
               </p>
           </div>
 
-          <div className="text-center mt-10 lg:mt-12">
-            <motion.button
-                whileHover={{ scale: 1.05, y: -5, boxShadow: `0 10px 20px -5px ${accentColor.base}60` }}
-                whileTap={{ scale: 0.98 }}
-                type="button"
-                className={`
-                    ${accentColor.bg} ${accentColor.hoverBg} text-white
-                    font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-                    shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
-                    transition-all duration-300 ease-in-out
-                    focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
-                `}
-            >
-              Ingyenes konzultációt foglalok
-            </motion.button>
-          </div>
+<div className="text-center mt-10 lg:mt-12">
+    <motion.button
+        whileHover={{ scale: 1.05, y: -5, boxShadow: `0 10px 20px -5px ${accentColor.base}60` }}
+        whileTap={{ scale: 0.98 }}
+        type="button"
+        className={`
+            inline-flex items-center
+            ${accentColor.bg} ${accentColor.hoverBg} text-white
+            font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
+            shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
+            transition-all duration-300 ease-in-out
+            focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
+        `}
+    >
+      <SparklesIcon className="w-6 h-6 mr-2" />
+      Ingyenes konzultációt foglalok
+    </motion.button>
+</div>
         </div>
       </section>
     </>

@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence, Variants } from 'framer-motion';
 import {
   ShieldCheckIcon,
   AcademicCapIcon,
@@ -11,10 +11,16 @@ import {
   ClipboardDocumentCheckIcon,
   DocumentTextIcon,
   GlobeAltIcon,
+  XMarkIcon,
+  CheckCircleIcon,
+  PhoneIcon
 } from '@heroicons/react/24/outline'; // Megtartjuk az outline ikonokat
+import { SparklesIcon } from '@heroicons/react/24/solid';
 
 // Importáljuk a solid (kitöltött) FireIcon-t
 import { FireIcon as FireIconSolid } from '@heroicons/react/24/solid'; // <-- Ezt importáltuk!
+
+import { IoArrowUndoSharp, IoArrowRedo } from "react-icons/io5";
 
 // --- ÚJ: PIROS TŰZ IKON (KITÖLTÖTT) ---
 const FireFlameIcon = ({ className }: { className?: string }) => {
@@ -202,47 +208,83 @@ const ServiceHighlightCards: React.FC = () => {
             background: rgba(255, 255, 255, 0.5);
         }
       `}</style>
-      <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* --- MÓDOSÍTOTT CÍMSOR KONTÉNER --- */}
-          <div className="relative text-center mb-16 lg:mb-20">
-            <FireFlameIcon className="absolute -top-12 right-4 lg:right-20 w-32 h-32 opacity-20 -z-0 hidden lg:block" />
-            <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
-              Főbb <span className={accentColor.text}>szolgáltatásaink:</span>
-            </h2>
-            <p className="relative z-10 text-xl text-slate-600 max-w-3xl mx-auto">Jó helyen jársz! Itt mindent egy helyen megtalálsz!</p>
-          </div>
 
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10"
-            variants={cardListVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
+      {/* --- FŐ KONTÉNER --- */}
+      <div className="relative font-['Poppins',_sans-serif]">
+        {/* === HULLÁMOS SVG ELVÁLASZTÓ a fenti kódból kimásolva === */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="relative block w-full h-[60px] sm:h-[100px]"
           >
-            {servicesData.map((service) => (
-              <FlippableServiceCard key={service.id} service={service} />
-            ))}
-          </motion.div>
-
-          <div className="text-center mt-16 lg:mt-20">
-            <motion.button
-              whileHover={{ scale: 1.05, y: -5, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.4)' }}
-              whileTap={{ scale: 0.98 }}
-              type="button"
-              className={`
-                ${accentColor.bg} text-white
-                font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-                shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
-                transition-all duration-300 ease-in-out
-                focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
-              `}
-            >
-              Szolgáltatásaink Megtekintése
-            </motion.button>
-          </div>
+            <defs>
+              <pattern id="gridPatternWave" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="48" height="48" fill="#ffffff" />
+                <path d="M0 0.5L48 0.5" stroke="rgba(3, 186, 190, 0.15)" strokeWidth="1" />
+                <path d="M0.5 0L0.5 48" stroke="rgba(3, 186, 190, 0.15)" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z" fill="url(#gridPatternWave)"></path>
+          </svg>
         </div>
-      </section>
+        
+        {/* === NYILAK a fenti kódból kimásolva === */}
+        <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
+            <div
+                className="absolute w-36 h-36 text-cyan-500" 
+                style={{ top: '60px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} 
+            >
+                <IoArrowUndoSharp className="w-full h-full" />
+            </div>
+        </div>
+
+        {/* --- FŐ SZEKCIÓ --- */}
+        <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden pt-28 sm:pt-40">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* --- MÓDOSÍTOTT CÍMSOR KONTÉNER --- */}
+            <div className="relative text-center mb-16 lg:mb-20">
+              <FireFlameIcon className="absolute -top-12 right-4 lg:right-20 w-32 h-32 opacity-20 -z-0 hidden lg:block" />
+              <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
+                Főbb <span className={accentColor.text}>szolgáltatásaink:</span>
+              </h2>
+              <p className="relative z-10 text-xl text-slate-600 max-w-3xl mx-auto">Jó helyen jársz! Itt mindent egy helyen megtalálsz!</p>
+            </div>
+
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10"
+              variants={cardListVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.05 }}
+            >
+              {servicesData.map((service) => (
+                <FlippableServiceCard key={service.id} service={service} />
+              ))}
+            </motion.div>
+
+            <div className="text-center mt-16 lg:mt-20">
+  <motion.button
+    whileHover={{ scale: 1.05, y: -5, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.4)' }}
+    whileTap={{ scale: 0.98 }}
+    type="button"
+    className={`
+      inline-flex items-center
+      ${accentColor.bg} text-white
+      font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
+      shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
+      transition-all duration-300 ease-in-out
+      focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
+    `}
+  >
+    <SparklesIcon className="w-6 h-6 mr-2" />
+    Szolgáltatásaink Megtekintése
+  </motion.button>
+</div>
+          </div>
+        </section>
+      </div>
     </>
   );
 };

@@ -4,6 +4,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import { UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5'; // <-- MÓDOSÍTÁS: Nyilak importálása
 
 const AnimatedDecorativeArrow: React.FC<{ className?: string }> = ({ className }) => {
     return (
@@ -97,7 +98,39 @@ const StatsCounterSection: React.FC = () => {
             background-size: 4rem 4rem;
         }
       `}</style>
-      <section ref={sectionRef} className="py-24 sm:py-32 font-['Poppins',_sans-serif] bg-slate-900 text-white relative overflow-hidden">
+      <section ref={sectionRef} className="pt-24 sm:pt-32 pb-24 sm:pb-32 font-['Poppins',_sans-serif] bg-slate-900 text-white relative overflow-hidden">
+        
+        {/* === MÓDOSÍTÁS: Fehér hullám elválasztó === */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1200 120"
+              preserveAspectRatio="none"
+              className="relative block w-full h-[60px] sm:h-[100px]"
+          >
+              <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z" fill="#ffffff"></path>
+          </svg>
+        </div>
+
+        {/* === MÓDOSÍTÁS: Új nyilak (a korábbi komponensből) === */}
+        <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
+            <div
+                className="absolute w-36 h-36 text-cyan-500" 
+                style={{ top: '60px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} 
+            >
+                <IoArrowUndoSharp className="w-full h-full" />
+            </div>
+        </div>
+        <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20" 
+            style={{ 
+                top: '50%', 
+                right: '15%', 
+                transform: 'translateY(-50%) rotate(150deg)'
+            }}
+        >
+            <IoArrowRedo className="w-full h-full" />
+        </div>
+
         <div className="absolute inset-0 cta-grid-pattern z-0"></div>
         {backgroundElementStyles.map((style, i) => (
             <motion.div
@@ -109,9 +142,11 @@ const StatsCounterSection: React.FC = () => {
               transition={{ duration: 20 + Math.random() * 15, repeat: Infinity, repeatType: 'mirror', delay: i * 5, ease: 'easeInOut' }}
             />
         ))}
-
+        
+        {/* === MÓDOSÍTÁS: Eredeti nyilak kikommentelve ===
         <AnimatedDecorativeArrow className="absolute top-1/3 -translate-y-1/2 left-4 md:left-8 lg:left-12 w-32 h-32 text-red-500 hidden lg:block transform -scale-x-100" />
         <AnimatedDecorativeArrow className="absolute bottom-1/4 translate-y-1/2 right-4 md:right-8 lg:right-12 w-32 h-32 text-red-500 hidden lg:block" />
+        */}
 
         <div className="container mx-auto px-6 relative z-10">
            <div className="text-center mb-16 lg:mb-20">
@@ -133,7 +168,6 @@ const StatsCounterSection: React.FC = () => {
               </motion.p>
           </div>
 
-          {/* --- MÓDOSÍTÁS ITT KEZDŐDIK --- */}
           <div className="max-w-2xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-16 sm:gap-y-12 gap-x-8 text-center">
               {stats.map((stat, index) => (
@@ -164,7 +198,6 @@ const StatsCounterSection: React.FC = () => {
               ))}
             </div>
           </div>
-          {/* --- MÓDOSÍTÁS ITT ÉR VÉGET --- */}
 
           <motion.div
             className="mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden"
