@@ -33,8 +33,7 @@ const ProcessSteps: React.FC = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
       `}</style>
-      <section 
-        // A section kap z-indexet, és a padding módosítva lett, hogy helyet adjon a hullámnak
+      <section
         className="pt-20 lg:pt-28 pb-32 lg:pb-40 font-['Poppins',_sans-serif] relative z-20 overflow-hidden"
         style={{
             backgroundColor: '#ffffff',
@@ -52,7 +51,7 @@ const ProcessSteps: React.FC = () => {
         <div className="absolute top-[40%] right-[8%] w-20 h-20 transform rotate-12 hidden xl:block">
             <FaArrowTrendDown className="w-full h-full text-black/50" />
         </div>
-        
+
         <div className="absolute bottom-[15%] left-[8%] w-18 h-18 transform rotate-6 hidden xl:block">
             <FaArrowTrendDown className="w-full h-full text-black/50" />
         </div>
@@ -125,8 +124,7 @@ const ProcessSteps: React.FC = () => {
             </Link>
         </div>
         </div>
-        
-        {/* Hozzáadva: Alsó fehér hullám */}
+
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +134,7 @@ const ProcessSteps: React.FC = () => {
             >
                 <path
                     d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
-                    fill="#ffffff" 
+                    fill="#ffffff"
                 ></path>
             </svg>
         </div>

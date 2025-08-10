@@ -162,88 +162,102 @@ const DownloadableDocsSection: React.FC = () => {
             }
         `}</style>
         <section
-            className="pt-24 lg:py-32 font-['Poppins',_sans-serif] relative bg-white overflow-hidden cta-grid-pattern"
+            className="pt-24 lg:pt-32 pb-24 lg:pb-32 font-['Poppins',_sans-serif] relative bg-white overflow-hidden cta-grid-pattern"
         >
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1200 120"
-                preserveAspectRatio="none"
-                className="relative block w-full h-[100px] sm:h-[150px]"
-            >
-                <path
-                    d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
-                    fill="#0f172a"
-                ></path>
-            </svg>
-        </div>
-
-        <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
-            <div
-                className="absolute w-36 h-36 text-cyan-500"
-                style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
-            >
-                <IoArrowUndoSharp className="w-full h-full" />
-            </div>
-            <div
-                className="absolute w-36 h-36 text-cyan-400"
-                style={{ top: '180%', right: '10%', transform: 'translateY(-50%) rotate(150deg)' }}
-            >
-                <IoArrowRedo className="w-full h-full" />
-            </div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="flex justify-center items-start gap-8 lg:gap-12">
-                <div
-                className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
+            <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1200 120"
+                    preserveAspectRatio="none"
+                    className="relative block w-full h-[100px] sm:h-[150px]"
                 >
-                <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
-                <span>Töltsd le</span> <span className='text-black'>a számodra</span>  leghasznosabb <span className='text-black'>anyagunkat!</span>
-                </h2>
-                <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
-                Add meg az elérhetőségedet, hogy a <span className='text-cyan-500'>szakemberünk fel tudjon hívni</span>, és tudjon tanácsot adni<span className='text-cyan-500'> a te konkrét helyzetedre!</span> 
-                </p>
+                    <path
+                        d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
+                        fill="#0f172a"
+                    ></path>
+                </svg>
+            </div>
+
+            <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
+                <div
+                    className="absolute w-36 h-36 text-cyan-500"
+                    style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
+                >
+                    <IoArrowUndoSharp className="w-full h-full" />
+                </div>
+                <div
+                    className="absolute w-36 h-36 text-cyan-400"
+                    style={{ top: '180%', right: '10%', transform: 'translateY(-50%) rotate(150deg)' }}
+                >
+                    <IoArrowRedo className="w-full h-full" />
                 </div>
             </div>
-            <div className="relative max-w-5xl mx-auto">
-                <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
-                        {downloadableDocs.map(doc => (
-                            <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
-                                <DownloadCard
-                                    doc={doc}
-                                    formData={formData[doc.id]}
-                                    submitted={submitted[doc.id]}
-                                    handleChange={handleFormChange}
-                                    handleSubmit={handleFormSubmit}
-                                />
-                            </div>
-                        ))}
-                </div>
-                
-                {/* Navigációs Gombok */}
-                <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-8 hidden sm:flex">
-                    <button
-                        onClick={() => scroll('left')}
-                        disabled={!canScrollLeft}
-                        className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
-                        aria-label="Előző"
+            
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="flex justify-center items-start gap-8 lg:gap-12">
+                    <div
+                    className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
                     >
-                        <ChevronLeftIcon className="w-6 h-6 text-slate-700"/>
-                    </button>
+                    <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
+                    <span>Töltsd le</span> <span className='text-black'>a számodra</span>  leghasznosabb <span className='text-black'>anyagunkat!</span>
+                    </h2>
+                    <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
+                    Add meg az elérhetőségedet, hogy a <span className='text-cyan-500'>szakemberünk fel tudjon hívni</span>, és tudjon tanácsot adni<span className='text-cyan-500'> a te konkrét helyzetedre!</span> 
+                    </p>
+                    </div>
                 </div>
-                <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-8 hidden sm:flex">
-                    <button
-                        onClick={() => scroll('right')}
-                        disabled={!canScrollRight}
-                        className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
-                        aria-label="Következő"
-                    >
-                        <ChevronRightIcon className="w-6 h-6 text-slate-700"/>
-                    </button>
+                <div className="relative max-w-5xl mx-auto">
+                    <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                            {downloadableDocs.map(doc => (
+                                <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
+                                    <DownloadCard
+                                        doc={doc}
+                                        formData={formData[doc.id]}
+                                        submitted={submitted[doc.id]}
+                                        handleChange={handleFormChange}
+                                        handleSubmit={handleFormSubmit}
+                                    />
+                                </div>
+                            ))}
+                    </div>
+                    
+                    <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-8 hidden sm:flex">
+                        <button
+                            onClick={() => scroll('left')}
+                            disabled={!canScrollLeft}
+                            className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                            aria-label="Előző"
+                        >
+                            <ChevronLeftIcon className="w-6 h-6 text-slate-700"/>
+                        </button>
+                    </div>
+                    <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-8 hidden sm:flex">
+                        <button
+                            onClick={() => scroll('right')}
+                            disabled={!canScrollRight}
+                            className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                            aria-label="Következő"
+                        >
+                            <ChevronRightIcon className="w-6 h-6 text-slate-700"/>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            {/* --- HOZZÁADVA: Új, kisebb fehér hullám az aljára --- */}
+            <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1200 120"
+                    preserveAspectRatio="none"
+                    className="relative block w-full h-[60px] sm:h-[90px]"
+                >
+                    <path
+                        d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
+                        fill="#ffffff"
+                    ></path>
+                </svg>
+            </div>
         </section>
         </>
     );

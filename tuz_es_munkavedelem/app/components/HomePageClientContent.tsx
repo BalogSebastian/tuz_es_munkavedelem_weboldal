@@ -24,24 +24,13 @@ import IntegratedApplication from './IntegratedApplications';
 export default function HomePageClientContent() {
   return (
     <>
-      {/* Azok a komponensek, amiknek azonnal meg kell jelenniük, és nincsenek ssr:false opcióval */}
-      {/* Ide rakhatsz olyan komponenseket, amikben nincs ssr:false dynamic import,
-          vagy amiknek muszáj kliens komponensnek lenniük, de nem dinamikusan betöltve.
-          A HeaderHero és PreConsultationForm valószínűleg az app/page.tsx-ben marad,
-          hogy szerver oldalon renderelődjön, ha lehetséges. */}
-
       <IntegratedApplication/>
       <ServiceHighlightCards />
-     
       <StatsCounterSection />
       <DownloadableDocsSection />
-      
       <ProcessSteps />
       <CallToActionSection />
-
-      
       <FaqAccordion/>
-
       <Footer />
     </>
   );

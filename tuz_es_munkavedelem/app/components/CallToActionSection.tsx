@@ -17,7 +17,7 @@ const CallToActionSection: React.FC = () => {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-        
+
         .cta-grid-pattern {
             background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px),
                               linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px);
@@ -25,35 +25,48 @@ const CallToActionSection: React.FC = () => {
         }
       `}</style>
 
-      {/* !!! ITT A LÉNYEG !!!
-        A 'relative' pozíció, az alacsonyabb 'z-10', és a negatív '-mt-...' margó
-        együtt biztosítja, hogy ez a szekció felcsússzon a ProcessSteps hulláma MÖGÉ.
-      */}
-      <section className="bg-slate-900 pb-20 sm:pb-32 relative z-10 -mt-20 sm:-mt-28 font-['Poppins',_sans-serif] overflow-hidden">
-        
+      {/* A section relatív, a negatív margót és z-indexet eltávolítottuk */}
+      <section className="bg-slate-900 pb-20 sm:pb-32 relative font-['Poppins',_sans-serif]">
+
+        {/* --- HOZZÁADVA: FELSŐ FEHÉR HULLÁM --- */}
+        {/* Ez a hullám a szekció tetején helyezkedik el, és fehér kitöltést kap. */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                className="relative block w-full h-[80px] sm:h-[120px]"
+            >
+                <path
+                    d="M-0.00,49.98 C149.99,150.00 249.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,0.00 L-0.00,0.00 Z"
+                    fill="#ffffff"
+                ></path>
+            </svg>
+        </div>
+
         <div className="absolute inset-0 cta-grid-pattern z-0"></div>
-        
-        {/* A belső div kapta meg a felső paddinget, hogy a tartalom ne lógjon a hullám mögé */}
+
+        {/* A felső padding megmaradt, hogy a tartalom a hullám alá kerüljön */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-40">
             <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
-                <h2 
+                <h2
                     className={`text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r ${accentColor.textGradient} mb-6 tracking-tight`}
                 >
                     Készen állsz a biztonságra?
                 </h2>
-                <p 
+                <p
                     className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed"
                 >
                     Tedd meg az első lépést, és tudd biztonságban minden értékedet, előzd meg az esetleges tüzet, és a baleseteket!
                 </p>
-                
+
                 <div>
                     <Link
                         href="/kapcsolat"
                         className={`
                             inline-flex items-center gap-3 ${accentColor.bg} text-white
-                            font-bold py-4 px-10 rounded-xl text-lg sm:text-xl 
-                            transition-shadow duration-300 ease-in-out 
+                            font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
+                            transition-shadow duration-300 ease-in-out
                             focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
                         `}
                     >
@@ -64,7 +77,7 @@ const CallToActionSection: React.FC = () => {
             </div>
         </div>
 
-        {/* Ez az alsó sötét hullám továbbra is kell a következő szekcióhoz */}
+        {/* Az alsó sötét hullám megmarad a következő szekcióhoz való átmenethez */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +87,7 @@ const CallToActionSection: React.FC = () => {
             >
                 <path
                     d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
-                    fill="#0f172a" 
+                    fill="#0f172a"
                 ></path>
             </svg>
         </div>
