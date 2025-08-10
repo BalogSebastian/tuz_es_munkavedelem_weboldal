@@ -35,9 +35,13 @@ export default function HomePageClientContent() {
      
       <StatsCounterSection />
       <DownloadableDocsSection />
+      
       <ProcessSteps />
+
+
       <CallToActionSection />
       <FaqAccordion/>
+
       <Footer />
     </>
   );

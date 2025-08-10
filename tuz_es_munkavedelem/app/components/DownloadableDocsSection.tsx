@@ -1,11 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import {
-    motion,
-    useMotionValue,
-    useTransform,
-} from 'framer-motion';
+import Link from 'next/link';
 import {
     DocumentArrowDownIcon,
     UserIcon,
@@ -16,8 +12,7 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon
 } from '@heroicons/react/24/solid';
-import { FaArrowTrendDown } from 'react-icons/fa6';
-import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5'; // MÓDOSÍTÁS: Új nyilak importálása
+import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5';
 
 // --- EGYSÉGESÍTETT CIÁN SZÍNSÉMA ---
 const accentColor = {
@@ -50,26 +45,10 @@ const downloadableDocs = [
 interface FormDataState { name: string; email: string; phone: string; }
 
 const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; handleChange: any; handleSubmit: any; }> = ({ doc, formData, submitted, handleChange, handleSubmit }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0); const mouseY = useMotionValue(0);
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => { if (!cardRef.current) return; const rect = cardRef.current.getBoundingClientRect(); mouseX.set(event.clientX - rect.left); mouseY.set(event.clientY - rect.top); };
-  const handleMouseLeave = () => { mouseX.set(0); mouseY.set(0); };
-
   return (
-    <motion.div
-      ref={cardRef} className="bg-white rounded-2xl shadow-xl border border-gray-200/70 relative overflow-hidden h-full"
-      style={{ perspective: '1200px' }}
-      onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
-      whileHover={{ y: -8, scale:1.02, boxShadow: "0 25px 40px -15px rgba(0,0,0,0.12)" }}
-      transition={{type: "spring", stiffness:300, damping: 20}} >
-      <motion.div
-        className="absolute top-0 left-0 w-full h-full pointer-events-none rounded-2xl"
-        style={{ background: useTransform( [mouseX, mouseY], ([newX, newY]) => `radial-gradient(400px at ${newX}px ${newY}px, rgba(255, 255, 255, 0.3), transparent 80%)` ), }} />
-      <motion.div
-        className="relative w-full h-full" style={{ transformStyle: 'preserve-3d' }}
-        animate={{ rotateY: submitted ? -180 : 0 }} transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1] }} >
-        <div className="p-6 sm:p-8 flex flex-col h-full" style={{ backfaceVisibility: 'hidden' }}>
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-200/70 relative overflow-hidden h-full">
+      <div className="relative w-full h-full">
+        <div className="p-6 sm:p-8 flex flex-col h-full">
             <div className="flex-grow flex flex-col">
                 <div className="w-fit mx-auto mb-5">
                     <DocumentArrowDownIcon className={`w-12 h-12 sm:w-14 sm:h-14 ${accentColor.text}`} />
@@ -88,21 +67,21 @@ const DownloadCard: React.FC<{ doc: any; formData: any; submitted: boolean; hand
                     </div>
                     ))}
                     <div className="pt-2">
-                    <motion.button type="submit" className={`w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-lg shadow-lg text-base font-semibold ${accentColor.textOnAccent} ${accentColor.bg} ${accentColor.hoverBg} focus:outline-none focus:ring-2 focus:ring-offset-2 ${accentColor.ring} transition-all duration-200 ease-in-out`} whileHover={{ scale: 1.03, y: -2, boxShadow: `0 10px 20px -5px ${accentColor.baseHex}55`}} whileTap={{ scale: 0.98 }} >
+                    <button type="submit" className={`w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-lg shadow-lg text-base font-semibold ${accentColor.textOnAccent} ${accentColor.bg} ${accentColor.hoverBg} focus:outline-none focus:ring-2 focus:ring-offset-2 ${accentColor.ring} transition-all duration-200 ease-in-out`}>
                         Letöltés és Adatlap Küldése
-                        <motion.span initial={{x:0}} whileHover={{x:4}} transition={{type:'spring', stiffness:300, damping:15}}> <ArrowRightIcon className="ml-3 h-5 w-5" /> </motion.span>
-                    </motion.button>
+                        <span> <ArrowRightIcon className="ml-3 h-5 w-5" /> </span>
+                    </button>
                     </div>
                 </form>
             </div>
         </div>
-        <div className={`absolute top-0 left-0 w-full h-full p-6 sm:p-8 flex flex-col justify-center items-center text-center rounded-2xl ${accentColor.successBg} border border-green-200`} style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }} >
+        <div className={`absolute top-0 left-0 w-full h-full p-6 sm:p-8 flex flex-col justify-center items-center text-center rounded-2xl ${accentColor.successBg} border border-green-200 ${submitted ? '' : 'hidden'}`} >
             <CheckCircleIcon className={`w-20 h-20 ${accentColor.successText} mx-auto mb-4`} />
             <h4 className={`text-xl sm:text-2xl font-bold ${accentColor.successText} mb-2`}>Küldés Sikeres!</h4>
             <p className="text-gray-700 text-sm">Köszönjük! A kért dokumentumot hamarosan elküldjük a megadott email címre.</p>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
@@ -168,134 +147,106 @@ const DownloadableDocsSection: React.FC = () => {
               behavior: 'smooth'
           });
       }
-  };
+    };
 
-  return (
-    <>
-    <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-    `}</style>
-    <section
-        className="pt-24 lg:py-32 font-['Poppins',_sans-serif] relative"
-        style={{
-            backgroundColor: '#ffffff',
-            backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`,
-            backgroundSize: '3rem 3rem',
-        }}
-    >
-      {/* === MÓDOSÍTÁS KEZDETE === */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
-          <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-              className="relative block w-full h-[100px] sm:h-[150px]"
-          >
-              <defs>
-                  <pattern id="gridPatternDark" patternUnits="userSpaceOnUse" width="64" height="64">
-                      {/* bg-slate-900 szín */}
-                      <rect width="64" height="64" fill="#0f172a" />
-                      {/* Halvány rácsvonalak */}
-                      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" />
-                  </pattern>
-              </defs>
-              <path
-                  d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
-                  fill="url(#gridPatternDark)"
-              ></path>
-          </svg>
-      </div>
-
-      <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
-          <div
-              className="absolute w-36 h-36 text-cyan-500"
-              style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
-          >
-              <IoArrowUndoSharp className="w-full h-full" />
-          </div>
-          <div
-              className="absolute w-36 h-36 text-cyan-400"
-              style={{ top: '180%', right: '10%', transform: 'translateY(-50%) rotate(150deg)' }}
-          >
-              <IoArrowRedo className="w-full h-full" />
-          </div>
-      </div>
-      {/* === MÓDOSÍTÁS VÉGE === */}
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-        <div className="flex justify-center items-start gap-8 lg:gap-12">
-            
-
-            <motion.div
-              className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
-              initial={{opacity:0, y:-30}}
-              whileInView={{opacity:1, y:0}}
-              viewport={{once:true, amount:0.5}}
-              transition={{duration:0.7, ease:"easeOut"}}
+    return (
+        <>
+        <style>{`
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
+            .scrollbar-hide::-webkit-scrollbar { display: none; }
+            .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+            .cta-grid-pattern {
+                background-image: linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px),
+                                  linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px);
+                background-size: 3rem 3rem;
+            }
+        `}</style>
+        <section
+            className="pt-24 lg:py-32 font-['Poppins',_sans-serif] relative bg-white overflow-hidden cta-grid-pattern"
+        >
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                className="relative block w-full h-[100px] sm:h-[150px]"
             >
-              <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
-              <span>Töltsd le</span> <span className='text-black'>a számodra</span>  leghasznosabb <span className='text-black'>anyagunkat!</span>
-              </h2>
-              <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
-              Add meg az elérhetőségedet, hogy a <span className='text-cyan-500'>szakemberünk fel tudjon hívni</span>, és tudjon tanácsot adni<span className='text-cyan-500'> a te konkrét helyzetedre!</span> 
-              </p>
-            </motion.div>
-            
-            
+                <path
+                    d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
+                    fill="#0f172a"
+                ></path>
+            </svg>
+        </div>
+
+        <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
+            <div
+                className="absolute w-36 h-36 text-cyan-500"
+                style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
+            >
+                <IoArrowUndoSharp className="w-full h-full" />
+            </div>
+            <div
+                className="absolute w-36 h-36 text-cyan-400"
+                style={{ top: '180%', right: '10%', transform: 'translateY(-50%) rotate(150deg)' }}
+            >
+                <IoArrowRedo className="w-full h-full" />
+            </div>
         </div>
         
-        <div className="relative max-w-5xl mx-auto">
-             <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
-                <motion.div
-                    className="flex w-full"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.1 }}
-                    variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="flex justify-center items-start gap-8 lg:gap-12">
+                <div
+                className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
                 >
-                    {downloadableDocs.map(doc => (
-                        <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
-                             <DownloadCard
-                                doc={doc}
-                                formData={formData[doc.id]}
-                                submitted={submitted[doc.id]}
-                                handleChange={handleFormChange}
-                                handleSubmit={handleFormSubmit}
-                            />
-                        </div>
-                    ))}
-                </motion.div>
+                <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
+                <span>Töltsd le</span> <span className='text-black'>a számodra</span>  leghasznosabb <span className='text-black'>anyagunkat!</span>
+                </h2>
+                <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
+                Add meg az elérhetőségedet, hogy a <span className='text-cyan-500'>szakemberünk fel tudjon hívni</span>, és tudjon tanácsot adni<span className='text-cyan-500'> a te konkrét helyzetedre!</span> 
+                </p>
+                </div>
             </div>
-            
-             {/* Navigációs Gombok */}
-             <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-8 hidden sm:flex">
-                <button
-                    onClick={() => scroll('left')}
-                    disabled={!canScrollLeft}
-                    className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
-                    aria-label="Előző"
-                >
-                    <ChevronLeftIcon className="w-6 h-6 text-slate-700"/>
-                </button>
-            </div>
-            <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-8 hidden sm:flex">
-                <button
-                    onClick={() => scroll('right')}
-                    disabled={!canScrollRight}
-                    className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
-                    aria-label="Következő"
-                >
-                    <ChevronRightIcon className="w-6 h-6 text-slate-700"/>
-                </button>
+            <div className="relative max-w-5xl mx-auto">
+                <div ref={scrollContainerRef} className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                        {downloadableDocs.map(doc => (
+                            <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
+                                <DownloadCard
+                                    doc={doc}
+                                    formData={formData[doc.id]}
+                                    submitted={submitted[doc.id]}
+                                    handleChange={handleFormChange}
+                                    handleSubmit={handleFormSubmit}
+                                />
+                            </div>
+                        ))}
+                </div>
+                
+                {/* Navigációs Gombok */}
+                <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-8 hidden sm:flex">
+                    <button
+                        onClick={() => scroll('left')}
+                        disabled={!canScrollLeft}
+                        className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                        aria-label="Előző"
+                    >
+                        <ChevronLeftIcon className="w-6 h-6 text-slate-700"/>
+                    </button>
+                </div>
+                <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-8 hidden sm:flex">
+                    <button
+                        onClick={() => scroll('right')}
+                        disabled={!canScrollRight}
+                        className="p-3 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                        aria-label="Következő"
+                    >
+                        <ChevronRightIcon className="w-6 h-6 text-slate-700"/>
+                    </button>
+                </div>
             </div>
         </div>
-      </div>
-    </section>
-    </>
-  );
+        </section>
+        </>
+    );
 };
 
 export default DownloadableDocsSection;

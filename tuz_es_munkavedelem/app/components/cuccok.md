@@ -17,3 +17,22 @@
                         </div>
                     </div>
                 </div> 
+
+
+                <div className="flex flex-col items-center">
+                            <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mb-4"/>
+                            <h3 className="text-2xl font-bold text-red-400 mb-2">Rendszerinformáció</h3>
+                            <p className="text-slate-300 mb-4">
+                                A háttérben a rendszer stabilizálása és frissítése zajlik. Kérjük türelmét.
+                            </p>
+                            <div className="flex items-center justify-center space-x-2 my-4">
+                               <p className="text-lg font-medium text-slate-400">Betöltés</p>
+                               <div className="loading-dots text-2xl font-bold text-red-400">
+                                   <span>.</span><span>.</span><span>.</span>
+                               </div>
+                            </div>
+                            <div className="mt-4 p-3 bg-slate-800/50 border border-slate-700 rounded-lg w-full">
+                                <p className="text-sm text-slate-400">Várható éles indulás:</p>
+                                <p className="text-lg font-bold text-cyan-300">Augusztus 4. 23:59</p>
+                            </div>
+                         </div>

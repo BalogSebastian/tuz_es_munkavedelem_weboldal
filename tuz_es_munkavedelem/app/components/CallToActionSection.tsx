@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import Link from 'next/link';
 import { SparklesIcon } from '@heroicons/react/24/solid';
-// MÓDOSÍTÁS: Ikon importálása
 import { IoArrowRedo } from 'react-icons/io5';
 
 // --- SZÍNPALETTA (Változatlan) ---
@@ -16,42 +15,7 @@ const accentColor = {
   textGradient: 'from-cyan-300 to-sky-400',
 };
 
-// --- Animációs variánsok (Változatlan) ---
-const sectionVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2, delayChildren: 0.1 }
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 100, damping: 15, duration: 0.6 }
-  },
-};
-
-// Típus a háttérelemek stílusához
-interface BackgroundElementStyle extends React.CSSProperties {}
-
 const CallToActionSection: React.FC = () => {
-  const [backgroundElementStyles, setBackgroundElementStyles] = useState<BackgroundElementStyle[]>([]);
-
-  useEffect(() => {
-    const styles: BackgroundElementStyle[] = [...Array(3)].map((_, i) => ({
-      width: `${300 + Math.random() * 400}px`,
-      height: `${300 + Math.random() * 400}px`,
-      backgroundColor: i % 2 === 0 ? 'rgba(3, 186, 190, 0.07)' : 'rgba(14, 116, 144, 0.07)',
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-    }));
-    setBackgroundElementStyles(styles);
-  }, []);
-
-
   return (
     <>
       <style>{`
@@ -65,7 +29,6 @@ const CallToActionSection: React.FC = () => {
       `}</style>
       <section className="bg-slate-900 pt-24 sm:pt-32 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 relative font-['Poppins',_sans-serif] overflow-hidden">
         
-        {/* === MÓDOSÍTÁS KEZDETE === */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -94,76 +57,40 @@ const CallToActionSection: React.FC = () => {
                 <IoArrowRedo className="w-full h-full" />
             </div>
         </div>
-        {/* === MÓDOSÍTÁS VÉGE === */}
-
+        
         <div className="absolute inset-0 cta-grid-pattern z-0"></div>
 
-        {backgroundElementStyles.map((style, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full filter blur-3xl"
-              style={style}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: [0, 1, 0.2, 0], scale: [0.7, 1.2, 0.7] }}
-              transition={{
-                  duration: 20 + Math.random() * 15,
-                  repeat: Infinity,
-                  repeatType: 'mirror',
-                  delay: i * 5,
-                  ease: 'easeInOut'
-              }}
-            />
-        ))}
+        {/* Eltávolítva a háttérelemek dinamikus generálása és animációja */}
         
-        <motion.div
-            className="relative max-w-7xl mx-auto"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-        >
-            {/* TÖRÖLVE: Eredeti nyilak eltávolítva */}
-
+        <div className="relative max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
-                <motion.h2 
+                <h2 
                     className={`text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r ${accentColor.textGradient} mb-6 tracking-tight`}
-                    variants={itemVariants}
                 >
                     Készen állsz a biztonságra?
-                </motion.h2>
-                <motion.p 
+                </h2>
+                <p 
                     className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed"
-                    variants={itemVariants}
                 >
                     Tedd meg az első lépést, és tudd biztonságban minden értékedet, előzd meg az esetleges tüzet, és a baleseteket!
-                </motion.p>
+                </p>
                 
-                <motion.div variants={itemVariants}>
-                    <motion.button
-                        type="button"
+                <div>
+                    <Link
+                        href="/kapcsolat"
                         className={`
                             inline-flex items-center gap-3 ${accentColor.bg} text-white
                             font-bold py-4 px-10 rounded-xl text-lg sm:text-xl 
                             transition-shadow duration-300 ease-in-out 
                             focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
                         `}
-                        animate={{
-                            boxShadow: [
-                                "0 0 15px rgba(3, 186, 190, 0.3)",
-                                "0 0 25px rgba(3, 186, 190, 0.5)",
-                                "0 0 15px rgba(3, 186, 190, 0.3)",
-                            ]
-                        }}
-                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                        whileHover={{ scale: 1.05, y: -4, boxShadow: '0 0 30px rgba(3, 186, 190, 0.6)' }}
-                        whileTap={{ scale: 0.98 }}
                     >
                         <SparklesIcon className="w-6 h-6" />
                         Ingyenes Konzultáció szakemberrel
-                    </motion.button>
-                </motion.div>
+                    </Link>
+                </div>
             </div>
-        </motion.div>
+        </div>
       </section>
     </>
   );

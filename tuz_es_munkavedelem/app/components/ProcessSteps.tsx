@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
-import { motion, useSpring, useTransform, useMotionValue, animate } from 'framer-motion';
+import React from 'react';
 import {
     ChatBubbleLeftRightIcon,
     DocumentCheckIcon,
@@ -10,66 +9,29 @@ import {
 } from '@heroicons/react/24/outline';
 import { FaArrowTrendDown } from 'react-icons/fa6';
 import { SparklesIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 // --- DEKORATÍV SVG KOMPONENSEK ---
-const BlueprintCorner: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.5 }) => {
+const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => {
     return (
-        <motion.svg
-            className={className} width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg"
-            initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay }} viewport={{ once: true, amount: 0.5 }} >
+        <svg
+            className={className} width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M150 0H0V150" stroke="currentColor" strokeWidth="2"/>
             <path d="M120 0H0V120" stroke="currentColor" strokeWidth="1"/>
             <path d="M90 0H0V90" stroke="currentColor" strokeWidth="0.5"/>
             <circle cx="0" cy="0" r="5" fill="currentColor"/>
-        </motion.svg>
+        </svg>
     );
-};
-
-const SchematicCrosshair: React.FC<{ className?: string, delay?: number }> = ({ className, delay = 0.6 }) => {
-    return (
-        <motion.svg
-            className={className} width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"
-            initial={{ opacity: 0, rotate: -90 }} whileInView={{ opacity: 1, rotate: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay }} viewport={{ once: true, amount: 0.5 }} >
-            <circle cx="40" cy="40" r="39" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4"/>
-            <path d="M40 0V80" stroke="currentColor" strokeWidth="1"/>
-            <path d="M0 40H80" stroke="currentColor" strokeWidth="1"/>
-        </motion.svg>
-    );
-}
-
-interface AnimatedNumberProps { to: number; className?: string; }
-const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ to, className }) => {
-    const nodeRef = useRef<HTMLSpanElement>(null);
-    useEffect(() => {
-        const node = nodeRef.current; if (!node) return;
-        const controls = animate(0, to, { duration: 1.2, ease: "circOut", onUpdate(value) { node.textContent = value.toFixed(0); } });
-        return () => controls.stop();
-    }, [to]);
-    return <span ref={nodeRef} className={className} />;
 };
 
 const accentColor = { base: '#03BABE', bg: 'bg-[#03BABE]', text: 'text-[#03BABE]', hoverBg: 'hover:bg-cyan-600', ring: 'focus:ring-cyan-500', shadow: 'shadow-cyan-500/40', hoverShadow: 'hover:shadow-cyan-400/60', focusRingOffset: 'focus:ring-offset-slate-50' };
 const steps = [ { step: 1, icon: ChatBubbleLeftRightIcon, title: "Konzultáció és Igényfelmérés", description: "Részletesen átbeszéljük vállalkozása specifikus igényeit, céljait és a vonatkozó jogszabályi követelményeket." }, { step: 2, icon: DocumentCheckIcon, title: "Szerződéskötés", description: "Az egyeztetettek alapján elkészítjük a hivatalos megállapodást, mely rögzíti a vállalt szolgáltatásokat és feltételeket." }, { step: 3, icon: WrenchScrewdriverIcon, title: "A Munka Kivitelezése", description: "Szakértő csapatunk precízen és a megbeszélt ütemezés szerint elvégzi a szerződésben foglalt feladatokat." }, { step: 4, icon: CreditCardIcon, title: "Fizetés és Utánkövetés", description: "A munka sikeres teljesítése és átadása után történik a díjazás. Igény esetén további támogatást és utánkövetést biztosítunk." } ];
-const cardEntranceVariants = { hiddenLeft: { opacity: 0, x: -80 }, hiddenRight: { opacity: 0, x: 80 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } } };
-const iconContainerVariants = { hidden: { opacity: 0, scale: 0.5 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "backOut", delay: 0.2 } } };
-const TiltCard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const cardRef = useRef<HTMLDivElement>(null); const mouseX = useMotionValue(0); const mouseY = useMotionValue(0);
-    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => { if (!cardRef.current) return; const rect = cardRef.current.getBoundingClientRect(); mouseX.set(event.clientX - rect.left - rect.width / 2); mouseY.set(event.clientY - rect.top - rect.height / 2); };
-    const handleMouseLeave = () => { mouseX.set(0); mouseY.set(0); };
-    const tiltIntensity = 5; const springConfig = { stiffness: 200, damping: 25, mass: 0.7 };
-    const rotateX = useSpring(useTransform(mouseY, [-100, 100], [tiltIntensity, -tiltIntensity]), springConfig); const rotateY = useSpring(useTransform(mouseX, [-150, 150], [-tiltIntensity, tiltIntensity]), springConfig);
-    return ( <motion.div ref={cardRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ perspective: "1000px" }}> <motion.div style={{ rotateX, rotateY }} className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 transform-style-3d h-full"> {children} </motion.div> </motion.div> );
-};
 
 const ProcessSteps: React.FC = () => {
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-        /* A háttér stílusát az elem inline stílusában adjuk meg a felülírás érdekében. */
-        .transform-style-3d { transform-style: preserve-3d; }
       `}</style>
       <section 
         className="py-20 lg:py-28 font-['Poppins',_sans-serif] relative overflow-hidden"
@@ -79,38 +41,20 @@ const ProcessSteps: React.FC = () => {
             backgroundSize: '3rem 3rem',
         }}
     >
-        <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" delay={0.2} />
-        <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" delay={0.3} />
+        <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" />
+        <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" />
 
-        <motion.div
-            className="absolute top-[8%] left-[10%] w-24 h-24 transform -rotate-12 hidden xl:block"
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-            viewport={{ once: true, amount: 0.5 }}
-        >
+        <div className="absolute top-[8%] left-[10%] w-24 h-24 transform -rotate-12 hidden xl:block">
             <FaArrowTrendDown className="w-full h-full text-black/50" />
-        </motion.div>
+        </div>
 
-        <motion.div
-            className="absolute top-[40%] right-[8%] w-20 h-20 transform rotate-12 hidden xl:block"
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
-            viewport={{ once: true, amount: 0.5 }}
-        >
+        <div className="absolute top-[40%] right-[8%] w-20 h-20 transform rotate-12 hidden xl:block">
             <FaArrowTrendDown className="w-full h-full text-black/50" />
-        </motion.div>
+        </div>
         
-        <motion.div
-            className="absolute bottom-[15%] left-[8%] w-18 h-18 transform rotate-6 hidden xl:block"
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 1.0 }}
-            viewport={{ once: true, amount: 0.5 }}
-        >
+        <div className="absolute bottom-[15%] left-[8%] w-18 h-18 transform rotate-6 hidden xl:block">
             <FaArrowTrendDown className="w-full h-full text-black/50" />
-        </motion.div>
+        </div>
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="relative text-center mb-16 lg:mb-20">
@@ -120,54 +64,39 @@ const ProcessSteps: React.FC = () => {
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">Átlátható lépések a sikeres és biztonságos munkakörnyezetért.</p>
           </div>
           <div className="relative max-w-xl mx-auto lg:max-w-4xl">
-            <motion.div
+            <div
                 className="hidden lg:block absolute left-1/2 top-10 bottom-10 w-1 bg-gradient-to-b from-cyan-200 via-cyan-300 to-cyan-200 rounded-full transform -translate-x-1/2"
                 style={{ transformOrigin: 'top' }}
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true, amount: 0.2, margin: "-100px" }}
-                transition={{ duration: 1.5, ease: 'easeOut' }}
             />
 
             <div className="space-y-20">
               {steps.map((step, index) => (
-                <motion.div
+                <div
                   key={step.step}
                   className={`lg:flex items-center relative ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
-                  initial={index % 2 === 0 ? 'hiddenRight' : 'hiddenLeft'}
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.25 }}
-                  variants={cardEntranceVariants}
                 >
                   <div className={`w-full lg:w-1/2 flex mb-8 lg:mb-0 ${index % 2 === 0 ? 'lg:justify-start lg:pl-[calc(50%+3rem)]' : 'lg:justify-end lg:pr-[calc(50%+3rem)]'}`}>
-                    <motion.div
-                      className="relative inline-block"
-                      initial="hidden" whileInView="visible"
-                      viewport={{ once: true, amount: 0.6 }}
-                      variants={iconContainerVariants}
-                    >
-                      <motion.div
+                    <div className="relative inline-block">
+                      <div
                            className="hidden lg:block absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
                            style={{ borderColor: accentColor.base, borderWidth: '2px', left: index % 2 === 0 ? 'auto' : 'calc(100% + 2rem)', right: index % 2 === 0 ? 'calc(100% + 2rem)' : 'auto' }}
-                           animate={{ scale: [1, 1.6, 1], boxShadow: [ '0 0 0px rgba(3, 186, 190, 0)', '0 0 25px rgba(3, 186, 190, 0.4)', '0 0 0px rgba(3, 186, 190, 0)' ] }}
-                           transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: 1 + index * 0.2 }}
                       />
                       <div className="bg-gradient-to-br from-white to-slate-100 p-6 rounded-full inline-flex items-center justify-center shadow-xl border border-gray-100 ring-8 ring-white/50">
                          <div className={`absolute -top-3 ${index % 2 === 0 ? '-right-3' : '-left-3'} ${accentColor.bg} text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg z-20 ring-4 ring-white`}>
-                           <AnimatedNumber to={step.step} />
+                           <span>{step.step}</span>
                          </div>
                          <step.icon className={`w-14 h-14 ${accentColor.text}`} aria-hidden="true" />
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
 
                   <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'}`}>
-                    <TiltCard>
+                    <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full">
                       <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
                       <p className="text-gray-600 leading-relaxed">{step.description}</p>
-                    </TiltCard>
+                    </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -179,10 +108,8 @@ const ProcessSteps: React.FC = () => {
           </div>
 
 <div className="text-center mt-10 lg:mt-12">
-    <motion.button
-        whileHover={{ scale: 1.05, y: -5, boxShadow: `0 10px 20px -5px ${accentColor.base}60` }}
-        whileTap={{ scale: 0.98 }}
-        type="button"
+    <Link
+        href="/kapcsolat"
         className={`
             inline-flex items-center
             ${accentColor.bg} ${accentColor.hoverBg} text-white
@@ -194,7 +121,7 @@ const ProcessSteps: React.FC = () => {
     >
       <SparklesIcon className="w-6 h-6 mr-2" />
       Ingyenes konzultációt foglalok
-    </motion.button>
+    </Link>
 </div>
         </div>
       </section>
