@@ -129,21 +129,7 @@ const ServiceHighlightCards: React.FC = () => {
 
       <div className="relative font-['Poppins',_sans-serif]">
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-            className="relative block w-full h-[60px] sm:h-[100px]"
-          >
-            <defs>
-              <pattern id="gridPatternWave" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
-                <rect x="0" y="0" width="48" height="48" fill="#ffffff" />
-                <path d="M0 0.5L48 0.5" stroke="rgba(3, 186, 190, 0.15)" strokeWidth="1" />
-                <path d="M0.5 0L0.5 48" stroke="rgba(3, 186, 190, 0.15)" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z" fill="url(#gridPatternWave)"></path>
-          </svg>
+          
         </div>
         
         <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
