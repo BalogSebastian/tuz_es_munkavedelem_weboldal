@@ -144,7 +144,7 @@ const HeaderHero = () => {
                     </div>
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
                         <a href="mailto:info@tuz-munkavedelmiszaki.hu" className="hover:text-cyan-300 transition-colors duration-300">info@tuz-munkavedelmiszaki.hu</a>
-                        <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36302722571</a>
+                        <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36/302722571</a>
                     </div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Link

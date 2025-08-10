@@ -176,26 +176,22 @@ const Footer: React.FC = () => {
               </h3>
               <address className="not-italic space-y-3 text-slate-400 text-base mb-8">
                 <a 
-                    href="mailto:info@markjani.hu" 
+                    href="mailto:info@tuz-munkavedelmiszaki.hu" 
                     className="flex items-center p-2 -ml-2 rounded-lg transition-colors duration-200 hover:bg-white/5 hover:text-white"
                 >
                   <EnvelopeIcon className="w-5 h-5 mr-3 text-cyan-400" />
-                  <span>info@markjani.hu</span>
+                  <span>info@tuz-munkavedelmiszaki.hu</span>
                 </a>
                 <a 
                     href="tel:+36209791719"
                     className="flex items-center p-2 -ml-2 rounded-lg transition-colors duration-200 hover:bg-white/5 hover:text-white"
                 >
                   <PhoneIcon className="w-5 h-5 mr-3 text-cyan-400" />
-                  <span className="whitespace-nowrap">+36 20 979 17 19</span>
+                  <span className="whitespace-nowrap">+36/302722571</span>
                 </a>
-                <div className="flex items-start p-2 -ml-2">
-                  <MapPinIcon className="w-5 h-5 mr-3 mt-1 text-cyan-400 flex-shrink-0" />
-                  <span>4031 Debrecen, István út 140.</span>
-                </div>
                 <div className="flex items-center p-2 -ml-2">
                   <BuildingOfficeIcon className="w-5 h-5 mr-3 text-cyan-400" />
-                  <span>JaniMark Kft.</span>
+                  <span>Trident Shield Group Kft.</span>
                 </div>
               </address>
 
