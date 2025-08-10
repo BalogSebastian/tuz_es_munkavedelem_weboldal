@@ -34,7 +34,8 @@ const ProcessSteps: React.FC = () => {
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
       `}</style>
       <section 
-        className="py-20 lg:py-28 font-['Poppins',_sans-serif] relative overflow-hidden"
+        // A section kap z-indexet, és a padding módosítva lett, hogy helyet adjon a hullámnak
+        className="pt-20 lg:pt-28 pb-32 lg:pb-40 font-['Poppins',_sans-serif] relative z-20 overflow-hidden"
         style={{
             backgroundColor: '#ffffff',
             backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`,
@@ -107,22 +108,37 @@ const ProcessSteps: React.FC = () => {
               </p>
           </div>
 
-<div className="text-center mt-10 lg:mt-12">
-    <Link
-        href="/kapcsolat"
-        className={`
-            inline-flex items-center
-            ${accentColor.bg} ${accentColor.hoverBg} text-white
-            font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-            shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
-            transition-all duration-300 ease-in-out
-            focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
-        `}
-    >
-      <SparklesIcon className="w-6 h-6 mr-2" />
-      Ingyenes konzultációt foglalok
-    </Link>
-</div>
+        <div className="text-center mt-10 lg:mt-12">
+            <Link
+                href="/kapcsolat"
+                className={`
+                    inline-flex items-center
+                    ${accentColor.bg} ${accentColor.hoverBg} text-white
+                    font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
+                    shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
+                    transition-all duration-300 ease-in-out
+                    focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
+                `}
+            >
+              <SparklesIcon className="w-6 h-6 mr-2" />
+              Ingyenes konzultációt foglalok
+            </Link>
+        </div>
+        </div>
+        
+        {/* Hozzáadva: Alsó fehér hullám */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                className="relative block w-full h-[80px] sm:h-[120px]"
+            >
+                <path
+                    d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
+                    fill="#ffffff" 
+                ></path>
+            </svg>
         </div>
       </section>
     </>

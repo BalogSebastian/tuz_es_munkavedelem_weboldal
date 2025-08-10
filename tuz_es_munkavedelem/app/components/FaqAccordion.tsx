@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { ChevronDownIcon, ExclamationCircleIcon, SparklesIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-// --- FŐ KOMPONENS ---
+// --- SZÍNPALETTA ---
 const accentColor = {
   text: 'text-[#03BABE]', textDark: 'text-cyan-800', hoverBg: 'hover:bg-cyan-600', ring: 'focus-visible:ring-cyan-500',
   borderLightOpen: 'border-cyan-400', ringLightOpen: 'ring-cyan-500/20', textHover: 'group-hover:text-cyan-600',
@@ -12,6 +12,7 @@ const accentColor = {
   questionBgHover: 'group-hover:bg-slate-50/50',
 };
 
+// --- FAQ ADATOK ---
 const faqItems = [
     { question: "Milyen gyakran kell munkavédelmi oktatást tartani?", answer: "A munkavédelmi oktatást munkába álláskor, munkahely vagy munkakör megváltozásakor, valamint legalább évente ismétlődően meg kell tartani. Bizonyos esetekben (pl. technológia változás) soron kívüli oktatás is szükséges lehet.", isImportant: true },
     { question: "Kötelező minden vállalkozásnak tűzvédelmi szabályzatot készíteni?", answer: "Nem minden esetben. Tűzvédelmi szabályzatot kell készíteni, ha a munkavállalók létszáma meghaladja az 5 főt, vagy ha 50 főnél több személy befogadására alkalmas létesítményt üzemeltetnek, illetve fokozottan tűz- vagy robbanásveszélyes besorolású anyagot használnak." },
@@ -39,28 +40,17 @@ const FaqAccordion: React.FC = () => {
       }}
     >
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
-      <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1200 120"
-    preserveAspectRatio="none"
-    className="relative block w-full h-[100px] sm:h-[150px]"
->
-    {/* EZT A RÉSZT TÖRÖLD KI:
-    <defs>
-        <pattern id="gridPatternDarkFaq" patternUnits="userSpaceOnUse" width="64" height="64">
-            <rect width="64" height="64" fill="#0f172a" />
-            <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" />
-        </pattern>
-    </defs>
-    */}
-
-    <path
-        d="M-0.00,49.98 C149.99,150.00 249.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,0.00 L-0.00,0.00 Z"
-        // CSERÉLD EZT: fill="url(#gridPatternDarkFaq)"
-        // ERRE:
-        fill="#0f172a" // <-- Ez a slate-900 színkódja
-    ></path>
-</svg>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="relative block w-full h-[100px] sm:h-[150px]"
+        >
+            <path
+                d="M-0.00,49.98 C149.99,150.00 249.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,0.00 L-0.00,0.00 Z"
+                fill="#0f172a"
+            ></path>
+        </svg>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">

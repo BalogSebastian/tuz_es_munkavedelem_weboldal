@@ -3,11 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { SparklesIcon } from '@heroicons/react/24/solid';
-import { IoArrowRedo } from 'react-icons/io5';
 
-// --- SZÍNPALETTA (Változatlan) ---
 const accentColor = {
-  base: '#03BABE',
   bg: 'bg-[#03BABE]',
   hoverBg: 'hover:bg-cyan-600',
   ring: 'focus:ring-cyan-500',
@@ -27,35 +24,17 @@ const CallToActionSection: React.FC = () => {
             background-size: 4rem 4rem;
         }
       `}</style>
-      <section className="bg-slate-900 pt-24 sm:pt-32 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 relative font-['Poppins',_sans-serif] overflow-hidden">
-        
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1200 120"
-                preserveAspectRatio="none"
-                className="relative block w-full h-[100px] sm:h-[150px]"
-            >
-                {/* A hullám SVG görbéjét (path) cseréltük egy letisztultabbra */}
-                <path
-    d="M0,0 V40 C200,120,500,0,720,50 C940,100,1200,20,1200,90 V0 Z"
-    fill="#ffffff"
-></path>
-            </svg>
-        </div>
 
-        <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
-            <div
-                className="absolute w-36 h-36 text-cyan-400"
-                style={{ top: '50%', right: '15%', transform: 'translateY(-50%) rotate(150deg)' }}
-            >
-                <IoArrowRedo className="w-full h-full" />
-            </div>
-        </div>
+      {/* !!! ITT A LÉNYEG !!!
+        A 'relative' pozíció, az alacsonyabb 'z-10', és a negatív '-mt-...' margó
+        együtt biztosítja, hogy ez a szekció felcsússzon a ProcessSteps hulláma MÖGÉ.
+      */}
+      <section className="bg-slate-900 pb-20 sm:pb-32 relative z-10 -mt-20 sm:-mt-28 font-['Poppins',_sans-serif] overflow-hidden">
         
         <div className="absolute inset-0 cta-grid-pattern z-0"></div>
         
-        <div className="relative max-w-7xl mx-auto">
+        {/* A belső div kapta meg a felső paddinget, hogy a tartalom ne lógjon a hullám mögé */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-40">
             <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                 <h2 
                     className={`text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r ${accentColor.textGradient} mb-6 tracking-tight`}
@@ -83,6 +62,21 @@ const CallToActionSection: React.FC = () => {
                     </Link>
                 </div>
             </div>
+        </div>
+
+        {/* Ez az alsó sötét hullám továbbra is kell a következő szekcióhoz */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                className="relative block w-full h-[80px] sm:h-[120px]"
+            >
+                <path
+                    d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
+                    fill="#0f172a" 
+                ></path>
+            </svg>
         </div>
       </section>
     </>

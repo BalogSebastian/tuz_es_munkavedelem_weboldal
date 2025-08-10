@@ -37,9 +37,9 @@ export default function HomePageClientContent() {
       <DownloadableDocsSection />
       
       <ProcessSteps />
-
-
       <CallToActionSection />
+
+      
       <FaqAccordion/>
 
       <Footer />
