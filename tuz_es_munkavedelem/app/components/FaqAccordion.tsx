@@ -39,23 +39,28 @@ const FaqAccordion: React.FC = () => {
       }}
     >
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
-          <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-              className="relative block w-full h-[100px] sm:h-[150px]"
-          >
-              <defs>
-                  <pattern id="gridPatternDarkFaq" patternUnits="userSpaceOnUse" width="64" height="64">
-                      <rect width="64" height="64" fill="#0f172a" />
-                      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" />
-                  </pattern>
-              </defs>
-              <path
-                  d="M-0.00,49.98 C149.99,150.00 249.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,0.00 L-0.00,0.00 Z"
-                  fill="url(#gridPatternDarkFaq)"
-              ></path>
-          </svg>
+      <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 1200 120"
+    preserveAspectRatio="none"
+    className="relative block w-full h-[100px] sm:h-[150px]"
+>
+    {/* EZT A RÉSZT TÖRÖLD KI:
+    <defs>
+        <pattern id="gridPatternDarkFaq" patternUnits="userSpaceOnUse" width="64" height="64">
+            <rect width="64" height="64" fill="#0f172a" />
+            <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" />
+        </pattern>
+    </defs>
+    */}
+
+    <path
+        d="M-0.00,49.98 C149.99,150.00 249.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,0.00 L-0.00,0.00 Z"
+        // CSERÉLD EZT: fill="url(#gridPatternDarkFaq)"
+        // ERRE:
+        fill="#0f172a" // <-- Ez a slate-900 színkódja
+    ></path>
+</svg>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">

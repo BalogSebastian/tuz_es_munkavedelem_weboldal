@@ -1,7 +1,7 @@
 // components/Footer.tsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   PhoneIcon,
   EnvelopeIcon,
@@ -10,6 +10,7 @@ import {
   ShieldCheckIcon,
   BookOpenIcon,
   SparklesIcon,
+  ChevronDownIcon, // Importálva az ikon a lenyíló menühöz
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -27,8 +28,52 @@ const accentColor = {
   contactHoverBg: 'bg-white/5',
 };
 
+// --- Lenyíló menü segédkomponens ---
+interface AccordionItemProps {
+  title: string;
+  links: { href: string; label: string }[];
+  isOpen: boolean;
+  toggle: () => void;
+}
+
+const AccordionItem: React.FC<AccordionItemProps> = ({ title, links, isOpen, toggle }) => (
+  <div className="border-b border-slate-700/50">
+    <button
+      onClick={toggle}
+      className="flex justify-between items-center w-full py-3 text-left hover:text-white transition-colors duration-200"
+    >
+      <span>{title}</span>
+      <ChevronDownIcon
+        className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+      />
+    </button>
+    <div
+      className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        isOpen ? 'max-h-96' : 'max-h-0'
+      }`}
+    >
+      <ul className="pt-2 pb-3 pl-4 space-y-3">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href} className="hover:text-white transition-colors duration-200 block">
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+);
+
+
 // --- FŐ KOMPONENS ---
 const Footer: React.FC = () => {
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const toggleAccordion = (accordionName: string) => {
+    setOpenAccordion(openAccordion === accordionName ? null : accordionName);
+  };
+  
   return (
     <>
       <style>{`
@@ -38,7 +83,7 @@ const Footer: React.FC = () => {
             background-size: 3.5rem 3.5rem;
         }
         .text-gradient {
-            background: linear-gradient(to right, ${accentColor.lightText}, ${accentColor.base});
+            background: linear-gradient(to right, ${accentColor.base}, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -48,10 +93,9 @@ const Footer: React.FC = () => {
       <footer
         className={`relative ${accentColor.darkBg} text-slate-300 py-16 sm:py-20 font-['Poppins',_sans-serif] overflow-hidden`}
       >
-        {/* Háttér rács - ez egy performáns, statikus megoldás */}
+        {/* Háttér rács */}
         <div className="absolute inset-0 footer-grid-pattern z-0 opacity-20"></div>
         
-        {/* Statikus díszítőelem (korábban animált volt) */}
         <div className="absolute top-8 right-8 lg:top-12 lg:right-12 w-24 h-24 lg:w-32 lg:h-32 text-cyan-400/10 hidden md:block">
              <ShieldCheckIcon className="w-full h-full" />
         </div>
@@ -62,10 +106,7 @@ const Footer: React.FC = () => {
             {/* Cég Logó és Rövid Leírás */}
             <div className="md:col-span-2 lg:col-span-1">
               <Link href="/" className="font-bold text-3xl tracking-wider mb-4 block text-gradient">
-                <span className={accentColor.lightText}>Tűz</span>
-                <span className="text-white mx-0.5">És</span>
-                <span className="text-white">Munka</span>
-                <span className={accentColor.lightText}>védelem</span>
+                  TűzÉsMunka<span className="text-white">védelem</span>
               </Link>
               <p className="text-base text-slate-400 leading-relaxed max-w-xs sm:max-w-none">
                 Szakértő megoldások tűz- és munkavédelemben. Gondoskodunk a biztonságról, hogy Ön a növekedésre fókuszálhasson.
@@ -88,19 +129,43 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            {/* Szolgáltatások kiemelése */}
+            {/* Szolgáltatások kiemelése (FRISSÍTVE) */}
             <div>
               <h3 className="text-xl font-semibold text-white mb-6 flex items-center">
                 <ShieldCheckIcon className={`w-6 h-6 mr-3 ${accentColor.text}`} />
                 Kiemelt Szolgáltatások
               </h3>
-              <ul className="space-y-3 text-slate-400 text-base">
-                <li><Link href="/KockazatErtekelesPage" className="hover:text-white transition-colors duration-200">Kockázatértékelés</Link></li>
-                <li><Link href="/MunkavedelemPage" className="hover:text-white transition-colors duration-200">Munkavédelem</Link></li>
-                <li><Link href="/TuzvedelemPage" className="hover:text-white transition-colors duration-200">Tűzvédelem</Link></li>
-                <li><Link href="/HaccpPage" className="hover:text-white transition-colors duration-200">HACCP Rendszer</Link></li>
-                <li><Link href="/OktatasokPage" className="hover:text-white transition-colors duration-200">Oktatások</Link></li>
-              </ul>
+              <div className="text-slate-400 text-base">
+                <AccordionItem
+                  title="Munkavédelem"
+                  isOpen={openAccordion === 'munkavedelem'}
+                  toggle={() => toggleAccordion('munkavedelem')}
+                  links={[
+                    { href: '/szolgaltatasok/kockazatertekeles', label: 'Kockázatértékelés' },
+                    { href: '/szolgaltatasok/munkavedelmi-szabalyzat', label: 'Munkavédelmi Szabályzat' },
+                    { href: '/szolgaltatasok/munkavedelmi-oktatas', label: 'Munkavédelmi Oktatás' },
+                    { href: '/szolgaltatasok/munkahelyi-baleset-kivizsgalas', label: 'Munkahelyi baleset kivizsgálás' },
+                  ]}
+                />
+                <AccordionItem
+                  title="Tűzvédelem"
+                  isOpen={openAccordion === 'tuzvedelem'}
+                  toggle={() => toggleAccordion('tuzvedelem')}
+                  links={[
+                    { href: '/szolgaltatasok/tuzvedelmi-szabalyzat', label: 'Tűzvédelmi Szabályzat' },
+                    { href: '/szolgaltatasok/kiurites-szamitas', label: 'Kiürítés Számítás' },
+                    { href: '/szolgaltatasok/tuzvedelmi-oktatas', label: 'Tűzvédelmi Oktatás' },
+                  ]}
+                />
+                 <div className="border-b border-slate-700/50">
+                   <Link href="/HaccpPage" className="hover:text-white transition-colors duration-200 flex py-3">HACCP</Link>
+                 </div>
+                 <div className="border-b border-slate-700/50">
+                    <Link href="/szolgaltatasok/villamos-biztonsagi-felulvizsgalat" className="hover:text-white transition-colors duration-200 block py-3">
+                        Villamos Biztonsági Felülvizsgálat (VBF)
+                    </Link>
+                 </div>
+              </div>
             </div>
 
             {/* Kapcsolat Infók és CTA */}

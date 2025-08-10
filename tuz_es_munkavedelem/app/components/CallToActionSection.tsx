@@ -36,16 +36,11 @@ const CallToActionSection: React.FC = () => {
                 preserveAspectRatio="none"
                 className="relative block w-full h-[100px] sm:h-[150px]"
             >
-                <defs>
-                    <pattern id="gridPatternLight" patternUnits="userSpaceOnUse" width="48" height="48">
-                        <rect width="48" height="48" fill="#ffffff" />
-                        <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(3, 186, 190, 0.15)" strokeWidth="1" />
-                    </pattern>
-                </defs>
+                {/* A hullám SVG görbéjét (path) cseréltük egy letisztultabbra */}
                 <path
-                    d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
-                    fill="url(#gridPatternLight)"
-                ></path>
+    d="M0,0 V40 C200,120,500,0,720,50 C940,100,1200,20,1200,90 V0 Z"
+    fill="#ffffff"
+></path>
             </svg>
         </div>
 
@@ -59,8 +54,6 @@ const CallToActionSection: React.FC = () => {
         </div>
         
         <div className="absolute inset-0 cta-grid-pattern z-0"></div>
-
-        {/* Eltávolítva a háttérelemek dinamikus generálása és animációja */}
         
         <div className="relative max-w-7xl mx-auto">
             <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
