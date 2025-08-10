@@ -32,7 +32,7 @@ const accentColor = {
 const downloadableDocs = [
     { id: 1, title: "Kávézó Nyitás Feltételei", description: "Útmutató a sikeres kávézó indításához szükséges összes tűz- és munkavédelmi teendőről.", fileName: "kavezo_nyitas_feltetelei.pdf" },
     { id: 2, title: "Mire van szüksége egy irodának?", description: "Ismerje meg az irodák alapvető szükségleteit, a kötelező jelölésektől az ergonomikus munkaállomásokig.", fileName: "irodai_szuksegletek_lista.pdf" },
-    { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Praktikus összefoglaló, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
+    { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Praktikus összefoglaló, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavédelmi_kisokos.pdf" },
     { id: 4, title: "Építkezési Munkavédelem", description: "Ellenőrző lista az építkezéseken betartandó legfontosabb munkavédelmi szabályokról.", fileName: "epitkezesi_ellenorzo_lista.pdf" },
     { id: 5, title: "HACCP Útmutató Vendéglátóhelyeknek", description: "Részletes útmutató az élelmiszer-biztonsági rendszer (HACCP) kiépítéséhez.", fileName: "vendeglatos_haccp_utmutato.pdf" },
     { id: 6, title: "Veszélyes Anyagok Kezelése", description: "Információs anyag a veszélyes anyagok tárolásának és kezelésének szabályairól.", fileName: "veszelyes_anyagok_kezelesi_utmutato.pdf" },
@@ -165,6 +165,7 @@ const DownloadableDocsSection: React.FC = () => {
             className="pt-24 lg:pt-32 pb-24 lg:pb-32 font-['Poppins',_sans-serif] relative bg-white overflow-hidden cta-grid-pattern"
         >
             <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
+                {/* --- MÓDOSÍTÁS: A SÖTÉT HULLÁM ÚJ FORMÁJA --- */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 1200 120"
@@ -172,7 +173,7 @@ const DownloadableDocsSection: React.FC = () => {
                     className="relative block w-full h-[100px] sm:h-[150px]"
                 >
                     <path
-                        d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z"
+                        d="M0 0.52C534.61 5.92 642.14 17.51 770.83 50.45 889.04 79.52 1012.75 120 1200 120L1200 0 0 0Z"
                         fill="#0f172a"
                     ></path>
                 </svg>
@@ -244,7 +245,7 @@ const DownloadableDocsSection: React.FC = () => {
                 </div>
             </div>
 
-            {/* --- HOZZÁADVA: Új, kisebb fehér hullám az aljára --- */}
+            {/* --- HOZZÁADVA: ÚJ, NAGYOBB FEHÉR HULLÁM AZ ALJÁRA --- */}
             <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
