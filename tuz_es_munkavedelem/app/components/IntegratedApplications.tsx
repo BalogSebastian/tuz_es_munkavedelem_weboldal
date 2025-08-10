@@ -300,17 +300,20 @@ const IntegratedApplication: React.FC = () => {
               style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '3rem 3rem' }} 
               className="font-['Poppins',_sans-serif] min-h-screen relative"
             >
-                {/* === HOZZÁADVA: A SÖTÉT, HULLÁMOS ELVÁLASZTÓ (rács nélkül) === */}
+                {/* --- MÓDOSÍTÁS: Az új, dinamikus és elegáns hullám a kéréseknek megfelelően --- */}
                 <div 
                   className="absolute top-0 left-0 w-full overflow-hidden leading-[0]"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1200 120"
+                        viewBox="0 0 1440 160"
                         preserveAspectRatio="none"
-                        className="relative block w-full h-[60px] sm:h-[100px]"
+                        className="relative block w-full h-[120px] sm:h-[150px]"
                     >
-                        <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z" fill="#0f172a"></path>
+                        <path 
+                           d="M0,32 C120,80 240,112 360,112 C480,112 600,80 720,64 C840,48 960,80 1080,96 C1200,112 1320,96 1440,80 L1440,0 L0,0 L0,32 Z" 
+                           fill="#0f172a"
+                        ></path>
                     </svg>
                 </div>
                 
