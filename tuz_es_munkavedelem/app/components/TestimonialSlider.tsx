@@ -4,16 +4,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useAnimationControls, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { StarIcon } from '@heroicons/react/24/solid';
-import { MdEmojiPeople } from 'react-icons/md'; // ÚJ: MdEmojiPeople importálása
+import { MdEmojiPeople } from 'react-icons/md';
 
 // --- StylizedQuoteIcon ELTÁVOLÍTVA ---
 // Ez a komponens már nem lesz használva, mivel az MdEmojiPeople váltja fel.
 
-
 const accentColor = {
   starActive: 'text-cyan-400',
-  quoteMark: 'text-cyan-200/10', // Ezt a színt megtartjuk, bár a quote ikont kivettük
-  primaryText: 'text-cyan-400', // Hozzáadtam, ha kellene a fő cím színéhez
+  quoteMark: 'text-cyan-200/10',
+  primaryText: 'text-cyan-400',
 };
 
 const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => (
@@ -93,36 +92,27 @@ const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ te
 
 const TestimonialSlider: React.FC = () => {
     const sectionRef = useRef(null);
-    const sliderRef = useRef<HTMLDivElement>(null); // Pontosabb típus
+    const sliderRef = useRef<HTMLDivElement>(null);
     const controls = useAnimationControls();
     const sectionIsInView = useInView(sectionRef, { once: true, amount: 0.2 });
     
-    // Duplázd meg a testimonials tömböt a zökkenőmentes végtelenítéshez
     const combinedTestimonials = [...testimonials, ...testimonials];
     
-    // Kiszámoljuk az egyetlen készlet szélességét a csúszás animációjához
-    // Ez a `testimonials.length` értékével van arányban, nem a `combinedTestimonials` értékével.
-    const itemWidth = 100 / (combinedTestimonials.length / 2); // Kártyák aránya a teljes szélességhez képest (1/2, 1/3, 1/4 attól függően, hány kártya látszik egyszerre)
+    const itemWidth = 100 / (combinedTestimonials.length / 2);
     
-    // Az animáció teljes időtartama - MÓDOSÍTVA: gyorsabb görgetés
-    const animationDuration = combinedTestimonials.length * 0.75; // Kétszer annyi kártya, kétszer annyi idő, hogy lassabb legyen.
+    const animationDuration = combinedTestimonials.length * 0.75;
 
     useEffect(() => {
         if(sectionIsInView && sliderRef.current) {
-            // Számoljuk ki a teljes görgetési távolságot százalékban
-            // Ahhoz, hogy jobbra forogjon, az X értéke növekedjen, vagy a translateX maradjon negatív, de az érték csökkenjen (közelebb a 0-hoz)
-            // A "jobbra forogjon" azt jelenti, hogy a tartalmat balra kell tolni, azaz a translateX negatív érték felé halad.
-            // A végtelen ciklust úgy érjük el, hogy a combinedTestimonials feléig görgetünk, majd hirtelen visszaugorunk az elejére.
             const totalWidthPercentage = 100 * (testimonials.length / (combinedTestimonials.length));
 
             controls.start({
-                x: [`0%`, `-${totalWidthPercentage}%`], // Balra görgetés a végtelen hatás eléréséhez
+                x: [`0%`, `-${totalWidthPercentage}%`],
                 transition: { ease: "linear", duration: animationDuration, repeat: Infinity }
             });
         }
     }, [sectionIsInView, controls, testimonials.length, combinedTestimonials.length, animationDuration]);
     
-    // Hover start/end animáció vezérlése (csak ha már látható a szekció)
     const handleHoverStart = () => {
         if (sectionIsInView) {
             controls.stop();
@@ -138,49 +128,60 @@ const TestimonialSlider: React.FC = () => {
         }
     };
 
-
     return (
-        <section ref={sectionRef} className="py-24 lg:py-32 bg-slate-900 font-['Poppins',_sans-serif] relative overflow-hidden cta-grid-pattern">
+        <>
             <style>{`.cta-grid-pattern { background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px), linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px); background-size: 4rem 4rem; }`}</style>
-            
-            <BlueprintCorner className="absolute top-0 left-0 text-cyan-400/10 hidden md:block" />
-            <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-400/10 transform rotate-180 hidden md:block" />
+            <section ref={sectionRef} className="py-24 lg:py-32 bg-slate-900 font-['Poppins',_sans-serif] relative overflow-hidden cta-grid-pattern">
+                
+                <BlueprintCorner className="absolute top-0 left-0 text-cyan-400/10 hidden md:block" />
+                <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-400/10 transform rotate-180 hidden md:block" />
 
-            <div className="container mx-auto relative z-10">
-                <motion.div 
-                    className="flex justify-center items-center gap-4 mb-16 lg:mb-20"
-                    initial={{opacity:0, y:20}}
-                    animate={sectionIsInView ? {opacity:1, y:0} : {}}
-                    transition={{duration:0.6, delay:0.1}}
-                >
-                    {/* MÓDOSÍTVA: MdEmojiPeople ikon színe pirosra */}
-                    <MdEmojiPeople className="w-12 h-12 text-cyan-400 shrink-0" /> {/* Piros árnyalat */}
-                    <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
-                        Ők már  <span className={accentColor.primaryText}>jobban</span> alszanak:
-                    </h2>
-                </motion.div>
-
-                <motion.div
-                    ref={sliderRef}
-                    onHoverStart={handleHoverStart}
-                    onHoverEnd={handleHoverEnd}
-                    className="max-w-7xl mx-auto overflow-hidden relative"
-                    // A maskImage a kártyák elhalványulását okozza a széleken
-                    style={{ maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)" }}
-                >
-                    {/* A combinedTestimonials tömb renderelése, hogy megvalósuljon a végtelenítés */}
-                    <motion.div className="flex" animate={controls}>
-                        {combinedTestimonials.map((testimonial, index) => (
-                            // Minden kártya szélessége 100% / látható kártyák száma
-                            // sm:w-1/2, md:w-1/3, lg:w-1/4, XL-en is 1/4-et feltételezünk
-                            <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
-                                <TestimonialCard testimonial={testimonial} />
-                            </div>
-                        ))}
+                <div className="container mx-auto relative z-10">
+                    <motion.div 
+                        className="flex justify-center items-center gap-4 mb-16 lg:mb-20"
+                        initial={{opacity:0, y:20}}
+                        animate={sectionIsInView ? {opacity:1, y:0} : {}}
+                        transition={{duration:0.6, delay:0.1}}
+                    >
+                        <MdEmojiPeople className="w-12 h-12 text-cyan-400 shrink-0" />
+                        <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
+                            Ők már  <span className={accentColor.primaryText}>jobban</span> alszanak:
+                        </h2>
                     </motion.div>
-                </motion.div>
-            </div>
-        </section>
+
+                    <motion.div
+                        ref={sliderRef}
+                        onHoverStart={handleHoverStart}
+                        onHoverEnd={handleHoverEnd}
+                        className="max-w-7xl mx-auto overflow-hidden relative"
+                        style={{ maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)" }}
+                    >
+                        <motion.div className="flex" animate={controls}>
+                            {combinedTestimonials.map((testimonial, index) => (
+                                <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                                    <TestimonialCard testimonial={testimonial} />
+                                </div>
+                            ))}
+                        </motion.div>
+                    </motion.div>
+                </div>
+
+                {/* --- HOZZÁADVA: ALSÓ SÖTÉT HULLÁM --- */}
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 1200 120"
+                        preserveAspectRatio="none"
+                        className="relative block w-full h-[80px] sm:h-[120px]"
+                    >
+                        <path
+                            d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
+                            fill="#0f172a"
+                        ></path>
+                    </svg>
+                </div>
+            </section>
+        </>
     );
 };
 

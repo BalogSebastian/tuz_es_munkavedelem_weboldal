@@ -125,7 +125,7 @@ const allQuestionsConfig: { [key: string]: BaseQuestionConfig } = {
             { value: '3_5_MONTHS', text: '3-5 hónap' },
             { value: 'MORE_THAN_5_MONTHS', text: 'Több mint 5 hónap' },
         ],
-        isMultiChoice: true,
+      isMultiChoice: true,
     },
     noCompanyInterest: {
         id: 'noCompanyInterest',
@@ -296,14 +296,13 @@ const IntegratedApplication: React.FC = () => {
               input[type="checkbox"]:checked { border-color: #03BABE; background-color: #03BABE; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); background-size: 100%; background-position: center; background-repeat: no-repeat; }
             `}</style>
 
-            {/* Fő konténer: marad az eredeti fehér háttér és cián rácsmintázat */}
             <div 
               style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '3rem 3rem' }} 
               className="font-['Poppins',_sans-serif] min-h-screen relative"
             >
-                {/* === MÓDOSÍTÁS: HULLÁMOS SVG ELVÁLASZTÓ SÖTÉT, RÁCSOS MINTÁZATTAL === */}
+                {/* === HOZZÁADVA: A SÖTÉT, HULLÁMOS ELVÁLASZTÓ (rács nélkül) === */}
                 <div 
-                  className="absolute top-0 left-0 w-full overflow-hidden leading-[0]" // Nincs text-slate-900, mert a fill a patternből jön
+                  className="absolute top-0 left-0 w-full overflow-hidden leading-[0]"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -311,22 +310,12 @@ const IntegratedApplication: React.FC = () => {
                         preserveAspectRatio="none"
                         className="relative block w-full h-[60px] sm:h-[100px]"
                     >
-                        {/* SVG Defs a rácsmintázathoz */}
-                        <defs>
-                            <pattern id="gridPatternWave" x="0" y="0" width="64" height="64" patternUnits="userSpaceOnUse">
-                                <rect x="0" y="0" width="64" height="64" fill="#0f172a" /> {/* Sötét háttér */}
-                                <path d="M0 0.5L64 0.5" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" /> {/* Vízszintes rácsvonal */}
-                                <path d="M0.5 0L0.5 64" stroke="rgba(203, 213, 225, 0.05)" strokeWidth="1" /> {/* Függőleges rácsvonal */}
-                            </pattern>
-                        </defs>
-                        {/* Ez a path a hullám formája, kitöltése a mintázattal */}
-                        <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z" fill="url(#gridPatternWave)"></path>
+                        <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z" fill="#0f172a"></path>
                     </svg>
                 </div>
                 
                 {/* IoArrowUndoSharp nyilak elhelyezése a hullám *fölött* */}
                 <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
-                    {/* Balról lefelé mutató nyíl */}
                     <div
                         className="absolute w-36 h-36 text-cyan-500" 
                         style={{ top: '60px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} 
@@ -419,7 +408,7 @@ const IntegratedApplication: React.FC = () => {
                     style={{ 
                         top: '50%', 
                         right: '15%', 
-                        transform: 'translateY(-50%) rotate(150deg)' // Felfelé és jobbra mutat
+                        transform: 'translateY(-50%) rotate(150deg)'
                     }}
                 >
                     <IoArrowRedo className="w-full h-full" />
