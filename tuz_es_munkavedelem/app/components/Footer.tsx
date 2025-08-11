@@ -121,7 +121,6 @@ const Footer: React.FC = () => {
               </h3>
               <ul className="space-y-3 text-slate-400 text-base">
                 <li><Link href="/bemutatkozas" className="hover:text-white transition-colors duration-200">Bemutatkozás</Link></li>
-                <li><Link href="/szolgaltatasok" className="hover:text-white transition-colors duration-200">Szolgáltatások</Link></li>
                 <li><Link href="/folyamat" className="hover:text-white transition-colors duration-200">Folyamatunk</Link></li>
                 <li><Link href="/eredmenyek" className="hover:text-white transition-colors duration-200">Eredmények</Link></li>
                 <li><Link href="/gyik" className="hover:text-white transition-colors duration-200">GYIK</Link></li>
@@ -141,10 +140,10 @@ const Footer: React.FC = () => {
                   isOpen={openAccordion === 'munkavedelem'}
                   toggle={() => toggleAccordion('munkavedelem')}
                   links={[
-                    { href: '/szolgaltatasok/kockazatertekeles', label: 'Kockázatértékelés' },
-                    { href: '/szolgaltatasok/munkavedelmi-szabalyzat', label: 'Munkavédelmi Szabályzat' },
-                    { href: '/szolgaltatasok/munkavedelmi-oktatas', label: 'Munkavédelmi Oktatás' },
-                    { href: '/szolgaltatasok/munkahelyi-baleset-kivizsgalas', label: 'Munkahelyi baleset kivizsgálás' },
+                    { href: '/gyorslinkek/kockazatertekeles', label: 'Kockázatértékelés' },
+                    { href: '/gyorslinkek/munkavedelmiszabalyzat', label: 'Munkavédelmi Szabályzat' },
+                    { href: '/gyorslinkek/munkavedelmioktatas', label: 'Munkavédelmi Oktatás' },
+                    { href: '/gyorslinkek/munkahelyibaleset', label: 'Munkahelyi baleset kivizsgálás' },
                   ]}
                 />
                 <AccordionItem
@@ -152,13 +151,13 @@ const Footer: React.FC = () => {
                   isOpen={openAccordion === 'tuzvedelem'}
                   toggle={() => toggleAccordion('tuzvedelem')}
                   links={[
-                    { href: '/szolgaltatasok/tuzvedelmi-szabalyzat', label: 'Tűzvédelmi Szabályzat' },
-                    { href: '/szolgaltatasok/kiurites-szamitas', label: 'Kiürítés Számítás' },
-                    { href: '/szolgaltatasok/tuzvedelmi-oktatas', label: 'Tűzvédelmi Oktatás' },
+                    { href: '/gyorslinkek/tuzvedelmi-szabalyzat', label: 'Tűzvédelmi Szabályzat' },
+                    { href: '/gyorslinkek/kiuritesszamitas', label: 'Kiürítés Számítás' },
+                    { href: '/gyorslinkek/tuzvedelmioktatas', label: 'Tűzvédelmi Oktatás' },
                   ]}
                 />
                  <div className="border-b border-slate-700/50">
-                   <Link href="/HaccpPage" className="hover:text-white transition-colors duration-200 flex py-3">HACCP</Link>
+                   <Link href="/gyorslinkek/HACCP" className="hover:text-white transition-colors duration-200 flex py-3">HACCP</Link>
                  </div>
                  <div className="border-b border-slate-700/50">
                     <Link href="/szolgaltatasok/villamos-biztonsagi-felulvizsgalat" className="hover:text-white transition-colors duration-200 block py-3">
