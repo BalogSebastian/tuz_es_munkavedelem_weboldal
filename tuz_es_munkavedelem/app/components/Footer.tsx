@@ -151,7 +151,7 @@ const Footer: React.FC = () => {
                   isOpen={openAccordion === 'tuzvedelem'}
                   toggle={() => toggleAccordion('tuzvedelem')}
                   links={[
-                    { href: '/gyorslinkek/tuzvedelmi-szabalyzat', label: 'Tűzvédelmi Szabályzat' },
+                    { href: '/gyorslinkek/tuzvedelmiszabalyzat', label: 'Tűzvédelmi Szabályzat' },
                     { href: '/gyorslinkek/kiuritesszamitas', label: 'Kiürítés Számítás' },
                     { href: '/gyorslinkek/tuzvedelmioktatas', label: 'Tűzvédelmi Oktatás' },
                   ]}
@@ -160,7 +160,7 @@ const Footer: React.FC = () => {
                    <Link href="/gyorslinkek/HACCP" className="hover:text-white transition-colors duration-200 flex py-3">HACCP</Link>
                  </div>
                  <div className="border-b border-slate-700/50">
-                    <Link href="/szolgaltatasok/villamos-biztonsagi-felulvizsgalat" className="hover:text-white transition-colors duration-200 block py-3">
+                    <Link href="/gyorslinkek/VBF" className="hover:text-white transition-colors duration-200 block py-3">
                         Villamos Biztonsági Felülvizsgálat (VBF)
                     </Link>
                  </div>
