@@ -1,12 +1,7 @@
-// components/sections/HeaderHero.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import {
-    ExclamationTriangleIcon,
-    XMarkIcon
-} from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -48,16 +43,10 @@ const ANIMATION_VARIANTS = {
             transition: { type: 'spring', stiffness: 100, damping: 20 },
         },
     },
-    disclaimer: {
-        hidden: { opacity: 0, scale: 0.9 },
-        visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } }
-    }
 };
 
 // --- FŐ KOMPONENS ---
 const HeaderHero = () => {
-    const [showDisclaimer, setShowDisclaimer] = useState(true);
-
     return (
         <>
             <style>
@@ -73,61 +62,8 @@ const HeaderHero = () => {
                   background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px), linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px); 
                   background-size: 4rem 4rem; 
                 }
-                .loading-dots span {
-                    animation: blink 1.4s infinite both;
-                }
-                .loading-dots span:nth-child(2) {
-                    animation-delay: 0.2s;
-                }
-                .loading-dots span:nth-child(3) {
-                    animation-delay: 0.4s;
-                }
-                @keyframes blink {
-                    0% { opacity: .2; }
-                    20% { opacity: 1; }
-                    100% { opacity: .2; }
-                }
                 `}
             </style>
-
-            {/* Disclaimer / Tájékoztató ablak */}
-            {showDisclaimer && (
-                 <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[100] p-4 font-['Poppins',_sans-serif]">
-                    <motion.div 
-                        className="relative bg-slate-900 border-2 border-red-500/50 rounded-2xl shadow-2xl shadow-red-500/20 max-w-lg w-full p-8 text-white text-center overflow-hidden"
-                        variants={ANIMATION_VARIANTS.disclaimer}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                    >
-                         <div className="absolute top-0 left-0 w-full h-1 bg-red-600 cta-glow-red"></div>
-                         <button 
-                            onClick={() => setShowDisclaimer(false)}
-                            className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"
-                            aria-label="Bezárás"
-                         >
-                            <XMarkIcon className="h-7 w-7" />
-                         </button>
-                         <div className="flex flex-col items-center">
-                            <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mb-4"/>
-                            <h3 className="text-2xl font-bold text-red-400 mb-2">Rendszerinformáció</h3>
-                            <p className="text-slate-300 mb-4">
-                                A háttérben a rendszer stabilizálása és frissítése zajlik. Kérjük türelmét.
-                            </p>
-                            <div className="flex items-center justify-center space-x-2 my-4">
-                               <p className="text-lg font-medium text-slate-400">Betöltés</p>
-                               <div className="loading-dots text-2xl font-bold text-red-400">
-                                   <span>.</span><span>.</span><span>.</span>
-                               </div>
-                            </div>
-                            <div className="mt-4 p-3 bg-slate-800/50 border border-slate-700 rounded-lg w-full">
-                                <p className="text-sm text-slate-400">Várható éles indulás:</p>
-                                <p className="text-lg font-bold text-cyan-300">Augusztus 4. 23:59</p>
-                            </div>
-                         </div>
-                    </motion.div>
-                </div>
-            )}
 
             <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px]">
                 {/* Navbar */}
