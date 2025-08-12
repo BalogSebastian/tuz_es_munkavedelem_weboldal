@@ -1,9 +1,11 @@
+// components/HeaderHero.tsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { QuoteRequestModal } from './QuoteRequestModal'; // Az új modal importálása
 
 // --- STÍLUS ÉS KONFIGURÁCIÓS KONSTANSOK ---
 const ACCENT_COLOR = {
@@ -47,6 +49,9 @@ const ANIMATION_VARIANTS = {
 
 // --- FŐ KOMPONENS ---
 const HeaderHero = () => {
+    // State a modal ablak nyitásához/zárásához
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <>
             <style>
@@ -83,8 +88,8 @@ const HeaderHero = () => {
                         <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36/302722571</a>
                     </div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Link
-                            href="https://calendly.com/"
+                        <button
+                            onClick={() => setIsModalOpen(true)}
                             className={`
                             ${ACCENT_COLOR.bg} ${ACCENT_COLOR.hoverBg} ${ACCENT_COLOR.textOnAccent}
                             font-bold py-2.5 px-5 rounded-lg text-sm
@@ -93,7 +98,7 @@ const HeaderHero = () => {
                             `}
                         >
                             Ajánlatkérés
-                        </Link>
+                        </button>
                     </motion.div>
                 </div>
 
@@ -154,6 +159,9 @@ const HeaderHero = () => {
                     </div>
                 </div>
             </div>
+            
+            {/* Az új modal ablak renderelése */}
+            <QuoteRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>
     );
 };
