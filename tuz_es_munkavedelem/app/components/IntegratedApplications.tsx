@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, Variants, useInView } from 'framer-motion';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence, Variants, useInView, animate } from 'framer-motion';
 import {
   CalendarDaysIcon,
   CheckIcon,
@@ -17,10 +17,12 @@ import {
   ShieldCheckIcon as ShieldIconOutline,
   XMarkIcon,
   CheckCircleIcon,
-  PhoneIcon
+  PhoneIcon,
+  EnvelopeIcon,
+  UserIcon
 } from '@heroicons/react/24/outline';
-import { SparklesIcon } from '@heroicons/react/24/solid';
 import {
+    SparklesIcon,
     FireIcon as FireIconSolid,
     ShieldCheckIcon as ShieldIconSolid,
     CalendarDaysIcon as CalendarDaysIconSolid,
@@ -201,46 +203,127 @@ const iconCardVariants = {
   visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 200, damping: 20, delay: 0.3 } },
 };
 
+// MÓDOSÍTVA: A ServicesModal mostantól űrlapot is tartalmaz, és kezeli az API hívást
 const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) => {
     const servicesList = [
-        { id: 'tuzvedelem', text: 'Teljes körű tűzvédelmi szolgáltatás' }, { id: 'munkavedelem', text: 'Munkavédelmi feladatok ellátása' },
-        { id: 'kockazatert', text: 'Kockázatértékelés készítése' }, { id: 'haccp', text: 'HACCP rendszer kiépítése és felügyelete' },
-        { id: 'erintesved', text: 'Érintésvédelmi felülvizsgálat' }, { id: 'oktatasok', text: 'Tűz- és munkavédelmi oktatások' },
-        { id: 'balesetek', text: 'Munkabalesetek kivizsgálása' }, { id: 'emelogep', text: 'Emelőgép- és egyéb gépvizsgálatok' },
+        { id: 'tuzvedelem', text: 'Teljes körű tűzvédelmi szolgáltatás' },
+        { id: 'munkavedelem', text: 'Munkavédelmi feladatok ellátása' },
+        { id: 'kockazatert', text: 'Kockázatértékelés készítése' },
+        { id: 'haccp', text: 'HACCP rendszer kiépítése és felügyelete' },
+        { id: 'erintesved', text: 'Érintésvédelmi felülvizsgálat' },
+        { id: 'oktatasok', text: 'Tűz- és munkavédelmi oktatások' },
+        { id: 'balesetek', text: 'Munkabalesetek kivizsgálása' },
+        { id: 'emelogep', text: 'Emelőgép- és egyéb gépvizsgálatok' },
     ];
+    const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
-    const handleCheckboxChange = (serviceId: string) => { setSelectedServices(prev => prev.includes(serviceId) ? prev.filter(id => id !== serviceId) : [...prev, serviceId]); };
-    const handleBookConsultationWithServices = () => { if (selectedServices.length === 0) { alert('Kérjük, válasszon ki legalább egy szolgáltatást!'); return; } const selectedServiceNames = servicesList.filter(s => selectedServices.includes(s.id)).map(s => s.text).join(', '); alert(`Köszönjük! Az alábbi szolgáltatások érdeklik: ${selectedServiceNames}. Most átirányítjuk az időpontfoglaló oldalra.`); window.location.href = 'https://calendly.com/tuzesmunkavedelem/60'; };
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const handleCheckboxChange = (serviceId: string) => {
+        setSelectedServices(prev => prev.includes(serviceId) ? prev.filter(id => id !== serviceId) : [...prev, serviceId]);
+    };
+
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        const payload = {
+            ...formData,
+            services: selectedServices.map(id => servicesList.find(s => s.id === id)?.text),
+        };
+
+        try {
+            const response = await fetch('/api/save-consultation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                throw new Error('Hiba történt a kérés elküldésekor.');
+            }
+
+            setIsSubmitted(true);
+            setTimeout(() => {
+                onClose();
+                setIsSubmitted(false);
+                setFormData({ name: '', email: '', phone: '' });
+                setSelectedServices([]);
+            }, 3000);
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('Hiba történt a kérés elküldésekor. Kérjük, próbálja újra.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
     const backdropVariants = { hidden: { opacity: 0 }, visible: { opacity: 1 } };
     const modalVariants = { hidden: { opacity: 0, y: 50, scale: 0.95 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 300, damping: 25, delay: 0.1 } }, exit: { opacity: 0, y: 30, scale: 0.95, transition: { duration: 0.2 } } };
+    
     return (
         <AnimatePresence>
             {isOpen && (
                 <motion.div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-grid-bg" variants={backdropVariants} initial="hidden" animate="visible" exit="hidden" onClick={onClose}>
                     <motion.div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-auto p-8 relative" variants={modalVariants} exit="exit" onClick={(e) => e.stopPropagation()}>
                         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"><XMarkIcon className="w-8 h-8" /></button>
-                        <h2 className={`text-3xl font-black text-center mb-6`}>Miben <span className={accentColor.text}>Segíthetünk</span>?</h2>
-                        <p className="text-center text-slate-600 mb-8 max-w-lg mx-auto">Az alábbi szolgáltatásokkal állunk rendelkezésére, hogy vállalkozása biztonságos és a jogszabályoknak megfelelő legyen. Kérjük, válassza ki az Önt érdeklő területeket.</p>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-10">
-                            {servicesList.map((service, index) => (
-                                <motion.li key={service.id} className="flex items-start gap-3" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.2 + index * 0.05 } }}>
-                                    <input type="checkbox" id={`service-${service.id}`} checked={selectedServices.includes(service.id)} onChange={() => handleCheckboxChange(service.id)} className={`form-checkbox h-6 w-6 rounded border-gray-300 text-cyan-500 shadow-sm focus:ring-cyan-500 cursor-pointer transition-colors duration-200 ${selectedServices.includes(service.id) ? accentColor.bg : 'bg-white border-gray-300'}`} />
-                                    <label htmlFor={`service-${service.id}`} className="text-slate-700 cursor-pointer flex-1">{service.text}</label>
-                                </motion.li>
-                            ))}
-                        </ul>
-                        <motion.div className="text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}>
-                           <motion.button onClick={handleBookConsultationWithServices} className={`inline-flex items-center gap-3 ${accentColor.bg} text-white font-bold py-4 px-10 rounded-xl text-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2`} whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }} whileTap={{ scale: 0.98 }}>
-                                <CalendarDaysIconSolid className="w-6 h-6" /> Időpontot Foglalok
-                            </motion.button>
-                        </motion.div>
+                        {!isSubmitted ? (
+                            <form onSubmit={handleSubmit}>
+                                <h2 className={`text-3xl font-black text-center mb-6`}>Miben <span className={accentColor.text}>Segíthetünk</span>?</h2>
+                                <p className="text-center text-slate-600 mb-8 max-w-lg mx-auto">Az alábbi szolgáltatásokkal állunk rendelkezésére. Kérjük, válassza ki az Önt érdeklő területeket és adja meg elérhetőségeit.</p>
+                                <div className="space-y-4 mb-6">
+                                    <div className="relative group">
+                                        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
+                                            <UserIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
+                                        </div>
+                                        <input type="text" name="name" value={formData.name} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Teljes Név*" required />
+                                    </div>
+                                    <div className="relative group">
+                                        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
+                                            <EnvelopeIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
+                                        </div>
+                                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Email cím*" required />
+                                    </div>
+                                    <div className="relative group">
+                                        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
+                                            <PhoneIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
+                                        </div>
+                                        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Telefonszám" />
+                                    </div>
+                                </div>
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-10">
+                                    {servicesList.map((service, index) => (
+                                        <motion.li key={service.id} className="flex items-start gap-3" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.2 + index * 0.05 } }}>
+                                            <input type="checkbox" id={`service-${service.id}`} checked={selectedServices.includes(service.id)} onChange={() => handleCheckboxChange(service.id)} className={`form-checkbox h-6 w-6 rounded border-gray-300 text-cyan-500 shadow-sm focus:ring-cyan-500 cursor-pointer transition-colors duration-200 ${selectedServices.includes(service.id) ? accentColor.bg : 'bg-white border-gray-300'}`} />
+                                            <label htmlFor={`service-${service.id}`} className="text-slate-700 cursor-pointer flex-1">{service.text}</label>
+                                        </motion.li>
+                                    ))}
+                                </ul>
+                                <motion.div className="text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}>
+                                <motion.button type="submit" disabled={isLoading} className={`inline-flex items-center gap-3 ${accentColor.bg} text-white font-bold py-4 px-10 rounded-xl text-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2 disabled:bg-cyan-300 disabled:cursor-not-allowed`} whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }} whileTap={{ scale: 0.98 }}>
+                                        <CalendarDaysIconSolid className="w-6 h-6" /> {isLoading ? 'Küldés...' : 'Konzultációt kérek'}
+                                    </motion.button>
+                                </motion.div>
+                            </form>
+                        ) : (
+                             <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                <CheckCircleIcon className={`w-20 h-20 mx-auto mb-4 ${accentColor.text}`} />
+                                <h3 className="text-2xl font-bold text-slate-800 mb-2">Köszönjük a kérését!</h3>
+                                <p className="text-slate-600">Hamarosan felvesszük Önnel a kapcsolatot a megadott elérhetőségeken.</p>
+                            </motion.div>
+                        )}
                     </motion.div>
                 </motion.div>
             )}
         </AnimatePresence>
     );
 };
-
 
 const IntegratedApplication: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -264,9 +347,9 @@ const IntegratedApplication: React.FC = () => {
         if (questionId === 'establishmentPhase') {
             if (value === 'HAS_COMPANY') { nextQuestions = [allQuestionsConfig.hasEmployees, allQuestionsConfig.hasPremise, allQuestionsConfig.dealsWithFood]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; } 
             else if (value === 'OPENING_SOON') { nextQuestions = [allQuestionsConfig.openingSoonTimeline]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; } 
-            else if (value === 'NO_COMPANY') { newFinalMessage = { type: 'booking', text: 'Kérjük, válasszon ki egy konzultációs lehetőséget, hogy segíthessünk vállalkozása elindításában.', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: handleBookConsultation, }; }
-        } else if (questionId === 'openingSoonTimeline') { newFinalMessage = { type: 'booking', text: 'Egy szakértő tud segíteni ebben. Kapsz tőlünk egy átlátszó ismertető anyagot. Keress minket emailben vagy telefonon!', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: handleBookConsultation, }; }
-        else if (questionId === 'dealsWithFood') { newFinalMessage = { type: 'booking', text: 'Köszönjük a válaszokat! Az Ön esetében személyes konzultáció szükséges a további lépésekhez.', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: handleBookConsultation, }; }
+            else if (value === 'NO_COMPANY') { newFinalMessage = { type: 'booking', text: 'Kérjük, válassza ki egy konzultációs lehetőséget, hogy segíthessünk vállalkozása elindításában.', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: () => alert("Minta Akció") }; }
+        } else if (questionId === 'openingSoonTimeline') { newFinalMessage = { type: 'booking', text: 'Egy szakértő tud segíteni ebben. Kapsz tőlünk egy átlátszó ismertető anyagot. Keress minket emailben vagy telefonon!', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: () => alert("Minta Akció") }; }
+        else if (questionId === 'dealsWithFood') { newFinalMessage = { type: 'booking', text: 'Köszönjük a válaszokat! Az Ön esetében személyes konzultáció szükséges a további lépésekhez.', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: () => alert("Minta Akció") }; }
         if (newFinalMessage) { setFinalMessage(newFinalMessage); setShowFinalScreen(true); } 
         else if (shouldAdvanceStep && currentStep < questionFlow.length - 1) { setCurrentStep(c => c + 1); }
     };
