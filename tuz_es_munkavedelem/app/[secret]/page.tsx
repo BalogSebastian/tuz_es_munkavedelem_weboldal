@@ -7,7 +7,8 @@ import {
   CheckCircleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  PaperClipIcon // Új ikon az ajánlatkérésekhez
+  PaperClipIcon,
+  LightBulbIcon // Új ikon a kvízhez
 } from '@heroicons/react/24/solid';
 
 export const dynamic = 'force-dynamic';
@@ -19,15 +20,16 @@ if (!uri) {
 
 const client = new MongoClient(uri);
 
-// Adatlekérdezés kiegészítve az `ajanlatkeres` kollekcióval
+// Adatlekérdezés kiegészítve a 'kvíz' kollekcióval
 const getSecretData = async (filter: { from?: string; to?: string }) => {
   try {
     await client.connect();
     const database = client.db('TuzEsMunkaVedelmiLeadek');
-    
+
     const downloadsCollection = database.collection('Letoltesek');
     const consultationCollection = database.collection('erroljoha tudsz');
-    const offerRequestCollection = database.collection('ajanlatkeres'); // Új
+    const offerRequestCollection = database.collection('ajanlatkeres');
+    const quizCollection = database.collection('kvíz'); // Új kollekció
 
     // A dátumszűréshez a megfelelő mezőneveket használjuk
     const dateQuery = (fieldName: string) => (filter.from && filter.to
@@ -36,12 +38,14 @@ const getSecretData = async (filter: { from?: string; to?: string }) => {
 
     const downloads = await downloadsCollection.find(dateQuery('downloadedAt')).sort({ downloadedAt: -1 }).toArray();
     const consultations = await consultationCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
-    const offerRequests = await offerRequestCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray(); // Új
+    const offerRequests = await offerRequestCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
+    const quizLeads = await quizCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray(); // Lekérdezés
 
     return {
       downloads: JSON.parse(JSON.stringify(downloads)),
       consultations: JSON.parse(JSON.stringify(consultations)),
-      offerRequests: JSON.parse(JSON.stringify(offerRequests)), // Új
+      offerRequests: JSON.parse(JSON.stringify(offerRequests)),
+      quizLeads: JSON.parse(JSON.stringify(quizLeads)), // Hozzáadva
     };
   } finally {
     await client.close();
@@ -53,53 +57,54 @@ interface SearchParams {
   dpage?: string; // downloads page
   cpage?: string; // consultations page
   opage?: string; // offers page
+  qpage?: string; // quiz page
   from?: string;
   to?: string;
 }
 
-// Updated function signature to handle async params and searchParams
-export default async function SecretPage({ 
-  params, 
-  searchParams 
-}: { 
-  params: Promise<{ secret: string }>; 
-  searchParams: Promise<SearchParams> 
+export default async function SecretPage({
+  params,
+  searchParams
+}: {
+  params: Promise<{ secret: string }>;
+  searchParams: Promise<SearchParams>
 }) {
-  // Await the params and searchParams
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  
   const secretKey = 'secretdocs134';
 
   if (resolvedParams.secret !== secretKey) {
     notFound();
   }
 
-  const { from, to, dpage = '1', cpage = '1', opage = '1' } = resolvedSearchParams;
+  const { from, to, dpage = '1', cpage = '1', opage = '1', qpage = '1' } = resolvedSearchParams;
   const itemsPerPage = 10;
 
   const currentDownloadPage = parseInt(dpage, 10);
   const currentConsultationPage = parseInt(cpage, 10);
   const currentOfferPage = parseInt(opage, 10);
+  const currentQuizPage = parseInt(qpage, 10);
 
-  const { downloads, consultations, offerRequests } = await getSecretData({ from, to });
+  const { downloads, consultations, offerRequests, quizLeads } = await getSecretData({ from, to });
 
   const paginatedDownloads = downloads.slice((currentDownloadPage - 1) * itemsPerPage, currentDownloadPage * itemsPerPage);
   const paginatedConsultations = consultations.slice((currentConsultationPage - 1) * itemsPerPage, currentConsultationPage * itemsPerPage);
   const paginatedOfferRequests = offerRequests.slice((currentOfferPage - 1) * itemsPerPage, currentOfferPage * itemsPerPage);
+  const paginatedQuizLeads = quizLeads.slice((currentQuizPage - 1) * itemsPerPage, currentQuizPage * itemsPerPage);
 
   const totalDownloadPages = Math.ceil(downloads.length / itemsPerPage);
   const totalConsultationPages = Math.ceil(consultations.length / itemsPerPage);
   const totalOfferPages = Math.ceil(offerRequests.length / itemsPerPage);
+  const totalQuizPages = Math.ceil(quizLeads.length / itemsPerPage);
 
-  // A lapozó most már kezeli a külön oldalszámokat
-  const renderPagination = (totalPages: number, currentPage: number, pageParamName: 'dpage' | 'cpage' | 'opage') => {
+  const renderPagination = (totalPages: number, currentPage: number, pageParamName: 'dpage' | 'cpage' | 'opage' | 'qpage') => {
     const otherParams = new URLSearchParams({
         from: from || '',
         to: to || '',
         dpage: dpage,
         cpage: cpage,
         opage: opage,
+        qpage: qpage,
     });
 
     const createPageLink = (page: number) => {
@@ -166,35 +171,27 @@ export default async function SecretPage({
             <button type="submit" className="mt-auto px-6 py-2 bg-cyan-500 text-slate-900 font-bold rounded-md hover:bg-cyan-400 transition shadow-md w-full sm:w-auto">Szűrés</button>
           </form>
         </div>
-        
+
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            {/* ÚJ: Ajánlatkérések szekció */}
+
+            {/* ÚJ: Kvíz leadek szekció */}
             <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><PaperClipIcon className="h-6 w-6" />Ajánlatkérések ({offerRequests.length})</h2>
-              {paginatedOfferRequests.length === 0 ? (<p className="text-gray-400">Nincsenek ajánlatkérési adatok.</p>) : (
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><LightBulbIcon className="h-6 w-6" />Kvíz Letöltések ({quizLeads.length})</h2>
+              {paginatedQuizLeads.length === 0 ? (<p className="text-gray-400">Nincsenek kvíz adatok.</p>) : (
                 <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
-                  {paginatedOfferRequests.map((item: any) => (
+                  {paginatedQuizLeads.map((item: any) => (
                     <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
                       <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
                       {item.phone && <p className="text-sm text-gray-500">Telefon: <span className="font-medium text-cyan-400">{item.phone}</span></p>}
-                      <div className="mt-2 pt-2 border-t border-slate-700 text-xs text-gray-500 space-y-1">
-                          <p>Érdeklődés: <b className="font-medium text-cyan-400">{item.services.join(', ')}</b></p>
-                          <div className="grid grid-cols-2 gap-1">
-                            <span>Munkavállalók: <b className="text-cyan-400">{item.employeeCount}</b></span>
-                            <span>Tevékenység: <b className="text-cyan-400">{item.activity}</b></span>
-                            <span>Telephelyek: <b className="text-cyan-400">{item.premiseCount}</b></span>
-                            <span>Méret: <b className="text-cyan-400">{item.premiseSize}</b></span>
-                            <span className="col-span-2">Lokáció: <b className="text-cyan-400">{item.premiseLocation}</b></span>
-                          </div>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-2">Dátum: {new Date(item.submittedAt).toLocaleString('hu-HU')}</p>
+                      <p className="text-xs text-gray-500 mt-1">Kvíz válasz: <span className="font-medium text-cyan-400">{item.quizAnswers}</span></p>
+                      <p className="text-xs text-gray-500 mt-1">Letöltött dokumentum: <span className="font-medium text-cyan-400">{item.downloadedDocument}</span></p>
+                      <p className="text-xs text-gray-500">Dátum: {new Date(item.submittedAt).toLocaleString('hu-HU')}</p>
                     </div>
                   ))}
                 </div>
               )}
-              {totalOfferPages > 1 && renderPagination(totalOfferPages, currentOfferPage, 'opage')}
+              {totalQuizPages > 1 && renderPagination(totalQuizPages, currentQuizPage, 'qpage')}
             </div>
 
             {/* Letöltések szekció */}
@@ -233,6 +230,33 @@ export default async function SecretPage({
               {totalConsultationPages > 1 && renderPagination(totalConsultationPages, currentConsultationPage, 'cpage')}
             </div>
             
+            {/* Ajánlatkérések szekció */}
+            <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><PaperClipIcon className="h-6 w-6" />Ajánlatkérések ({offerRequests.length})</h2>
+              {paginatedOfferRequests.length === 0 ? (<p className="text-gray-400">Nincsenek ajánlatkérési adatok.</p>) : (
+                <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                  {paginatedOfferRequests.map((item: any) => (
+                    <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
+                      <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
+                      {item.phone && <p className="text-sm text-gray-500">Telefon: <span className="font-medium text-cyan-400">{item.phone}</span></p>}
+                      <div className="mt-2 pt-2 border-t border-slate-700 text-xs text-gray-500 space-y-1">
+                          <p>Érdeklődés: <b className="font-medium text-cyan-400">{item.services.join(', ')}</b></p>
+                          <div className="grid grid-cols-2 gap-1">
+                            <span>Munkavállalók: <b className="text-cyan-400">{item.employeeCount}</b></span>
+                            <span>Tevékenység: <b className="text-cyan-400">{item.activity}</b></span>
+                            <span>Telephelyek: <b className="text-cyan-400">{item.premiseCount}</b></span>
+                            <span>Méret: <b className="text-cyan-400">{item.premiseSize}</b></span>
+                            <span className="col-span-2">Lokáció: <b className="text-cyan-400">{item.premiseLocation}</b></span>
+                          </div>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2">Dátum: {new Date(item.submittedAt).toLocaleString('hu-HU')}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {totalOfferPages > 1 && renderPagination(totalOfferPages, currentOfferPage, 'opage')}
+            </div>
+
           </div>
         </div>
       </div>

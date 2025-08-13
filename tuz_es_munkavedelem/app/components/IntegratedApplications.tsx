@@ -1,3 +1,4 @@
+// components/IntegratedApplications.tsx
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
@@ -19,7 +20,8 @@ import {
   CheckCircleIcon,
   PhoneIcon,
   EnvelopeIcon,
-  UserIcon
+  UserIcon,
+  DocumentArrowDownIcon
 } from '@heroicons/react/24/outline';
 import {
     SparklesIcon,
@@ -29,7 +31,7 @@ import {
 } from '@heroicons/react/24/solid';
 
 import { FaArrowTrendDown, FaHelmetSafety } from 'react-icons/fa6';
-import { IoArrowUndoSharp} from 'react-icons/io5'; 
+import { IoArrowUndoSharp} from 'react-icons/io5';
 import { HiDocument } from 'react-icons/hi';
 import { IoArrowRedo } from "react-icons/io5";
 
@@ -263,10 +265,10 @@ const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             setIsLoading(false);
         }
     };
-    
+
     const backdropVariants = { hidden: { opacity: 0 }, visible: { opacity: 1 } };
     const modalVariants = { hidden: { opacity: 0, y: 50, scale: 0.95 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 300, damping: 25, delay: 0.1 } }, exit: { opacity: 0, y: 30, scale: 0.95, transition: { duration: 0.2 } } };
-    
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -325,11 +327,102 @@ const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
     );
 };
 
+const DownloadForm = ({ onDownloadCompleted }: { onDownloadCompleted: () => void }) => {
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const payload = {
+      ...formData,
+      quizAnswers: 'Nincs cégem válasz',
+      downloadedDocument: 'altalanos_munkavedelmi_kisokos.pdf',
+    };
+
+    try {
+      const response = await fetch('/api/save-quiz-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error('Hiba történt az adatok mentése közben.');
+      }
+
+      // Fájl letöltésének indítása
+      const link = document.createElement('a');
+      link.href = '/documents/altalanos_munkavedelmi_kisokos.pdf';
+      link.setAttribute('download', 'altalanos_munkavedelmi_kisokos.pdf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setIsSubmitted(true);
+      onDownloadCompleted();
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Hiba történt a letöltés közben. Kérjük, próbálja újra.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isSubmitted) {
+    return (
+      <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <CheckCircleIcon className={`w-20 h-20 mx-auto mb-4 ${accentColor.text}`} />
+        <h3 className="text-2xl font-bold text-slate-800 mb-2">Köszönjük!</h3>
+        <p className="text-slate-600">A letöltés automatikusan elindult. Hamarosan felvesszük Önnel a kapcsolatot.</p>
+      </motion.div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">Töltsd le az útmutatót!</h2>
+      <p className="text-slate-600 mb-6 text-sm sm:text-base max-w-md mx-auto">Add meg adataidat a letöltéshez. Kérdéseiddel pedig keress minket bátran!</p>
+      <div className="relative group">
+        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
+            <UserIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
+        </div>
+        <input type="text" name="name" value={formData.name} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Teljes Név*" required />
+      </div>
+      <div className="relative group">
+        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
+            <EnvelopeIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
+        </div>
+        <input type="email" name="email" value={formData.email} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Email cím*" required />
+      </div>
+      <div className="relative group">
+        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
+            <PhoneIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
+        </div>
+        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Telefonszám" />
+      </div>
+      <div className="text-center pt-4">
+        <motion.button type="submit" disabled={isLoading} className={`inline-flex items-center gap-3 ${accentColor.bg} text-white font-bold py-4 px-10 rounded-xl text-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2 disabled:bg-cyan-300 disabled:cursor-not-allowed`} whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }} whileTap={{ scale: 0.98 }}>
+          <DocumentArrowDownIcon className="w-6 h-6" /> {isLoading ? 'Letöltés...' : 'Letöltöm az anyagot'}
+        </motion.button>
+      </div>
+    </form>
+  );
+};
+
+
 const IntegratedApplication: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [answers, setAnswers] = useState<AnswersState>(initialAnswersState);
     const [showFinalScreen, setShowFinalScreen] = useState(false);
-    const [finalMessage, setFinalMessage] = useState<{ type: 'booking' | 'info' | 'generic', text: string, buttonText?: string, buttonAction?: () => void } | null>(null);
+    const [finalScreenType, setFinalScreenType] = useState<'booking' | 'download' | null>(null); // Az új state
     const [summaryAnswers, setSummaryAnswers] = useState<AnswerSummary[]>([]);
     const [animationDirection, setAnimationDirection] = useState(1);
     const [questionFlow, setQuestionFlow] = useState<BaseQuestionConfig[]>([allQuestionsConfig.establishmentPhase]);
@@ -343,18 +436,18 @@ const IntegratedApplication: React.FC = () => {
     };
 
     const handleNextQuestionLogic = (questionId: string, value: any) => {
-        let newFinalMessage: typeof finalMessage = null; let nextQuestions: BaseQuestionConfig[] = []; let shouldAdvanceStep = true;
+        let newFinalScreenType: typeof finalScreenType = null; let nextQuestions: BaseQuestionConfig[] = []; let shouldAdvanceStep = true;
         if (questionId === 'establishmentPhase') {
-            if (value === 'HAS_COMPANY') { nextQuestions = [allQuestionsConfig.hasEmployees, allQuestionsConfig.hasPremise, allQuestionsConfig.dealsWithFood]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; } 
-            else if (value === 'OPENING_SOON') { nextQuestions = [allQuestionsConfig.openingSoonTimeline]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; } 
-            else if (value === 'NO_COMPANY') { newFinalMessage = { type: 'booking', text: 'Kérjük, válassza ki egy konzultációs lehetőséget, hogy segíthessünk vállalkozása elindításában.', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: () => alert("Minta Akció") }; }
-        } else if (questionId === 'openingSoonTimeline') { newFinalMessage = { type: 'booking', text: 'Egy szakértő tud segíteni ebben. Kapsz tőlünk egy átlátszó ismertető anyagot. Keress minket emailben vagy telefonon!', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: () => alert("Minta Akció") }; }
-        else if (questionId === 'dealsWithFood') { newFinalMessage = { type: 'booking', text: 'Köszönjük a válaszokat! Az Ön esetében személyes konzultáció szükséges a további lépésekhez.', buttonText: 'Ingyenes Konzultáció Foglalása', buttonAction: () => alert("Minta Akció") }; }
-        if (newFinalMessage) { setFinalMessage(newFinalMessage); setShowFinalScreen(true); } 
+            if (value === 'HAS_COMPANY') { nextQuestions = [allQuestionsConfig.hasEmployees, allQuestionsConfig.hasPremise, allQuestionsConfig.dealsWithFood]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; }
+            else if (value === 'OPENING_SOON') { nextQuestions = [allQuestionsConfig.openingSoonTimeline]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; }
+            else if (value === 'NO_COMPANY') { newFinalScreenType = 'download'; } // MÓDOSÍTÁS ITT
+        } else if (questionId === 'openingSoonTimeline') { newFinalScreenType = 'booking'; }
+        else if (questionId === 'dealsWithFood') { newFinalScreenType = 'booking'; }
+        if (newFinalScreenType) { setFinalScreenType(newFinalScreenType); setShowFinalScreen(true); }
         else if (shouldAdvanceStep && currentStep < questionFlow.length - 1) { setCurrentStep(c => c + 1); }
     };
 
-    const resetForm = () => { setAnimationDirection(-1); setShowFinalScreen(false); setFinalMessage(null); setTimeout(() => { setCurrentStep(0); setAnswers(initialAnswersState); setSummaryAnswers([]); setQuestionFlow([allQuestionsConfig.establishmentPhase]); }, 400); };
+    const resetForm = () => { setAnimationDirection(-1); setShowFinalScreen(false); setFinalScreenType(null); setTimeout(() => { setCurrentStep(0); setAnswers(initialAnswersState); setSummaryAnswers([]); setQuestionFlow([allQuestionsConfig.establishmentPhase]); }, 400); };
     const handleBookConsultation = () => { window.location.href = 'https://calendly.com/tuzesmunkavedelem/60'; };
     const currentQuestion = questionFlow[currentStep];
     const questionWrapperVariants: Variants = { enter: (dir: number) => ({ x: dir > 0 ? 80 : -80, opacity: 0 }), center: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.21, 1.02, 0.73, 1] } }, exit: (dir: number) => ({ x: dir < 0 ? 80 : -80, opacity: 0, transition: { duration: 0.4, ease: [0.83, 0, 0.17, 1] } }) };
@@ -379,12 +472,12 @@ const IntegratedApplication: React.FC = () => {
               input[type="checkbox"]:checked { border-color: #03BABE; background-color: #03BABE; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); background-size: 100%; background-position: center; background-repeat: no-repeat; }
             `}</style>
 
-            <div 
-              style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '3rem 3rem' }} 
+            <div
+              style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '3rem 3rem' }}
               className="font-['Poppins',_sans-serif] min-h-screen relative"
             >
                 {/* --- MÓDOSÍTÁS: Az új, dinamikus és elegáns hullám a kéréseknek megfelelően --- */}
-                <div 
+                <div
                   className="absolute top-0 left-0 w-full overflow-hidden leading-[0]"
                 >
                     <svg
@@ -393,35 +486,35 @@ const IntegratedApplication: React.FC = () => {
                         preserveAspectRatio="none"
                         className="relative block w-full h-[120px] sm:h-[150px]"
                     >
-                        <path 
-                           d="M0,32 C120,80 240,112 360,112 C480,112 600,80 720,64 C840,48 960,80 1080,96 C1200,112 1320,96 1440,80 L1440,0 L0,0 L0,32 Z" 
+                        <path
+                           d="M0,32 C120,80 240,112 360,112 C480,112 600,80 720,64 C840,48 960,80 1080,96 C1200,112 1320,96 1440,80 L1440,0 L0,0 L0,32 Z"
                            fill="#0f172a"
                         ></path>
                     </svg>
                 </div>
-                
+
                 {/* IoArrowUndoSharp nyilak elhelyezése a hullám *fölött* */}
                 <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
                     <div
-                        className="absolute w-36 h-36 text-cyan-500" 
-                        style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} 
+                        className="absolute w-36 h-36 text-cyan-500"
+                        style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
                     >
                         <IoArrowUndoSharp className="w-full h-full" />
                     </div>
                 </div>
 
                 {/* Section 1: Quiz */}
-                <motion.section 
-                  ref={preConsultationSectionRef} 
-                  className="relative pt-28 sm:pt-40 pb-24 sm:pb-32 overflow-hidden" 
-                  variants={sectionEnterVariants} 
-                  initial="hidden" 
-                  animate={isPreConsultationInView ? "visible" : "hidden"} 
+                <motion.section
+                  ref={preConsultationSectionRef}
+                  className="relative pt-28 sm:pt-40 pb-24 sm:pb-32 overflow-hidden"
+                  variants={sectionEnterVariants}
+                  initial="hidden"
+                  animate={isPreConsultationInView ? "visible" : "hidden"}
                   viewport={{ once: true, amount: 0.2 }}
                 >
                     <FloatingShapes />
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <motion.div 
+                        <motion.div
                             className="text-center mb-16"
                             initial="hidden"
                             animate={isPreConsultationInView ? "visible" : "hidden"}
@@ -472,11 +565,18 @@ const IntegratedApplication: React.FC = () => {
                                             </motion.div>
                                         ) : (
                                             <motion.div key="summary" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}} className="text-center">
-                                                <AnimatedCheckIcon className="w-20 h-20 gradient-text mx-auto mb-4" />
-                                                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">{finalMessage?.type === 'booking' ? 'Köszönjük a válaszait!' : 'Tájékoztatás'}</h2>
-                                                <p className="text-slate-600 mb-6 text-sm sm:text-base max-w-md mx-auto">{finalMessage?.text}</p>
-                                                {finalMessage?.type === 'booking' && ( <> <motion.div variants={summaryListVariants} initial="hidden" animate="visible" className="text-left bg-slate-50/70 p-4 rounded-lg mb-8 max-w-sm mx-auto space-y-2 border border-slate-200/80 shadow-inner"> {summaryAnswers.map(ans => ( <motion.div variants={summaryItemVariants} key={ans.questionId} className="flex justify-between items-center text-sm"> <span className="text-slate-600 truncate pr-2" title={ans.questionText}>{ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}</span> <span className={`font-bold px-2 py-0.5 rounded-md text-xs ${typeof ans.answerValue === 'boolean' ? (ans.answerValue ? `bg-cyan-100 text-cyan-800` : 'bg-red-100 text-red-800') : `bg-cyan-100 text-cyan-800`}`}>{ans.answerText}</span> </motion.div> ))} </motion.div> <motion.button onClick={finalMessage?.buttonAction} whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 20px -5px rgb(6 182 212 / 0.4)' }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto inline-flex items-center justify-center gradient-bg text-white font-bold py-4 px-10 rounded-lg text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-50"> <CalendarDaysIcon className="w-5 h-5 mr-2.5" /> {finalMessage?.buttonText} </motion.button> </> )}
-                                                {finalMessage?.type === 'info' && ( <motion.button onClick={finalMessage?.buttonAction} whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 20px -5px rgb(6 182 212 / 0.4)' }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto inline-flex items-center justify-center gradient-bg text-white font-bold py-4 px-10 rounded-lg text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-50"> <TruckIcon className="w-5 h-5 mr-2.5" /> {finalMessage?.buttonText} </motion.button> )}
+                                                {finalScreenType === 'booking' && (
+                                                    <>
+                                                        <AnimatedCheckIcon className="w-20 h-20 gradient-text mx-auto mb-4" />
+                                                        <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">Köszönjük a válaszait!</h2>
+                                                        <p className="text-slate-600 mb-6 text-sm sm:text-base max-w-md mx-auto">Az Ön esetében személyes konzultáció szükséges a további lépésekhez. Foglaljon időpontot szakértőinkkel!</p>
+                                                        <motion.div variants={summaryListVariants} initial="hidden" animate="visible" className="text-left bg-slate-50/70 p-4 rounded-lg mb-8 max-w-sm mx-auto space-y-2 border border-slate-200/80 shadow-inner"> {summaryAnswers.map(ans => ( <motion.div variants={summaryItemVariants} key={ans.questionId} className="flex justify-between items-center text-sm"> <span className="text-slate-600 truncate pr-2" title={ans.questionText}>{ans.questionText.length > 28 ? ans.questionText.substring(0,25) + "..." : ans.questionText}</span> <span className={`font-bold px-2 py-0.5 rounded-md text-xs ${typeof ans.answerValue === 'boolean' ? (ans.answerValue ? `bg-cyan-100 text-cyan-800` : 'bg-red-100 text-red-800') : `bg-cyan-100 text-cyan-800`}`}>{ans.answerText}</span> </motion.div> ))} </motion.div>
+                                                        <motion.button onClick={handleBookConsultation} whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 20px -5px rgb(6 182 212 / 0.4)' }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto inline-flex items-center justify-center gradient-bg text-white font-bold py-4 px-10 rounded-lg text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-50"> <CalendarDaysIcon className="w-5 h-5 mr-2.5" /> Konzultáció Foglalása </motion.button>
+                                                    </>
+                                                )}
+                                                {finalScreenType === 'download' && (
+                                                    <DownloadForm onDownloadCompleted={() => setShowFinalScreen(true)} />
+                                                )}
                                                 <button onClick={resetForm} className="mt-6 block w-full text-sm font-semibold text-cyan-600 hover:text-cyan-800 hover:underline transition-colors">Újrakezdés</button>
                                             </motion.div>
                                         )}
@@ -490,10 +590,10 @@ const IntegratedApplication: React.FC = () => {
                 </motion.section>
 
                 {/* ÚJ: FaArrowTrendDown nyíl a szekciók közötti résben */}
-                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20" 
-                    style={{ 
-                        top: '50%', 
-                        right: '15%', 
+                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+                    style={{
+                        top: '50%',
+                        right: '15%',
                         transform: 'translateY(-50%) rotate(150deg)'
                     }}
                 >
@@ -501,13 +601,13 @@ const IntegratedApplication: React.FC = () => {
                 </div>
 
                 {/* Section 2: Intro (Erről jó ha tudsz) */}
-                <motion.section 
-                    ref={introSectionRef} 
-                    id="bemutatkozas" 
-                    className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 font-['Poppins',_sans-serif]" 
-                    variants={introSectionVariants} 
-                    initial="hidden" 
-                    whileInView="visible" 
+                <motion.section
+                    ref={introSectionRef}
+                    id="bemutatkozas"
+                    className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 font-['Poppins',_sans-serif]"
+                    variants={introSectionVariants}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true, amount: 0.2 }}
                 >
                     <div className="max-w-6xl mx-auto flex flex-col items-center">
@@ -540,18 +640,18 @@ const IntegratedApplication: React.FC = () => {
                                 <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5"><div className={`p-4 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500`}><HiDocument className="w-8 h-8 text-white" /></div><h3 className="text-2xl font-bold text-slate-800">HACCP</h3></motion.div>
                                 <p className="text-slate-600 leading-relaxed">A HACCP az élelmiszer biztonság alapköve. Minden esetben ki kell dolgozni ha valaki élelmiszerrel foglalkozik, és természetesen e-szerint kell eljárni a későbbiekben. Fontos tudni, hogy nem üzemelhetsz HACCP rendszer nélkül, különben bármikor bezárathatják az egységedet!</p>
                             </motion.div>
-                        </div>  
+                        </div>
                         <motion.div variants={introItemVariants} className="text-center mt-20">
                             <p className="mb-6 text-xl text-slate-600">Beszélni szeretnék egy <span className={accentColor.text}>jó</span> szakival!</p>
                             <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }}>
-    <button 
-        onClick={() => setIsModalOpen(true)} 
+    <button
+        onClick={() => setIsModalOpen(true)}
         className={`
-            inline-flex items-center 
-            ${accentColor.bg} ${accentColor.hoverBg} text-white 
-            font-bold py-4 px-10 rounded-xl text-lg 
-            shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow} 
-            transition-all duration-300 ease-in-out 
+            inline-flex items-center
+            ${accentColor.bg} ${accentColor.hoverBg} text-white
+            font-bold py-4 px-10 rounded-xl text-lg
+            shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
+            transition-all duration-300 ease-in-out
             focus:outline-none focus:ring-4 ${accentColor.ring}
         `}
     >
@@ -564,7 +664,7 @@ const IntegratedApplication: React.FC = () => {
                 </motion.section>
 
                 {/* === HOZZÁADVA: A FEHÉR, HULLÁMOS ELVÁLASZTÓ === */}
-                <div 
+                <div
                   className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]"
                 >
                     <svg
