@@ -1,6 +1,3 @@
-// components/IntegratedApplications.tsx
-'use client';
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, Variants, useInView, animate } from 'framer-motion';
 import {
@@ -205,17 +202,14 @@ const iconCardVariants = {
   visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 200, damping: 20, delay: 0.3 } },
 };
 
-// MÓDOSÍTVA: A ServicesModal mostantól űrlapot is tartalmaz, és kezeli az API hívást
 const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) => {
+    // Frissített servicesList a felhasználó kérésének megfelelően
     const servicesList = [
-        { id: 'tuzvedelem', text: 'Teljes körű tűzvédelmi szolgáltatás' },
-        { id: 'munkavedelem', text: 'Munkavédelmi feladatok ellátása' },
-        { id: 'kockazatert', text: 'Kockázatértékelés készítése' },
-        { id: 'haccp', text: 'HACCP rendszer kiépítése és felügyelete' },
-        { id: 'erintesved', text: 'Érintésvédelmi felülvizsgálat' },
-        { id: 'oktatasok', text: 'Tűz- és munkavédelmi oktatások' },
-        { id: 'balesetek', text: 'Munkabalesetek kivizsgálása' },
-        { id: 'emelogep', text: 'Emelőgép- és egyéb gépvizsgálatok' },
+        { id: 'tuzvedelem', text: 'Tűzvédelem' },
+        { id: 'munkavedelem', text: 'Munkavédelem' },
+        { id: 'haccp', text: 'HACCP' },
+        { id: 'erintesvedelem', text: 'Érintésvédelem (VBF)' },
+        { id: 'oktatas', text: 'Oktatás' },
     ];
     const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -309,7 +303,7 @@ const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                                 </ul>
                                 <motion.div className="text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}>
                                 <motion.button type="submit" disabled={isLoading} className={`inline-flex items-center gap-3 ${accentColor.bg} text-white font-bold py-4 px-10 rounded-xl text-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2 disabled:bg-cyan-300 disabled:cursor-not-allowed`} whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }} whileTap={{ scale: 0.98 }}>
-                                        <CalendarDaysIconSolid className="w-6 h-6" /> {isLoading ? 'Küldés...' : 'Konzultációt kérek'}
+                                        <CalendarDaysIconSolid className="w-6 h-6" /> {isLoading ? 'Küldés...' : 'Időpontfoglalás'}
                                     </motion.button>
                                 </motion.div>
                             </form>
@@ -360,7 +354,7 @@ const DownloadForm = ({ onDownloadCompleted }: { onDownloadCompleted: () => void
 
       // Fájl letöltésének indítása
       const link = document.createElement('a');
-      link.href = '/documents/altalanos_munkavedelmi_kisokos.pdf';
+      link.href = '/documents/altalanos_munkavedelem_kisokos.pdf';
       link.setAttribute('download', 'altalanos_munkavedelmi_kisokos.pdf');
       document.body.appendChild(link);
       link.click();
