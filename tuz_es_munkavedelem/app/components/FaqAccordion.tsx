@@ -102,7 +102,7 @@ const FaqAccordion: React.FC = () => {
         </div>
 
         <div className="text-center mt-16 lg:mt-20">
-            <p className="text-lg text-slate-600 mb-6">Nem találta a választ? Vegye fel velünk a kapcsolatot!</p>
+            <p className="text-lg text-slate-600 mb-6">Nem találtál rá választ? Vedd fel egy szakértőnkkel a kapcsolatot:</p>
             <div>
                 <Link href="/kapcsolat"
                     className={`inline-flex items-center bg-[#03BABE] hover:bg-cyan-600 text-white font-semibold py-4 px-10 rounded-xl text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2`}

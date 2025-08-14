@@ -106,10 +106,10 @@ const Footer: React.FC = () => {
             {/* Cég Logó és Rövid Leírás */}
             <div className="md:col-span-2 lg:col-span-1">
               <Link href="/" className="font-bold text-3xl tracking-wider mb-4 block text-gradient">
-                  TűzÉsMunka<span className="text-white">védelem</span>
+              Munkavédelmi<span className="text-white">Szaki</span>
               </Link>
               <p className="text-base text-slate-400 leading-relaxed max-w-xs sm:max-w-none">
-                Szakértő megoldások tűz- és munkavédelemben. Gondoskodunk a biztonságról, hogy Ön a növekedésre fókuszálhasson.
+              Profi megoldások a Tűz- Munkavédelem és HACCP kérdésekben is, hogy neked ne legyen gondod vele! Keress minket bátran!”
               </p>
             </div>
 
@@ -122,7 +122,6 @@ const Footer: React.FC = () => {
               <ul className="space-y-3 text-slate-400 text-base">
                 <li><Link href="/bemutatkozas" className="hover:text-white transition-colors duration-200">Bemutatkozás</Link></li>
                 <li><Link href="/folyamat" className="hover:text-white transition-colors duration-200">Folyamatunk</Link></li>
-                <li><Link href="/eredmenyek" className="hover:text-white transition-colors duration-200">Eredmények</Link></li>
                 <li><Link href="/gyik" className="hover:text-white transition-colors duration-200">GYIK</Link></li>
                 <li><Link href="/kapcsolat" className="hover:text-white transition-colors duration-200">Kapcsolat</Link></li>
               </ul>
@@ -218,7 +217,7 @@ const Footer: React.FC = () => {
           <div
             className="border-t border-slate-700/60 pt-8 mt-12 text-center text-xs text-slate-500"
           >
-            <p>&copy; {new Date().getFullYear()} JaniMark Kft. Minden jog fenntartva.</p>
+            <p>&copy; {new Date().getFullYear()} Trident Shield Group Kft. Minden jog fenntartva.</p>
             <div className="mt-2 flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-4">
               <Link href="/adatvedelmi-nyilatkozat" className="hover:text-white transition-colors duration-200">Adatvédelmi Nyilatkozat</Link>
               <Link href="/aszf" className="hover:text-white transition-colors duration-200">Általános Szerződési Feltételek</Link>

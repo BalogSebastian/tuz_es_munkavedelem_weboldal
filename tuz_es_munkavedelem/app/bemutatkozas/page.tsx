@@ -1,17 +1,20 @@
-// components/sections/Bemutatkozas.tsx
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useRef, useEffect } from 'react';
+import { motion, useInView, animate, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { 
     ArrowLeftIcon, 
-    BuildingStorefrontIcon, 
-    PhoneIcon, 
+    CalendarDaysIcon,
     ShieldCheckIcon,
+    UsersIcon,
+    CurrencyPoundIcon,
+    BuildingOfficeIcon,
+    CheckBadgeIcon,
+    SparklesIcon,
     AcademicCapIcon,
     ScaleIcon,
-    UsersIcon,
-    SparklesIcon
+    PhoneIcon,
+    BuildingStorefrontIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -19,6 +22,9 @@ const accentColor = {
   text: 'text-cyan-500',
   gradientFrom: 'from-cyan-500',
   gradientTo: 'to-teal-400',
+  bg: 'bg-cyan-500',
+  ring: 'focus:ring-cyan-500',
+  base: '#06b6d4',
 };
 
 const pageVariants = {
@@ -27,7 +33,7 @@ const pageVariants = {
 };
 
 const itemVariants = {
-  initial: { opacity: 0, y: 50, filter: 'blur(8px)' },
+  initial: { opacity: 0, y: 50, filter: 'blur(5px)' },
   in: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
 };
 
@@ -105,6 +111,107 @@ const StatCard = ({ value, label }: { value: string, label: string }) => (
     </motion.div>
 );
 
+interface AnimatedCounterProps {
+    from?: number;
+    to: number;
+    className?: string;
+    prefix?: string;
+    suffix?: string;
+}
+
+const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ from = 0, to, prefix = '', suffix = '' }) => {
+    const nodeRef = useRef<HTMLSpanElement>(null);
+    const isInView = useInView(nodeRef, { once: true, margin: "-100px" });
+  
+    useEffect(() => {
+      if (isInView && nodeRef.current) {
+        const node = nodeRef.current;
+        const controls = animate(from, to, {
+          duration: 2.5,
+          ease: 'easeOut',
+          onUpdate(value) {
+            node.textContent = prefix + Math.round(value).toLocaleString('hu-HU') + suffix;
+          },
+        });
+        return () => controls.stop();
+      }
+    }, [from, to, isInView, prefix, suffix]);
+  
+    return <span ref={nodeRef} />;
+};
+
+const MetricCard = ({ icon: Icon, value, unit, label }: { icon: React.ElementType, value: number, unit: string, label: string }) => (
+    <motion.div 
+        variants={itemVariants}
+        whileHover={{ y: -8, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)' }}
+        className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200/80 text-center"
+    >
+        <Icon className={`w-12 h-12 mx-auto mb-4 ${accentColor.text}`} />
+        <div className="text-5xl font-black text-slate-800">
+            <AnimatedCounter to={value} />
+            <span className={accentColor.text}>{unit}</span>
+        </div>
+        <p className="text-slate-600 font-semibold mt-2">{label}</p>
+    </motion.div>
+);
+
+const HungaryMap = () => {
+    const locations = [
+        { x: 85.3, y: 47.5 },
+        { x: 47.6, y: 47.0 },
+        { x: 55.4, y: 20.2 },
+        { x: 34.0, y: 50.5 },
+        { x: 39.6, y: 11.0 },
+        { x: 67.9, y: 64.2 },
+        { x: 41.5, y: 31.8 },
+        { x: 34.0, y: 20.0 },
+        { x: 88.2, y: 58.5 },
+        { x: 52.0, y: 31.0 },
+    ];
+
+    return (
+        <motion.div variants={itemVariants} className="relative w-full max-w-4xl mx-auto aspect-[16/9] bg-white/70 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-slate-200/80">
+            <svg viewBox="0 0 100 60" className="w-full h-full">
+                <motion.path
+                    d="M9.6,30.4L1.2,29.2L1.2,27.6L8.4,26L9.6,23.6L12,22.8L14.4,23.6L16.8,22.8L18,20.4L22.8,18.8L26.4,18.8L28.8,17.2L32.4,17.2L34.8,18.8L38.4,18.8L40.8,20.4L44.4,20.4L46.8,22L49.2,22L51.6,23.6L54,23.6L56.4,25.2L58.8,25.2L61.2,26.8L63.6,26.8L66,28.4L68.4,28.4L70.8,30L73.2,30L75.6,31.6L78,31.6L80.4,33.2L82.8,33.2L85.2,34.8L87.6,34.8L90,36.4L92.4,36.4L94.8,38L94.8,39.6L92.4,41.2L90,41.2L87.6,42.8L85.2,42.8L82.8,44.4L80.4,44.4L78,46L75.6,46L73.2,47.6L70.8,47.6L68.4,49.2L66,49.2L63.6,50.8L61.2,50.8L58.8,52.4L56.4,52.4L54,54L51.6,54L49.2,55.6L46.8,55.6L44.4,57.2L42,57.2L39.6,58.8L37.2,58.8L34.8,60.4L32.4,60.4L30,62L27.6,62L25.2,63.6L22.8,63.6L20.4,65.2L18,65.2L15.6,66.8L13.2,66.8L10.8,68.4L8.4,68.4L6,70L3.6,70L1.2,71.6L1.2,73.2L0,74.8L0,30.4L9.6,30.4Z"
+                    transform="scale(1, 0.8) translate(0, -15)"
+                    fill="#e2e8f0"
+                    stroke="#cbd5e1"
+                    strokeWidth="0.2"
+                />
+                <g>
+                    {locations.map((loc, i) => (
+                        <motion.circle
+                            key={i}
+                            cx={loc.x}
+                            cy={loc.y}
+                            r="0.8"
+                            fill={accentColor.base}
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: [0, 1, 0], scale: [0, 2, 0] }}
+                            transition={{ duration: 2.5, delay: 0.5 + i * 0.2, repeat: Infinity, repeatDelay: 3 }}
+                        />
+                    ))}
+                </g>
+            </svg>
+        </motion.div>
+    );
+};
+
+const CaseStudyCard = ({ title, description, result }: { title: string, description: string, result: string }) => (
+    <motion.div
+        variants={itemVariants}
+        whileHover={{ y: -8, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)' }}
+        className="bg-white/70 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200/80 text-left h-full"
+    >
+        <h3 className="text-2xl font-bold text-slate-800 mb-2">{title}</h3>
+        <p className="text-slate-600 mb-4">{description}</p>
+        <div className="mt-auto pt-4 border-t border-slate-200">
+            <span className={`font-bold ${accentColor.text}`}>{result}</span>
+        </div>
+    </motion.div>
+);
+
 const Bemutatkozas = () => {
     return (
         <div className="min-h-screen bg-slate-50 text-slate-800 font-['Poppins',_sans-serif] overflow-hidden">
@@ -159,12 +266,6 @@ const Bemutatkozas = () => {
                     </motion.header>
 
                     <section className="w-full flex flex-col items-center space-y-12">
-                        <FounderCard name="Demeter Márk" role="A Stratéga | Munkavédelmi Szakértő" imgSrc="https://placehold.co/200x200/e2e8f0/334155?text=DM">
-                            <p>
-                                Márk a rendszerszemléletű gondolkodás mestere. Képes a legbonyolultabb jogszabályi környezetet is lebontani érthető, logikus és mindenekelőtt működőképes munkavédelmi rendszerekké. Célja, hogy a biztonsági kultúra ne kényszer, hanem a vállalati siker szerves része legyen.
-                            </p>
-                        </FounderCard>
-
                         <FounderCard name="Németh János" role="A Gyakorlati Megvalósító | Tűzvédelmi Specialista" imgSrc="https://placehold.co/200x200/e2e8f0/334155?text=NJ">
                             <p>
                                 János a terepen van otthon. Legyen szó egy ipari csarnok tűzvédelmi bejárásáról vagy egy irodaház kiürítési tervének gyakorlati teszteléséről, ő az, aki a papíron lévő terveket a valóságban is működővé teszi. Pontosan tudja, mi az, ami egy éles helyzetben számít.
