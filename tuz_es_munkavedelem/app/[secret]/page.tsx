@@ -10,6 +10,9 @@ import {
   PaperClipIcon,
   LightBulbIcon // Új ikon a kvízhez
 } from '@heroicons/react/24/solid';
+import {
+  ChatBubbleLeftRightIcon
+} from '@heroicons/react/24/outline'; // Új ikon a kontaktokhoz
 
 export const dynamic = 'force-dynamic';
 
@@ -20,7 +23,7 @@ if (!uri) {
 
 const client = new MongoClient(uri);
 
-// Adatlekérdezés kiegészítve a 'kvíz' kollekcióval
+// Adatlekérdezés kiegészítve a 'kvíz' és 'kontakt' kollekciókkal
 const getSecretData = async (filter: { from?: string; to?: string }) => {
   try {
     await client.connect();
@@ -29,7 +32,8 @@ const getSecretData = async (filter: { from?: string; to?: string }) => {
     const downloadsCollection = database.collection('Letoltesek');
     const consultationCollection = database.collection('erroljoha tudsz');
     const offerRequestCollection = database.collection('ajanlatkeres');
-    const quizCollection = database.collection('kvíz'); // Új kollekció
+    const quizCollection = database.collection('kvíz');
+    const contactCollection = database.collection('kontakt'); // Új kollekció a kontaktoknak
 
     // A dátumszűréshez a megfelelő mezőneveket használjuk
     const dateQuery = (fieldName: string) => (filter.from && filter.to
@@ -39,13 +43,15 @@ const getSecretData = async (filter: { from?: string; to?: string }) => {
     const downloads = await downloadsCollection.find(dateQuery('downloadedAt')).sort({ downloadedAt: -1 }).toArray();
     const consultations = await consultationCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
     const offerRequests = await offerRequestCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
-    const quizLeads = await quizCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray(); // Lekérdezés
+    const quizLeads = await quizCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
+    const contactMessages = await contactCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray(); // Lekérdezés
 
     return {
       downloads: JSON.parse(JSON.stringify(downloads)),
       consultations: JSON.parse(JSON.stringify(consultations)),
       offerRequests: JSON.parse(JSON.stringify(offerRequests)),
-      quizLeads: JSON.parse(JSON.stringify(quizLeads)), // Hozzáadva
+      quizLeads: JSON.parse(JSON.stringify(quizLeads)),
+      contactMessages: JSON.parse(JSON.stringify(contactMessages)), // Hozzáadva
     };
   } finally {
     await client.close();
@@ -58,6 +64,7 @@ interface SearchParams {
   cpage?: string; // consultations page
   opage?: string; // offers page
   qpage?: string; // quiz page
+  kpage?: string; // kontakt page
   from?: string;
   to?: string;
 }
@@ -77,27 +84,30 @@ export default async function SecretPage({
     notFound();
   }
 
-  const { from, to, dpage = '1', cpage = '1', opage = '1', qpage = '1' } = resolvedSearchParams;
+  const { from, to, dpage = '1', cpage = '1', opage = '1', qpage = '1', kpage = '1' } = resolvedSearchParams;
   const itemsPerPage = 10;
 
   const currentDownloadPage = parseInt(dpage, 10);
   const currentConsultationPage = parseInt(cpage, 10);
   const currentOfferPage = parseInt(opage, 10);
   const currentQuizPage = parseInt(qpage, 10);
+  const currentKontaktPage = parseInt(kpage, 10); // Új oldalszám a kontaktoknak
 
-  const { downloads, consultations, offerRequests, quizLeads } = await getSecretData({ from, to });
+  const { downloads, consultations, offerRequests, quizLeads, contactMessages } = await getSecretData({ from, to });
 
   const paginatedDownloads = downloads.slice((currentDownloadPage - 1) * itemsPerPage, currentDownloadPage * itemsPerPage);
   const paginatedConsultations = consultations.slice((currentConsultationPage - 1) * itemsPerPage, currentConsultationPage * itemsPerPage);
   const paginatedOfferRequests = offerRequests.slice((currentOfferPage - 1) * itemsPerPage, currentOfferPage * itemsPerPage);
   const paginatedQuizLeads = quizLeads.slice((currentQuizPage - 1) * itemsPerPage, currentQuizPage * itemsPerPage);
+  const paginatedKontaktMessages = contactMessages.slice((currentKontaktPage - 1) * itemsPerPage, currentKontaktPage * itemsPerPage); // Lapozás
 
   const totalDownloadPages = Math.ceil(downloads.length / itemsPerPage);
   const totalConsultationPages = Math.ceil(consultations.length / itemsPerPage);
   const totalOfferPages = Math.ceil(offerRequests.length / itemsPerPage);
   const totalQuizPages = Math.ceil(quizLeads.length / itemsPerPage);
+  const totalKontaktPages = Math.ceil(contactMessages.length / itemsPerPage); // Összes oldalszám
 
-  const renderPagination = (totalPages: number, currentPage: number, pageParamName: 'dpage' | 'cpage' | 'opage' | 'qpage') => {
+  const renderPagination = (totalPages: number, currentPage: number, pageParamName: 'dpage' | 'cpage' | 'opage' | 'qpage' | 'kpage') => {
     const otherParams = new URLSearchParams({
         from: from || '',
         to: to || '',
@@ -105,6 +115,7 @@ export default async function SecretPage({
         cpage: cpage,
         opage: opage,
         qpage: qpage,
+        kpage: kpage, // Hozzáadva
     });
 
     const createPageLink = (page: number) => {
@@ -173,7 +184,27 @@ export default async function SecretPage({
         </div>
 
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* A grid oszlopainak száma megnövelve 4-re */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+             {/* ÚJ: Kontakt üzenetek szekció */}
+             <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
+  <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><ChatBubbleLeftRightIcon className="h-6 w-6" />Kapcsolatfelvételek ({contactMessages.length})</h2>
+  {paginatedKontaktMessages.length === 0 ? (<p className="text-gray-400">Nincsenek beérkezett üzenetek.</p>) : (
+    <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
+      {paginatedKontaktMessages.map((item: any) => (
+        <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
+          <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
+          {/* A telefonszám megjelenítése, ha létezik */}
+          {item.phone && <p className="text-sm text-gray-500">Telefon: <span className="font-medium text-cyan-400">{item.phone}</span></p>}
+          <p className="text-xs text-gray-500 mt-1">Üzenet: <span className="font-medium text-cyan-400">{item.message}</span></p>
+          <p className="text-xs text-gray-500">Dátum: {new Date(item.submittedAt).toLocaleString('hu-HU')}</p>
+        </div>
+      ))}
+    </div>
+  )}
+  {totalKontaktPages > 1 && renderPagination(totalKontaktPages, currentKontaktPage, 'kpage')}
+</div>
 
             {/* ÚJ: Kvíz leadek szekció */}
             <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
