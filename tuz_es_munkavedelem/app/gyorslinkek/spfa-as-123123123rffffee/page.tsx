@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   ArrowLeftIcon,
-  DocumentTextIcon, // Fő ikon
-  CheckBadgeIcon, // Megelőzés
-  ScaleIcon, // Jog
-  ClipboardDocumentCheckIcon, // Feladatok
-  ShieldExclamationIcon, // Kockázatértékelés
-  UserGroupIcon, // Oktatás
-  ExclamationTriangleIcon, // Figyelmeztetés
+  DocumentTextIcon,
+  CheckBadgeIcon,
+  ScaleIcon,
+  ClipboardDocumentCheckIcon,
+  ShieldExclamationIcon,
+  UserGroupIcon,
+  ExclamationTriangleIcon,
   CalendarDaysIcon,
   LightBulbIcon,
   MagnifyingGlassIcon
@@ -19,7 +19,7 @@ import {
 
 // Az oldal stílusát meghatározó színséma
 const accentColor = {
-  text: 'text-cyan-500',
+  text: 'text-black',
   bg: 'bg-cyan-500',
   hoverBg: 'hover:bg-cyan-600',
   ring: 'focus:ring-cyan-500',
@@ -35,6 +35,7 @@ const accentColor = {
 
 const MunkavedelmiSzabalyzatPage = () => {
   const router = useRouter();
+  const strongClass = "font-bold text-slate-800"; // A strong tag stílusa
 
   return (
     <>
@@ -73,10 +74,10 @@ const MunkavedelmiSzabalyzatPage = () => {
                     <DocumentTextIcon className="w-8 h-8"/>
                 </div>
                 <h1 className="text-3xl font-extrabold text-slate-900 mb-4">
-                  Munkavédelmi Szabályzat
+                  Mi az a Munkavédelmi Szabályzat?
                 </h1>
                 <p className="text-slate-600 leading-relaxed">
-                  A munkavédelmi szabályzat egy olyan kötelező, írásos dokumentum, amely minden vállalkozás számára alapvető fontosságú. Célja, hogy részletesen meghatározza a munkavédelmi feladatokat, a felelősségi köröket és a munkavégzés biztonságos feltételeit.
+                  A munkavédelmi szabályzat egy olyan kötelező, írásos dokumentum, amely minden vállalkozás számára alapvető fontosságú. Célja, hogy részletesen meghatározza a munkavédelmi feladatokat, a felelősségi köröket és a munkavégzés biztonságos feltételeit. A szabályzatban rögzített előírások segítenek a munkabalesetek és a foglalkozási megbetegedések megelőzésében, ezzel védve a dolgozók egészségét és testi épségét. A dokumentum elkészítése nem csupán jogszabályi előírás, hanem a <strong className={strongClass}>biztonságtudatos</strong> és felelős cégvezetés elengedhetetlen eszköze.
                 </p>
               </div>
             </aside>
@@ -127,24 +128,58 @@ const MunkavedelmiSzabalyzatPage = () => {
                 <h2 className="text-3xl font-bold text-slate-900 mb-8">Mi ennek a jogi kötelezettsége?</h2>
                 <div className={`p-8 rounded-xl border-2 ${accentColor.warningBorder} ${accentColor.warningBg}`}>
                     <p className={`mb-6 ${accentColor.warningText}`}>
-                        A munkavédelmi szabályzat elkészítését és folyamatos karbantartását a <strong>munkavédelemről szóló 1993. évi XCIII. törvény</strong> írja elő, amely egyértelműen meghatározza a munkáltatók jogait és kötelezettségeit. A szabályzat megléte és naprakészsége elengedhetetlen a hatósági ellenőrzéseken való megfeleléshez.
+                        A munkavédelmi szabályzat elkészítését és folyamatos karbantartását a <strong className={strongClass}>munkavédelemről szóló 1993. évi XCIII. törvény</strong> írja elő, amely egyértelműen meghatározza a munkáltatók jogait és kötelezettségeit. A szabályzat megléte és naprakészsége elengedhetetlen a hatósági ellenőrzéseken való megfeleléshez.
                     </p>
                     <h4 className="font-bold text-lg mb-3 text-slate-800">A jogi előírások figyelmen kívül hagyása súlyos következményekkel járhat:</h4>
                     <ul className="space-y-2 text-slate-700">
-                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong>Pénzbírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki a hiányzó vagy elavult szabályzat miatt.</span></li>
-                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong>Baleset esetén felelősség:</strong> Munkabaleset során a cég jogi és anyagi felelőssége nagyban nőhet a megfelelő szabályzat vagy a hiányos munkavédelem miatt.</span></li>
-                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong>Működés felfüggesztése:</strong> Súlyos mulasztások esetén a hatóság felfüggesztheti a cég tevékenységét.</span></li>
+                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Pénzbírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki a hiányzó vagy elavult szabályzat miatt.</span></li>
+                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Baleset esetén felelősség:</strong> Munkabaleset során a cég jogi és anyagi felelőssége nagyban nőhet a megfelelő szabályzat vagy a hiányos munkavédelem miatt.</span></li>
+                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Működés felfüggesztése:</strong> Súlyos mulasztások esetén a hatóság felfüggesztheti a cég tevékenységét.</span></li>
                     </ul>
                 </div>
               </section>
 
-              <section>
+             {/* --- FELJAVÍTOTT SZOLGÁLTATÁSOK SZEKCIÓ --- */}
+             <section>
                 <h2 className="text-3xl font-bold text-slate-900 mb-8">Komplex Munkavédelmi Szolgáltatásaink</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="bg-white p-6 rounded-lg border border-slate-200"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><DocumentTextIcon className="w-6 h-6"/></div><h4 className="font-bold mb-1">Munkavédelmi Szabályzat Készítése</h4><p className="text-sm text-slate-600">Szakértelemmel állítjuk össze vállalkozása egyedi munkavédelmi szabályzatát, amely teljes mértékben megfelel a jogszabályoknak.</p></div>
-                    <div className="bg-white p-6 rounded-lg border border-slate-200"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><MagnifyingGlassIcon className="w-6 h-6"/></div><h4 className="font-bold mb-1">Szabályzat Felülvizsgálata</h4><p className="text-sm text-slate-600">Gondoskodunk a jogszabályban előírt felülvizsgálatokról, hogy a dokumentációja mindig naprakész és érvényes legyen.</p></div>
-                    <div className="bg-white p-6 rounded-lg border border-slate-200"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><ShieldExclamationIcon className="w-6 h-6"/></div><h4 className="font-bold mb-1">Kockázatértékelés</h4><p className="text-sm text-slate-600">Elkészítjük a kockázatértékelést és beépítjük a szabályzatba, ezzel garantálva a dokumentumok egységességét és a biztonságos munkavégzést.</p></div>
-                    <div className="bg-white p-6 rounded-lg border border-slate-200"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><LightBulbIcon className="w-6 h-6"/></div><h4 className="font-bold mb-1">Szaktanácsadás és Támogatás</h4><p className="text-sm text-slate-600">Folyamatos szakmai támogatást nyújtunk a munkavédelemmel kapcsolatos kérdésekben, segítünk a jogszabályi bizonytalanságok tisztázásában.</p></div>
+                    
+                    {/* 1. Kártya */}
+                    <div className="bg-white p-6 rounded-xl border border-slate-200/90 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-cyan-300 h-full flex flex-col">
+                        <div className={`mb-4 w-fit p-3 rounded-lg bg-slate-100 ${accentColor.text}`}>
+                            <DocumentTextIcon className="w-7 h-7"/>
+                        </div>
+                        <h4 className={`text-lg font-bold mb-2 ${accentColor.text}`}>Munkavédelmi Szabályzat Készítése</h4>
+                        <p className={`text-sm ${accentColor.lightText} flex-grow`}>Szakértelemmel állítjuk össze vállalkozása egyedi munkavédelmi szabályzatát, amely teljes mértékben megfelel a jogszabályoknak.</p>
+                    </div>
+
+                    {/* 2. Kártya */}
+                    <div className="bg-white p-6 rounded-xl border border-slate-200/90 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-cyan-300 h-full flex flex-col">
+                        <div className={`mb-4 w-fit p-3 rounded-lg bg-slate-100 ${accentColor.text}`}>
+                            <MagnifyingGlassIcon className="w-7 h-7"/>
+                        </div>
+                        <h4 className={`text-lg font-bold mb-2 ${accentColor.text}`}>Szabályzat Felülvizsgálata</h4>
+                        <p className={`text-sm ${accentColor.lightText} flex-grow`}>Gondoskodunk a jogszabályban előírt felülvizsgálatokról, hogy a dokumentációja mindig naprakész és érvényes legyen.</p>
+                    </div>
+
+                    {/* 3. Kártya */}
+                    <div className="bg-white p-6 rounded-xl border border-slate-200/90 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-cyan-300 h-full flex flex-col">
+                        <div className={`mb-4 w-fit p-3 rounded-lg bg-slate-100 ${accentColor.text}`}>
+                            <ShieldExclamationIcon className="w-7 h-7"/>
+                        </div>
+                        <h4 className={`text-lg font-bold mb-2 ${accentColor.text}`}>Kockázatértékelés</h4>
+                        <p className={`text-sm ${accentColor.lightText} flex-grow`}>Elkészítjük a kockázatértékelést és beépítjük a szabályzatba, ezzel garantálva a dokumentumok egységességét és a biztonságos munkavégzést.</p>
+                    </div>
+
+                    {/* 4. Kártya */}
+                    <div className="bg-white p-6 rounded-xl border border-slate-200/90 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-cyan-300 h-full flex flex-col">
+                        <div className={`mb-4 w-fit p-3 rounded-lg bg-slate-100 ${accentColor.text}`}>
+                            <LightBulbIcon className="w-7 h-7"/>
+                        </div>
+                        <h4 className={`text-lg font-bold mb-2 ${accentColor.text}`}>Szaktanácsadás és Támogatás</h4>
+                        <p className={`text-sm ${accentColor.lightText} flex-grow`}>Folyamatos szakmai támogatást nyújtunk a munkavédelemmel kapcsolatos kérdésekben, segítünk a jogszabályi bizonytalanságok tisztázásában.</p>
+                    </div>
+
                 </div>
               </section>
 
@@ -154,7 +189,7 @@ const MunkavedelmiSzabalyzatPage = () => {
                   Ne kockáztasson! Keressen minket egy ingyenes konzultációért, hogy átbeszéljük az Ön egyedi munkavédelmi igényeit és elkészítsük a szabályzatot.
                 </p>
                 <div className="mt-8">
-                  <Link href="https://calendly.com/" target="_blank" rel="noopener noreferrer">
+                  <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
                     <button
                       className={`inline-flex items-center justify-center font-bold py-3 px-8 rounded-lg text-lg text-cyan-600 bg-white shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105`}
                     >

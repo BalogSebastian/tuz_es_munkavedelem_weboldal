@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
                   toggle={() => toggleAccordion('munkavedelem')}
                   links={[
                     { href: '/gyorslinkek/kockazatertekeles', label: 'Kockázatértékelés' },
-                    { href: '/gyorslinkek/munkavedelmiszabalyzat', label: 'Munkavédelmi Szabályzat' },
+                    { href: '/gyorslinkek/spfa-as-123123123rffffee', label: 'Munkavédelmi Szabályzat' },
                     { href: '/gyorslinkek/munkavedelmioktatas', label: 'Munkavédelmi Oktatás' },
                     { href: '/gyorslinkek/munkahelyibaleset', label: 'Munkahelyi baleset kivizsgálás' },
                   ]}
