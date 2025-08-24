@@ -159,7 +159,7 @@ const Footer: React.FC = () => {
                    <Link href="/gyorslinkek/HACCP" className="hover:text-white transition-colors duration-200 flex py-3">HACCP</Link>
                  </div>
                  <div className="border-b border-slate-700/50">
-                    <Link href="/gyorslinkek/VBF" className="hover:text-white transition-colors duration-200 block py-3">
+                    <Link href="/gyorslinkek/s-f3b8a1c9" className="hover:text-white transition-colors duration-200 block py-3">
                         Villamos Biztonsági Felülvizsgálat (VBF)
                     </Link>
                  </div>
