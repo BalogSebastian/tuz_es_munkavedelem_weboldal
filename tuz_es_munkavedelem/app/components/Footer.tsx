@@ -156,7 +156,7 @@ const Footer: React.FC = () => {
                   ]}
                 />
                  <div className="border-b border-slate-700/50">
-                   <Link href="/gyorslinkek/HACCP" className="hover:text-white transition-colors duration-200 flex py-3">HACCP</Link>
+                   <Link href="/gyorslinkek/HACCP-sspfasd-12312asd-id1" className="hover:text-white transition-colors duration-200 flex py-3">HACCP</Link>
                  </div>
                  <div className="border-b border-slate-700/50">
                     <Link href="/gyorslinkek/s-f3b8a1c9" className="hover:text-white transition-colors duration-200 block py-3">
