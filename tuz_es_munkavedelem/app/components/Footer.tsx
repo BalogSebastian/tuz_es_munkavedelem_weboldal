@@ -152,7 +152,7 @@ const Footer: React.FC = () => {
                   links={[
                     { href: '/gyorslinkek/s-1234f134hqegb31b61gij41', label: 'Tűzvédelmi Szabályzat' },
                     { href: '/gyorslinkek/kiuritesszamitas', label: 'Kiürítés Számítás' },
-                    { href: '/gyorslinkek/tuzvedelmioktatas', label: 'Tűzvédelmi Oktatás' },
+                    { href: '/gyorslinkek/spp-1234234123423-p1', label: 'Tűzvédelmi Oktatás' },
                   ]}
                 />
                  <div className="border-b border-slate-700/50">

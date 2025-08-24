@@ -1,0 +1,145 @@
+'use client';
+
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import {
+  ArrowLeftIcon,
+  BookOpenIcon,
+  DocumentCheckIcon,
+  ExclamationTriangleIcon,
+  CalendarDaysIcon,
+  AcademicCapIcon,
+  ComputerDesktopIcon, // Online oktatáshoz
+  MapPinIcon // Helyszíni oktatáshoz
+} from '@heroicons/react/24/outline';
+
+// A meglévő, tűzvédelmi témájú színséma
+const themeColors = {
+  primary: {
+    text: 'text-red-600',
+    bg: 'bg-red-600',
+    hoverBg: 'hover:bg-red-700',
+    ring: 'focus:ring-red-500',
+    border: 'border-red-500',
+    lightBg: 'bg-red-100', // Világosabb piros háttér
+    lightText: 'text-red-900',
+  },
+  secondary: {
+    lightBg: 'bg-cyan-100', // A kék kiemeléshez
+    border: 'border-cyan-500',
+    lightText: 'text-cyan-900',
+  },
+  cta: { // A piros CTA gombhoz
+    text: 'text-white',
+    bg: 'bg-red-600',
+    hoverBg: 'hover:bg-red-700',
+    ring: 'focus:ring-red-500',
+    gradientFrom: 'from-red-600',
+    gradientTo: 'to-orange-500',
+  },
+  base: {
+    pageBg: 'bg-slate-50',
+    containerBg: 'bg-white',
+    darkText: 'text-slate-900',
+    lightText: 'text-slate-600',
+    border: 'border-slate-200',
+  }
+};
+
+
+const ServiceCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: React.ReactNode }) => (
+    <div className={`${themeColors.base.containerBg} p-6 rounded-xl shadow-md border ${themeColors.base.border} transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-red-200 h-full`}>
+      <div className="flex items-center gap-4 mb-4">
+        <div className={`p-3 rounded-lg ${themeColors.primary.lightBg} ${themeColors.primary.text} flex-shrink-0`}>
+          <Icon className="w-7 h-7" />
+        </div>
+        <h3 className={`text-lg font-bold ${themeColors.base.darkText}`}>{title}</h3>
+      </div>
+      <div className={`${themeColors.base.lightText} leading-relaxed text-sm`}>{content}</div>
+    </div>
+);
+
+const TuzvedelmiOktatasPage = () => {
+  const router = useRouter();
+  const strongClass = "font-bold text-slate-800"; // A strong tag stílusa
+
+  return (
+    <div className={`min-h-screen ${themeColors.base.pageBg} font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8`}>
+      <div className={`max-w-6xl mx-auto ${themeColors.base.containerBg}/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8 sm:p-10 relative z-10 border ${themeColors.base.border}`}>
+        
+        <button
+          onClick={() => router.back()}
+          className={`inline-flex items-center justify-center p-3 rounded-full ${themeColors.primary.bg} text-white shadow-lg ${themeColors.primary.hoverBg} transition-all duration-300 mb-8 hover:scale-110 hover:shadow-red-500/40`}
+          aria-label="Vissza az előző oldalra"
+        >
+          <ArrowLeftIcon className="w-6 h-6" />
+        </button>
+
+        {/* --- 1. KÉP TARTALMA: Bevezető --- */}
+        <section className="text-center mb-16">
+            <h1 className={`text-4xl sm:text-5xl font-extrabold ${themeColors.base.darkText} mb-4`}>
+              Tűzvédelmi <span className={themeColors.primary.text}>Oktatás</span>
+            </h1>
+            <p className={`text-lg sm:text-xl ${themeColors.base.lightText} leading-relaxed max-w-4xl mx-auto`}>
+              A tűzvédelmi oktatás a tűz- és munkavédelmi rendszer egyik alapvető, jogszabályi kötelezettségként elrendelt eleme, amelynek célja a tűzveszélyek megismerése, a megelőzés, valamint a vészhelyzetekben való helyes cselekvés biztosítása.
+            </p>
+        </section>
+
+        {/* --- 1. KÉP TARTALMA: Jogi háttér és következmények --- */}
+        <section className="mb-20">
+            <h2 className={`text-3xl font-bold ${themeColors.base.darkText} mb-8 text-center`}>
+                Jogi Háttér és Következmények
+            </h2>
+            <div className={`bg-slate-100/70 border ${themeColors.base.border} p-8 rounded-xl space-y-6`}>
+                <p className={themeColors.base.lightText}>
+                    A tűzvédelmi oktatás kötelezettségét főként a <strong className={strongClass}>1996. évi XXXI. törvény</strong> a tűz elleni védekezésről, a műszaki mentésről és a tűzoltóságról, valamint a <strong className={strongClass}>101/2023. (XII. 29.) BM rendelet</strong> szabályozza.
+                </p>
+                
+                <div className={`p-6 rounded-lg border-l-4 ${themeColors.secondary.border} ${themeColors.secondary.lightBg}`}>
+                    <p className={themeColors.secondary.lightText}>A munkáltató köteles gondoskodni arról, hogy munkavállalói és a munkavégzésben résztvevő családtagjai a <strong className={strongClass}>munkakörükkel kapcsolatos tűzvédelmi ismereteket a foglalkoztatás megkezdése előtt megismerjék</strong>.</p>
+                </div>
+
+                <div className={`p-6 rounded-lg border-l-4 ${themeColors.primary.border} ${themeColors.primary.lightBg}`}>
+                    <p className={`${themeColors.primary.lightText} mb-4`}>Az új munkavállalókat a munkába állásukkor előzetes oktatásban kell részesíteni. Ennek elmulasztása esetén a munkáltató <strong className={strongClass}>1,5 millió forintig terjedő bírsággal sújtható, ha a munkavállaló belépése óta több mint 15 nap telt el</strong>.</p>
+                    <p className={themeColors.primary.lightText}>A tűzvédelmi oktatás részletes szabályairól és tartalmi követelményeiről további információkat találsz a <strong className={strongClass}>101/2023. (XII. 29.) BM rendelet</strong>-ben, és a kapcsolódó katasztrófavédelmi irányelvekben.</p>
+                </div>
+            </div>
+        </section>
+
+        {/* --- 2. KÉP TARTALMA: Oktatás Nálunk --- */}
+        <section className="mb-20">
+            <h2 className={`text-3xl font-bold ${themeColors.base.darkText} mb-12 text-center`}>
+                Tűzvédelmi oktatás nálunk
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <ServiceCard icon={ComputerDesktopIcon} title="Online oktató anyag" content="Rugalmas, online elérhető tananyagok, melyeket a munkavállalók a saját tempójukban végezhetnek el." />
+                <ServiceCard icon={BookOpenIcon} title="Oktatási tematika" content="Személyre szabott tematikát állítunk össze, figyelembe véve a munkavállalók tevékenységi körét, hogy az oktatás releváns és jogszabályilag megfelelő legyen." />
+                <ServiceCard icon={MapPinIcon} title="Helyszíni oktatás" content="Tapasztalt szakértőink a helyszínen tartanak gyakorlatias, interaktív képzéseket a maximális hatékonyság érdekében." />
+                <ServiceCard icon={DocumentCheckIcon} title="Dokumentáció és Naplózás" content="Az oktatás végrehajtását hitelesen, oktatási naplóban rögzítjük, melyet a hatósági ellenőrzések során be kell mutatni." />
+            </div>
+        </section>
+
+        {/* --- 3. KÉP TARTALMA: Call to Action (Piros gombbal) --- */}
+        <div className={`text-center mt-12 p-10 bg-gradient-to-br ${themeColors.cta.gradientFrom} ${themeColors.cta.gradientTo} rounded-2xl shadow-2xl`}>
+          <h3 className="text-3xl font-bold text-white mb-4">Ne várj a hatósági ellenőrzésre, tedd meg az első lépést!</h3>
+          <p className="text-lg text-red-100 max-w-2xl mx-auto">
+            Gyere el egy ingyenes online konzultációra, és gondoskodj a megfelelő tűzvédelmi oktatásról.
+          </p>
+          <div className="mt-8">
+            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+              <button
+                className={`inline-flex items-center justify-center font-bold py-4 px-10 rounded-xl text-lg ${themeColors.primary.text} bg-white shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105`}
+              >
+                <CalendarDaysIcon className="w-6 h-6 mr-3" />
+                Foglalj ingyenes konzultációt!
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TuzvedelmiOktatasPage;
