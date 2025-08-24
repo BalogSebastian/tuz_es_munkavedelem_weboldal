@@ -141,7 +141,7 @@ const Footer: React.FC = () => {
                   links={[
                     { href: '/gyorslinkek/ad-ads-123123123ssp-1d1', label: 'Kockázatértékelés' },
                     { href: '/gyorslinkek/spfa-as-123123123rffffee', label: 'Munkavédelmi Szabályzat' },
-                    { href: '/gyorslinkek/munkavedelmioktatas', label: 'Munkavédelmi Oktatás' },
+                    { href: '/gyorslinkek/sdfas-sdf-131-okta-1111111', label: 'Munkavédelmi Oktatás' },
                     { href: '/gyorslinkek/cff-cd12-asdf2312-ss', label: 'Munkahelyi baleset kivizsgálás' },
                   ]}
                 />

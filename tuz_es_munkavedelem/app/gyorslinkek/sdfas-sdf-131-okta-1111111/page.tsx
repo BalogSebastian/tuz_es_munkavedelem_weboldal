@@ -22,8 +22,8 @@ import Link from 'next/link';
 
 // Színséma az oldalhoz
 const accentColor = {
-  text: 'text-[#03BABE]',
-  bg: 'bg-[#03BABE]',
+  text: 'text-cyan-500',
+  bg: 'bg-cyan-500',
   hoverBg: 'hover:bg-cyan-600',
   ring: 'focus:ring-cyan-500',
   gradientFrom: 'from-cyan-500',
@@ -54,7 +54,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 12 } }
 };
 
-// Egyedi kártya komponensek helyes típusdefinícióval
+// Egyedi kártya komponensek
 const InfoCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: string }) => (
   <motion.div variants={itemVariants} className="flex items-start gap-5 p-6 bg-white rounded-xl shadow-lg border border-slate-100 group transition-all duration-300 hover:border-cyan-200 hover:shadow-xl">
     <div className={`p-3 rounded-full ${accentColor.lightBg} ${accentColor.text} flex-shrink-0`}>
@@ -67,7 +67,7 @@ const InfoCard = ({ icon: Icon, title, content }: { icon: React.ElementType; tit
   </motion.div>
 );
 
-const BenefitCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: string }) => (
+const BenefitCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: React.ReactNode }) => (
     <motion.div variants={itemVariants} className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-slate-200/80 text-center flex flex-col items-center h-full">
       <div className={`p-4 rounded-full ${accentColor.bg} text-white mb-4 shadow-md`}>
         <Icon className="w-8 h-8" />
@@ -80,6 +80,7 @@ const BenefitCard = ({ icon: Icon, title, content }: { icon: React.ElementType; 
 
 const MunkavedelmiOktatasPage = () => {
   const router = useRouter();
+  const strongClass = "font-bold text-slate-900";
 
   return (
     <motion.div
@@ -100,7 +101,6 @@ const MunkavedelmiOktatasPage = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
       >
-        {/* --- VISSZA GOMB ITT --- */}
         <motion.button
           onClick={() => router.back()}
           className={`inline-flex items-center justify-center p-3 rounded-full ${accentColor.bg} text-white shadow-md ${accentColor.hoverBg} transition-all duration-300 mb-8`}
@@ -123,10 +123,9 @@ const MunkavedelmiOktatasPage = () => {
           className="text-lg sm:text-xl text-slate-700 leading-relaxed mb-12 text-center max-w-4xl mx-auto"
           variants={itemVariants}
         >
-          A munkavédelmi oktatás célja a munkavállalók felkészítése a biztonságos munkavégzésre, a munkahelyi veszélyforrások felismerésére, és a balesetek, foglalkozási megbetegedések megelőzésére. Ez a folyamat nem csupán egy jogszabályi kötelezettség, hanem a munkatársak egészségének és testi épségének védelmében tett legfontosabb lépés.
+          A <strong>munkavédelmi oktatás</strong> célja a munkavállalók felkészítése a biztonságos munkavégzésre, és a balesetek, foglalkozási megbetegedések megelőzésére. A munkáltató köteles gondoskodni arról, hogy minden munkavállaló (beleértve a diálkmunkásokat, alkalmi munkavállalókat és a táv dolgozókat is) a munkába álláskor és rendszeresen részesüljön munkavédelmi oktatásban.
         </motion.p>
 
-        {/* Miből épül fel? */}
         <motion.section className="mb-16" variants={sectionVariants}>
             <motion.h2 className="text-3xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
                 Miből épül fel egy munkavédelmi oktatás?
@@ -135,87 +134,52 @@ const MunkavedelmiOktatasPage = () => {
                 Szakmailag felépített munkavédelmi oktatásunk az alábbi elemekre fókuszál:
             </motion.p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <InfoCard
-                    icon={BookOpenIcon}
-                    title="Általános szabályok"
-                    content="A munkavédelemről szóló alapvető jogszabályok, a munkáltató és a munkavállaló jogainak és kötelezettségeinek ismertetése."
-                />
-                <InfoCard
-                    icon={ExclamationTriangleIcon}
-                    title="Egyedi kockázatok"
-                    content="A cégre és a munkakörre vonatkozó specifikus veszélyforrások (pl. gépek, vegyi anyagok, ergonómiai terhelés) és a megelőző intézkedések részletes bemutatása."
-                />
-                <InfoCard
-                    icon={ShieldCheckIcon}
-                    title="Védőeszközök használata"
-                    content="A kötelező egyéni védőeszközök (PPE) helyes használatának, karbantartásának és tárolásának bemutatása."
-                />
-                <InfoCard
-                    icon={SparklesIcon}
-                    title="Balesetkezelés"
-                    content="A teendők ismertetése munkahelyi baleset vagy vészhelyzet esetén, a bejelentési kötelezettségek és a mentési eljárások áttekintése."
-                />
+                <InfoCard icon={BookOpenIcon} title="Általános szabályok" content="A munkavédelemről szóló alapvető jogszabályok, a munkáltató és a munkavállaló jogainak és kötelezettségeinek ismertetése." />
+                <InfoCard icon={ExclamationTriangleIcon} title="Egyedi kockázatok" content="A cégre és a munkakörre vonatkozó specifikus veszélyforrások (pl. gépek, vegyi anyagok, ergonómiai terhelés) és a megelőző intézkedések részletes bemutatása." />
+                <InfoCard icon={ShieldCheckIcon} title="Védőeszközök használata" content="A kötelező egyéni védőeszközök (PPE) helyes használatának, karbantartásának és tárolásának bemutatása." />
+                <InfoCard icon={SparklesIcon} title="Balesetkezelés" content="A teendők ismertetése munkahelyi baleset vagy vészhelyzet esetén, a bejelentési kötelezettségek és a mentési eljárások áttekintése." />
             </div>
         </motion.section>
 
-        {/* Jogi kötelezettség */}
         <motion.section className="mb-16" variants={sectionVariants}>
             <motion.h2 className="text-3xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
                 Mi ennek a jogi kötelezettsége?
             </motion.h2>
             <div className="bg-red-50 border-l-4 border-red-500 p-8 rounded-r-lg text-red-900 shadow-md">
                 <motion.p className="mb-4" variants={itemVariants}>
-                    A munkavédelmi oktatás kötelezettségét a <strong>munkavédelemről szóló 1993. évi XCIII. törvény</strong> írja elő, és meghatározza, hogy az oktatást a munkába lépéskor, munkakör vagy technológia megváltozásakor, valamint baleset után kell elvégezni. A jogszabály azt is előírja, hogy az oktatásnak naprakésznek, hatékonynak és ellenőrizhetőnek kell lennie.
+                    A munkavédelmi oktatás kötelezettségét a <strong className={strongClass}>munkavédelemről szóló 1993. évi XCIII. törvény</strong> és a 6/2024. (II. 8.) NGM rendelet szabályozza. A törvény meghatározza, hogy az oktatást a munkába lépéskor, munkakör vagy technológia megváltozásakor, valamint baleset után kell elvégezni. A jogszabály azt is előírja, hogy az oktatásnak naprakésznek, hatékonynak és ellenőrizhetőnek kell lennie.
                 </motion.p>
                 <motion.h4 className="font-bold text-lg mb-3" variants={itemVariants}>Az elmaradás vagy hiányos dokumentálás komoly büntetéseket vonhat maga után:</motion.h4>
                 <ul className="list-disc list-inside space-y-2">
-                    <motion.li variants={itemVariants}><strong>Hatósági bírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki.</motion.li>
-                    <motion.li variants={itemVariants}><strong>Felelősség növekedése:</strong> Munkahelyi baleset esetén, ha bebizonyosodik, hogy a munkavállaló nem kapott megfelelő oktatást, a cég jogi és anyagi felelőssége nagy mértékben növekedhet.</motion.li>
-                    <motion.li variants={itemVariants}><strong>Személyi sérülések:</strong> A legfontosabb következmény, hogy a felkészületlen dolgozók veszélybe sodorhatják önmagukat és másokat.</motion.li>
+                    <motion.li variants={itemVariants}><strong className={strongClass}>Hatósági bírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki az elmaradt vagy szabálytalanul megtartott munkavédelmi oktatás miatt.</motion.li>
+                    <motion.li variants={itemVariants}><strong className={strongClass}>Felelősség növekedése:</strong> Munkahelyi baleset esetén, ha bebizonyosodik, hogy a munkavállaló nem kapott megfelelő munkavédelmi oktatást, a cég jogi és anyagi felelőssége nagy mértékben növekedhet.</motion.li>
+                    <motion.li variants={itemVariants}><strong className={strongClass}>Személyi sérülések:</strong> A legfontosabb következmény, hogy a felkészületlen dolgozók veszélybe sodorhatják önmagukat és másokat.</motion.li>
                 </ul>
             </div>
         </motion.section>
         
-        {/* Mi felkészültek vagyunk */}
         <motion.section className="mb-16" variants={sectionVariants}>
             <motion.h2 className="text-3xl font-bold text-slate-900 mb-10 text-center" variants={itemVariants}>
                 Mi felkészültek vagyunk erre:
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <BenefitCard 
-                    icon={AcademicCapIcon}
-                    title="Szakmailag felkészült oktatók"
-                    content="Tapasztalt munkavédelmi szakembereink garantálják a színvonalas és érthető oktatást, a legújabb jogszabályi ismeretek átadásával."
-                />
-                <BenefitCard 
-                    icon={MapPinIcon}
-                    title="Helyszíni, vagy online képzés"
-                    content="Igény szerint a helyszínen tartott, interaktív képzéseket tartunk, amelyek a valós környezetben a leginkább hatékonyak."
-                />
-                <BenefitCard 
-                    icon={SparklesIcon}
-                    title="Cégére szabott tematika"
-                    content="A tananyagot a vállalkozásod profiljához és a munkakörök specifikus kockázataihoz igazítjuk, hogy a képzés releváns és hasznos legyen."
-                />
-                <BenefitCard 
-                    icon={DocumentTextIcon}
-                    title="Teljeskörű dokumentáció"
-                    content="Elkészítjük és átadjuk a hatóságok számára is elfogadható oktatási jegyzőkönyveket és igazolásokat."
-                />
+                <BenefitCard icon={AcademicCapIcon} title="Szakmailag felkészült oktatók" content="Tapasztalt munkavédelmi szakembereink garantálják a színvonalas és érthető oktatást, a legújabb jogszabályi ismeretek átadásával." />
+                <BenefitCard icon={ComputerDesktopIcon} title="Helyszíni, vagy online képzés" content={<>Igény szerint a helyszínen tartott, <strong className={strongClass}>interaktív képzéseket</strong> tartunk, amelyek a valós környezetben a leginkább hatékonyak.</>} />
+                <BenefitCard icon={SparklesIcon} title="Cégére szabott tematika" content={<>A tananyagot a <strong className={strongClass}>vállalkozásod profiljához</strong> és a munkakörök specifikus kockázataihoz igazítjuk, hogy a képzés releváns és hasznos legyen.</>} />
+                <BenefitCard icon={DocumentTextIcon} title="Teljeskörű dokumentáció" content={<><strong className={strongClass}>Teljeskörű</strong> dokumentációt biztosítunk: elkészítjük és átadjuk a hatóságok számára is <strong className={strongClass}>elfogadható</strong> oktatási jegyzőkönyveket és igazolásokat.</>} />
             </div>
         </motion.section>
 
-        {/* CTA */}
         <motion.div
           className="text-center mt-12 mb-8 p-8 bg-gradient-to-r from-cyan-100 to-teal-50 rounded-2xl shadow-inner border border-cyan-200"
           variants={itemVariants}
         >
-          <h3 className="text-2xl font-bold text-slate-800 mb-3">Biztosítsd a munkavállalóid oktatását!</h3>
+          <h3 className="text-2xl font-bold text-slate-800 mb-3">Biztosítsd a <strong className={strongClass}>munkavállalóid</strong> oktatását!</h3>
           <p className="text-lg text-slate-700 max-w-2xl mx-auto">
             Ne bízd a véletlenre a munkavédelmet. Keressen minket egy díjmentes konzultációért, és gondoskodjon munkatársai megfelelő munkavédelmi oktatásáról.
           </p>
           <motion.div variants={itemVariants} className="mt-8">
-            <Link href="https://calendly.com/" target="_blank" rel="noopener noreferrer">
+            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
               <motion.button
                 className={`inline-flex items-center justify-center font-bold py-4 px-10 rounded-xl text-lg sm:text-xl text-white bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} shadow-lg shadow-cyan-500/30 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2`}
                 whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }}
