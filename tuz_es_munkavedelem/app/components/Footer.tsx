@@ -151,7 +151,7 @@ const Footer: React.FC = () => {
                   toggle={() => toggleAccordion('tuzvedelem')}
                   links={[
                     { href: '/gyorslinkek/s-1234f134hqegb31b61gij41', label: 'Tűzvédelmi Szabályzat' },
-                    { href: '/gyorslinkek/kiuritesszamitas', label: 'Kiürítés Számítás' },
+                    { href: '/gyorslinkek/spfs-ad12312312-asdpa', label: 'Kiürítés Számítás' },
                     { href: '/gyorslinkek/spp-1234234123423-p1', label: 'Tűzvédelmi Oktatás' },
                   ]}
                 />
