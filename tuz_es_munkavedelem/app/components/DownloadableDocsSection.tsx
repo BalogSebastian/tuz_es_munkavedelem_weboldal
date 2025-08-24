@@ -51,14 +51,45 @@ interface DocState {
     error: string | null;
 }
 
-// --- LETÖLTŐ KÁRTYA KOMPONENS ---
-const DownloadCard: React.FC<{
-    doc: any;
-    docState: DocState;
-    handleChange: (docId: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (doc: any, e: React.FormEvent<HTMLFormElement>) => void;
-}> = ({ doc, docState, handleChange, handleSubmit }) => {
-  const { formData, isSubmitted, isLoading, error } = docState;
+interface DownloadCardProps {
+    doc: typeof downloadableDocs[0];
+    initialState: DocState;
+    onDownloadSubmit: (doc: typeof downloadableDocs[0], formData: FormDataState) => Promise<void>;
+}
+
+// --- LETÖLTŐ KÁRTYA KOMPONENS (Optimalizált, Lokális Állapotkezelés) ---
+const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownloadSubmit }) => {
+    // Az állapotot itt kezeljük, minimalizálva a szülő komponens újrarenderelését
+    const [state, setState] = useState(initialState);
+    const { formData, isSubmitted, isLoading, error } = state;
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setState(prev => ({
+            ...prev,
+            formData: { ...prev.formData, [name]: value }
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!formData.name || !formData.email) {
+            setState(prev => ({ ...prev, error: "A név és az email mező kitöltése kötelező.", isLoading: false }));
+            return;
+        }
+
+        setState(prev => ({ ...prev, isLoading: true, error: null }));
+
+        try {
+            await onDownloadSubmit(doc, formData);
+            setState(prev => ({ ...prev, isSubmitted: true, isLoading: false }));
+
+        } catch (err: any) {
+            console.error("Submit error:", err);
+            setState(prev => ({ ...prev, isLoading: false, error: err.message || 'Ismeretlen hiba történt.' }));
+        }
+    };
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-200/70 relative overflow-hidden h-full">
@@ -71,7 +102,7 @@ const DownloadCard: React.FC<{
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3 text-center">{doc.title}</h3>
                 <p className="text-slate-600 leading-relaxed mb-6 text-center text-sm line-clamp-3 flex-grow">{doc.description}</p>
-                <form onSubmit={(e) => handleSubmit(doc, e)} className="space-y-4 mt-auto">
+                <form onSubmit={handleSubmit} className="space-y-4 mt-auto">
                     {(['name', 'email', 'phone'] as Array<keyof FormDataState>).map(fieldName => (
                     <div key={fieldName} className="relative group">
                         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
@@ -84,7 +115,7 @@ const DownloadCard: React.FC<{
                             name={fieldName}
                             id={`${fieldName}-${doc.id}`}
                             value={formData[fieldName]}
-                            onChange={(e) => handleChange(doc.id, e)}
+                            onChange={handleChange}
                             className={`block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none ${accentColor.ring} ${accentColor.borderFocus} sm:text-sm transition-all duration-200 hover:shadow-md focus:shadow-md`}
                             placeholder={fieldName === 'name' ? 'Teljes Név*' : fieldName === 'email' ? 'Email cím*' : 'Telefonszám'}
                             required={fieldName !== 'phone'}
@@ -123,27 +154,11 @@ const DownloadableDocsSection: React.FC = () => {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
 
-    const [docsState, setDocsState] = useState<Record<number, DocState>>(() =>
-      downloadableDocs.reduce((acc, doc) => {
-        acc[doc.id] = { formData: { name: '', email: '', phone: '' }, isSubmitted: false, isLoading: false, error: null };
-        return acc;
-      }, {} as Record<number, DocState>)
-    );
+    const initialFormData = { name: '', email: '', phone: '' };
 
-    const handleFormChange = (docId: number, e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setDocsState(prev => ({
-            ...prev,
-            [docId]: { ...prev[docId], formData: { ...prev[docId].formData, [name]: value } }
-        }));
-    };
-
-    const handleFormSubmit = async (doc: any, e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const { id, title, fileName } = doc;
-        const { formData } = docsState[id];
-
-        setDocsState(prev => ({ ...prev, [id]: { ...prev[id], isLoading: true, error: null } }));
+    // Ezt a függvényt adja át a Fő Komponens a kártyának
+    const handleDownloadSubmit = useCallback(async (doc: typeof downloadableDocs[0], formData: FormDataState) => {
+        const { title, fileName } = doc;
 
         try {
             const response = await fetch('/api/save-lead', {
@@ -159,19 +174,16 @@ const DownloadableDocsSection: React.FC = () => {
 
             // Fájl letöltésének indítása
             const link = document.createElement('a');
-            link.href = `/documents/${fileName}`; // Feltételezzük, hogy a PDF-ek a public/documents mappában vannak
+            link.href = `/documents/${fileName}`;
             link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
 
-            setDocsState(prev => ({ ...prev, [id]: { ...prev[id], isSubmitted: true, isLoading: false } }));
-
         } catch (error: any) {
-            console.error("Submit error:", error);
-            setDocsState(prev => ({ ...prev, [id]: { ...prev[id], isLoading: false, error: error.message } }));
+            throw new Error(error.message || 'Hiba történt a küldés során.');
         }
-    };
+    }, []);
 
     const checkScrollButtons = useCallback(() => {
         const container = scrollContainerRef.current;
@@ -255,10 +267,12 @@ const DownloadableDocsSection: React.FC = () => {
                     className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
                     >
                     <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
-                    <span>Töltsd le</span> <span className='text-black'>a számodra</span>  leghasznosabb <span className='text-black'>anyagunkat!</span>
+                    {/* ITT A JAVÍTÁS: A képen látható főcím */}
+                    <span className='text-cyan-500'>Töltsd le</span> <span className='text-black'>a számodra</span> leghasznosabb <span className='text-black'>anyagunkat!</span>
                     </h2>
+                    {/* ITT A JAVÍTÁS: A képen látható alcím */}
                     <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
-                    Add meg az elérhetőségedet, hogy a <span className='text-cyan-500'>szakemberünk fel tudjon hívni</span>, és tudjon tanácsot adni<span className='text-cyan-500'> a te konkrét helyzetedre!</span>
+                    Ezek az az anyagok jól jöhetnek ha még több információra van szükséged, hogy többet tudj meg, és elkerüld a büntetést.
                     </p>
                     </div>
                 </div>
@@ -268,9 +282,8 @@ const DownloadableDocsSection: React.FC = () => {
                                 <div key={doc.id} className="flex-shrink-0 w-full sm:w-1/2 p-3 sm:p-4 snap-start">
                                     <DownloadCard
                                         doc={doc}
-                                        docState={docsState[doc.id]}
-                                        handleChange={handleFormChange}
-                                        handleSubmit={handleFormSubmit}
+                                        initialState={{ formData: initialFormData, isSubmitted: false, isLoading: false, error: null }}
+                                        onDownloadSubmit={handleDownloadSubmit}
                                     />
                                 </div>
                             ))}

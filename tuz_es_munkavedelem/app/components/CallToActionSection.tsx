@@ -4,6 +4,16 @@ import React from 'react';
 import Link from 'next/link';
 import { SparklesIcon } from '@heroicons/react/24/solid';
 
+// --- ÚJ: PIROS CTA KONSTANSOK ---
+const RED_ACCENT_COLOR = {
+    baseHex: '#DC2626', // Tailwind red-600
+    bg: 'bg-red-600',
+    textOnAccent: 'text-white',
+    ring: 'focus-visible:ring-red-500',
+    shadow: 'shadow-red-500/40',
+    hoverShadow: 'hover:shadow-red-400/60',
+};
+
 const accentColor = {
   bg: 'bg-[#03BABE]',
   hoverBg: 'hover:bg-cyan-600',
@@ -22,6 +32,21 @@ const CallToActionSection: React.FC = () => {
             background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px),
                               linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px);
             background-size: 4rem 4rem;
+        }
+        /* CTA GLOW STÍLUS BEILLESZTÉSE */
+        .cta-glow-red {
+            box-shadow: 0 0 30px ${RED_ACCENT_COLOR.baseHex}80, 0 0 60px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
+        }
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px ${RED_ACCENT_COLOR.baseHex}60, 0 0 70px ${RED_ACCENT_COLOR.baseHex}40;
+        }
+        .cta-button:active {
+            transform: scale(0.98);
         }
       `}</style>
 
@@ -64,14 +89,17 @@ const CallToActionSection: React.FC = () => {
                     <Link
                         href="/kapcsolat"
                         className={`
-                            inline-flex items-center gap-3 ${accentColor.bg} text-white
+                            inline-flex items-center gap-3
+                            ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent}
                             font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-                            transition-shadow duration-300 ease-in-out
-                            focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
+                            shadow-lg ${RED_ACCENT_COLOR.shadow} ${RED_ACCENT_COLOR.hoverShadow}
+                            transition-all duration-300 ease-in-out
+                            focus:outline-none focus:ring-4 ${RED_ACCENT_COLOR.ring} focus:ring-offset-2 focus:ring-offset-slate-900
+                            cta-button
                         `}
                     >
                         <SparklesIcon className="w-6 h-6" />
-                        Ingyenes Konzultáció szakemberrel
+                        Foglalj egy ingyenes konzultációt!
                     </Link>
                 </div>
             </div>

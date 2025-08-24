@@ -7,9 +7,11 @@ import {
     ArrowLeftIcon, 
     ChevronDownIcon,
     MagnifyingGlassIcon,
-    CalendarDaysIcon
+    CalendarDaysIcon,
+    SparklesIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { FaFire, FaHardHat, FaUtensils, FaQuestionCircle } from 'react-icons/fa';
 
 const accentColor = {
   text: 'text-cyan-500',
@@ -21,37 +23,50 @@ const accentColor = {
 
 const faqData = [
     { 
-        category: "Általános Kérdések", 
+        category: "Tűzvédelem",
+        icon: FaFire,
         questions: [
-            { q: "Mikor van szükségem tűz- és munkavédelmi szakemberre?", a: "Gyakorlatilag minden vállalkozásnak szüksége van valamilyen szintű szakértői támogatásra, amint akár csak egy alkalmazottja is van. A kötelezettségek mértéke a cég méretétől, tevékenységi körétől és a munkavállalók számától függ. Egy ingyenes konzultáció során segítünk felmérni az Önre vonatkozó konkrét előírásokat." },
-            { q: "Milyen dokumentumokat kell mindig a telephelyen tartanom?", a: "Ez tevékenységfüggő, de általánosságban elmondható, hogy a Munkavédelmi Szabályzatot, a Kockázatértékelést, a Tűzvédelmi Szabályzatot, a Tűzriadó Tervet, valamint az oktatásokról és felülvizsgálatokról szóló jegyzőkönyveket mindig elérhetővé kell tenni egy hatósági ellenőrzés során." },
-            { q: "Mennyibe kerülnek a szolgáltatásaik?", a: "Minden vállalkozás más, ezért árainkat mindig egyedi igényekre szabjuk. Egy díjmentes igényfelmérés után egy teljesen átlátható, tételes árajánlatot adunk, rejtett költségek nélkül. Célunk a hosszú távú, kölcsönösen előnyös partnerség." },
-            { q: "Csak Debrecenben és környékén dolgoznak?", a: "Bár központunk Debrecenben található, országos lefedettséggel rendelkezünk. Modern kommunikációs eszközeinknek köszönhetően a távolság nem akadály, és szükség esetén az ország bármely pontjára el tudunk utazni." },
+          { 
+            q: "Mikor kötelező tűzvédelmi szakembert alkalmaznod?",
+            a: "Röviden, akkor van rá szükséged, ha a vállalkozásod az alábbi kategóriák valamelyikébe esik:<ul>" +
+               "<li><strong>Több mint 5 főt </strong> foglalkoztatsz (beleértve a családtagokat is, ha segítenek).</li>" +
+               "<li>Olyan helyet üzemeltetsz, aminek a befogadóképessége <strong>meghaladja az 500 főt</strong>, vagy van benne egy <strong>50 főnél nagyobb terem</strong>.</li>" +
+               "<li><strong>Tűz- vagy robbanásveszélyes</strong> anyagokkal <strong>dolgozol</strong>.</li>" +
+               "<li><strong>Speciális</strong> intézményt <strong>működtetsz</strong>, mint például <strong>iskola, óvoda, kórház, idősotthon, szálloda vagy irodaház</strong>.</li>" +
+               "</ul>"
+          },
+          
+            { q: "Pontosan mit csinál egy tűzvédelmi szakember?", a: "Lényegében leveszi a válladról a tűzvédelemmel kapcsolatos terheket és felelősséget. A főbb feladatai:<ul><li>Elkészíti és frissen tartja a <strong>Tűzvédelmi Szabályzatodat</strong> és a <strong>Tűzriadó Tervet</strong>.</li><li>Megtartja a munkavállalóidnak a <strong>kötelező éves tűzvédelmi oktatást</strong>.</li><li>Tartja a kapcsolatot a <strong>hatósággal</strong> (katasztrófavédelem).</li><li>Segít neked megelőzni a <strong>bírságokat</strong> és – ami a legfontosabb – a valódi tűzeseteket.</li></ul>" },
+            { q: "Milyen jogszabályban találhatóak a Tűzvédelmi követelmények?", a: "Ha érdekel a pontos háttér, ezt a két jogszabályt keresd:<ul><li><strong>A tűz elleni védekezésről szóló 1996. évi XXXI. törvény</strong>.</li><li><strong>A tűzvédelmi szakemberek foglalkoztatásáról szóló 9/2015. (III. 25.) BM rendelet</strong>.</li></ul>" },
+            { q: "Kötelező a munkahelyi tűzvédelmi oktatás?", a: "Igen, a törvény szerint <strong>minden munkavállaló számára kötelező évente legalább egyszer</strong> részt venni tűzvédelmi oktatáson. Az oktatás célja, hogy pontosan tudd, mit kell tenned vészhelyzetben az adott épületben:<ul><li><strong>Hol vannak a menekülési útvonalak?</strong></li><li><strong>Hol találod a tűzoltó készülékeket és a fali tűzcsapokat?</strong></li><li><strong>Ki a menekülési csoportvezető az adott területen?</strong></li><li><strong>Hogyan tudod áramtalanítani a gépeket?</strong></li></ul>Egy éles helyzetben ezek az információk életeket menthetnek." },
+            { q: "Miért kezd el sípolni a füstérzékelő, ha nincs is füst?", a: "A legtöbb esetben a rövid, szabályos időközönként hallható csipogás az <strong>elem merülését jelzi</strong>. Ez a készülék figyelmeztetése, hogy cseréld ki az elemet, mielőtt teljesen lemerülne és működésképtelenné válna. Más okok is lehetnek, például:<ul><li><strong>Pára vagy gőz:</strong> A fürdőszobából kiáramló forró gőz vagy a konyhai pára is beindíthatja.</li><li><strong>Por:</strong> Ha a készülék érzékelő kamrája poros, az is okozhat téves riasztást. Érdemes évente egyszer óvatosan kiporszívózni.</li></ul>" },
         ]
     },
     { 
-        category: "Tűzvédelem", 
+        category: "Munkavédelem",
+        icon: FaHardHat,
         questions: [
-            { q: "Milyen gyakran kell a tűzoltó készülékeket ellenőriztetni?", a: "A tűzoltó készülékeket évente legalább egyszer felül kell vizsgáltatni szakemberrel (ez az alapkarbantartás). Ezen felül a tulajdonosnak negyedévente szemrevételezéssel kell ellenőriznie azok állapotát. A készülék típusától függően közép- és teljes körű karbantartás is kötelező 5, illetve 10 évente." },
-            { q: "Kötelező minden cégnek Tűzvédelmi Szabályzatot készíteni?", a: "Nem. Tűzvédelmi Szabályzatot akkor kell készíteni, ha a munkavégzésben részt vevő családtagokkal együtt ötnél több munkavállalót foglalkoztatnak, vagy ha ötvennél több személy befogadására alkalmas létesítményt működtetnek, illetve fokozottan tűz- vagy robbanásveszélyes besorolású anyaggal dolgoznak." },
-            { q: "Mi az a Tűzriadó Terv és kinek kell?", a: "A Tűzriadó Terv a Tűzvédelmi Szabályzat melléklete, amely részletesen leírja a teendőket tűz esetén: kiürítési útvonalak, riasztási lánc, felelős személyek. Minden olyan helyen kötelező, ahol Tűzvédelmi Szabályzat készítése is előírás." },
+            { q: "Miért kötelező a kockázatértékelés?", a: "Azért, mert a <strong>munkavédelmi törvények előírják</strong>. Neked, mint munkáltatónak, jogi kötelességed gondoskodni a dolgozóid biztonságáról. Ha rendben van a kockázatértékelés, nemcsak a törvényi megfelelést biztosítod, hanem <strong>csökkented a munkahelyi balesetek és megbetegedések esélyét</strong> is." },
+            { q: "Minden munkavállalónak kötelező az orvosi alkalmassági vizsgálat?", a: "<strong>Igen, kötelező</strong>. Munkába állás előtt minden munkavállalónak részt kell vennie előzetes orvosi alkalmassági vizsgálaton, hogy kiderüljön, végezheti-e biztonságosan a munkáját." },
+            { q: "Mikor kell orvosi vizsgálatra menni?", a: "<ul><li><strong>Munkába állás előtt:</strong> mindig kötelező.</li><li><strong>Időszakosan:</strong> a munkakör és a kockázatok alapján meghatározott időközönként (pl. évente vagy 2-3 évente).</li><li><strong>Rendkívüli esetben:</strong> ha a munkavállaló egészségi állapota megváltozik, vagy a munkakörülmények indokolják.</li></ul>" },
+            { q: "Mi a teendő munkabaleset esetén?", a: "Ha munkabaleset történik, a legfontosabb, hogy <strong>azonnal gondoskodj a sérült ellátásáról</strong> – ha kell, hívj mentőt. Ezután a következőket kell megtenni:<ul><li><strong>Elsősegély biztosítása</strong> – ha szükséges, azonnal.</li><li><strong>A baleset jelentése</strong> – a sérültnek vagy a szemtanúnak jeleznie kell a közvetlen vezetőnek.</li><li><strong>A helyszín biztosítása</strong> – lehetőség szerint ne változtasd meg a baleset körülményeit, amíg a kivizsgálás meg nem történik.</li><li><strong>Baleseti jegyzőkönyv készítése</strong> – a munkáltató feladata, minden munkabalesetet ki kell vizsgálni és dokumentálni.</li><li><strong>Hatósági bejelentés</strong> – ha a baleset súlyos (pl. halálos, több napos munkaképtelenséget okoz), kötelező az illetékes hatóság felé is jelenteni.</li></ul>" },
+            { q: "Mikortól kell egy cégnek a munkavédelem?", a: "A munkavédelem már az <strong>első munkavállaló belépésétől kezdve kötelező</strong>. Tehát ha egy cég alkalmazásban tart akár csak egy embert, onnantól gondoskodnia kell a munkavédelmi előírások betartásáról." },
+            { q: "Ki kötelezi a munkavédelmet?", a: "A munkavédelmet a <strong>munkavédelmi törvény (1993. évi XCIII. törvény a munkavédelemről)</strong> írja elő. Ez a jogszabály határozza meg, milyen kötelezettségeid vannak munkáltatóként, és milyen jogai vannak a munkavállalóknak a biztonságos munkavégzéshez. A törvény betartását a <strong>munkavédelmi hatóság</strong> (jelenleg a Kormányhivatalok Munkavédelmi és Munkaügyi Ellenőrzési Osztályai) ellenőrzi. Ha hiányosságot találnak, bírságot szabhatnak ki, vagy akár le is állíthatják a munkát." },
+            { q: "Ki készítheti el a kockázatértékelést?", a: "<strong>Csak olyan szakember</strong>, aki rendelkezik a megfelelő munkavédelmi végzettséggel (pl. munkavédelmi technikus, mérnök). Te saját magad nem készítheted el, ha nincs hozzá képesítésed – ez hatósági előírás." },
+            { q: "Milyen gyakran kell frissíteni a kockázatértékelést?", a: "Általában <strong>3-5 évente</strong>, de ha a munkahelyen változás történik (pl. új gép, új technológia, munkabaleset), akkor <strong>azonnal frissíteni kell</strong>." },
+            { q: "Mi az a Munkahelyi Szabályzat?", a: "A Munkahelyi Szabályzat (vagy más néven Munkavédelmi Szabályzat) egy belső dokumentum, ami rögzíti a cég munkavédelmi előírásait, szabályait és eljárásait. Tulajdonképpen a munkavédelmi törvény gyakorlati „fordítása” a te cégedre szabva. Mit tartalmaz?<ul><li><strong>a munkahelyi veszélyek és kockázatok ismertetését,</strong></li><li><strong>a védőfelszerelések használatának előírásait,</strong></li><li><strong>a munkavállalók és a munkáltató feladatait, felelősségét,</strong></li><li><strong>az oktatás, ellenőrzés és balesetkezelés rendjét.</strong></li></ul>" },
         ]
     },
     { 
-        category: "Munkavédelem", 
+        category: "HACCP",
+        icon: FaUtensils,
         questions: [
-            { q: "Mi az a kockázatértékelés és miért kötelező?", a: "A kockázatértékelés egy dokumentum, amelyben a munkáltató felméri a munkahelyen előforduló veszélyeket és az azokból származó kockázatokat. Célja a megelőzés. A Munkavédelmi Törvény értelmében minden szervezett munkavégzést folytató vállalkozás számára kötelező az elkészítése, már egyetlen munkavállaló esetén is." },
-            { q: "Minden munkavállalónak kötelező az orvosi alkalmassági vizsgálat?", a: "Igen, a munkába lépés előtt minden munkavállalónak kötelező előzetes orvosi alkalmassági vizsgálaton részt vennie. Bizonyos munkakörökben időszakos és soron kívüli vizsgálatok is előírtak." },
-            { q: "Mi a teendő munkabaleset esetén?", a: "Az első és legfontosabb a sérült ellátása és a további veszély elhárítása. Ezt követően minden munkabalesetet azonnal jelenteni kell a munkáltatónak. A munkáltató kötelessége a balesetet kivizsgálni, jegyzőkönyvet felvenni, és a súlyosságtól függően bejelenteni az illetékes hatóságnak." },
+            { q: "Kötelező a HACCP minden cégnek?", a: "<strong>Igen</strong>, minden olyan vállalkozásnak, ami élelmiszerrel foglalkozik – a termeléstől a forgalmazáson át a vendéglátásig – kötelező HACCP rendszert működtetnie. Ez jogszabályi előírás az EU-ban és Magyarországon is." },
+            { q: "Mit tartalmaz egy HACCP dokumentáció?", a: "<ul><li><strong>a technológiai folyamatok leírását,</strong></li><li><strong>a lehetséges veszélyek elemzését,</strong></li><li><strong>a kritikus ellenőrzési pontokat</strong> (pl. hőmérséklet, tisztaság),</li><li><strong>az ellenőrzési módszereket és felelősöket,</strong></li><li><strong>a naplózás és nyomonkövetés módját.</strong></li></ul>" },
+            { q: "Milyen előnye van a HACCP-nek a cégem számára?", a: "<ul><li><strong>Biztonságosabb élelmiszert</strong> tudsz előállítani és forgalmazni.</li><li>Elkerülheted a <strong>hatósági bírságokat és bezárást</strong>.</li><li><strong>Növeli a vásárlók bizalmát</strong>, hiszen tudják, hogy szabályozott körülmények között dolgozol.</li><li>Segít rendszerezni a folyamatokat és <strong>csökkenti a hibák esélyét</strong>.</li></ul>" },
+            { q: "Mi az a HACCP?", a: "A HACCP (Hazard Analysis and Critical Control Points) egy élelmiszerbiztonsági rendszer, ami segít <strong>azonosítani, megelőzni és ellenőrizni</strong> azokat a veszélyeket, amelyek az élelmiszer előállítása vagy forgalmazása során előfordulhatnak. (pl: fertőzések, gomba megtelepedése, vírusok elkerülése)" },
         ]
     },
-    { 
-        category: "HACCP", 
-        questions: [
-            { q: "Kinek kötelező a HACCP rendszer kiépítése?", a: "Minden vállalkozásnak, amely élelmiszerrel foglalkozik – a termeléstől a forgalmazáson át a vendéglátásig – kötelező HACCP rendszert működtetnie. Ez vonatkozik a legkisebb büfére és a legnagyobb élelmiszer-üzemre is." },
-            { q: "Milyen gyakran kell felülvizsgálni a HACCP rendszert?", a: "A HACCP rendszert évente legalább egyszer kötelező felülvizsgálni, de soron kívüli felülvizsgálat is szükséges lehet például a technológia, a termékkör vagy a jogszabályok változása esetén." },
-        ]
-    }
 ];
 
 const pageVariants = {
@@ -93,7 +108,11 @@ const FaqItem = ({ q, a, isOpen, onClick }: { q: string, a: string, isOpen: bool
             }}
             className="overflow-hidden"
           >
-            <div className="pb-6 text-slate-600 text-lg leading-relaxed prose max-w-none">{a}</div>
+            {/* A dangerouslySetInnerHTML használata a HTML tartalom megjelenítéséhez */}
+            <div 
+              className="pb-6 text-slate-600 text-lg leading-relaxed prose max-w-none prose-ul:list-disc prose-ul:pl-6 prose-ul:space-y-2 prose-strong:font-bold"
+              dangerouslySetInnerHTML={{ __html: a }} 
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -102,27 +121,26 @@ const FaqItem = ({ q, a, isOpen, onClick }: { q: string, a: string, isOpen: bool
 };
 
 const GyakoriKerdesek = () => {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("Összes");
   const [searchTerm, setSearchTerm] = useState("");
   const [openQuestion, setOpenQuestion] = useState<string | null>(null);
 
-  // JAVÍTÁS: A szűrési logika robusztusabbra cserélve
   const filteredData = useMemo(() => {
     const searchLower = searchTerm.toLowerCase();
+    const isSearchActive = searchLower.length > 0;
 
     return faqData
       .map(cat => ({
         ...cat,
         questions: cat.questions.filter(
-          q => searchTerm.trim() === '' || q.q.toLowerCase().includes(searchLower) || q.a.toLowerCase().includes(searchLower)
+          q => q.q.toLowerCase().includes(searchLower) || q.a.toLowerCase().includes(searchLower)
         )
       }))
-      .filter(cat => activeCategory === 'All' || cat.category === activeCategory)
+      .filter(cat => activeCategory === 'Összes' || cat.category === activeCategory)
       .filter(cat => cat.questions.length > 0);
 
   }, [activeCategory, searchTerm]);
 
-  // JAVÍTÁS: A nyitott kérdés állapotának nullázása szűréskor
   useEffect(() => {
     setOpenQuestion(null);
   }, [activeCategory, searchTerm]);
@@ -149,22 +167,15 @@ const GyakoriKerdesek = () => {
         animate="in"
       >
         <motion.header variants={itemVariants} className="text-center max-w-4xl mx-auto mb-20">
-          <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">
-            Tudásbázis: <span className={accentColor.text}>Válaszok</span> a kérdéseire.
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4">
+            <span className={accentColor.text}>Tudásbázis</span>
           </h1>
-          <p className="text-2xl text-slate-600 leading-snug">
-            Keressen a leggyakoribb kérdések között, vagy böngésszen kategóriák szerint, hogy megtalálja a szükséges információt.
+          <p className="text-3xl text-slate-800 font-black mb-2">
+            Válaszok a kérdéseidre!
           </p>
-          <div className="mt-8 max-w-2xl mx-auto relative">
-            <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" />
-            <input 
-              type="text"
-              placeholder="Keressen kulcsszóra... (pl. 'kockázatértékelés')"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all text-lg"
-            />
-          </div>
+          <p className="text-xl text-slate-600 leading-snug max-w-2xl mx-auto">
+            Keressen a leggyakoribb kérdések között, hogy megtaláld a szükséges információt.
+          </p>
         </motion.header>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
@@ -172,7 +183,7 @@ const GyakoriKerdesek = () => {
             <motion.div variants={itemVariants} className="sticky top-24">
               <h2 className="text-2xl font-bold text-slate-800 mb-4">Kategóriák</h2>
               <ul className="space-y-2">
-                {["All", ...faqData.map(c => c.category)].map((category) => (
+                {["Összes", ...faqData.map(c => c.category)].map((category) => (
                   <li key={category}>
                     <button
                       onClick={() => setActiveCategory(category)}
@@ -182,7 +193,7 @@ const GyakoriKerdesek = () => {
                           : 'text-slate-600 hover:bg-white hover:text-slate-900'
                       }`}
                     >
-                      {category === "All" ? "Összes Kérdés" : category}
+                      {category === "Összes" ? "Összes Kérdés" : category}
                     </button>
                   </li>
                 ))}
@@ -202,7 +213,10 @@ const GyakoriKerdesek = () => {
                       transition={{ duration: 0.5, ease: 'easeOut' }}
                       className="mb-12"
                     >
-                      <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">{category.category}</h2>
+                      <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 flex items-center">
+                        {category.icon && <category.icon className="w-8 h-8 mr-4" />}
+                        {category.category}
+                      </h2>
                       <div className="bg-white/70 backdrop-blur-md p-2 sm:p-4 rounded-2xl shadow-xl border border-slate-200/80">
                         {category.questions.map((q, index) => (
                           <FaqItem
@@ -245,13 +259,13 @@ const GyakoriKerdesek = () => {
                 Vissza a főoldalra
               </motion.div>
             </Link>
-            <Link href="https://calendly.com/">
+            <Link href="/kapcsolat">
               <motion.div
                 className={`w-full sm:w-auto text-center font-bold py-3 px-8 rounded-xl bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg shadow-cyan-500/30 cursor-pointer`}
                 whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
                 whileTap={{ scale: 0.95 }}
               >
-                <CalendarDaysIcon className="w-5 h-5 inline-block mr-2" />
+                <SparklesIcon className="w-5 h-5 inline-block mr-2" />
                 Konzultációt Kérek
               </motion.div>
             </Link>

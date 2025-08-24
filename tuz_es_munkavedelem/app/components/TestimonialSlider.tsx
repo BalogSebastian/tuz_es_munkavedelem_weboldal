@@ -22,16 +22,16 @@ const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => (
 const testimonials = [
     { id: 1, name: "Nagy Károly", company: "Tech Kft.", quote: "Profi csapat, naprakész tudással. Az audit után sokkal nyugodtabban alszom. Maximálisan elégedett vagyok.", rating: 5 },
     { id: 2, name: "Kiss Éva", company: "Kis Bolt Bt.", quote: "Az oktatásuk érthető és gyakorlatias volt, a munkatársaim is pozitívan értékelték. Rugalmasak és segítőkészek.", rating: 5 },
-    { id: 3, name: "Szabó Zoltán", company: "Gyártó Zrt.", quote: "Gyorsan és precízen elkészítették a hiányzó szabályzatainkat. A hatósági ellenőrzésen minden rendben volt.", rating: 4 },
+    { id: 3, name: "Szabó Zoltán", company: "Gyártó Zrt.", quote: "Gyorsan és precízen elkészítették a hiányzó szabályzatainkat. A hatósági ellenőrzésen minden rendben volt.", rating: 5 },
     { id: 4, name: "Horváth Mária", company: "Szolgáltató Centrum", quote: "A kockázatértékelésük rendkívül alapos volt, olyan dolgokra is felhívták a figyelmünket, amikre nem is gondoltunk.", rating: 5 },
     { id: 5, name: "Fehér Petra", company: "Innovatív Zrt.", quote: "Modern szemlélet, kiváló szakértelem. Mindenkinek csak ajánlani tudom őket, aki komolyan veszi a biztonságot.", rating: 5 },
     { id: 6, name: "Kovács István", company: "Építőipari Kft.", quote: "Már több projekten dolgoztunk együtt, mindig megbízható és profi partnerek voltak. Köszönjük a munkájukat!", rating: 5 },
     // Hozzáadott extra értékelések a végtelenítéshez
     { id: 7, name: "Tóth Gábor", company: "Logisztika Kft.", quote: "A tűzvédelmi felülvizsgálat rendkívül alapos volt, mindenre kiterjedő és érthető magyarázatokkal. Ajánlott!", rating: 5 },
-    { id: 8, name: "Varga Judit", company: "Élelmiszerbolt", quote: "A HACCP rendszer bevezetése simán ment, köszönhetően a szakértelemnek és a folyamatos támogatásnak. Remek munka!", rating: 4 },
+    { id: 8, name: "Varga Judit", company: "Élelmiszerbolt", quote: "A HACCP rendszer bevezetése simán ment, köszönhetően a szakértelemnek és a folyamatos támogatásnak. Remek munka!", rating: 5 },
     { id: 9, name: "Molnár Dániel", company: "Építőanyag Kereskedés", quote: "A munkavédelmi dokumentáció rendezése gyorsan és hatékonyan történt. Jelentős terhet vettek le a vállunkról.", rating: 5 },
     { id: 10, name: "Papp Andrea", company: "Vendéglátás Kft.", quote: "Az időszakos felülvizsgálatok mindig pontosan lezajlanak, és előzetesen emlékeztetnek is rá. Kiváló szolgáltatás!", rating: 5 },
-    { id: 11, name: "Fekete Zsolt", company: "Szoftverfejlesztő Zrt.", quote: "Online is megoldható volt az oktatás, ami nekünk nagyon fontos volt a rugalmasság miatt. Profik!", rating: 4 },
+    { id: 11, name: "Fekete Zsolt", company: "Szoftverfejlesztő Zrt.", quote: "Online is megoldható volt az oktatás, ami nekünk nagyon fontos volt a rugalmasság miatt. Profik!", rating: 5 },
     { id: 12, name: "Juhász Krisztina", company: "Mezőgazdasági Vállalat", quote: "A telephelyi felmérés és a tanácsadás sokat segített a specifikus kérdéseinkben. Külön köszönöm a részletes útmutatót!", rating: 5 },
 ];
 

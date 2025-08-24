@@ -3,46 +3,73 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  ShieldCheckIcon,
-  AcademicCapIcon,
   ExclamationTriangleIcon,
-  BoltIcon,
+  BoltIcon as BoltIconOutline,
   ClipboardDocumentCheckIcon,
-  DocumentTextIcon,
-  GlobeAltIcon,
-  XMarkIcon,
-  CheckCircleIcon,
-  PhoneIcon,
-  FireIcon as FireIconSolid
-} from '@heroicons/react/24/outline'; // Megtartjuk az outline ikonokat
-import { SparklesIcon } from '@heroicons/react/24/solid';
-import { IoArrowUndoSharp, IoArrowRedo } from "react-icons/io5";
+} from '@heroicons/react/24/outline';
+import { IoArrowUndoSharp } from "react-icons/io5";
+import { FaHelmetSafety } from 'react-icons/fa6';
 
-const FireFlameIcon = ({ className }: { className?: string }) => {
-    return (
-        <div className={className}>
-            <FireIconSolid className="w-full h-full text-[#E53E3E]" />
-        </div>
-    );
+
+// --- CTA KONSTANSOK ---
+const RED_ACCENT_COLOR = {
+    baseHex: '#DC2626', // Tailwind red-600
+    bg: 'bg-red-600',
+    textOnAccent: 'text-white',
+    ring: 'focus-visible:ring-red-500',
 };
 
-
+// --- EGYÉB SZÍNEK ÉS STÍLUSOK ---
 const accentColor = {
-  base: '#03BABE',
-  bg: 'bg-[#03BABE]',
   text: 'text-[#03BABE]',
-  hoverBg: 'hover:bg-cyan-600',
-  ring: 'focus:ring-cyan-500',
-  shadow: 'shadow-cyan-500/40',
-  hoverShadow: 'hover:shadow-cyan-400/60',
-  focusRingOffset: 'focus:ring-offset-slate-100',
 };
 
+// --- SZOLGÁLTATÁSI ADATOK ---
 const servicesData = [
-  { id: 1, title: "Tűzvédelem ", description: "Teljes szabályzatok kidolgozása, elektromos rendszerek biztonsági vizsgálata.", icon: ExclamationTriangleIcon, colorName: "red", gradientClasses: "from-red-500 to-rose-500", textColor: "text-red-700", backSideText: "Teljes körű munkahelyi kockázatértékelés készítése a jogszabályi előírásoknak megfelelően, javaslatokkal a kockázatok csökkentésére.", price: "Egyedi árajánlat" },
-  { id: 2, title: "Munkavédelem", description: " Munkavédelemi kockázatok kezelése és elemzése, szabályzatok és a megelőzési intézkedések kidolgozása.", icon: BoltIcon, colorName: "blue", gradientClasses: "from-blue-500 to-cyan-500", textColor: "text-blue-700", backSideText: "Szabványossági felülvizsgálat, érintésvédelmi mérések elvégzése és dokumentálása minősítő irattal.", price: "12.000 Ft-tól" },
-  { id: 3, title: "HACCP", description: "Higiéniai előírások kidolgozása, bevezetése, és folyamatos felügyelete.", icon: ClipboardDocumentCheckIcon, colorName: "yellow", gradientClasses: "from-amber-400 to-orange-500", textColor: "text-amber-700", backSideText: "A munkakörhöz és munkahelyhez igazított tematika, hatékony ismeretátadás, dokumentált oktatás.", price: "20.000 Ft/csoporttól" },
-  { id: 4, title: "Oktatások", description: "Interaktív elméleti képzések, a biztonságért és a nyugalomért.", icon: AcademicCapIcon, colorName: "green", gradientClasses: "from-green-500 to-emerald-500", textColor: "text-green-700", backSideText: "Teljes körű HACCP dokumentáció elkészítése, helyszíni tanácsadás és belső auditok elvégzése.", price: "Egyedi árajánlat" },
+  // 1. VILLAMOSBIZTONSÁG
+  { 
+    id: 4, 
+    title: "Villamosbiztonság", 
+    description: "Elvégezzük a méréseket a telephelyeden, és a jogszabálynak megfelelő jegyzőkönyvet készítünk róla, majd dokumentálunk számodra minden veszélyforrást, amivel megelőzheted az esetleges tűzeseteket.", 
+    icon: BoltIconOutline, 
+    gradientClasses: "from-blue-400 to-indigo-500", 
+    textColor: "text-blue-700", 
+    backSideText: "Helyszíni mérések elvégzése, dokumentálása, jegyzőkönyv elkészítése.", 
+    price: "40.000 Ft-tól" 
+  },
+  // 2. TŰZVÉDELEM
+  { 
+    id: 1, 
+    title: "Tűzvédelem", 
+    description: "Kidolgozzuk a telephelyre vonatkozó tűzvédelmi szabályokat, és elkészítjük a megfelelő menekülési útvonalat. Ezután egy oktatást készítünk a céged alkalmazottai számára.", 
+    icon: ExclamationTriangleIcon, 
+    gradientClasses: "from-red-500 to-rose-500", 
+    textColor: "text-red-700", 
+    backSideText: "Teljes tűzvédelmi szabályzat készítése a munkavállalók oktatásával.", 
+    price: "20.000 Ft-tól" 
+  },
+  // 3. MUNKAVÉDELEM
+  { 
+    id: 2, 
+    title: "Munkavédelem", 
+    description: "Megcsináljuk a munkahelyi kockázatok kezelésére vonatkozó szabályrendszert, illetve a cég teljes munkavédelmi szabályzatát, amiről oktatást készítünk a cég tevékenységére szabottan.", 
+    icon: FaHelmetSafety, 
+    gradientClasses: "from-amber-400 to-yellow-500", 
+    textColor: "text-amber-700", 
+    backSideText: "Teljes körű munkavédelmi kockázatértékelés készítése, szabályzattal és a munkavállalók oktatásával.", 
+    price: "30.000 Ft-tól" 
+  },
+  // 4. HACCP
+  { 
+    id: 3, 
+    title: "HACCP", 
+    description: "Kidolgozzuk a higiéniai előírásoknak megfelelő kézikönyvet, segítünk kialakítani a megfelelő munkaterületet, és megtanítunk minden munkavállalót a jogszabály szerinti helyes munkavégzésre.", 
+    icon: ClipboardDocumentCheckIcon, 
+    gradientClasses: "from-blue-500 to-cyan-500", 
+    textColor: "text-blue-700", 
+    backSideText: "Teljes jegyzőkönyv kidolgozása és bevezetése mérési naplókkal, és oktatással.", 
+    price: "15.000 Ft-tól" 
+  },
 ];
 
 interface ServiceCardProps {
@@ -52,6 +79,8 @@ interface ServiceCardProps {
 const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
+  const cardShadowClass = `shadow-xl border border-slate-100`;
+
   return (
     <div
       className="relative w-full h-[320px] sm:h-[340px] md:h-[360px] cursor-pointer group"
@@ -59,16 +88,15 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <div
-        className="relative w-full h-full"
+        className={`relative w-full h-full transition-transform duration-700 ease-in-out`} // Animáció átalakítása
         style={{
             transformStyle: 'preserve-3d',
             transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-            transition: 'transform 0.7s ease-in-out',
         }}
       >
         {/* Kártya Előlapja */}
         <div
-          className="absolute w-full h-full bg-white rounded-2xl shadow-xl p-6 sm:p-8 pt-16 text-center flex flex-col border border-slate-100"
+          className={`absolute w-full h-full bg-white rounded-2xl p-6 sm:p-8 pt-16 text-center flex flex-col ${cardShadowClass}`}
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div
@@ -107,9 +135,12 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
 };
 
 const ServiceHighlightCards: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <style>{`
+        /* Optimalizált stílusok */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
         .custom-scroll::-webkit-scrollbar {
             width: 5px;
@@ -124,6 +155,18 @@ const ServiceHighlightCards: React.FC = () => {
         }
         .custom-scroll::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
+        }
+        /* CTA GLOW STÍLUS BEILLESZTÉSE - egyszerűsítve a teljesítményért */
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px ${RED_ACCENT_COLOR.baseHex}60, 0 0 70px ${RED_ACCENT_COLOR.baseHex}40;
+        }
+        .cta-button:active {
+            transform: scale(0.98);
         }
       `}</style>
 
@@ -144,7 +187,6 @@ const ServiceHighlightCards: React.FC = () => {
         <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden pt-28 sm:pt-40">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative text-center mb-16 lg:mb-20">
-              <FireFlameIcon className="absolute -top-12 right-4 lg:right-20 w-32 h-32  -z-0 hidden lg:block" />
               <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
                 Főbb <span className={accentColor.text}>szolgáltatásaink:</span>
               </h2>
@@ -158,19 +200,18 @@ const ServiceHighlightCards: React.FC = () => {
             </div>
 
             <div className="text-center mt-16 lg:mt-20">
-              <Link href="/szolgaltatasok"
-                className={`
-                  inline-flex items-center
-                  ${accentColor.bg} text-white
-                  font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-                  shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
-                  transition-all duration-300 ease-in-out
-                  focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
-                `}
-              >
-                <SparklesIcon className="w-6 h-6 mr-2" />
-                Szolgáltatásaink Megtekintése
-              </Link>
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className={`
+                        inline-flex items-center gap-3 
+                        ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} 
+                        font-bold py-8 px-12 rounded-xl text-3xl 
+                        cta-button 
+                        focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900
+                    `}
+                >
+                    Foglalj egy ingyenes konzultációt!
+                </button>
             </div>
           </div>
         </section>

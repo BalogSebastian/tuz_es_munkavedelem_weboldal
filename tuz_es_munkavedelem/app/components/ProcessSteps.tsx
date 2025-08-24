@@ -25,7 +25,34 @@ const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => {
 };
 
 const accentColor = { base: '#03BABE', bg: 'bg-[#03BABE]', text: 'text-[#03BABE]', hoverBg: 'hover:bg-cyan-600', ring: 'focus:ring-cyan-500', shadow: 'shadow-cyan-500/40', hoverShadow: 'hover:shadow-cyan-400/60', focusRingOffset: 'focus:ring-offset-slate-50' };
-const steps = [ { step: 1, icon: ChatBubbleLeftRightIcon, title: "Konzultáció és Igényfelmérés", description: "Részletesen átbeszéljük vállalkozása specifikus igényeit, céljait és a vonatkozó jogszabályi követelményeket." }, { step: 2, icon: DocumentCheckIcon, title: "Szerződéskötés", description: "Az egyeztetettek alapján elkészítjük a hivatalos megállapodást, mely rögzíti a vállalt szolgáltatásokat és feltételeket." }, { step: 3, icon: WrenchScrewdriverIcon, title: "A Munka Kivitelezése", description: "Szakértő csapatunk precízen és a megbeszélt ütemezés szerint elvégzi a szerződésben foglalt feladatokat." }, { step: 4, icon: CreditCardIcon, title: "Fizetés és Utánkövetés", description: "A munka sikeres teljesítése és átadása után történik a díjazás. Igény esetén további támogatást és utánkövetést biztosítunk." } ];
+
+// --- JAVÍTOTT LÉPÉSEK (A kért tartalommal) ---
+const steps = [ 
+    { 
+        step: 1, 
+        icon: ChatBubbleLeftRightIcon, 
+        title: "Konzultáció és Igényfelmérés", 
+        description: "Részletesen átbeszéljük vállalkozás specifikus igényeit, céljait és a vonatkozó jogszabályi követelményeket." 
+    }, 
+    { 
+        step: 2, 
+        icon: DocumentCheckIcon, 
+        title: "Szerződéskötés", 
+        description: "Az egyeztetettek alapján mi elkészítjük a hivatalos megállapodást, amely rögzíti a vállalt szolgáltatásokat és feltételeket." 
+    }, 
+    { 
+        step: 3, 
+        icon: WrenchScrewdriverIcon, 
+        title: "A Munka Kivitelezése", 
+        description: "Szakértő csapatunk precízen és a megbeszélt ütemezés szerint elvégzi a szerződésben foglalt feladatokat." 
+    }, 
+    { 
+        step: 4, 
+        icon: CreditCardIcon, 
+        title: "Fizetés és Utánkövetés", 
+        description: "A munka sikeres teljesítése és átadása után történik a díjazás. A későbbiekben pedig minden jogszabály módosításról informálunk, és minden határidőről értesítünk." 
+    } 
+];
 
 const ProcessSteps: React.FC = () => {
   return (
@@ -44,24 +71,16 @@ const ProcessSteps: React.FC = () => {
         <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" />
         <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" />
 
-        <div className="absolute top-[8%] left-[10%] w-24 h-24 transform -rotate-12 hidden xl:block">
-            <FaArrowTrendDown className="w-full h-full text-black/50" />
-        </div>
-
-        <div className="absolute top-[40%] right-[8%] w-20 h-20 transform rotate-12 hidden xl:block">
-            <FaArrowTrendDown className="w-full h-full text-black/50" />
-        </div>
-
-        <div className="absolute bottom-[15%] left-[8%] w-18 h-18 transform rotate-6 hidden xl:block">
-            <FaArrowTrendDown className="w-full h-full text-black/50" />
-        </div>
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="relative text-center mb-16 lg:mb-20">
             <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4">
               Együttműködésünk <span className={accentColor.text}>Folyamata</span>
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">Átlátható lépések a sikeres és biztonságos munkakörnyezetért.</p>
+            {/* JAVÍTOTT: Két bekezdés helyett egy tömör leírás */}
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                Átlátható közös munkát biztosítunk, ahol a munka befejezése után is folyamatosan kapcsolatban maradunk, és kezeljük az ügyeket, ellentétben azokkal, akik eltűnnek.
+            </p>
           </div>
           <div className="relative max-w-xl mx-auto lg:max-w-4xl">
             <div
@@ -103,7 +122,7 @@ const ProcessSteps: React.FC = () => {
 
           <div className="text-center mt-16 lg:mt-20 px-4">
               <p className="text-lg md:text-xl text-slate-700 font-medium max-w-xl mx-auto">
-                  Igen jól látod, nálunk csak a munka befejezése után kell fizetni!
+              Igen jól látod, nálunk csak a munka befejezése után kell fizetni!
               </p>
           </div>
 
@@ -116,7 +135,7 @@ const ProcessSteps: React.FC = () => {
                     font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
                     shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
                     transition-all duration-300 ease-in-out
-                    focus:outline-none focus:ring-4 ${accentColor.ring} ${accentColor.focusRingOffset}
+                    focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2 ${accentColor.focusRingOffset}
                 `}
             >
               <SparklesIcon className="w-6 h-6 mr-2" />

@@ -61,7 +61,8 @@ const HeaderHero = () => {
                   box-shadow: 0 0 15px ${ACCENT_COLOR.baseHex}40, 0 0 30px ${ACCENT_COLOR.baseHex}30, inset 0 0 10px ${ACCENT_COLOR.baseHex}20;
                 }
                 .cta-glow-red {
-                    box-shadow: 0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20;
+                    /* Sokat megemelt glowing effektus */
+                    box-shadow: 0 0 30px ${RED_ACCENT_COLOR.baseHex}80, 0 0 60px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
                 }
                 .cta-grid-pattern { 
                   background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px), linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px); 
@@ -72,20 +73,24 @@ const HeaderHero = () => {
 
             <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px]">
                 {/* Navbar */}
-                <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50 border-b border-slate-700">
+                <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-around text-sm shadow-xl z-50 border-b border-slate-700">
                     <div className="flex items-center gap-1">
                         <div className="font-bold text-lg tracking-wider relative top-[5px]">
                             <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white">Szaki</span>
                         </div>
-                        <img
+                        {/* A logo méretének csökkentése a navbarban */}
+                        <Image
                             src="/munkavedelmiszakiLOGO.png"
                             alt="Munkavédelmi Szaki Logó"
-                            className="h-10 w-auto"
+                            width={32}
+                            height={32}
+                            className="h-8 w-auto"
                         />
                     </div>
+                    {/* E-mail és telefonszám elhelyezése */}
                     <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
                         <a href="mailto:info@tuz-munkavedelmiszaki.hu" className="hover:text-cyan-300 transition-colors duration-300">info@tuz-munkavedelmiszaki.hu</a>
-                        <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36/302722571</a>
+                        <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36 30 272 2571</a>
                     </div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <button
@@ -113,11 +118,12 @@ const HeaderHero = () => {
                           animate="visible"
                         >
                           <motion.div variants={ANIMATION_VARIANTS.item} className="mb-2 z-20">
+                              {/* A középső logó méretének csökkentése */}
                               <Image
                                   src="/munkavedelmiszakiLOGO.png"
                                   alt="Munkavédelmi Szaki Logó"
-                                  width={300}
-                                  height={300}
+                                  width={150}
+                                  height={150}
                                   className="mx-auto"
                                   priority
                               />
@@ -127,34 +133,48 @@ const HeaderHero = () => {
                               className="text-3xl md:text-4xl text-slate-300 mb-2 z-10"
                               variants={ANIMATION_VARIANTS.item}
                           >
-                              Nem tudod hogyan tovább?
+                              {/* Új copy szöveg */}
+                              Elkészítjük a jogszabályoknak megfelelő Tűz- Munkavédelmi, és HACCP dokumentációkat, hogy téged ne büntessenek meg.
                           </motion.h2>
 
                           <motion.h1
-                              className="text-5xl sm:text-7xl md:text-8xl font-black mb-8 leading-tight tracking-tighter text-white z-10"
+                              className="text-5xl sm:text-7xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white z-10"
                               variants={ANIMATION_VARIANTS.item}
                           >
-                              Nyugalom, mi tudjuk.
+                              {/* Új copy szöveg */}
+                              A büntetés értéke 10 Millió forintig terjedhet!
                           </motion.h1>
 
                           <motion.p
                               className="text-lg md:text-xl mb-12 text-slate-300 max-w-3xl font-medium z-10"
                               variants={ANIMATION_VARIANTS.item}
                           >
+                              {/* Meglévő copy szöveg megtartása */}
                               Segítünk kijutni a jogszabályi útvesztőből, és átláthatóvá tenni a Tűz, Munkavédelem, vagy akár a HACCP kérdéseit!
                           </motion.p>
 
                           <motion.div
                               variants={ANIMATION_VARIANTS.item}
                           >
+                              {/* Új CTA gomb, erősebb glowing effekttel */}
                               <motion.button
-                                  whileHover={{ scale: 1.03, y: -4 }}
-                                  whileTap={{ scale: 0.98, y: 0 }}
+                                  whileHover={{ scale: 1.05, boxShadow: `0 0 45px ${RED_ACCENT_COLOR.baseHex}80, 0 0 90px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 30px ${RED_ACCENT_COLOR.baseHex}40` }}
+                                  whileTap={{ scale: 0.98, boxShadow: `0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20` }}
                                   className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
                               >
-                                  Gyere és beszéljük át!
+                                  Foglald le ingyenes konzultációdat!
                               </motion.button>
                           </motion.div>
+                           
+                          {/* Új szöveg a CTA gomb alá */}
+                          <motion.div
+                              variants={ANIMATION_VARIANTS.item}
+                              className="mt-8 text-lg font-bold text-white text-center"
+                          >
+                              <span className="text-yellow-400">★ ★ ★ ★ ★</span>
+                              <span className="ml-2">Több mint 150 elkerült büntetés!</span>
+                          </motion.div>
+
                         </motion.div>
                     </div>
                 </div>

@@ -182,6 +182,37 @@ const FloatingShapes = () => (
     </div>
 );
 
+// --- CTA GOMB KONSTANSOK (A HeaderHero-ból átemelve) ---
+const RED_ACCENT_COLOR = {
+    baseHex: '#DC2626', // Tailwind red-600
+    baseRgb: '220, 38, 38',
+    bg: 'bg-red-600',
+    hoverBg: 'hover:bg-red-700',
+    ring: 'focus-visible:ring-red-500',
+    textOnAccent: 'text-white',
+};
+
+const ANIMATION_VARIANTS = {
+    container: {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.2, delayChildren: 0.5 },
+        },
+    },
+    item: {
+        hidden: { opacity: 0, y: 25, filter: 'blur(10px)' },
+        visible: {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            transition: { type: 'spring', stiffness: 100, damping: 20 },
+        },
+    },
+};
+// --- VÉGE CTA GOMB KONSTANSOK ---
+
+
 const accentColor = {
   base: '#03BABE', bg: 'bg-[#03BABE]', text: 'text-[#03BABE]', hoverBg: 'hover:bg-cyan-600',
   ring: 'focus:ring-cyan-500', shadow: 'shadow-cyan-500/40', hoverShadow: 'hover:shadow-cyan-400/60',
@@ -464,6 +495,11 @@ const IntegratedApplication: React.FC = () => {
               .modal-grid-bg { background-color: #1a202c; background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px); background-size: 3rem 3rem; }
               input[type="checkbox"] { flex-shrink: 0; transition: all 0.2s ease-in-out; }
               input[type="checkbox"]:checked { border-color: #03BABE; background-color: #03BABE; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); background-size: 100%; background-position: center; background-repeat: no-repeat; }
+                .cta-glow-red {
+                    /* Sokat megemelt glowing effektus - Mivel ez a stílus a HeaderHero-ban is megvan,
+                       és a CSS beágyazás csak a Quiz componentre érvényes, a biztonság kedvéért itt is beillesztem. */
+                    box-shadow: 0 0 30px ${RED_ACCENT_COLOR.baseHex}80, 0 0 60px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
+                }
             `}</style>
 
             <div
@@ -605,16 +641,16 @@ const IntegratedApplication: React.FC = () => {
                     viewport={{ once: true, amount: 0.2 }}
                 >
                     <div className="max-w-6xl mx-auto flex flex-col items-center">
-                        <motion.h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-16 text-center" variants={introItemVariants}>Erről <span className={accentColor.text}>jó</span> ha tudsz:</motion.h2>
-                        <motion.p variants={introItemVariants} className="text-center text-lg lg:text-xl text-slate-600 max-w-3xl mb-16 leading-relaxed">Jó hogy ittvagy!  Fontos tudnod, hogy minden vállalkozásra más-más előírás vonatkozik, emiatt nem mindig egyszerű ennek megfelelni! Érdemes tisztában lenned azzal hogy mire is kell figyelmet fordítanod.</motion.p>
+                        <motion.h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-6 text-center" variants={introItemVariants}>Ezt a három alapvető dolgot ismerned kell ahhoz, <span className={accentColor.text}>hogy ne függesszék fel a vállalkozásodat</span> !</motion.h2>
+                        <motion.p variants={introItemVariants} className="text-center text-lg lg:text-xl text-slate-600 max-w-3xl mb-16 leading-relaxed">Fontos tudni, hogy minden vállalkozásra más-más előírás vonatkozik, ezért nem egyszerű ezeknek megfelelni.Segítünk abban, hogy neked mire is kell figyelmet fordítani.</motion.p>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16 w-full">
                             <motion.div variants={introItemVariants} whileHover={{ y: -8, scale: 1.03 }} className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl">
-                                <motion.div className="absolute w-24 h-24 -top-8 -right-8" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}><FireIconSolid className="w-full h-full text-red-500 drop-shadow-lg" /></motion.div>
+                                <motion.div className="absolute w-24 h-24 -top-9 -right-9" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}><FireIconSolid className="w-full h-full text-red-500 drop-shadow-lg" /></motion.div>
                                 <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5"><div className={`p-4 rounded-xl bg-gradient-to-br from-red-400 to-red-600`}><FireIcon className="w-8 h-8 text-white" /></div><h3 className="text-2xl font-bold text-slate-800">Tűzvédelem</h3></motion.div>
                                 <p className="text-slate-600 leading-relaxed">Többről van szó mint a tűzoltó készülék meglétéről. A Tűzvédelem egy proaktív stratégia, ami a probléma megelőzésére, és gyors reagálására szolgál. Fontos: Kötelező, ha rendelkezel bármilyen telephellyel!</p>
                             </motion.div>
                             <motion.div variants={introItemVariants} whileHover={{ y: -8, scale: 1.03 }} className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl">
-                                <motion.div className="absolute w-24 h-24 -top-8 -right-8" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}>
+                                <motion.div className="absolute w-24 h-24 -top-9 -right-9" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}>
                                     <FaHelmetSafety className="w-full h-full text-yellow-500 drop-shadow-lg" />
                                 </motion.div>
                                 <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5">
@@ -630,29 +666,34 @@ const IntegratedApplication: React.FC = () => {
                                 </p>
                             </motion.div>
                             <motion.div variants={introItemVariants} whileHover={{ y: -8, scale: 1.03 }} className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl">
-                                <motion.div className="absolute w-24 h-24 -top-8 -right-8" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}><HiDocument className="w-full h-full text-blue-500 drop-shadow-lg" /></motion.div>
+                                <motion.div className="absolute w-24 h-24 -top-9 -right-9" animate={{ y: [-4, 4, -4], rotate: [-3, 3, -3], }} transition={{ duration: 8, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}><HiDocument className="w-full h-full text-blue-500 drop-shadow-lg" /></motion.div>
                                 <motion.div variants={iconCardVariants} className="flex items-center gap-5 mb-5"><div className={`p-4 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500`}><HiDocument className="w-8 h-8 text-white" /></div><h3 className="text-2xl font-bold text-slate-800">HACCP</h3></motion.div>
                                 <p className="text-slate-600 leading-relaxed">A HACCP az élelmiszer biztonság alapköve. Minden esetben ki kell dolgozni ha valaki élelmiszerrel foglalkozik, és természetesen e-szerint kell eljárni a későbbiekben. Fontos tudni, hogy nem üzemelhetsz HACCP rendszer nélkül, különben bármikor bezárathatják az egységedet!</p>
                             </motion.div>
                         </div>
                         <motion.div variants={introItemVariants} className="text-center mt-20">
-                            <p className="mb-6 text-xl text-slate-600">Beszélni szeretnék egy <span className={accentColor.text}>jó</span> szakival!</p>
-                            <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.98 }}>
-    <button
-        onClick={() => setIsModalOpen(true)}
-        className={`
-            inline-flex items-center
-            ${accentColor.bg} ${accentColor.hoverBg} text-white
-            font-bold py-4 px-10 rounded-xl text-lg
-            shadow-lg ${accentColor.shadow} ${accentColor.hoverShadow}
-            transition-all duration-300 ease-in-out
-            focus:outline-none focus:ring-4 ${accentColor.ring}
-        `}
-    >
-        <SparklesIcon className="w-6 h-6 mr-2" />
-        online konzultáció egy szakemberrel
-    </button>
-</motion.div>
+                            <p className="mb-6 text-xl text-slate-600">Beszélj egy hozzáértő szakemberrel ! <span className={accentColor.text}></span></p>
+                            {/* AZ ÁTALAKÍTOTT CTA GOMB BLOKK */}
+                            <motion.div
+                                variants={ANIMATION_VARIANTS.item}
+                            >
+                                <motion.button
+                                    onClick={() => setIsModalOpen(true)}
+                                    // Piros CTA gomb glow effektek beillesztése
+                                    whileHover={{ scale: 1.05, boxShadow: `0 0 45px ${RED_ACCENT_COLOR.baseHex}80, 0 0 90px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 30px ${RED_ACCENT_COLOR.baseHex}40` }}
+                                    whileTap={{ scale: 0.98, boxShadow: `0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20` }}
+                                    className={`
+                                        inline-flex items-center gap-3 
+                                        ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} 
+                                        font-bold py-8 px-12 rounded-xl text-3xl 
+                                        shadow-lg cta-glow-red transition-all duration-300 ease-in-out 
+                                        focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900
+                                    `}
+                                >
+                                    Foglalj egy ingyenes konzultiót!
+                                </motion.button>
+                            </motion.div>
+                            {/* VÉGE AZ ÁTALAKÍTOTT CTA GOMB BLOKKNAK */}
                         </motion.div>
                     </div>
                 </motion.section>

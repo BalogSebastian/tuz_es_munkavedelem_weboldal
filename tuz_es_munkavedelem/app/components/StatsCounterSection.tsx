@@ -1,80 +1,69 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView, animate } from 'framer-motion';
 import { UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5';
 
-const AnimatedDecorativeArrow: React.FC<{ className?: string }> = ({ className }) => {
+// --- Natív Intersection Observer Hook ---
+const useInViewObserver = (ref: React.RefObject<HTMLElement | null>, options: IntersectionObserverInit) => {
+    const [isInView, setIsInView] = useState(false);
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                setIsInView(true);
+                observer.unobserve(entry.target); 
+            }
+        }, options);
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, [ref, options]);
+
+    return isInView;
+};
+
+// --- ÁTALAKÍTVA: Nincs Animáció, Azonnali Érték megjelenítése ---
+function StaticCounter({ value, isInView }: { value: number; isInView: boolean }) {
+    // Az isInView állapotot használjuk a feltételes megjelenítésre
+    return <>{isInView ? value : 0}</>;
+}
+
+// --- CSS-alapú Csillogás Animáció ---
+const IconShineEffect: React.FC<{ delay: number, isParentInView: boolean }> = ({ delay, isParentInView }) => {
+    if (!isParentInView) return null;
     return (
-        <motion.svg
-            viewBox="0 0 100 100" fill="none" className={className}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
+        <div
+            className="absolute inset-0 w-full h-full overflow-hidden rounded-full"
+            style={{ animationDelay: `${delay}s` }}
         >
-            <motion.path
-                d="M20 20C48.33 22.17 73.33 45.17 80 80" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 1, ease: "circOut", delay: 0.5 } }
-                }} />
-            <motion.path
-                d="M70 73L80 80L87 70" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"
-                variants={{
-                    hidden: { pathLength: 0, opacity: 0 },
-                    visible: { pathLength: 1, opacity: 1, transition: { duration: 0.5, ease: "circOut", delay: 1.2 } }
-                }} />
-        </motion.svg>
+            <div
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-transparent via-white/80 to-transparent shine-animation"
+            />
+        </div>
     );
 };
 
 
 const stats = [
-  { value: 150, label: "Elégedett Ügyfél", suffix: "+", icon: UserGroupIcon },
+  { value: 150, label: "Elégedett Ügyfél", suffix: "", icon: UserGroupIcon },
   { value: 150, label: "Elkerült Büntetés", suffix: "", icon: ShieldCheckIcon },
 ];
-
-function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean }) {
-    const [displayValue, setDisplayValue] = useState(0);
-    useEffect(() => {
-        if (isInView) {
-            const controls = animate(0, value, {
-                duration: 2.0, ease: "easeOut",
-                onUpdate(latest) { setDisplayValue(Math.round(latest)); }
-            });
-            return () => controls.stop();
-        }
-    }, [isInView, value]);
-    return <>{displayValue}</>;
-}
-
-const IconShineEffect: React.FC<{ delay: number, isParentInView: boolean }> = ({ delay, isParentInView }) => {
-    if (!isParentInView) return null;
-    return (
-        <motion.div
-            className="absolute inset-0 w-full h-full overflow-hidden rounded-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.7, 0] }}
-            transition={{ duration: 0.8, ease: "easeInOut", delay: delay + 0.4 }}
-        >
-            <motion.div
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-transparent via-white/80 to-transparent"
-                initial={{ x: "-150%", width: "50%" }}
-                animate={{ x: "150%" }}
-                transition={{ duration: 0.6, ease: "linear" }}
-            />
-        </motion.div>
-    );
-};
 
 interface BackgroundElementStyle extends React.CSSProperties {}
 
 const StatsCounterSection: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const sectionRef = useRef<HTMLElement | null>(null); 
+  const isInView = useInViewObserver(sectionRef, { threshold: 0.3 }); 
   
   const [backgroundElementStyles, setBackgroundElementStyles] = useState<BackgroundElementStyle[]>([]);
+  
   useEffect(() => {
     const styles: BackgroundElementStyle[] = [...Array(3)].map((_, i) => ({
       width: `${300 + Math.random() * 400}px`,
@@ -82,6 +71,8 @@ const StatsCounterSection: React.FC = () => {
       backgroundColor: i % 2 === 0 ? 'rgba(3, 186, 190, 0.07)' : 'rgba(14, 116, 144, 0.07)',
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
+      animationDuration: `${20 + Math.random() * 15}s`,
+      animationDelay: `-${Math.random() * 10}s`,
     }));
     setBackgroundElementStyles(styles);
   }, []);
@@ -91,15 +82,100 @@ const StatsCounterSection: React.FC = () => {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
+        
+        /* Teljesítmény-optimalizált CSS */
         .cta-grid-pattern {
             background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px),
                               linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px);
             background-size: 4rem 4rem;
         }
+
+        /* 1. Háttér mozgás animáció */
+        @keyframes subtle-move {
+            0% { transform: translate(0, 0) scale(0.7); opacity: 0; }
+            33% { transform: translate(5%, 10%) scale(1.2); opacity: 1; }
+            66% { transform: translate(-5%, -10%) scale(0.9); opacity: 0.5; }
+            100% { transform: translate(0, 0) scale(0.7); opacity: 0; }
+        }
+        .background-blob {
+            animation-name: subtle-move;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-direction: alternate;
+            filter: blur(3rem);
+        }
+
+        /* 2. Fejlécek animációja */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3. Statisztika kártyák és ikonok animációja */
+        .stat-card {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), scale 0.3s, box-shadow 0.3s;
+        }
+        .stat-card.visible {
+             opacity: 1;
+             transform: translateY(0);
+        }
+        .stat-card:hover {
+            transform: scale(1.08) translateY(-8px);
+        }
+        .stat-icon-wrapper {
+            transform: scale(0);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .stat-icon-wrapper.visible {
+            transform: scale(1);
+        }
+
+        /* 4. Csillogás animáció */
+        @keyframes shine {
+            0% { opacity: 0; transform: translateX(-150%); }
+            10% { opacity: 0.7; }
+            50% { opacity: 0; transform: translateX(150%); }
+            100% { opacity: 0; }
+        }
+        .shine-animation {
+            animation-name: shine;
+            animation-duration: 0.6s;
+            animation-timing-function: linear;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        /* A szülő div a késleltetésért felel: */
+        .stat-icon-wrapper > div:last-child {
+            animation-delay: var(--delay, 0s); 
+            opacity: 0;
+        }
+
+        /* 5. CTA kártya */
+        .cta-card {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s;
+        }
+        .cta-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .cta-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
+        }
+
       `}</style>
       <section ref={sectionRef} className="pt-24 sm:pt-32 pb-24 sm:pb-32 font-['Poppins',_sans-serif] bg-slate-900 text-white relative overflow-hidden">
         
-        {/* === MÓDOSÍTÁS: ÚJ, ELEGANCIÓS HULLÁM FELÜL === */}
+        {/* Hullám Felül */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
           <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +190,7 @@ const StatsCounterSection: React.FC = () => {
           </svg>
         </div>
 
-        {/* === ÚJ: Nyilak, a hullám *fölött* elhelyezve, a szekció vizuális elválasztása miatt === */}
+        {/* Dekoratív Nyilak */}
         <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
             <div
                 className="absolute w-36 h-36 text-cyan-500" 
@@ -133,80 +209,66 @@ const StatsCounterSection: React.FC = () => {
             <IoArrowRedo className="w-full h-full" />
         </div>
 
+        {/* Háttér Mintázat és Blur Elemetk */}
         <div className="absolute inset-0 cta-grid-pattern z-0"></div>
         {backgroundElementStyles.map((style, i) => (
-            <motion.div
+            <div
               key={i}
-              className="absolute rounded-full filter blur-3xl"
+              className="absolute rounded-full background-blob"
               style={style}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: [0, 1, 0.2, 0], scale: [0.7, 1.2, 0.7] }}
-              transition={{ duration: 20 + Math.random() * 15, repeat: Infinity, repeatType: 'mirror', delay: i * 5, ease: 'easeInOut' }}
             />
         ))}
         
-        {/* === MÓDOSÍTÁS: Eredeti nyilak kikommentelve ===
-        <AnimatedDecorativeArrow className="absolute top-1/3 -translate-y-1/2 left-4 md:left-8 lg:left-12 w-32 h-32 text-red-500 hidden lg:block transform -scale-x-100" />
-        <AnimatedDecorativeArrow className="absolute bottom-1/4 translate-y-1/2 right-4 md:right-8 lg:right-12 w-32 h-32 text-red-500 hidden lg:block" />
-        */}
-
         <div className="container mx-auto px-6 relative z-10">
            <div className="text-center mb-16 lg:mb-20">
-              <motion.h2 
-                  className="text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 mb-4"
-                  initial={{ opacity:0, y: 20 }}
-                  animate={isInView ? { opacity:1, y: 0 } : {}}
-                  transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
+              {/* Fejléc Animáció (CSS) */}
+              <h2 
+                  className={`text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 mb-4 fade-in-up ${isInView ? 'visible' : ''}`}
+                  style={{ transitionDelay: '0.1s' }}
               >
                   Eredményeink <span className='text-white'>számokban:</span>
-              </motion.h2>
-              <motion.p 
-                  className="text-lg text-slate-300 max-w-2xl mx-auto"
-                  initial={{ opacity:0, y: 20 }}
-                  animate={isInView ? { opacity:1, y: 0 } : {}}
-                  transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
+              </h2>
+              {/* Bevezető Szöveg Animáció (CSS) */}
+              <p 
+                  className={`text-lg text-slate-300 max-w-2xl mx-auto fade-in-up ${isInView ? 'visible' : ''}`}
+                  style={{ transitionDelay: '0.25s' }}
               >
                   Fontos számunkra, hogy az ügyfeleink ne stresszeljenek egy ellenőrzés során.
-              </motion.p>
+              </p>
           </div>
 
           <div className="max-w-2xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-16 sm:gap-y-12 gap-x-8 text-center">
               {stats.map((stat, index) => (
-                <motion.div
+                <div
                     key={index}
-                    className="flex flex-col items-center"
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.7, delay: index * 0.15 + 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.08, y: -8, transition: { type: "spring", stiffness: 300, damping:10 } }}
+                    className={`flex flex-col items-center stat-card ${isInView ? 'visible' : ''}`}
+                    style={{ transitionDelay: `${index * 0.15 + 0.4}s` }}
                 >
-                     <motion.div 
-                        className="relative mb-5 p-4 bg-white/10 rounded-full ring-2 ring-white/20 shadow-lg"
-                        initial={{scale:0}}
-                        animate={isInView ? {scale:1} : {}}
-                        transition={{type:'spring', stiffness:260, damping:20, delay: index * 0.15 + 0.6}}
+                     {/* Ikon Animáció (CSS) */}
+                     <div 
+                        className={`relative mb-5 p-4 bg-white/10 rounded-full ring-2 ring-white/20 shadow-lg stat-icon-wrapper ${isInView ? 'visible' : ''}`}
+                        style={{ transitionDelay: `${index * 0.15 + 0.6}s` }}
                      >
                         <stat.icon className="w-10 h-10 text-cyan-400" />
-                        <IconShineEffect delay={index * 0.15 + 1} isParentInView={isInView} />
-                     </motion.div>
+                        <IconShineEffect delay={index * 0.15 + 1.2} isParentInView={isInView} />
+                     </div>
                     
                     <div className="text-5xl lg:text-7xl font-extrabold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
-                        <AnimatedCounter value={stat.value} isInView={isInView} />
+                        {/* STATIKUS MEGJELENÍTÉS */}
+                        <StaticCounter value={stat.value} isInView={isInView} />
                         {stat.suffix}
                     </div>
                     <div className="text-base lg:text-xl font-medium text-slate-400">{stat.label}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
 
-          <motion.div
-            className="mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(239, 68, 68, 0.8)' }}
+          {/* CTA Kártya Animáció (CSS) */}
+          <div
+            className={`mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden cta-card ${isInView ? 'visible' : ''}`}
+            style={{ transitionDelay: '1.0s' }}
           >
             <div className="absolute inset-0 bg-white/5 opacity-20 transform -skew-y-12 scale-150"></div>
             <p className="text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight relative z-10">
@@ -216,12 +278,12 @@ const StatsCounterSection: React.FC = () => {
               <span className="text-yellow-300 drop-shadow-lg">2 000 000 Ft</span> is lehet!
             </p>
             <p className="text-red-200 text-base sm:text-lg mt-4 relative z-10">
-              Ne kockáztasson – legyen felkészült!
+            Ne kockáztass - légy felkészült!
             </p>
-          </motion.div>
+          </div>
 
         </div>
-        {/* === ÚJ: SÖTÉT HULLÁM AZ ALJÁN === */}
+        {/* Sötét Hullám Alul */}
         <div 
           className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20"
         >
