@@ -142,7 +142,7 @@ const Footer: React.FC = () => {
                     { href: '/gyorslinkek/kockazatertekeles', label: 'Kockázatértékelés' },
                     { href: '/gyorslinkek/spfa-as-123123123rffffee', label: 'Munkavédelmi Szabályzat' },
                     { href: '/gyorslinkek/munkavedelmioktatas', label: 'Munkavédelmi Oktatás' },
-                    { href: '/gyorslinkek/munkahelyibaleset', label: 'Munkahelyi baleset kivizsgálás' },
+                    { href: '/gyorslinkek/cff-cd12-asdf2312-ss', label: 'Munkahelyi baleset kivizsgálás' },
                   ]}
                 />
                 <AccordionItem
