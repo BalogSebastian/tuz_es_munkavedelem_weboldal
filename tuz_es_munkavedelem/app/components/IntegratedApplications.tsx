@@ -622,8 +622,8 @@ const IntegratedApplication: React.FC = () => {
                 {/* ÚJ: FaArrowTrendDown nyíl a szekciók közötti résben */}
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
-                        top: '50%',
-                        right: '15%',
+                        top: '45%',
+                        right: '10%',
                         transform: 'translateY(-50%) rotate(150deg)'
                     }}
                 >
