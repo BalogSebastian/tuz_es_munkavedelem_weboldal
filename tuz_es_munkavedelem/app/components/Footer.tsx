@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
                 Gyorslinkek
               </h3>
               <ul className="space-y-3 text-slate-400 text-base">
-                <li><Link href="/bemutatkozas" className="hover:text-white transition-colors duration-200">Bemutatkozás</Link></li>
+                <li><Link href="/bemutatkozas" className="hover:text-white transition-colors duration-200">Rólunk</Link></li>
                 <li><Link href="/folyamat" className="hover:text-white transition-colors duration-200">Folyamatunk</Link></li>
                 <li><Link href="/gyik" className="hover:text-white transition-colors duration-200">GYIK</Link></li>
                 <li><Link href="/kapcsolat" className="hover:text-white transition-colors duration-200">Kapcsolat</Link></li>
