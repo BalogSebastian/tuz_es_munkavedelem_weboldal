@@ -217,7 +217,7 @@ const Kapcsolat = () => {
                                 Vissza a főoldalra
                             </motion.div>
                         </Link>
-                        <Link href="/kapcsolat#contact-form">
+                        <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358">
                             <motion.div
                                 className={`w-full sm:w-auto text-center font-bold py-3 px-8 rounded-xl bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg shadow-cyan-500/30 cursor-pointer`}
                                 whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
