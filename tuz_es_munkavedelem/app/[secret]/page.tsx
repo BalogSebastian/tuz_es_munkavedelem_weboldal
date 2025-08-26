@@ -78,7 +78,7 @@ export default async function SecretPage({
 }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const secretKey = 'secretdocs134';
+  const secretKey = 'ssppffccddadminnsp1111sps11';
 
   if (resolvedParams.secret !== secretKey) {
     notFound();
