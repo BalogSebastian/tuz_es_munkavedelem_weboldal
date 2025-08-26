@@ -27,25 +27,25 @@ const processSteps = [
     step: 1,
     icon: ChatBubbleLeftRightIcon,
     title: "Konzultáció és Igényfelmérés",
-    description: "Minden sikeres partnerség egy alapos beszélgetéssel kezdődik. Egy díjmentes konzultáció során megismerjük vállalkozását, feltérképezzük az egyedi igényeket és a potenciális kockázatokat, hogy pontosan értsük, miben segíthetünk."
+    description: "Minden sikeres partnerség egy alapos beszélgetéssel kezdődik. Egy díjmentes konzultáció során megismerjük vállalkozását, feltérképezzük az egyedi igényeket és a potenciális kockázatokat, hogy pontosan értsük, mire van szükséged."
   },
   {
     step: 2,
     icon: DocumentCheckIcon,
     title: "Szerződéskötés és Tervezés",
-    description: "Az egyeztetettek alapján egy átlátható, minden részletre kiterjedő árajánlatot és szerződéstervezetet készítünk. Itt rögzítjük a vállalt szolgáltatásokat, a határidőket és a garanciákat. Nincsenek rejtett költségek."
+    description: "Az egyeztetettek alapján egy átlátható, minden részletre kiterjedő árajánlatot és szerződéstervezetet készítünk. Itt rögzítjük a vállalt szolgáltatásokat, a határidőket és a garanciákat, lásd nincsenek rejtett költségek. Első a bizalom!"
   },
   {
     step: 3,
     icon: WrenchScrewdriverIcon,
     title: "A Munka Kivitelezése",
-    description: "Szakértő csapatunk precízen és a megbeszélt ütemezés szerint elvégzi a szerződésben foglalt feladatokat, legyen szó dokumentáció készítéséről, helyszíni bejárásról vagy oktatásról. A folyamatról folyamatosan tájékoztatjuk."
+    description: "Szakértő csapatunk precízen és a megbeszélt ütemezés szerint elvégzi a szerződésben foglalt feladatokat, legyen szó dokumentáció készítéséről, helyszíni bejárásról, felülvizsgálatról vagy oktatásról."
   },
   {
     step: 4,
-    icon: CreditCardIcon,
-    title: "Átadás, Fizetés és Utánkövetés",
-    description: "A munka sikeres teljesítése és átadása után történik a díjazás. A kapcsolatunk itt nem ér véget; igény esetén további támogatást és utánkövetést biztosítunk, hogy a biztonság hosszú távon is fenntartható legyen."
+    icon: CheckBadgeIcon,
+    title: "Átadás és utánkövetés",
+    description: "A munka sikeres teljesítése és átadása után történik a díjazás. A kapcsolatunk itt nem ér véget, ugyanis folyamatosan informálunk a későbbiekben az esetleges jogszabály módosításokról, illetve a rád vonatkozó módosításokról."
   }
 ];
 
@@ -106,10 +106,10 @@ const Folyamatunk = () => {
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
             <motion.header variants={itemVariants} className="mb-20">
               <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">
-                Az Ön Nyugalma, <span className={accentColor.text}>Lépésről Lépésre</span>.
+                így csináljuk mi, <span className={accentColor.text}>lépésről lépésre:</span>
               </h1>
               <p className="text-2xl text-slate-600 leading-snug">
-                Egy átlátható és kiszámítható folyamat, amely a kapcsolatfelvételtől a hosszú távú partnerségig végigkíséri Önt a biztonságos működés felé vezető úton.
+                A legfontosabb az átláthatóság, ezt vagyunk hivatottak biztosítani, és folyamatosan tájékoztatni téged, anélkül hogy ezt kérned kellene.
               </p>
             </motion.header>
 
@@ -128,53 +128,21 @@ const Folyamatunk = () => {
                 </div>
             </main>
 
-            <motion.section variants={itemVariants} className="w-full mt-28">
-                <div className="text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-800 mb-12">
-                        Miért Működik Ez a Folyamat?
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="text-center p-6">
-                            <CheckBadgeIcon className={`w-12 h-12 mx-auto mb-4 ${accentColor.text}`} />
-                            <h3 className="text-2xl font-bold text-slate-800 mb-2">Átláthatóság</h3>
-                            <p className="text-slate-600">Minden lépésről tudni fog. Nincsenek rejtett költségek vagy meglepetések, csak tiszta, érthető kommunikáció.</p>
-                        </div>
-                        <div className="text-center p-6">
-                            <CheckBadgeIcon className={`w-12 h-12 mx-auto mb-4 ${accentColor.text}`} />
-                            <h3 className="text-2xl font-bold text-slate-800 mb-2">Hatékonyság</h3>
-                            <p className="text-slate-600">A letisztult folyamatunknak köszönhetően időt és energiát spórolunk Önnek, hogy a vállalkozásával foglalkozhasson.</p>
-                        </div>
-                        <div className="text-center p-6">
-                            <CheckBadgeIcon className={`w-12 h-12 mx-auto mb-4 ${accentColor.text}`} />
-                            <h3 className="text-2xl font-bold text-slate-800 mb-2">Partnerség</h3>
-                            <p className="text-slate-600">Nem csak egy szolgáltatást nyújtunk, hanem egy hosszú távú, megbízható partnerséget, amire mindig számíthat.</p>
-                        </div>
-                    </div>
-                </div>
-            </motion.section>
+            {/* A "Miért Működik Ez a Folyamat?" szekció eltávolítva a kérésedre */}
 
             <motion.footer variants={itemVariants} className="w-full mt-24 text-center border-t border-slate-200 pt-16">
               <h3 className="text-3xl font-bold text-slate-800 mb-4">Indítsuk el a közös munkát!</h3>
               <p className="text-slate-600 text-lg mb-8">Az első lépés egy ingyenes konzultáció. Vegye fel velünk a kapcsolatot még ma!</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/">
-                  <motion.div
-                    className="w-full sm:w-auto text-center font-semibold py-3 px-8 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors cursor-pointer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <ArrowLeftIcon className="w-5 h-5 inline-block mr-2" />
-                    Vissza a főoldalra
-                  </motion.div>
-                </Link>
-                <Link href="https://calendly.com/">
+                {/* A "Vissza a főoldalra" gomb eltávolítva a kérésedre */}
+                <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
                   <motion.div
                     className={`w-full sm:w-auto text-center font-bold py-3 px-8 rounded-xl bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg shadow-cyan-500/30 cursor-pointer`}
                     whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <CalendarDaysIcon className="w-5 h-5 inline-block mr-2" />
-                    Időpontfoglalás
+                    Konzultációt foglalok egy szakemberrel
                   </motion.div>
                 </Link>
               </div>
