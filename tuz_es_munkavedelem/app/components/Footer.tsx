@@ -185,7 +185,7 @@ const Footer: React.FC = () => {
                     className="flex items-center p-2 -ml-2 rounded-lg transition-colors duration-200 hover:bg-white/5 hover:text-white"
                 >
                   <PhoneIcon className="w-5 h-5 mr-3 text-cyan-400" />
-                  <span className="whitespace-nowrap">+36/302722571</span>
+                  <span className="whitespace-nowrap">+36 30 272 2571</span>
                 </a>
                 <div className="flex items-center p-2 -ml-2">
                   <BuildingOfficeIcon className="w-5 h-5 mr-3 text-cyan-400" />
@@ -215,12 +215,15 @@ const Footer: React.FC = () => {
           </div>
 
           <div
-            className="border-t border-slate-700/60 pt-8 mt-12 text-center text-xs text-slate-500"
+            className="border-t border-slate-700/60 pt-8 mt-12 text-center text-sm text-slate-300"
           >
             <p>&copy; {new Date().getFullYear()} Trident Shield Group Kft. Minden jog fenntartva.</p>
-            <div className="mt-2 flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-4">
-              <Link href="/adatvedelmi-nyilatkozat" className="hover:text-white transition-colors duration-200">Adatvédelmi Nyilatkozat</Link>
-              <Link href="/aszf" className="hover:text-white transition-colors duration-200">Általános Szerződési Feltételek</Link>
+            <div className="mt-4 flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-4">
+              <Link href="/adatszabalyzat" className="hover:text-white transition-colors duration-200">Adatkezelési Szabályzat</Link>
+              <Link href="/adattaj" className="hover:text-white transition-colors duration-200">Adatkezelési Tájékoztató</Link>
+              <Link href="/impresszum" className="hover:text-white transition-colors duration-200">Impresszum</Link>
+              <Link href="/aszf" className="hover:text-white transition-colors duration-200">Általános Szerzői Feltételek</Link>
+
             </div>
           </div>
         </div>
