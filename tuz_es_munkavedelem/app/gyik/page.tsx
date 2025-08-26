@@ -29,14 +29,14 @@ const faqData = [
           { 
             q: "Mikor kötelező tűzvédelmi szakembert alkalmaznod?",
             a: "Röviden, akkor van rá szükséged, ha a vállalkozásod az alábbi kategóriák valamelyikébe esik:<ul>" +
-               "<li><strong>Több mint 5 főt </strong> foglalkoztatsz (beleértve a családtagokat is, ha segítenek).</li>" +
+               "<li><strong>Több mint 5 főt</strong> foglalkoztatsz (beleértve a családtagokat is, ha segítenek).</li>" +
                "<li>Olyan helyet üzemeltetsz, aminek a befogadóképessége <strong>meghaladja az 500 főt</strong>, vagy van benne egy <strong>50 főnél nagyobb terem</strong>.</li>" +
-               "<li><strong>Tűz- vagy robbanásveszélyes</strong> anyagokkal <strong>dolgozol</strong>.</li>" +
-               "<li><strong>Speciális</strong> intézményt <strong>működtetsz</strong>, mint például <strong>iskola, óvoda, kórház, idősotthon, szálloda vagy irodaház</strong>.</li>" +
+               "<li><strong>Tűz- vagy robbanásveszélyes</strong> anyagokkal dolgozol.</li>" +
+               "<li><strong>Speciális</strong> intézményt működtetsz, mint például <strong>iskola, óvoda, kórház, idősotthon, szálloda vagy irodaház</strong>.</li>" +
                "</ul>"
           },
           
-            { q: "Pontosan mit csinál egy tűzvédelmi szakember?", a: "Lényegében leveszi a válladról a tűzvédelemmel kapcsolatos terheket és felelősséget. A főbb feladatai:<ul><li>Elkészíti és frissen tartja a <strong>Tűzvédelmi Szabályzatodat</strong> és a <strong>Tűzriadó Tervet</strong>.</li><li>Megtartja a munkavállalóidnak a <strong>kötelező éves tűzvédelmi oktatást</strong>.</li><li>Tartja a kapcsolatot a <strong>hatósággal</strong> (katasztrófavédelem).</li><li>Segít neked megelőzni a <strong>bírságokat</strong> és – ami a legfontosabb – a valódi tűzeseteket.</li></ul>" },
+            { q: "Pontosan mit csinál egy tűzvédelmi szakember?", a: "Lényegében leveszi a válladról a tűzvédelemmel kapcsolatos terheket és felelősséget. A főbb feladatai:<ul><li>Elkészíti és frissen tartja a <strong>Tűzvédelmi Szabályzatodat</strong> és a Tűzriadó Tervet.</li><li>Megtartja a <strong>munkavállalóidnak</strong> a <strong>kötelező éves tűzvédelmi oktatást</strong>.</li><li>Tartja a kapcsolatot a <strong>hatósággal</strong> (katasztrófavédelem).</li><li>Segít neked megelőzni a <strong>bírságokat</strong> és – ami a legfontosabb – a valódi tűzeseteket.</li></ul>" },
             { q: "Milyen jogszabályban találhatóak a Tűzvédelmi követelmények?", a: "Ha érdekel a pontos háttér, ezt a két jogszabályt keresd:<ul><li><strong>A tűz elleni védekezésről szóló 1996. évi XXXI. törvény</strong>.</li><li><strong>A tűzvédelmi szakemberek foglalkoztatásáról szóló 9/2015. (III. 25.) BM rendelet</strong>.</li></ul>" },
             { q: "Kötelező a munkahelyi tűzvédelmi oktatás?", a: "Igen, a törvény szerint <strong>minden munkavállaló számára kötelező évente legalább egyszer</strong> részt venni tűzvédelmi oktatáson. Az oktatás célja, hogy pontosan tudd, mit kell tenned vészhelyzetben az adott épületben:<ul><li><strong>Hol vannak a menekülési útvonalak?</strong></li><li><strong>Hol találod a tűzoltó készülékeket és a fali tűzcsapokat?</strong></li><li><strong>Ki a menekülési csoportvezető az adott területen?</strong></li><li><strong>Hogyan tudod áramtalanítani a gépeket?</strong></li></ul>Egy éles helyzetben ezek az információk életeket menthetnek." },
             { q: "Miért kezd el sípolni a füstérzékelő, ha nincs is füst?", a: "A legtöbb esetben a rövid, szabályos időközönként hallható csipogás az <strong>elem merülését jelzi</strong>. Ez a készülék figyelmeztetése, hogy cseréld ki az elemet, mielőtt teljesen lemerülne és működésképtelenné válna. Más okok is lehetnek, például:<ul><li><strong>Pára vagy gőz:</strong> A fürdőszobából kiáramló forró gőz vagy a konyhai pára is beindíthatja.</li><li><strong>Por:</strong> Ha a készülék érzékelő kamrája poros, az is okozhat téves riasztást. Érdemes évente egyszer óvatosan kiporszívózni.</li></ul>" },
@@ -46,22 +46,22 @@ const faqData = [
         category: "Munkavédelem",
         icon: FaHardHat,
         questions: [
-            { q: "Miért kötelező a kockázatértékelés?", a: "Azért, mert a <strong>munkavédelmi törvények előírják</strong>. Neked, mint munkáltatónak, jogi kötelességed gondoskodni a dolgozóid biztonságáról. Ha rendben van a kockázatértékelés, nemcsak a törvényi megfelelést biztosítod, hanem <strong>csökkented a munkahelyi balesetek és megbetegedések esélyét</strong> is." },
+            { q: "Miért kötelező a kockázatértékelés?", a: "Azért, mert a <strong>munkavédelmi törvények előírják</strong>. Neked, mint munkáltatónak, jogi kötelességed gondoskodni a <strong>dolgozóid</strong> biztonságáról. Ha rendben van a kockázatértékelés, nemcsak a törvényi megfelelést <strong>biztosítod</strong>, hanem <strong>csökkented a munkahelyi balesetek és megbetegedések esélyét</strong> is." },
             { q: "Minden munkavállalónak kötelező az orvosi alkalmassági vizsgálat?", a: "<strong>Igen, kötelező</strong>. Munkába állás előtt minden munkavállalónak részt kell vennie előzetes orvosi alkalmassági vizsgálaton, hogy kiderüljön, végezheti-e biztonságosan a munkáját." },
             { q: "Mikor kell orvosi vizsgálatra menni?", a: "<ul><li><strong>Munkába állás előtt:</strong> mindig kötelező.</li><li><strong>Időszakosan:</strong> a munkakör és a kockázatok alapján meghatározott időközönként (pl. évente vagy 2-3 évente).</li><li><strong>Rendkívüli esetben:</strong> ha a munkavállaló egészségi állapota megváltozik, vagy a munkakörülmények indokolják.</li></ul>" },
-            { q: "Mi a teendő munkabaleset esetén?", a: "Ha munkabaleset történik, a legfontosabb, hogy <strong>azonnal gondoskodj a sérült ellátásáról</strong> – ha kell, hívj mentőt. Ezután a következőket kell megtenni:<ul><li><strong>Elsősegély biztosítása</strong> – ha szükséges, azonnal.</li><li><strong>A baleset jelentése</strong> – a sérültnek vagy a szemtanúnak jeleznie kell a közvetlen vezetőnek.</li><li><strong>A helyszín biztosítása</strong> – lehetőség szerint ne változtasd meg a baleset körülményeit, amíg a kivizsgálás meg nem történik.</li><li><strong>Baleseti jegyzőkönyv készítése</strong> – a munkáltató feladata, minden munkabalesetet ki kell vizsgálni és dokumentálni.</li><li><strong>Hatósági bejelentés</strong> – ha a baleset súlyos (pl. halálos, több napos munkaképtelenséget okoz), kötelező az illetékes hatóság felé is jelenteni.</li></ul>" },
+            { q: "Mi a teendő munkabaleset esetén?", a: "Ha munkabaleset történik, a legfontosabb, hogy <strong>azonnal gondoskodj a sérült ellátásáról</strong> – ha kell, hívj mentőt. Ezután a következőket kell megtenni:<ul><li><strong>1. Elsősegély biztosítása</strong> – ha szükséges, azonnal.</li><li><strong>2. A baleset jelentése</strong> – a sérültnek vagy a szemtanúnak jeleznie kell a közvetlen vezetőnek.</li><li><strong>3. A helyszín biztosítása</strong> – lehetőség szerint ne változtasd meg a baleset körülményeit, amíg a kivizsgálás meg nem történik.</li><li><strong>4. Baleseti jegyzőkönyv készítése</strong> – a munkáltató feladata, minden munkabalesetet ki kell vizsgálni és dokumentálni.</li><li><strong>5. Hatósági bejelentés</strong> – ha a baleset súlyos (pl. halálos, több napos munkaképtelenséget okoz), kötelező az illetékes hatóság felé is jelenteni.</li></ul>" },
             { q: "Mikortól kell egy cégnek a munkavédelem?", a: "A munkavédelem már az <strong>első munkavállaló belépésétől kezdve kötelező</strong>. Tehát ha egy cég alkalmazásban tart akár csak egy embert, onnantól gondoskodnia kell a munkavédelmi előírások betartásáról." },
             { q: "Ki kötelezi a munkavédelmet?", a: "A munkavédelmet a <strong>munkavédelmi törvény (1993. évi XCIII. törvény a munkavédelemről)</strong> írja elő. Ez a jogszabály határozza meg, milyen kötelezettségeid vannak munkáltatóként, és milyen jogai vannak a munkavállalóknak a biztonságos munkavégzéshez. A törvény betartását a <strong>munkavédelmi hatóság</strong> (jelenleg a Kormányhivatalok Munkavédelmi és Munkaügyi Ellenőrzési Osztályai) ellenőrzi. Ha hiányosságot találnak, bírságot szabhatnak ki, vagy akár le is állíthatják a munkát." },
             { q: "Ki készítheti el a kockázatértékelést?", a: "<strong>Csak olyan szakember</strong>, aki rendelkezik a megfelelő munkavédelmi végzettséggel (pl. munkavédelmi technikus, mérnök). Te saját magad nem készítheted el, ha nincs hozzá képesítésed – ez hatósági előírás." },
             { q: "Milyen gyakran kell frissíteni a kockázatértékelést?", a: "Általában <strong>3-5 évente</strong>, de ha a munkahelyen változás történik (pl. új gép, új technológia, munkabaleset), akkor <strong>azonnal frissíteni kell</strong>." },
-            { q: "Mi az a Munkahelyi Szabályzat?", a: "A Munkahelyi Szabályzat (vagy más néven Munkavédelmi Szabályzat) egy belső dokumentum, ami rögzíti a cég munkavédelmi előírásait, szabályait és eljárásait. Tulajdonképpen a munkavédelmi törvény gyakorlati „fordítása” a te cégedre szabva. Mit tartalmaz?<ul><li><strong>a munkahelyi veszélyek és kockázatok ismertetését,</strong></li><li><strong>a védőfelszerelések használatának előírásait,</strong></li><li><strong>a munkavállalók és a munkáltató feladatait, felelősségét,</strong></li><li><strong>az oktatás, ellenőrzés és balesetkezelés rendjét.</strong></li></ul>" },
+            { q: "Mi az a Munkahelyi Szabályzat?", a: "A Munkahelyi Szabályzat (vagy más néven Munkavédelmi Szabályzat) egy belső dokumentum, ami rögzíti a cég munkavédelmi előírásait, szabályait és eljárásait. Tulajdonképpen a munkavédelmi törvény gyakorlati „fordítása” a te cégedre szabva.<ul><li><strong>a munkahelyi veszélyek és kockázatok ismertetését,</strong></li><li><strong>a védőfelszerelések használatának előírásait,</strong></li><li><strong>a munkavállalók és a munkáltató feladatait, felelősségét,</strong></li><li><strong>az oktatás, ellenőrzés és balesetkezelés rendjét.</strong></li></ul>" },
         ]
     },
     { 
         category: "HACCP",
         icon: FaUtensils,
         questions: [
-            { q: "Kötelező a HACCP minden cégnek?", a: "<strong>Igen</strong>, minden olyan vállalkozásnak, ami élelmiszerrel foglalkozik – a termeléstől a forgalmazáson át a vendéglátásig – kötelező HACCP rendszert működtetnie. Ez jogszabályi előírás az EU-ban és Magyarországon is." },
+            { q: "Kötelező a HACCP minden cégnek?", a: "<strong>Igen</strong>, minden olyan vállalkozásnak, ami élelmiszerrel foglalkozik (pl. étterem, pékség, büfé, kávézó, élelmiszerbolt), rendelkeznie kell HACCP-vel. Ez jogszabályi előírás az EU-ban és Magyarországon is." },
             { q: "Mit tartalmaz egy HACCP dokumentáció?", a: "<ul><li><strong>a technológiai folyamatok leírását,</strong></li><li><strong>a lehetséges veszélyek elemzését,</strong></li><li><strong>a kritikus ellenőrzési pontokat</strong> (pl. hőmérséklet, tisztaság),</li><li><strong>az ellenőrzési módszereket és felelősöket,</strong></li><li><strong>a naplózás és nyomonkövetés módját.</strong></li></ul>" },
             { q: "Milyen előnye van a HACCP-nek a cégem számára?", a: "<ul><li><strong>Biztonságosabb élelmiszert</strong> tudsz előállítani és forgalmazni.</li><li>Elkerülheted a <strong>hatósági bírságokat és bezárást</strong>.</li><li><strong>Növeli a vásárlók bizalmát</strong>, hiszen tudják, hogy szabályozott körülmények között dolgozol.</li><li>Segít rendszerezni a folyamatokat és <strong>csökkenti a hibák esélyét</strong>.</li></ul>" },
             { q: "Mi az a HACCP?", a: "A HACCP (Hazard Analysis and Critical Control Points) egy élelmiszerbiztonsági rendszer, ami segít <strong>azonosítani, megelőzni és ellenőrizni</strong> azokat a veszélyeket, amelyek az élelmiszer előállítása vagy forgalmazása során előfordulhatnak. (pl: fertőzések, gomba megtelepedése, vírusok elkerülése)" },
@@ -246,27 +246,17 @@ const GyakoriKerdesek = () => {
         </div>
 
         <motion.footer variants={itemVariants} className="max-w-4xl mx-auto mt-24 text-center border-t border-slate-200 pt-16">
-          <h3 className="text-3xl font-bold text-slate-800 mb-4">Nem találta a választ?</h3>
+          <h3 className="text-3xl font-bold text-slate-800 mb-4">Ha nem találod a választ vagy lenne még speciálisabb kérdésed, foglalj egy online megbeszélést!</h3>
           <p className="text-slate-600 text-lg mb-8">Szakértő csapatunk készen áll, hogy személyesen válaszoljon minden felmerülő kérdésére.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/">
-              <motion.div
-                className="w-full sm:w-auto text-center font-semibold py-3 px-8 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors cursor-pointer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ArrowLeftIcon className="w-5 h-5 inline-block mr-2" />
-                Vissza a főoldalra
-              </motion.div>
-            </Link>
-            <Link href="/kapcsolat">
+            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
               <motion.div
                 className={`w-full sm:w-auto text-center font-bold py-3 px-8 rounded-xl bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg shadow-cyan-500/30 cursor-pointer`}
                 whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
                 whileTap={{ scale: 0.95 }}
               >
-                <SparklesIcon className="w-5 h-5 inline-block mr-2" />
-                Konzultációt Kérek
+                <CalendarDaysIcon className="w-5 h-5 inline-block mr-2" />
+                Konzultációt kérek!
               </motion.div>
             </Link>
           </div>
