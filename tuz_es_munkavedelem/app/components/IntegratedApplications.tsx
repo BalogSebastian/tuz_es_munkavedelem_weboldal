@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, Variants, useInView, animate } from 'framer-motion';
 import {
@@ -234,7 +236,6 @@ const iconCardVariants = {
 };
 
 const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) => {
-    // Frissített servicesList a felhasználó kérésének megfelelően
     const servicesList = [
         { id: 'tuzvedelem', text: 'Tűzvédelem' },
         { id: 'munkavedelem', text: 'Munkavédelem' },
@@ -447,7 +448,7 @@ const IntegratedApplication: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [answers, setAnswers] = useState<AnswersState>(initialAnswersState);
     const [showFinalScreen, setShowFinalScreen] = useState(false);
-    const [finalScreenType, setFinalScreenType] = useState<'booking' | 'download' | null>(null); // Az új state
+    const [finalScreenType, setFinalScreenType] = useState<'booking' | 'download' | null>(null);
     const [summaryAnswers, setSummaryAnswers] = useState<AnswerSummary[]>([]);
     const [animationDirection, setAnimationDirection] = useState(1);
     const [questionFlow, setQuestionFlow] = useState<BaseQuestionConfig[]>([allQuestionsConfig.establishmentPhase]);
@@ -465,7 +466,7 @@ const IntegratedApplication: React.FC = () => {
         if (questionId === 'establishmentPhase') {
             if (value === 'HAS_COMPANY') { nextQuestions = [allQuestionsConfig.hasEmployees, allQuestionsConfig.hasPremise, allQuestionsConfig.dealsWithFood]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; }
             else if (value === 'OPENING_SOON') { nextQuestions = [allQuestionsConfig.openingSoonTimeline]; setQuestionFlow([allQuestionsConfig.establishmentPhase, ...nextQuestions]); setCurrentStep(c => c + 1); shouldAdvanceStep = false; }
-            else if (value === 'NO_COMPANY') { newFinalScreenType = 'download'; } // MÓDOSÍTÁS ITT
+            else if (value === 'NO_COMPANY') { newFinalScreenType = 'download'; }
         } else if (questionId === 'openingSoonTimeline') { newFinalScreenType = 'booking'; }
         else if (questionId === 'dealsWithFood') { newFinalScreenType = 'booking'; }
         if (newFinalScreenType) { setFinalScreenType(newFinalScreenType); setShowFinalScreen(true); }
@@ -492,38 +493,18 @@ const IntegratedApplication: React.FC = () => {
               @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
               .gradient-text { background: linear-gradient(to right, #06b6d4, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
               .gradient-bg { background: linear-gradient(to right, #06b6d4, #2dd4bf); }
-              .modal-grid-bg { background-color: #1a202c; background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px); background-size: 3rem 3rem; }
+              .modal-grid-bg { background-color: #1a202c; background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px); background-size: 4rem 4rem; }
               input[type="checkbox"] { flex-shrink: 0; transition: all 0.2s ease-in-out; }
               input[type="checkbox"]:checked { border-color: #03BABE; background-color: #03BABE; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); background-size: 100%; background-position: center; background-repeat: no-repeat; }
                 .cta-glow-red {
-                    /* Sokat megemelt glowing effektus - Mivel ez a stílus a HeaderHero-ban is megvan,
-                       és a CSS beágyazás csak a Quiz componentre érvényes, a biztonság kedvéért itt is beillesztem. */
                     box-shadow: 0 0 30px ${RED_ACCENT_COLOR.baseHex}80, 0 0 60px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
                 }
             `}</style>
 
             <div
-              style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '3rem 3rem' }}
+              style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '4rem 4rem' }}
               className="font-['Poppins',_sans-serif] min-h-screen relative"
             >
-                {/* --- MÓDOSÍTÁS: Az új, dinamikus és elegáns hullám a kéréseknek megfelelően --- */}
-                <div
-                  className="absolute top-0 left-0 w-full overflow-hidden leading-[0]"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1440 160"
-                        preserveAspectRatio="none"
-                        className="relative block w-full h-[120px] sm:h-[150px]"
-                    >
-                        <path
-                           d="M0,32 C120,80 240,112 360,112 C480,112 600,80 720,64 C840,48 960,80 1080,96 C1200,112 1320,96 1440,80 L1440,0 L0,0 L0,32 Z"
-                           fill="#0f172a"
-                        ></path>
-                    </svg>
-                </div>
-
-                {/* IoArrowUndoSharp nyilak elhelyezése a hullám *fölött* */}
                 <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
                     <div
                         className="absolute w-36 h-36 text-cyan-500"
@@ -533,7 +514,6 @@ const IntegratedApplication: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Section 1: Quiz */}
                 <motion.section
                   ref={preConsultationSectionRef}
                   className="relative pt-28 sm:pt-40 pb-24 sm:pb-32 overflow-hidden"
@@ -619,7 +599,6 @@ const IntegratedApplication: React.FC = () => {
                     </div>
                 </motion.section>
 
-                {/* ÚJ: FaArrowTrendDown nyíl a szekciók közötti résben */}
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
                         top: '45%',
@@ -630,7 +609,6 @@ const IntegratedApplication: React.FC = () => {
                     <IoArrowRedo className="w-full h-full" />
                 </div>
 
-                {/* Section 2: Intro (Erről jó ha tudsz) */}
                 <motion.section
                     ref={introSectionRef}
                     id="bemutatkozas"
@@ -673,13 +651,11 @@ const IntegratedApplication: React.FC = () => {
                         </div>
                         <motion.div variants={introItemVariants} className="text-center mt-20">
                             <p className="mb-6 text-xl text-slate-600">Beszélj egy hozzáértő szakemberrel ! <span className={accentColor.text}></span></p>
-                            {/* AZ ÁTALAKÍTOTT CTA GOMB BLOKK */}
                             <motion.div
                                 variants={ANIMATION_VARIANTS.item}
                             >
                                 <motion.button
                                     onClick={() => setIsModalOpen(true)}
-                                    // Piros CTA gomb glow effektek beillesztése
                                     whileHover={{ scale: 1.05, boxShadow: `0 0 45px ${RED_ACCENT_COLOR.baseHex}80, 0 0 90px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 30px ${RED_ACCENT_COLOR.baseHex}40` }}
                                     whileTap={{ scale: 0.98, boxShadow: `0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20` }}
                                     className={`
@@ -693,24 +669,9 @@ const IntegratedApplication: React.FC = () => {
                                     Foglalj egy ingyenes konzultiót!
                                 </motion.button>
                             </motion.div>
-                            {/* VÉGE AZ ÁTALAKÍTOTT CTA GOMB BLOKKNAK */}
                         </motion.div>
                     </div>
                 </motion.section>
-
-                {/* === HOZZÁADVA: A FEHÉR, HULLÁMOS ELVÁLASZTÓ === */}
-                <div
-                  className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1200 120"
-                        preserveAspectRatio="none"
-                        className="relative block w-full h-[150px] transform rotate-180"
-                    >
-                        <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.3-37.5 74.18-4.82 148.64 16.54 221.58 35.85 72.94 19.31 148.8 31.54 223.32 23.33 74.52-8.21 146.43-39.22 215.1-66.21L1200 0H0z" fill="#ffffff"></path>
-                    </svg>
-                </div>
             </div>
             <ServicesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>

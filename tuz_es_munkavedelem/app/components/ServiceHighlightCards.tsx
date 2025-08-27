@@ -12,7 +12,7 @@ import { FaHelmetSafety } from 'react-icons/fa6';
 
 // --- CTA KONSTANSOK ---
 const RED_ACCENT_COLOR = {
-    baseHex: '#DC2626', // Tailwind red-600
+    baseHex: '#DC2626',
     bg: 'bg-red-600',
     textOnAccent: 'text-white',
     ring: 'focus-visible:ring-red-500',
@@ -165,10 +165,15 @@ const ServiceHighlightCards: React.FC = () => {
         .cta-button:active {
             transform: scale(0.98);
         }
+        .grid-pattern-light {
+            background-image: linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px),
+                              linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px);
+            background-size: 4rem 4rem;
+        }
       `}</style>
 
       <div className="relative font-['Poppins',_sans-serif]">
-        <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden pt-28 sm:pt-40">
+        <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden pt-28 sm:pt-40 relative grid-pattern-light">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative text-center mb-16 lg:mb-20">
               <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">

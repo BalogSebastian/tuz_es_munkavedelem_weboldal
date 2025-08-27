@@ -6,9 +6,6 @@ import { motion, useInView, useAnimationControls, useMotionValue, useTransform, 
 import { StarIcon } from '@heroicons/react/24/solid';
 import { MdEmojiPeople } from 'react-icons/md';
 
-// --- StylizedQuoteIcon ELTÁVOLÍTVA ---
-// Ez a komponens már nem lesz használva, mivel az MdEmojiPeople váltja fel.
-
 const accentColor = {
   starActive: 'text-cyan-400',
   quoteMark: 'text-cyan-200/10',
@@ -26,7 +23,6 @@ const testimonials = [
     { id: 4, name: "Horváth Mária", company: "Szolgáltató Centrum", quote: "A kockázatértékelésük rendkívül alapos volt, olyan dolgokra is felhívták a figyelmünket, amikre nem is gondoltunk.", rating: 5 },
     { id: 5, name: "Fehér Petra", company: "Innovatív Zrt.", quote: "Modern szemlélet, kiváló szakértelem. Mindenkinek csak ajánlani tudom őket, aki komolyan veszi a biztonságot.", rating: 5 },
     { id: 6, name: "Kovács István", company: "Építőipari Kft.", quote: "Már több projekten dolgoztunk együtt, mindig megbízható és profi partnerek voltak. Köszönjük a munkájukat!", rating: 5 },
-    // Hozzáadott extra értékelések a végtelenítéshez
     { id: 7, name: "Tóth Gábor", company: "Logisztika Kft.", quote: "A tűzvédelmi felülvizsgálat rendkívül alapos volt, mindenre kiterjedő és érthető magyarázatokkal. Ajánlott!", rating: 5 },
     { id: 8, name: "Varga Judit", company: "Élelmiszerbolt", quote: "A HACCP rendszer bevezetése simán ment, köszönhetően a szakértelemnek és a folyamatos támogatásnak. Remek munka!", rating: 5 },
     { id: 9, name: "Molnár Dániel", company: "Építőanyag Kereskedés", quote: "A munkavédelmi dokumentáció rendezése gyorsan és hatékonyan történt. Jelentős terhet vettek le a vállunkról.", rating: 5 },
@@ -98,8 +94,6 @@ const TestimonialSlider: React.FC = () => {
     
     const combinedTestimonials = [...testimonials, ...testimonials];
     
-    const itemWidth = 100 / (combinedTestimonials.length / 2);
-    
     const animationDuration = combinedTestimonials.length * 0.75;
 
     useEffect(() => {
@@ -164,21 +158,6 @@ const TestimonialSlider: React.FC = () => {
                             ))}
                         </motion.div>
                     </motion.div>
-                </div>
-
-                {/* --- HOZZÁADVA: ALSÓ SÖTÉT HULLÁM --- */}
-                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1200 120"
-                        preserveAspectRatio="none"
-                        className="relative block w-full h-[80px] sm:h-[120px]"
-                    >
-                        <path
-                            d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
-                            fill="#0f172a"
-                        ></path>
-                    </svg>
                 </div>
             </section>
         </>
