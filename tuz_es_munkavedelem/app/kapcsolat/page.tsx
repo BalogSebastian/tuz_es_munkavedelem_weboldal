@@ -33,45 +33,6 @@ const itemVariants = {
 };
 
 const Kapcsolat = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-
-    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setError(null);
-
-        try {
-            const response = await fetch('/api/save-contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
-            });
-
-            if (!response.ok) {
-                throw new Error('Hiba történt az üzenet mentésekor.');
-            }
-            
-            setIsSubmitted(true);
-            setTimeout(() => {
-                setIsSubmitted(false);
-                setFormData({ name: '', email: '', phone: '', message: '' });
-            }, 5000);
-
-        } catch (err: any) {
-            console.error('API Error:', err);
-            setError(err.message || 'Ismeretlen hiba történt.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     return (
         <div className="min-h-screen bg-slate-50 font-['Poppins',_sans-serif]">
             <motion.div
@@ -103,64 +64,28 @@ const Kapcsolat = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
                     <main className="lg:col-span-3">
                         <motion.div variants={itemVariants}>
-                            <AnimatePresence mode="wait">
-                                {isSubmitted ? (
-                                    <motion.div
-                                        key="success"
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200 h-full flex flex-col justify-center items-center text-center min-h-[600px]"
-                                    >
-                                        <CheckCircleIcon className="w-20 h-20 text-green-500 mb-4" />
-                                        <h3 className="text-3xl font-bold text-slate-800">Üzenet elküldve!</h3>
-                                        <p className="text-slate-600 text-lg mt-2">Köszönjük a megkeresésed! Hamarosan felvesszük veled a kapcsolatot.</p>
-                                    </motion.div>
-                                ) : (
-                                    <motion.form
-                                        key="form"
-                                        onSubmit={handleSubmit}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200 space-y-6"
-                                    >
-                                        <h2 className="text-3xl font-bold text-slate-800 mb-4">Írj üzenetet, ha kérdésed van!</h2>
-                                        <div>
-                                            <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-1">Neved</label>
-                                            <input type="text" name="name" id="name" required onChange={handleFormChange} className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all text-slate-800" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-1">E-mail címed</label>
-                                            <input type="email" name="email" id="email" required onChange={handleFormChange} className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all text-slate-800" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="phone" className="block text-sm font-bold text-slate-700 mb-1">Telefonszám (opcionális)</label>
-                                            <input type="tel" name="phone" id="phone" onChange={handleFormChange} className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all text-slate-800" />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="message" className="block text-sm font-bold text-slate-700 mb-1">Üzenet</label>
-                                            <textarea name="message" id="message" rows={4} required onChange={handleFormChange} className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all text-slate-800"></textarea>
-                                        </div>
-                                        {error && (
-                                            <motion.p 
-                                                className="text-red-500 text-sm text-center"
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                            >{error}</motion.p>
-                                        )}
-                                        <motion.button
-                                            type="submit"
-                                            disabled={isLoading}
-                                            className={`w-full font-bold py-4 px-8 rounded-xl text-lg text-white bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} shadow-lg shadow-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed`}
-                                            whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            <PaperAirplaneIcon className="w-6 h-6 inline-block mr-2" />
-                                            {isLoading ? 'Küldés...' : 'Üzenet küldése'}
-                                        </motion.button>
-                                    </motion.form>
-                                )}
-                            </AnimatePresence>
+                            <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200 space-y-6 flex flex-col items-center justify-center min-h-[600px]">
+                                <h2 className="text-3xl font-bold text-slate-800 mb-4">Foglalj időpontot egy ingyenes konzultációra!</h2>
+                                <iframe 
+                                    src="https://app.minup.io/embed/munkavedelmiszaki/service/46358?canStartPayment=true" 
+                                    style={{ width: '750px', height: '590px' }} 
+                                    frameBorder="0"
+                                ></iframe>
+                                <script 
+                                    type="text/javascript" 
+                                    dangerouslySetInnerHTML={{
+                                        __html: `
+                                            window.addEventListener("message", (event) => {
+                                                if (event.origin !== "https://app.minup.io") return;
+                                                const data = event.data;
+                                                if (data.type === "redirect_to_payment") {
+                                                    window.location.href = data.url;
+                                                }
+                                            });
+                                        `,
+                                    }}
+                                />
+                            </div>
                         </motion.div>
                     </main>
                     <aside className="lg:col-span-2 space-y-8">

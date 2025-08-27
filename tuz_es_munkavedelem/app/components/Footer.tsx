@@ -193,24 +193,6 @@ const Footer: React.FC = () => {
                 </div>
               </address>
 
-              <div className="mt-8">
-                 <Link href="/#ajanlatkeres">
-                    <button
-                        className={`
-                            relative inline-flex items-center justify-center w-full
-                            ${accentColor.gradient} text-white
-                            font-bold py-3 px-8 rounded-xl text-lg
-                            shadow-inner shadow-black/20
-                            transition-all duration-300 ease-in-out
-                            focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900
-                            hover:shadow-xl hover:shadow-cyan-500/40
-                        `}
-                    >
-                        <SparklesIcon className="w-6 h-6 mr-3 text-yellow-300" />
-                        Ingyenes Ajánlatkérés
-                    </button>
-                 </Link>
-              </div>
             </div>
           </div>
 
