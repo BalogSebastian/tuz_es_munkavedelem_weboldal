@@ -189,8 +189,11 @@ const ServiceHighlightCards: React.FC = () => {
             </div>
 
             <div className="text-center mt-16 lg:mt-20">
+              <Link 
+                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+                passHref
+              >
                 <button
-                    onClick={() => setIsModalOpen(true)}
                     className={`
                         inline-flex items-center gap-3 
                         ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} 
@@ -201,6 +204,7 @@ const ServiceHighlightCards: React.FC = () => {
                 >
                     Foglalj egy ingyenes konzultációt!
                 </button>
+              </Link>
             </div>
           </div>
         </section>

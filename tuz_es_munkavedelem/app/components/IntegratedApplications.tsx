@@ -310,19 +310,19 @@ const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                                         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
                                             <UserIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
                                         </div>
-                                        <input type="text" name="name" value={formData.name} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Teljes Név*" required />
+                                        <input type="text" name="name" value={formData.name} onChange={handleFormChange} className="block w-full text-gray-500 pl-10 text-black pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Teljes Név*" required />
                                     </div>
                                     <div className="relative group">
                                         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
                                             <EnvelopeIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
                                         </div>
-                                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Email cím*" required />
+                                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} className="block w-full text-gray-500  pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Email cím*" required />
                                     </div>
                                     <div className="relative group">
                                         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
                                             <PhoneIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
                                         </div>
-                                        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Telefonszám" />
+                                        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} className="block w-full text-gray-500  pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Telefonszám" />
                                     </div>
                                 </div>
                                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-10">
@@ -420,19 +420,19 @@ const DownloadForm = ({ onDownloadCompleted }: { onDownloadCompleted: () => void
         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
             <UserIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
         </div>
-        <input type="text" name="name" value={formData.name} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Teljes Név*" required />
+        <input type="text" name="name" value={formData.name} onChange={handleFormChange} className="block text-gray-500 w-full pl-10 pr-3 py-3 border font-black border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Teljes Név*" required />
       </div>
       <div className="relative group">
         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
             <EnvelopeIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
         </div>
-        <input type="email" name="email" value={formData.email} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Email cím*" required />
+        <input type="email" name="email" value={formData.email} onChange={handleFormChange} className="block text-gray-500 w-full pl-10 pr-3 py-3 border font-black border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Email cím*" required />
       </div>
       <div className="relative group">
         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
             <PhoneIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />
         </div>
-        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Telefonszám" />
+        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} className="block w-full text-gray-500 pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none  font-black focus:ring-2 focus:ring-cyan-500" placeholder="Telefonszám" />
       </div>
       <div className="text-center pt-4">
         <motion.button type="submit" disabled={isLoading} className={`inline-flex items-center gap-3 ${accentColor.bg} text-white font-bold py-4 px-10 rounded-xl text-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2 disabled:bg-cyan-300 disabled:cursor-not-allowed`} whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }} whileTap={{ scale: 0.98 }}>
@@ -474,7 +474,7 @@ const IntegratedApplication: React.FC = () => {
     };
 
     const resetForm = () => { setAnimationDirection(-1); setShowFinalScreen(false); setFinalScreenType(null); setTimeout(() => { setCurrentStep(0); setAnswers(initialAnswersState); setSummaryAnswers([]); setQuestionFlow([allQuestionsConfig.establishmentPhase]); }, 400); };
-    const handleBookConsultation = () => { window.location.href = 'https://calendly.com/tuzesmunkavedelem/60'; };
+    const handleBookConsultation = () => { window.location.href = 'https://app.minup.io/book/munkavedelmiszaki/service/46358'; };
     const currentQuestion = questionFlow[currentStep];
     const questionWrapperVariants: Variants = { enter: (dir: number) => ({ x: dir > 0 ? 80 : -80, opacity: 0 }), center: { x: 0, opacity: 1, transition: { duration: 0.5, ease: [0.21, 1.02, 0.73, 1] } }, exit: (dir: number) => ({ x: dir < 0 ? 80 : -80, opacity: 0, transition: { duration: 0.4, ease: [0.83, 0, 0.17, 1] } }) };
     const contentStaggerVariants: Variants = { center: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }, };

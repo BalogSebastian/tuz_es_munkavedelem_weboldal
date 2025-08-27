@@ -169,7 +169,7 @@ const CombinedSections: React.FC = () => {
                     </div>
                     <div className="text-center mt-10 lg:mt-12">
                         <Link
-                            href="/kapcsolat"
+                            href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
                             className={`
                                 inline-flex items-center
                                 ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
@@ -203,7 +203,7 @@ const CombinedSections: React.FC = () => {
                         </p>
                         <div>
                             <Link
-                                href="/kapcsolat"
+                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358                                "
                                 className={`
                                     inline-flex items-center gap-3
                                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}

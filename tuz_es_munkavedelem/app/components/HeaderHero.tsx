@@ -157,13 +157,19 @@ const HeaderHero = () => {
                               variants={ANIMATION_VARIANTS.item}
                           >
                               {/* Új CTA gomb, erősebb glowing effekttel */}
-                              <motion.button
-                                  whileHover={{ scale: 1.05, boxShadow: `0 0 45px ${RED_ACCENT_COLOR.baseHex}80, 0 0 90px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 30px ${RED_ACCENT_COLOR.baseHex}40` }}
-                                  whileTap={{ scale: 0.98, boxShadow: `0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20` }}
-                                  className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+                              <Link 
+                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+                                passHref
+                                className="inline-flex"
                               >
-                                  Foglald le ingyenes konzultációdat!
-                              </motion.button>
+                                <motion.button
+                                    whileHover={{ scale: 1.05, boxShadow: `0 0 45px ${RED_ACCENT_COLOR.baseHex}80, 0 0 90px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 30px ${RED_ACCENT_COLOR.baseHex}40` }}
+                                    whileTap={{ scale: 0.98, boxShadow: `0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20` }}
+                                    className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+                                >
+                                    Foglald le ingyenes konzultációdat!
+                                </motion.button>
+                              </Link>
                           </motion.div>
                            
                           {/* Új szöveg a CTA gomb alá */}
