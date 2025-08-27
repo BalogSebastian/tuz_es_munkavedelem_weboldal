@@ -12,7 +12,6 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon
 } from '@heroicons/react/24/solid';
-import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5';
 
 // --- SZÍNSÉMA ---
 const accentColor = {
@@ -35,8 +34,8 @@ const downloadableDocs = [
     { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Praktikus összefoglaló, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
     { id: 4, title: "Építkezési Munkavédelem", description: "Ellenőrző lista az építkezéseken betartandó legfontosabb munkavédelmi szabályokról.", fileName: "epitkezesi_ellenorzo_lista.pdf" },
     { id: 5, title: "HACCP Útmutató Vendéglátóhelyeknek", description: "Részletes útmutató az élelmiszer-biztonsági rendszer (HACCP) kiépítéséhez.", fileName: "vendeglatos_haccp_utmutato.pdf" },
-    { id: 6, title: "Veszélyes Anyagok Kezelése", description: "Információs anyag a veszélyes anyagok tárolásának és kezelésének szabályairól.", fileName: "veszelyes_anyagok_kezelesi_utmutato.pdf" },
-    { id: 7, title: "Tűzvédelmi Szabályzat Minta", description: "Letölthető és személyre szabható tűzvédelmi szabályzat minta kisebb vállalkozások számára.", fileName: "tuzvedelmi_szabalyzat_minta.pdf" },
+    { id: 6, "title": "Veszélyes Anyagok Kezelése", "description": "Információs anyag a veszélyes anyagok tárolásának és kezelésének szabályairól.", "fileName": "veszelyes_anyagok_kezelesi_utmutato.pdf" },
+    { id: 7, "title": "Tűzvédelmi Szabályzat Minta", "description": "Letölthető és személyre szabható tűzvédelmi szabályzat minta kisebb vállalkozások számára.", "fileName": "tuzvedelmi_szabalyzat_minta.pdf" },
     { id: 8, "title": "Munkabalesetek Kivizsgálása", "description": "Lépésről lépésre útmutató a munkabalesetek szakszerű kivizsgálásához és dokumentálásához.", "fileName": "munkabaleset_kivizsgalasi_protokoll.pdf" },
     { id: 9, "title": "Raktárak Munkavédelme", "description": "Gyakorlati tanácsok és előírások a biztonságos raktári munkavégzéshez.", "fileName": "raktari_munkavedelem_kisokos.pdf" },
     { id: 10, "title": "Elsősegélynyújtás a Munkahelyen", "description": "Azonnali teendők és alapvető elsősegélynyújtási ismeretek munkahelyi vészhelyzetek esetére.", "fileName": "elsosegelynyujtas_munkahelyen.pdf" }
@@ -59,7 +58,6 @@ interface DownloadCardProps {
 
 // --- LETÖLTŐ KÁRTYA KOMPONENS (Optimalizált, Lokális Állapotkezelés) ---
 const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownloadSubmit }) => {
-    // Az állapotot itt kezeljük, minimalizálva a szülő komponens újrarenderelését
     const [state, setState] = useState(initialState);
     const { formData, isSubmitted, isLoading, error } = state;
 
@@ -94,7 +92,6 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownlo
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-200/70 relative overflow-hidden h-full">
       <div className="relative w-full h-full">
-        {/* Alap nézet (űrlap) */}
         <div className={`p-6 sm:p-8 flex flex-col h-full transition-opacity duration-300 ${isSubmitted ? 'opacity-0' : 'opacity-100'}`}>
             <div className="flex-grow flex flex-col">
                 <div className="w-fit mx-auto mb-5">
@@ -136,7 +133,6 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownlo
                 </form>
             </div>
         </div>
-        {/* Sikeres küldés nézet */}
         <div className={`absolute top-0 left-0 w-full h-full p-6 sm:p-8 flex flex-col justify-center items-center text-center rounded-2xl ${accentColor.successBg} border border-green-200 transition-opacity duration-300 ${isSubmitted ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} >
             <CheckCircleIcon className={`w-20 h-20 ${accentColor.successText} mx-auto mb-4`} />
             <h4 className={`text-xl sm:text-2xl font-bold ${accentColor.successText} mb-2`}>Sikeres Letöltés!</h4>
@@ -147,7 +143,6 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownlo
   );
 }
 
-
 // --- FŐ KOMPONENS ---
 const DownloadableDocsSection: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -156,7 +151,6 @@ const DownloadableDocsSection: React.FC = () => {
 
     const initialFormData = { name: '', email: '', phone: '' };
 
-    // Ezt a függvényt adja át a Fő Komponens a kártyának
     const handleDownloadSubmit = useCallback(async (doc: typeof downloadableDocs[0], formData: FormDataState) => {
         const { title, fileName } = doc;
 
@@ -172,7 +166,6 @@ const DownloadableDocsSection: React.FC = () => {
                 throw new Error(errorData.message || 'Hiba történt a szerveren.');
             }
 
-            // Fájl letöltésének indítása
             const link = document.createElement('a');
             link.href = `/documents/${fileName}`;
             link.setAttribute('download', fileName);
@@ -226,51 +219,22 @@ const DownloadableDocsSection: React.FC = () => {
             .cta-grid-pattern {
                 background-image: linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px),
                                   linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px);
-                background-size: 3rem 3rem;
+                background-size: 4rem 4rem;
+                background-attachment: fixed;
+                background-position: 0  170px;
             }
         `}</style>
         <section
             className="pt-24 lg:pt-32 pb-24 lg:pb-32 font-['Poppins',_sans-serif] relative bg-white overflow-hidden cta-grid-pattern"
         >
-            <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1200 120"
-                    preserveAspectRatio="none"
-                    className="relative block w-full h-[100px] sm:h-[150px]"
-                >
-                    <path
-                        d="M0 0.52C534.61 5.92 642.14 17.51 770.83 50.45 889.04 79.52 1012.75 120 1200 120L1200 0 0 0Z"
-                        fill="#0f172a"
-                    ></path>
-                </svg>
-            </div>
-
-            <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none z-20">
-                <div
-                    className="absolute w-36 h-36 text-cyan-500"
-                    style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
-                >
-                    <IoArrowUndoSharp className="w-full h-full" />
-                </div>
-                <div
-                    className="absolute w-36 h-36 text-cyan-400"
-                    style={{ top: '180%', right: '10%', transform: 'translateY(-50%) rotate(150deg)' }}
-                >
-                    <IoArrowRedo className="w-full h-full" />
-                </div>
-            </div>
-
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="flex justify-center items-start gap-8 lg:gap-12">
                     <div
                     className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
                     >
                     <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
-                    {/* ITT A JAVÍTÁS: A képen látható főcím */}
                     <span className='text-cyan-500'>Töltsd le</span> <span className='text-black'>a számodra</span> leghasznosabb <span className='text-black'>anyagunkat!</span>
                     </h2>
-                    {/* ITT A JAVÍTÁS: A képen látható alcím */}
                     <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
                     Ezek az az anyagok jól jöhetnek ha még több információra van szükséged, hogy többet tudj meg, és elkerüld a büntetést.
                     </p>
@@ -310,20 +274,6 @@ const DownloadableDocsSection: React.FC = () => {
                         </button>
                     </div>
                 </div>
-            </div>
-
-            <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1200 120"
-                    preserveAspectRatio="none"
-                    className="relative block w-full h-[60px] sm:h-[90px]"
-                >
-                    <path
-                        d="M-0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 C749.20,150.00 850.00,-50.00 1200.00,49.98 L1200.00,120.00 L-0.00,120.00 Z"
-                        fill="#ffffff"
-                    ></path>
-                </svg>
             </div>
         </section>
         </>

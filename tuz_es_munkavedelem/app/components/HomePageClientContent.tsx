@@ -20,6 +20,7 @@ const Footer = dynamic(() => import('./Footer'), { ssr: false }); // A Footer is
 import HeaderHero from './HeaderHero'; // A HeaderHero valószínűleg nem ide tartozik majd, hanem a page.tsx-be
 import PreConsultationForm from './PreConsultationForm'; // A PreConsultationForm valószínűleg nem ide tartozik majd, hanem a page.tsx-be
 import IntegratedApplication from './IntegratedApplications';
+import CombinedSections from './Combined';
 
 export default function HomePageClientContent() {
   return (
@@ -28,9 +29,7 @@ export default function HomePageClientContent() {
       <ServiceHighlightCards />
       <StatsCounterSection />
       <DownloadableDocsSection />
-      <ProcessSteps />
-      <CallToActionSection />
-      <FaqAccordion/>
+      <CombinedSections/>
       <Footer />
     </>
   );

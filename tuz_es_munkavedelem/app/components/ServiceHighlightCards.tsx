@@ -7,7 +7,6 @@ import {
   BoltIcon as BoltIconOutline,
   ClipboardDocumentCheckIcon,
 } from '@heroicons/react/24/outline';
-import { IoArrowUndoSharp } from "react-icons/io5";
 import { FaHelmetSafety } from 'react-icons/fa6';
 
 
@@ -88,13 +87,12 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <div
-        className={`relative w-full h-full transition-transform duration-700 ease-in-out`} // Animáció átalakítása
+        className={`relative w-full h-full transition-transform duration-700 ease-in-out`}
         style={{
             transformStyle: 'preserve-3d',
             transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
-        {/* Kártya Előlapja */}
         <div
           className={`absolute w-full h-full bg-white rounded-2xl p-6 sm:p-8 pt-16 text-center flex flex-col ${cardShadowClass}`}
           style={{ backfaceVisibility: 'hidden' }}
@@ -116,7 +114,6 @@ const FlippableServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
           </div>
         </div>
 
-        {/* Kártya Hátlapja */}
         <div
           className={`absolute w-full h-full rounded-2xl shadow-xl p-6 sm:p-8 text-white flex flex-col justify-center items-center text-center bg-gradient-to-br ${service.gradientClasses}`}
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
@@ -171,19 +168,6 @@ const ServiceHighlightCards: React.FC = () => {
       `}</style>
 
       <div className="relative font-['Poppins',_sans-serif]">
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
-          
-        </div>
-        
-        <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
-            <div
-                className="absolute w-36 h-36 text-cyan-500" 
-                style={{ top: '60px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }} 
-            >
-                <IoArrowUndoSharp className="w-full h-full" />
-            </div>
-        </div>
-
         <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden pt-28 sm:pt-40">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative text-center mb-16 lg:mb-20">
