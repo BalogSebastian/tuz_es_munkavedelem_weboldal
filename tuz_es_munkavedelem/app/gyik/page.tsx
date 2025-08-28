@@ -26,20 +26,23 @@ const faqData = [
         category: "Tűzvédelem",
         icon: FaFire,
         questions: [
-          { 
-            q: "Mikor kötelező tűzvédelmi szakembert alkalmaznod?",
-            a: "Röviden, akkor van rá szükséged, ha a vállalkozásod az alábbi kategóriák valamelyikébe esik:<ul>" +
-               "<li><strong>Több mint 5 főt</strong> foglalkoztatsz (beleértve a családtagokat is, ha segítenek).</li>" +
-               "<li>Olyan helyet üzemeltetsz, aminek a befogadóképessége <strong>meghaladja az 500 főt</strong>, vagy van benne egy <strong>50 főnél nagyobb terem</strong>.</li>" +
-               "<li><strong>Tűz- vagy robbanásveszélyes</strong> anyagokkal dolgozol.</li>" +
-               "<li><strong>Speciális</strong> intézményt működtetsz, mint például <strong>iskola, óvoda, kórház, idősotthon, szálloda vagy irodaház</strong>.</li>" +
-               "</ul>"
-          },
+          { q: "Kell-e tűzvédelmi szabályzat, ha csak 3 alkalmazottam van?", a: "Igen, bizonyos esetekben kell. <strong>Ha a cég tűzveszélyes tevékenységet végez, vagy 50 főnél több ember tartózkodik rendszeresen az épületben, </strong>kötelező a szabályzat. Három alkalmazott esetén általában nem kell, de a tevékenység jellege ezt felülírhatja." },
+          { q: "Milyen esetben kötelező tűzriadó tervet készíteni?", a : "Tűzriadó tervet kell készíteni <strong>ha az épület befogadóképessége meghaladja az 50 főt,</strong> vagy ha <strong>veszélyes anyagokat tárolnak,</strong> illetve </strong> oktatási, egészségügyi, szórakoztató intézményekben. A terv célja, hogy vészhelyzetben mindenki tudja, hogyan kell elhagyni az épületet."},
+          { q: "Milyen gyakran kell tűzvédelmi oktatást tartani?", a: "A tűzvédelmi oktatás <strong>évente egyszer kötelező</strong> minden munkavállalónak. Új belépőknek <strong>belépéskor azonnal</strong> kell oktatást tartani. Ha a tevékenység vagy a munkakör megváltozik, akkor rendkívüli oktatás szükséges. Az oktatás célja, hogy minden dolgozó tisztában legyen a teendőkkel." },
+          { q: "Hol kell dokumentálni a tűzvédelmi oktatást?", a: "Az oktatásról <strong>írásos dokumentációt kell vezetni</strong>, amely tartalmazza az oktatás időpontját, a résztvevők nevét és aláírását, valamint az oktatást tartó személy nevét. Ezt a nyilvántartást a cégnek meg kell őriznie, mert az ellenőrzés során <strong>a hatóság mindig kéri</strong>." },
+          { q: "Ki tarthat tűzvédelmi oktatást a dolgozóknak?", a: "Tűzvédelmi oktatást csak <strong>tűzvédelmi szakvizsgával rendelkező szakember</strong> tarthat. Ez lehet külsős cég vagy saját munkavállaló, ha van megfelelő végzettsége. Az ügyvezető önállóan nem tarthat oktatást, kivéve ha rendelkezik a szükséges képesítéssel." },
+          { q: "Milyen tűzvédelmi eszközök kellenek egy irodába?", a: "Egy irodában kötelező a <strong>tűzoltó készülék</strong>, menekülési útvonal jelzések, valamint szükség esetén <strong>füstjelzők és vészvilágítás</strong>. A pontos eszközök a helyiség méretétől és a dolgozók számától függenek. A lényeg, hogy egy esetleges tűz esetén gyorsan és biztonságosan lehessen reagálni." },
+          { q: "Kell-e tűzoltó készülék egy kisebb üzletbe?", a: "Igen. A jogszabály szerint <strong>minden gazdálkodó egységben</strong> kötelező a tűzoltó készülék elhelyezése, mérettől függetlenül. Még egy kisebb boltban is előfordulhat tűzveszélyes helyzet, ezért legalább <strong>egy darab megfelelő típusú készüléket</strong> mindig biztosítani kell, jól látható és elérhető helyen." },
+          { q: "Hány darab tűzoltó készülék szükséges?", a: "A készülékek számát a <strong>helyiség alapterülete és a tűzveszélyességi osztály</strong> határozza meg. Általános szabály, hogy <strong>50 m²-enként</strong> legalább egy tűzoltó készülék szükséges. Emellett minden szinten és kiemelten veszélyes munkahelyeken külön is kell elhelyezni készülékeket a gyors beavatkozás érdekében." },
+          { q: "Mennyi ideig jó egy tűzoltó készülék?", a: "Egy tűzoltó készülék általában <strong>10–15 évig használható</strong>, ha rendszeresen karbantartják. Azonban <strong>évente kötelező felülvizsgálat</strong> szükséges, amelyet szakember végez. Ha a készülék sérült, lejárt vagy nem működőképes, akkor azonnali csere szükséges, különben bírság is kiszabható ellenőrzéskor." },
+          { q: "Ki tölti fel a tűzoltó készülékeket?", a: "A tűzoltó készülékek karbantartását és újratöltését csak <strong>engedéllyel rendelkező szakember vagy cég</strong> végezheti. A cégvezető felelőssége, hogy időben gondoskodjon erről. Saját kezűleg nem lehet után­tölteni, mert a hibás feltöltés életveszélyes lehet, és jogszabályellenes is." },
+          { q: "Milyen gyakran kell a tűzoltó készülékeket ellenőrizni?", a: "A <strong>tűzoltó készülékeket évente kötelező</strong> szakemberrel felülvizsgáltatni. Az ellenőrzés során a <strong>működőképességet, töltöttséget és érvényességet</strong> nézik. Ötévente nagyobb karbantartás vagy csere szükséges. Enélkül a készülék <strong>nem biztos, hogy működik</strong>, és a hatóság <strong>bírságot</strong> szabhat ki." },
+          { q: "Mit vizsgál a katasztrófavédelem egy ellenőrzés során?", a: "A katasztrófavédelem ellenőrzi a <strong>tűzvédelmi szabályzatot</strong>, a <strong>tűzriadó tervet</strong>, a kihelyezett <strong>tűzoltó készülékeket</strong>, a <strong>menekülési útvonalakat</strong> és az <strong>oktatás dokumentációját</strong>. Azt is vizsgálják, hogy minden eszköz <strong>megfelelően karbantartott</strong>-e. Hiányosság esetén figyelmeztetés vagy bírság jár." },
+          { q: "Mi történik, ha nincs tűzvédelmi szabályzat?", a: "Ha a cégnek kötelező lenne, de <strong>nincs tűzvédelmi szabályzata</strong>, a hatóság <strong>bírságot</strong> szabhat ki, és kötelezi annak pótlására. Hiányában nem csak <strong>anyagi szankció</strong> fenyeget, hanem <strong>tűzesetnél a cég vezetője személyesen is felelős</strong>, mert nem biztosította a szükséges megelőző intézkedéseket." },
+          { q: "Mekkora bírságot kaphatok tűzvédelmi hiányosságok miatt?", a: "A <strong>tűzvédelmi bírság összege 50 000 Ft-tól több millió forintig</strong> terjedhet, a hiányosság súlyosságától függően. Például egy <strong>lejárt tűzoltó készülék kisebb bírság</strong> , míg egy <strong>hiányzó szabályzat vagy nem működő menekülési útvonal</strong> több százezres vagy milliós bírságot vonhat maga után." },
+
+
           
-            { q: "Pontosan mit csinál egy tűzvédelmi szakember?", a: "Lényegében leveszi a válladról a tűzvédelemmel kapcsolatos terheket és felelősséget. A főbb feladatai:<ul><li>Elkészíti és frissen tartja a <strong>Tűzvédelmi Szabályzatodat</strong> és a Tűzriadó Tervet.</li><li>Megtartja a <strong>munkavállalóidnak</strong> a <strong>kötelező éves tűzvédelmi oktatást</strong>.</li><li>Tartja a kapcsolatot a <strong>hatósággal</strong> (katasztrófavédelem).</li><li>Segít neked megelőzni a <strong>bírságokat</strong> és – ami a legfontosabb – a valódi tűzeseteket.</li></ul>" },
-            { q: "Milyen jogszabályban találhatóak a Tűzvédelmi követelmények?", a: "Ha érdekel a pontos háttér, ezt a két jogszabályt keresd:<ul><li><strong>A tűz elleni védekezésről szóló 1996. évi XXXI. törvény</strong>.</li><li><strong>A tűzvédelmi szakemberek foglalkoztatásáról szóló 9/2015. (III. 25.) BM rendelet</strong>.</li></ul>" },
-            { q: "Kötelező a munkahelyi tűzvédelmi oktatás?", a: "Igen, a törvény szerint <strong>minden munkavállaló számára kötelező évente legalább egyszer</strong> részt venni tűzvédelmi oktatáson. Az oktatás célja, hogy pontosan tudd, mit kell tenned vészhelyzetben az adott épületben:<ul><li><strong>Hol vannak a menekülési útvonalak?</strong></li><li><strong>Hol találod a tűzoltó készülékeket és a fali tűzcsapokat?</strong></li><li><strong>Ki a menekülési csoportvezető az adott területen?</strong></li><li><strong>Hogyan tudod áramtalanítani a gépeket?</strong></li></ul>Egy éles helyzetben ezek az információk életeket menthetnek." },
-            { q: "Miért kezd el sípolni a füstérzékelő, ha nincs is füst?", a: "A legtöbb esetben a rövid, szabályos időközönként hallható csipogás az <strong>elem merülését jelzi</strong>. Ez a készülék figyelmeztetése, hogy cseréld ki az elemet, mielőtt teljesen lemerülne és működésképtelenné válna. Más okok is lehetnek, például:<ul><li><strong>Pára vagy gőz:</strong> A fürdőszobából kiáramló forró gőz vagy a konyhai pára is beindíthatja.</li><li><strong>Por:</strong> Ha a készülék érzékelő kamrája poros, az is okozhat téves riasztást. Érdemes évente egyszer óvatosan kiporszívózni.</li></ul>" },
         ]
     },
     { 
@@ -104,15 +107,16 @@ const FaqItem = ({ q, a, isOpen, onClick }: { q: string, a: string, isOpen: bool
             exit="collapsed"
             variants={{
               open: { opacity: 1, height: 'auto', transition: { duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] } },
-              collapsed: { opacity: 0, height: 0, transition: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] } }
+              collapsed: { opacity: 0, height: 0, transition: { duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] } },
             }}
             className="overflow-hidden"
           >
-            {/* A dangerouslySetInnerHTML használata a HTML tartalom megjelenítéséhez */}
-            <div 
-              className="pb-6 text-slate-600 text-lg leading-relaxed prose max-w-none prose-ul:list-disc prose-ul:pl-6 prose-ul:space-y-2 prose-strong:font-bold"
-              dangerouslySetInnerHTML={{ __html: a }} 
-            />
+            <motion.div
+              variants={itemVariants}
+              className="text-lg text-slate-600 pb-5"
+            >
+              <div dangerouslySetInnerHTML={{ __html: a }} />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -120,150 +124,207 @@ const FaqItem = ({ q, a, isOpen, onClick }: { q: string, a: string, isOpen: bool
   );
 };
 
-const GyakoriKerdesek = () => {
-  const [activeCategory, setActiveCategory] = useState("Összes");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [openQuestion, setOpenQuestion] = useState<string | null>(null);
+const GyakoriKerdesek = ({ id }: { id: string }) => {
+  const [activeCategory, setActiveCategory] = useState<string>('Tűzvédelem');
+  const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
-  const filteredData = useMemo(() => {
-    const searchLower = searchTerm.toLowerCase();
-    const isSearchActive = searchLower.length > 0;
+  const filteredCategories = useMemo(() => {
+    return faqData.filter(category => {
+      if (!searchQuery) {
+        return true;
+      }
+      return category.questions.some(q => 
+        q.q.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        q.a.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+  }, [searchQuery]);
 
-    return faqData
-      .map(cat => ({
-        ...cat,
-        questions: cat.questions.filter(
-          q => q.q.toLowerCase().includes(searchLower) || q.a.toLowerCase().includes(searchLower)
-        )
-      }))
-      .filter(cat => activeCategory === 'Összes' || cat.category === activeCategory)
-      .filter(cat => cat.questions.length > 0);
+  const displayedQuestions = useMemo(() => {
+    if (searchQuery) {
+      const allQuestions = faqData.flatMap(cat => cat.questions.map(q => ({
+        ...q,
+        category: cat.category
+      })));
+      return allQuestions.filter(q => 
+        q.q.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        q.a.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    const currentCategory = faqData.find(cat => cat.category === activeCategory);
+    return currentCategory ? currentCategory.questions : [];
+  }, [activeCategory, searchQuery]);
 
-  }, [activeCategory, searchTerm]);
+  const handleCategoryClick = (categoryName: string) => {
+      setActiveCategory(categoryName);
+      setActiveQuestion(null);
+      setIsMobileNavOpen(false);
+      setSearchQuery('');
+  };
 
-  useEffect(() => {
-    setOpenQuestion(null);
-  }, [activeCategory, searchTerm]);
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const query = event.target.value;
+      setSearchQuery(query);
+      if (query) {
+          setIsSearchActive(true);
+      } else {
+          setIsSearchActive(false);
+      }
+      setActiveQuestion(null);
+      setActiveCategory(faqData[0].category);
+  };
+
+  const handleBackToCategories = () => {
+      setIsSearchActive(false);
+      setSearchQuery('');
+      setActiveQuestion(null);
+  };
+
+  const handleQuestionClick = (q: string) => {
+      setActiveQuestion(activeQuestion === q ? null : q);
+  };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-['Poppins',_sans-serif]">
-      <motion.div 
-          className="absolute inset-0 z-0"
-          animate={{ 
-              background: [
-                  "radial-gradient(circle at 10% 20%, rgba(3, 186, 190, 0.07), transparent 40%)",
-                  "radial-gradient(circle at 90% 80%, rgba(3, 186, 190, 0.07), transparent 40%)",
-                  "radial-gradient(circle at 50% 50%, rgba(3, 186, 190, 0.07), transparent 40%)",
-                  "radial-gradient(circle at 10% 20%, rgba(3, 186, 190, 0.07), transparent 40%)",
-              ]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      />
-
-      <motion.div
-        className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 relative"
-        variants={pageVariants}
-        initial="initial"
-        animate="in"
-      >
-        <motion.header variants={itemVariants} className="text-center max-w-4xl mx-auto mb-20">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4">
-            <span className={accentColor.text}>Tudásbázis</span>
-          </h1>
-          <p className="text-3xl text-slate-800 font-black mb-2">
-            Válaszok a kérdéseidre!
-          </p>
-          <p className="text-xl text-slate-600 leading-snug max-w-2xl mx-auto">
-            Keressen a leggyakoribb kérdések között, hogy megtaláld a szükséges információt.
-          </p>
-        </motion.header>
-
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-          <aside className="lg:w-1/3">
-            <motion.div variants={itemVariants} className="sticky top-24">
-              <h2 className="text-2xl font-bold text-slate-800 mb-4">Kategóriák</h2>
-              <ul className="space-y-2">
-                {["Összes", ...faqData.map(c => c.category)].map((category) => (
-                  <li key={category}>
-                    <button
-                      onClick={() => setActiveCategory(category)}
-                      className={`w-full text-left p-4 rounded-lg font-semibold text-lg transition-all duration-300 ${
-                        activeCategory === category
-                          ? `bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg`
-                          : 'text-slate-600 hover:bg-white hover:text-slate-900'
-                      }`}
-                    >
-                      {category === "Összes" ? "Összes Kérdés" : category}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </aside>
-
-          <main className="lg:w-2/3 space-y-12">
-            <AnimatePresence mode="wait">
-              {filteredData.length > 0 ? (
-                <motion.div key={activeCategory + searchTerm}>
-                  {filteredData.map((category) => (
-                    <motion.section 
-                      key={category.category}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className="mb-12"
-                    >
-                      <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 flex items-center">
-                        {category.icon && <category.icon className="w-8 h-8 mr-4" />}
-                        {category.category}
-                      </h2>
-                      <div className="bg-white/70 backdrop-blur-md p-2 sm:p-4 rounded-2xl shadow-xl border border-slate-200/80">
-                        {category.questions.map((q, index) => (
-                          <FaqItem
-                            key={q.q}
-                            q={q.q}
-                            a={q.a}
-                            isOpen={openQuestion === `${category.category}-${index}`}
-                            onClick={() => setOpenQuestion(openQuestion === `${category.category}-${index}` ? null : `${category.category}-${index}`)}
-                          />
-                        ))}
-                      </div>
-                    </motion.section>
-                  ))}
-                </motion.div>
-              ) : (
-                <motion.div 
-                    key="no-results"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center py-16"
-                >
-                    <p className="text-xl text-slate-600">Nincs a keresésnek megfelelő találat.</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </main>
-        </div>
-
-        <motion.footer variants={itemVariants} className="max-w-4xl mx-auto mt-24 text-center border-t border-slate-200 pt-16">
-          <h3 className="text-3xl font-bold text-slate-800 mb-4">Ha nem találod a választ vagy lenne még speciálisabb kérdésed, foglalj egy online megbeszélést!</h3>
-          <p className="text-slate-600 text-lg mb-8">Szakértő csapatunk készen áll, hogy személyesen válaszoljon minden felmerülő kérdésére.</p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-              <motion.div
-                className={`w-full sm:w-auto text-center font-bold py-3 px-8 rounded-xl bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg shadow-cyan-500/30 cursor-pointer`}
-                whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <CalendarDaysIcon className="w-5 h-5 inline-block mr-2" />
-                Konzultációt kérek!
-              </motion.div>
-            </Link>
+    <section id={id} className="relative py-12 md:py-24 bg-slate-50 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial="initial"
+          animate="in"
+          variants={pageVariants}
+          className="max-w-7xl mx-auto"
+        >
+          <div className="text-center mb-12">
+            <motion.h2 
+              className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4"
+              variants={itemVariants}
+            >
+              Gyakran Ismételt Kérdések
+            </motion.h2>
+            <motion.p 
+              className="text-lg text-slate-600 max-w-2xl mx-auto"
+              variants={itemVariants}
+            >
+              Összegyűjtöttük a leggyakrabban felmerülő kérdéseket és válaszokat, hogy segítsünk eligazodni a tűzvédelem, munkavédelem és HACCP világában.
+            </motion.p>
           </div>
-        </motion.footer>
 
-      </motion.div>
-    </div>
+          <motion.div 
+            className="relative mb-8"
+            variants={itemVariants}
+          >
+            <div className="relative">
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                placeholder="Keresés..."
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors shadow-sm"
+              />
+            </div>
+            {isSearchActive && (
+                <motion.button
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={handleBackToCategories}
+                    className="mt-4 flex items-center text-sm text-cyan-600 hover:text-cyan-800 transition-colors"
+                >
+                    <ArrowLeftIcon className="w-4 h-4 mr-1" /> Vissza a kategóriákhoz
+                </motion.button>
+            )}
+          </motion.div>
+
+          {!isSearchActive && (
+            <motion.div
+              className="mb-8"
+              variants={itemVariants}
+            >
+              <nav className="hidden lg:flex justify-center space-x-4 p-2 bg-white rounded-full shadow-lg">
+                {faqData.map(category => (
+                  <button
+                    key={category.category}
+                    onClick={() => handleCategoryClick(category.category)}
+                    className={`flex items-center space-x-2 px-6 py-3 rounded-full transition-all duration-300
+                      ${activeCategory === category.category 
+                        ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-white shadow-lg transform scale-105' 
+                        : 'text-slate-700 hover:bg-slate-100 hover:text-cyan-600'
+                      }
+                    `}
+                  >
+                    <category.icon className="w-5 h-5" />
+                    <span className="font-semibold">{category.category}</span>
+                  </button>
+                ))}
+              </nav>
+
+              <div className="lg:hidden">
+                <button
+                  onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                  className="w-full flex justify-between items-center px-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm text-slate-700"
+                >
+                  <span className="font-semibold">{activeCategory}</span>
+                  <ChevronDownIcon className={`w-5 h-5 transition-transform ${isMobileNavOpen ? 'transform rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {isMobileNavOpen && (
+                    <motion.nav
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-2 bg-white border border-slate-200 rounded-xl shadow-lg"
+                    >
+                      {faqData.map(category => (
+                        <button
+                          key={category.category}
+                          onClick={() => handleCategoryClick(category.category)}
+                          className="w-full text-left px-4 py-3 text-slate-700 hover:bg-slate-100 transition-colors rounded-xl"
+                        >
+                          <span className="font-semibold">{category.category}</span>
+                        </button>
+                      ))}
+                    </motion.nav>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
+
+          <div className="bg-white rounded-3xl shadow-xl p-6 md:p-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isSearchActive ? 'search-results' : activeCategory}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {displayedQuestions.length > 0 ? (
+                  displayedQuestions.map((item, index) => (
+                    <FaqItem
+                      key={index}
+                      q={item.q}
+                      a={item.a}
+                      isOpen={activeQuestion === item.q}
+                      onClick={() => handleQuestionClick(item.q)}
+                    />
+                  ))
+                ) : (
+                  <div className="text-center py-10 text-slate-500">
+                    <p>Nincs találat a keresési feltételeknek megfelelően.</p>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
