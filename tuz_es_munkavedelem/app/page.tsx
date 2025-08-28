@@ -1,19 +1,18 @@
 // app/page.tsx
-// Itt már csak a HeaderHero és PreConsultationForm marad
 import HeaderHero from './components/HeaderHero';
-import PreConsultationForm from './components/PreConsultationForm';
 import TestimonialSlider from './components/TestimonialSlider';
 
-// Az új kliens komponenst importáljuk, ami a dinamikus betöltéseket tartalmazza
+// Importáljuk az új, kliens oldalon betöltődő komponenseket tartalmazó fájlt
 import HomePageClientContent from './components/HomePageClientContent';
 
 export default function HomePage() {
   return (
     <main>
-      {/* Ezek maradnak szerver komponensek, így a leggyorsabban renderelődnek */}
+      {/* Ezek a szerver oldalon renderelődő, statikus komponensek */}
       <HeaderHero />
-      <TestimonialSlider/>
-      {/* A többi komponenst a kliens komponens rendereli, dinamikusan */}
+      <TestimonialSlider />
+      
+      {/* Ez a komponens tartalmazza a dinamikus, kliens oldali tartalmakat */}
       <HomePageClientContent />
     </main>
   );

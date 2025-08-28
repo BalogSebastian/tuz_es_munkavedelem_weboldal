@@ -1,25 +1,14 @@
 // components/sections/GyakoriKerdesek.tsx
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowLeftIcon, 
     ChevronDownIcon,
     MagnifyingGlassIcon,
-    CalendarDaysIcon,
-    SparklesIcon
 } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { FaFire, FaHardHat, FaUtensils, FaQuestionCircle } from 'react-icons/fa';
-
-const accentColor = {
-  text: 'text-cyan-500',
-  gradientFrom: 'from-cyan-500',
-  gradientTo: 'to-teal-400',
-  bg: 'bg-cyan-500',
-  ring: 'focus:ring-cyan-500',
-};
+import { FaFire, FaHardHat, FaUtensils } from 'react-icons/fa';
 
 const faqData = [
     { 
@@ -27,7 +16,7 @@ const faqData = [
         icon: FaFire,
         questions: [
           { q: "Kell-e tűzvédelmi szabályzat, ha csak 3 alkalmazottam van?", a: "Igen, bizonyos esetekben kell. <strong>Ha a cég tűzveszélyes tevékenységet végez, vagy 50 főnél több ember tartózkodik rendszeresen az épületben, </strong>kötelező a szabályzat. Három alkalmazott esetén általában nem kell, de a tevékenység jellege ezt felülírhatja." },
-          { q: "Milyen esetben kötelező tűzriadó tervet készíteni?", a : "Tűzriadó tervet kell készíteni <strong>ha az épület befogadóképessége meghaladja az 50 főt,</strong> vagy ha <strong>veszélyes anyagokat tárolnak,</strong> illetve </strong> oktatási, egészségügyi, szórakoztató intézményekben. A terv célja, hogy vészhelyzetben mindenki tudja, hogyan kell elhagyni az épületet."},
+          { q: "Milyen esetben kötelező tűzriadó tervet készíteni?", a : "Tűzriadó tervet kell készíteni <strong>ha az épület befogadóképessége meghaladja az 50 főt,</strong> vagy ha <strong>veszélyes anyagokat tárolnak,</strong> illetve <strong>oktatási, egészségügyi, szórakoztató intézményekben.</strong> A terv célja, hogy vészhelyzetben mindenki tudja, hogyan kell elhagyni az épületet."},
           { q: "Milyen gyakran kell tűzvédelmi oktatást tartani?", a: "A tűzvédelmi oktatás <strong>évente egyszer kötelező</strong> minden munkavállalónak. Új belépőknek <strong>belépéskor azonnal</strong> kell oktatást tartani. Ha a tevékenység vagy a munkakör megváltozik, akkor rendkívüli oktatás szükséges. Az oktatás célja, hogy minden dolgozó tisztában legyen a teendőkkel." },
           { q: "Hol kell dokumentálni a tűzvédelmi oktatást?", a: "Az oktatásról <strong>írásos dokumentációt kell vezetni</strong>, amely tartalmazza az oktatás időpontját, a résztvevők nevét és aláírását, valamint az oktatást tartó személy nevét. Ezt a nyilvántartást a cégnek meg kell őriznie, mert az ellenőrzés során <strong>a hatóság mindig kéri</strong>." },
           { q: "Ki tarthat tűzvédelmi oktatást a dolgozóknak?", a: "Tűzvédelmi oktatást csak <strong>tűzvédelmi szakvizsgával rendelkező szakember</strong> tarthat. Ez lehet külsős cég vagy saját munkavállaló, ha van megfelelő végzettsége. Az ügyvezető önállóan nem tarthat oktatást, kivéve ha rendelkezik a szükséges képesítéssel." },
@@ -40,9 +29,6 @@ const faqData = [
           { q: "Mit vizsgál a katasztrófavédelem egy ellenőrzés során?", a: "A katasztrófavédelem ellenőrzi a <strong>tűzvédelmi szabályzatot</strong>, a <strong>tűzriadó tervet</strong>, a kihelyezett <strong>tűzoltó készülékeket</strong>, a <strong>menekülési útvonalakat</strong> és az <strong>oktatás dokumentációját</strong>. Azt is vizsgálják, hogy minden eszköz <strong>megfelelően karbantartott</strong>-e. Hiányosság esetén figyelmeztetés vagy bírság jár." },
           { q: "Mi történik, ha nincs tűzvédelmi szabályzat?", a: "Ha a cégnek kötelező lenne, de <strong>nincs tűzvédelmi szabályzata</strong>, a hatóság <strong>bírságot</strong> szabhat ki, és kötelezi annak pótlására. Hiányában nem csak <strong>anyagi szankció</strong> fenyeget, hanem <strong>tűzesetnél a cég vezetője személyesen is felelős</strong>, mert nem biztosította a szükséges megelőző intézkedéseket." },
           { q: "Mekkora bírságot kaphatok tűzvédelmi hiányosságok miatt?", a: "A <strong>tűzvédelmi bírság összege 50 000 Ft-tól több millió forintig</strong> terjedhet, a hiányosság súlyosságától függően. Például egy <strong>lejárt tűzoltó készülék kisebb bírság</strong> , míg egy <strong>hiányzó szabályzat vagy nem működő menekülési útvonal</strong> több százezres vagy milliós bírságot vonhat maga után." },
-
-
-          
         ]
     },
     { 
@@ -124,24 +110,12 @@ const FaqItem = ({ q, a, isOpen, onClick }: { q: string, a: string, isOpen: bool
   );
 };
 
-const GyakoriKerdesek = ({ id }: { id: string }) => {
+const GyakoriKerdesek = () => {
   const [activeCategory, setActiveCategory] = useState<string>('Tűzvédelem');
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
-
-  const filteredCategories = useMemo(() => {
-    return faqData.filter(category => {
-      if (!searchQuery) {
-        return true;
-      }
-      return category.questions.some(q => 
-        q.q.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        q.a.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    });
-  }, [searchQuery]);
 
   const displayedQuestions = useMemo(() => {
     if (searchQuery) {
@@ -188,7 +162,7 @@ const GyakoriKerdesek = ({ id }: { id: string }) => {
   };
 
   return (
-    <section id={id} className="relative py-12 md:py-24 bg-slate-50 overflow-hidden">
+    <section id="gyik" className="relative py-12 md:py-24 bg-slate-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           initial="initial"
