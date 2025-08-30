@@ -128,15 +128,213 @@ const faqData = [
         category: "Munkavédelem",
         icon: FaHardHat,
         questions: [
-            { q: "Miért kötelező a kockázatértékelés?", a: "Azért, mert a <strong>munkavédelmi törvények előírják</strong>. Neked, mint munkáltatónak, jogi kötelességed gondoskodni a <strong>dolgozóid</strong> biztonságáról. Ha rendben van a kockázatértékelés, nemcsak a törvényi megfelelést <strong>biztosítod</strong>, hanem <strong>csökkented a munkahelyi balesetek és megbetegedések esélyét</strong> is." },
-            { q: "Minden munkavállalónak kötelező az orvosi alkalmassági vizsgálat?", a: "<strong>Igen, kötelező</strong>. Munkába állás előtt minden munkavállalónak részt kell vennie előzetes orvosi alkalmassági vizsgálaton, hogy kiderüljön, végezheti-e biztonságosan a munkáját." },
-            { q: "Mikor kell orvosi vizsgálatra menni?", a: "<ul><li><strong>Munkába állás előtt:</strong> mindig kötelező.</li><li><strong>Időszakosan:</strong> a munkakör és a kockázatok alapján meghatározott időközönként (pl. évente vagy 2-3 évente).</li><li><strong>Rendkívüli esetben:</strong> ha a munkavállaló egészségi állapota megváltozik, vagy a munkakörülmények indokolják.</li></ul>" },
-            { q: "Mi a teendő munkabaleset esetén?", a: "Ha munkabaleset történik, a legfontosabb, hogy <strong>azonnal gondoskodj a sérült ellátásáról</strong> – ha kell, hívj mentőt. Ezután a következőket kell megtenni:<ul><li><strong>1. Elsősegély biztosítása</strong> – ha szükséges, azonnal.</li><li><strong>2. A baleset jelentése</strong> – a sérültnek vagy a szemtanúnak jeleznie kell a közvetlen vezetőnek.</li><li><strong>3. A helyszín biztosítása</strong> – lehetőség szerint ne változtasd meg a baleset körülményeit, amíg a kivizsgálás meg nem történik.</li><li><strong>4. Baleseti jegyzőkönyv készítése</strong> – a munkáltató feladata, minden munkabalesetet ki kell vizsgálni és dokumentálni.</li><li><strong>5. Hatósági bejelentés</strong> – ha a baleset súlyos (pl. halálos, több napos munkaképtelenséget okoz), kötelező az illetékes hatóság felé is jelenteni.</li></ul>" },
-            { q: "Mikortól kell egy cégnek a munkavédelem?", a: "A munkavédelem már az <strong>első munkavállaló belépésétől kezdve kötelező</strong>. Tehát ha egy cég alkalmazásban tart akár csak egy embert, onnantól gondoskodnia kell a munkavédelmi előírások betartásáról." },
-            { q: "Ki kötelezi a munkavédelmet?", a: "A munkavédelmet a <strong>munkavédelmi törvény (1993. évi XCIII. törvény a munkavédelemről)</strong> írja elő. Ez a jogszabály határozza meg, milyen kötelezettségeid vannak munkáltatóként, és milyen jogai vannak a munkavállalóknak a biztonságos munkavégzéshez. A törvény betartását a <strong>munkavédelmi hatóság</strong> (jelenleg a Kormányhivatalok Munkavédelmi és Munkaügyi Ellenőrzési Osztályai) ellenőrzi. Ha hiányosságot találnak, bírságot szabhatnak ki, vagy akár le is állíthatják a munkát." },
-            { q: "Ki készítheti el a kockázatértékelést?", a: "<strong>Csak olyan szakember</strong>, aki rendelkezik a megfelelő munkavédelmi végzettséggel (pl. munkavédelmi technikus, mérnök). Te saját magad nem készítheted el, ha nincs hozzá képesítésed – ez hatósági előírás." },
-            { q: "Milyen gyakran kell frissíteni a kockázatértékelést?", a: "Általában <strong>3-5 évente</strong>, de ha a munkahelyen változás történik (pl. új gép, új technológia, munkabaleset), akkor <strong>azonnal frissíteni kell</strong>." },
-            { q: "Mi az a Munkahelyi Szabályzat?", a: "A Munkahelyi Szabályzat (vagy más néven Munkavédelmi Szabályzat) egy belső dokumentum, ami rögzíti a cég munkavédelmi előírásait, szabályait és eljárásait. Tulajdonképpen a munkavédelmi törvény gyakorlati „fordítása” a te cégedre szabva.<ul><li><strong>a munkahelyi veszélyek és kockázatok ismertetését,</strong></li><li><strong>a védőfelszerelések használatának előírásait,</strong></li><li><strong>a munkavállalók és a munkáltató feladatait, felelősségét,</strong></li><li><strong>az oktatás, ellenőrzés és balesetkezelés rendjét.</strong></li></ul>" },
+          {
+            q: "Miért kötelező a munkavédelem minden cégnek?",
+            a : "A <strong> munkavédelem célja </strong> a dolgozók biztonságának és egészségének megőrzése. Nem csak <strong> jogi kötelezettség, </strong>  hanem a <strong> munkahelyi balesetek és betegségek megelőzésének alapja.</strong> Ha nincs megfelelő munkavédelem, az <strong> bírságot, jogi felelősséget</strong>és akár<strong>  komoly anyagi károkat </strong> is okozhat a cégnek. "
+          },
+          {
+            q : "Mikortól kell egy cégnek munkavédelmi szakembert alkalmaznia?",
+            a : "<strong>  Már egy fő alkalmazása esetén </strong> kötelező munkavédelmi szakember bevonása. A feladatokat kizárólag <strong> megfelelő végzettséggel rendelkező szakember </strong> láthatja el. Ő végzi a <strong> kockázatértékelést,</strong> a szükséges <strong> dokumentációk elkészítését, </strong>  valamint segít a munkáltatónak a <strong> törvényi előírások betartásában. </strong>"
+          },
+          {
+            q : "Ki felelős a munkavédelemért a cégnél: az ügyvezető vagy a szakember?",
+            a : "A <strong>jogi felelősség mindig az ügyvezetőt terheli.</strong> A munkavédelmi szakember szakmai támogatást nyújt: elkészíti a <strong> szabályzatot,</strong> elvégzi a  <strong> kockázatértékelést</strong> és megtartja az <strong> oktatásokat. </strong> De a szabályok <strong>  betartatásáért </strong> és a munkavállalók biztonságáért <strong> az ügyvezető felel.</strong>"
+          },
+          {
+             q : "Mi történik, ha nincs munkavédelmi szabályzat?",
+             a : "Szabályzat hiányában a <strong>  hatóság súlyos bírságot szabhat ki,</strong>  vagy akár <strong> felfüggesztheti a cég működését. </strong> Ha <strong>baleset</strong> történik, a munkáltató teljes körű <strong>anyagi és jogi felelősséget </strong>visel . A munkavédelmi szabályzat megléte a <strong>biztonság alapfeltétele,</strong> minden cég számára kötelező."
+          },
+          {
+            q : "Mi a különbség a munkavédelmi szabályzat és a kockázatértékelés között?",
+            a : "A <strong> munkavédelmi szabályzat </strong> tartalmazza a cég <strong> feladatait, felelősségi köröket és előírásokat. </strong> A <strong> kockázatértékelés </strong>ezzel szemben a  <strong> konkrét veszélyek felmérését, </strong> azok <strong> értékelését</strong> valamint a <strong> megelőző intézkedések meghatározását</strong> szolgálja. Együtt alkotják a teljes munkavédelmi rendszert."
+          },
+          {
+             q : "Milyen jogszabály írja elő a munkavédelmet?",
+             a : "A munkavédelem alapját az <strong> 1993. évi XCIII. törvény a munkavédelemről</strong> 1993. évi XCIII. törvény a munkavédelemről <strong> munkáltatók kötelezettségeit, </strong> a <strong> munkavállalók jogait </strong> és a <strong> biztonságos munkavégzés feltételeit.</strong> A törvényt további <strong> rendeletek és szabványok </stong> egészítik ki, amelyek részletes előírásokat tartalmaznak."
+          },
+          {
+            q : "Kell munkavédelmi szabályzat, ha csak 1 alkalmazottam van?",
+            a : "Igen, <strong> már egyetlen alkalmazott esetén is kötelező </strong> a munkavédelmi szabályzat. A törvény nem tesz különbséget a cég mérete alapján: minden munkáltató köteles gondoskodni a dolgozói biztonságáról. A dokumentáció hiánya <strong> bírságot és jogi felelősséget </strong>  von maga után."
+          },
+          {
+            q : "Kötelező-e a munkavédelem a részmunkaidős vagy alkalmi dolgozóknál is?",
+            a : "Igen, a munkavédelem <strong> minden munkaviszonyban álló dolgozóra vonatkozik, </strong> legyen az teljes-, részmunkaidős vagy alkalmi. A munkáltató kötelessége, hogy a dolgozók biztonságos körülmények között dolgozzanak, függetlenül a ledolgozott órák számától."
+          },
+          {
+            q : " Kinek a kötelessége biztosítani a munkavédelmet: a munkáltatónak vagy a dolgozónak?",
+            a : "A <strong> munkáltató kötelessége </strong> biztosítani a biztonságos munkafeltételeket, elkészíteni a dokumentációt és megtartani az oktatásokat. A <strong>  munkavállalónak pedig kötelessége betartani </strong> az előírásokat és helyesen használni a védőeszközöket. A felelősség tehát megoszlik, de a fő felelősség a munkáltatóé."
+          },
+          {
+            q: "Mekkora bírság járhat munkavédelmi hiányosságokért?",
+            a: "A munkavédelmi bírság <strong>200.000 Ft-tól akár több millió forintig</strong> terjedhet, a hiányosság súlyosságától függően. Súlyos mulasztás esetén a hatóság <strong>felfüggesztheti a cég működését</strong> is. Ha baleset történik, a munkáltató <strong>teljes körű kártérítési felelősséggel</strong> tartozik."
+          },
+          {
+            q: "Ki készítheti el a kockázatértékelést?",
+            a: "A kockázatértékelést kizárólag <strong>szakképzett munkavédelmi szakember</strong> készítheti el. Ő rendelkezik a szükséges ismeretekkel ahhoz, hogy felmérje a munkahelyi veszélyeket, meghatározza a kockázatok mértékét, és előírja a megfelelő megelőző intézkedéseket."
+          },
+          {
+            q: "Milyen gyakran kell frissíteni a kockázatértékelést?",
+            a: "A kockázatértékelést <strong>legalább 5 évente</strong> kötelező frissíteni. Emellett mindig újra kell készíteni, ha <strong>változik a munkakörnyezet</strong>, új technológiát vezetnek be, vagy baleset történik. Így biztosítható, hogy a dokumentum mindig <strong>naprakész és érvényes</strong> legyen."
+          },
+          {
+            q: "Kötelező-e kockázatértékelés egy irodában is?",
+            a: "Igen, <strong>minden munkahelyen kötelező</strong>, még akkor is, ha csak irodai munkavégzés zajlik. Bár itt kevesebb a veszélyforrás, a dokumentumban szerepelnie kell például az <strong>ergonómiai kockázatoknak, elektromos berendezések használatának, tűz- és menekülési előírásoknak</strong>."
+          },
+          {
+            q: "Mennyi ideig érvényes a kockázatértékelés?",
+            a: "A kockázatértékelés <strong>5 évig érvényes</strong>, de előbb is frissíteni kell, ha baleset történik, új technológia kerül bevezetésre, vagy jelentősen megváltozik a munkakörnyezet. A dokumentum naprakészsége kulcsfontosságú, mivel <strong>ellenőrzéskor mindig az aktuális állapotot</strong> vizsgálják."
+          },
+          {
+            q : "Mi történik, ha nincs kockázatértékelés?",
+            a : "Ha nincs kockázatértékelés, a munkáltató <strong> jogi felelősséggel tartozik </strong> és munkavédelmi bírságot kaphat, amely akár több százezer forint is lehet. Súlyosabb esetben a hatóság a cég működését is felfüggesztheti. Emellett balesetnél a munkáltató teljes <strong> kártérítési felelősséggel </strong> tartozik."
+          },
+          {
+            q : "Milyen területekre kell kiterjednie a kockázatértékelésnek?",
+            a : "A kockázatértékelésnek minden munkaterületre ki kell terjednie: <strong> munkakörnyezet, munkaeszközök, gépek, munkafolyamatok, vegyi anyagok, fizikai tényezők (pl. zaj, rezgés, hőmérséklet), ergonómia és pszichoszociális kockázatok.</strong> Az átfogó vizsgálat biztosítja a dolgozók teljes körű védelmét."
+          },
+          {
+            q : "Kötelező-e zaj- vagy rezgésmérés a kockázatértékelésben?",
+            a : "Igen, ha a munkahelyen a dolgozókat <strong> zaj- vagy rezgésterhelés éri, </strong> kötelező a mérés. Például gyárakban, műhelyekben, építkezéseken. Irodai környezetben általában nem szükséges, de a szakembernek mindig dokumentálnia kell, hogy az adott munkahelyen milyen mértékű kockázat áll fenn."
+          },
+          {
+            q : "Kell-e veszélyes anyagokra külön kockázatértékelés?",
+            a : "Igen, a veszélyes anyagok esetében mindig <strong> külön kockázatértékelést </strong> kell készíteni. Ez tartalmazza az anyagok azonosítását, tárolását, kezelési módját, valamint a dolgozók egészségére gyakorolt hatásait. A munkáltató köteles <strong> biztonsági adatlapot biztosítani </strong> minden ilyen anyagról."
+          },
+          {
+            q : "Minden munkavállalónak kötelező az orvosi alkalmassági vizsgálat?",
+            a : "Igen, <strong> minden dolgozó számára kötelező </strong> a munkába állás előtt. Ez biztosítja, hogy a munkavállaló egészségi állapota megfelel az adott munkakör követelményeinek. Az orvosi alkalmasság nélkül a munkáltató <strong>  nem foglalkoztathatja jogszerűen</strong> a dolgozót."
+          },
+          {
+            q : "Mikor kell orvosi vizsgálatra menni?",
+            a : "Az orvosi vizsgálatot a munkába állás előtt kell elvégezni, majd <strong> időszakosan </strong> a jogszabály által meghatározott gyakorisággal. Bizonyos munkaköröknél soron kívül is szükséges lehet, például baleset, betegség után vagy ha a munkakörülmények megváltoznak."
+          },
+          {
+            q : "Mennyi ideig érvényes az orvosi alkalmassági igazolás?",
+            a : "Az orvosi igazolás általában <strong> 1–3 évig érvényes, </strong> a munkakör veszélyességi besorolásától függően. Veszélyesebb munkakörökben gyakrabban, akár évente szükséges a vizsgálat. Az érvényesség lejárta után új vizsgálat nélkül <strong>nem dolgozhat tovább a munkavállaló. </strong>"
+          },
+          {
+            q: "Ki fizeti a dolgozók orvosi alkalmassági vizsgálatát?",
+            a: "Az orvosi alkalmassági vizsgálat költsége <strong>minden esetben a munkáltatót terheli.</strong> A dolgozónak nem kell fizetnie érte, mivel ez a munkavégzés feltétele. A vizsgálat díja a munkáltató kötelező munkavédelmi kiadásai közé tartozik."
+          },
+          {
+            q: "Milyen vizsgálat kell élelmiszeripari dolgozóknak?",
+            a: "Az élelmiszeriparban dolgozóknak kötelező a <strong>higiénés alkalmassági vizsgálat</strong>, amely kizárja a fertőző betegségekben szenvedő személyek foglalkoztatását. Emellett rendszeres időszakos vizsgálatokat is kell végezni, hogy a dolgozók megfeleljenek a <strong>közegészségügyi előírásoknak.</strong>"
+          },
+          {
+            q: "Kötelező-e pszichológiai alkalmassági vizsgálat bizonyos munkaköröknél?",
+            a: "Igen, bizonyos munkaköröknél, például <strong>fegyveres biztonsági őrök, gépjárművezetők vagy fokozott figyelmet igénylő munkát végzők</strong> esetében kötelező a pszichológiai alkalmassági vizsgálat. Ez biztosítja, hogy a dolgozó mentálisan is alkalmas a feladat biztonságos ellátására."
+          },
+          {
+            q: "Kötelező-e a munkavédelmi oktatás minden dolgozónak?",
+            a: "Igen, a munkavédelmi oktatás <strong>minden munkavállaló számára kötelező.</strong> Ide tartoznak a teljes munkaidős, részmunkaidős és alkalmi dolgozók is. Az oktatás biztosítja, hogy a munkavállaló tisztában legyen a <strong>munkahelyi veszélyekkel, előírásokkal és saját felelősségével.</strong>"
+          },
+          {
+            q: "Milyen gyakran kell munkavédelmi oktatást tartani?",
+            a: "Az oktatásnak három típusa van: <strong>belépéskor</strong> (munkába állás előtt), <strong>ismétlődő oktatás</strong> (általában évente) és <strong>rendkívüli oktatás</strong>, ha új gépet, technológiát vezetnek be vagy baleset történik. Az időszakos ismétlés gyakoriságát a jogszabály és a cég kockázatai határozzák meg."
+          },
+          {
+            q: "Ki tarthat munkavédelmi oktatást?",
+            a: "A munkavédelmi oktatást <strong>csak munkavédelmi szakember</strong> vagy megfelelő képesítéssel rendelkező személy tarthatja. Az ügyvezető önmagában nem jogosult rá, ha nincs szakirányú képesítése. Ez biztosítja, hogy az oktatás <strong>szakmailag helyes és jogszerű</strong> legyen."
+          },
+          {
+            q: "Hogyan kell dokumentálni a munkavédelmi oktatást?",
+            a: "Az oktatásról <strong>írásos dokumentációt</strong> kell készíteni, amely tartalmazza az oktatás témáit, időpontját, az oktató és a résztvevők adatait, valamint a dolgozók aláírását. Enélkül az oktatás <strong>érvénytelennek számít</strong>, és egy ellenőrzés során bírságot vonhat maga után."
+          },
+          {
+            q: "Kötelező-e oktatást tartani gyakornokoknak és diákoknak?",
+            a: "Igen, minden munkát végző személynek, így a gyakornokoknak és diákoknak is kötelező a munkavédelmi oktatás. Ők ugyanúgy részt vesznek a munkafolyamatokban, ezért tisztában kell lenniük a <strong>veszélyekkel és a biztonsági szabályokkal</strong>, mielőtt bármilyen munkát végeznek."
+          },
+          {
+            q: "Mennyi ideig tart egy munkavédelmi oktatás?",
+            a: "Az oktatás időtartama a munkakörök veszélyességéről függ. Egy egyszerű irodai munka esetén <strong>30–60 perc is elegendő</strong>, míg veszélyes üzemeknél több órás képzés szükséges lehet. A lényeg, hogy az oktatás alatt a dolgozó <strong>teljes körű tájékoztatást kapjon.</strong>"
+          },
+          {
+            q: "Mit tartalmazzon egy munkavédelmi oktatás?",
+            a: "Az oktatásnak tartalmaznia kell a munkakör veszélyeit, a szükséges <strong>védőeszközök használatát</strong>, a vészhelyzeti teendőket, valamint a cég belső szabályait. Fontos, hogy a dolgozó tisztában legyen a <strong>jogszabályi előírásokkal</strong> és a saját felelősségével is."
+          },
+          {
+            q: "Mi történik, ha nincs dokumentálva az oktatás?",
+            a: "Ha az oktatás nincs dokumentálva, az olyan, mintha meg sem történt volna. Ellenőrzéskor a hatóság ezt <strong>súlyos hiányosságnak</strong> tekinti, és bírságot szabhat ki. Emellett baleset esetén a munkáltató <strong>teljes felelősséget visel</strong>, mert nem tudja igazolni a dolgozó felkészítését."
+          },
+          {
+            q: "Ki biztosítja a védőfelszereléseket?",
+            a: "A védőfelszerelések biztosítása a <strong>munkáltató kötelezettsége.</strong> Ő köteles gondoskodni arról, hogy a dolgozók a munkavégzéshez megfelelő védőeszközöket kapjanak. Ez jogszabályi előírás, és a hiánya esetén a munkáltató felelős minden balesetért vagy egészségkárosodásért."
+          },
+          {
+            q: "Ingyenes a védőfelszerelés a dolgozóknak?",
+            a: "Igen, a védőfelszereléseket a munkáltatónak <strong>ingyen kell biztosítania</strong> a munkavállalók számára. Az eszközök költségét nem lehet levonni a dolgozó béréből, és nem lehet elvárni, hogy saját pénzen vásárolja meg. Ez a munkáltató alapvető kötelezettsége."
+          },
+          {
+            q: "Mi számít egyéni védőeszköznek?",
+            a: "Egyéni védőeszköznek számít minden olyan eszköz, amelyet a dolgozó <strong>saját védelme érdekében visel vagy használ.</strong> Például: sisak, védőszemüveg, kesztyű, fülvédő, légzésvédő, láthatósági mellény. A lényeg, hogy az adott munkakör veszélyeinek megfelelő védelmet biztosítson."
+          },
+          {
+            q: "Kell-e munkaruhát adni minden dolgozónak?",
+            a: "Nem minden esetben kötelező. <strong>Munkaruhát akkor kell biztosítani,</strong> ha a munkavégzés során a dolgozó ruhája elszennyeződik, sérülhet, vagy a munka jellege miatt egységes megjelenés szükséges. Egyszerű irodai munkánál nem, de élelmiszeriparban vagy ipari területen kötelező."
+          },
+          {
+            q: "Ki felel a védőeszközök állapotáért?",
+            a: "A védőeszközök állapotáért <strong>elsődlegesen a munkáltató felel,</strong> hiszen neki kell biztosítania, hogy azok megfelelőek és biztonságosak legyenek. A munkavállaló kötelessége az eszközök rendeltetésszerű használata, és jeleznie kell, ha azok megsérülnek vagy elhasználódnak."
+          },
+          {
+            q: "Hogyan kell nyilvántartani a védőfelszerelések kiadását?",
+            a: "A védőfelszerelések kiadását <strong>írásban kell dokumentálni,</strong> általában védőeszköz-átadási jegyzőkönyvben vagy nyilvántartásban. Ebben szerepelnie kell, hogy ki, mikor, milyen eszközt kapott, és az aláírásával igazolja az átvételt. Ez az ellenőrzéskor is bizonyíték."
+          },
+          {
+            q: "Mi a teendő munkabaleset esetén?",
+            a: "Munkabalesetkor az első lépés az <strong>életmentés és elsősegélynyújtás.</strong> Ezt követően a munkáltatónak azonnal intézkednie kell a veszélyhelyzet megszüntetéséről, a baleset kivizsgálásáról és jegyzőkönyv felvételéről. A súlyos baleseteket kötelező bejelenteni a hatóságnak."
+          },
+          {
+            q: "Hogyan kell kivizsgálni egy munkahelyi balesetet?",
+            a: "A balesetet a munkáltató köteles kivizsgálni. Ez magában foglalja a <strong>körülmények felderítését, a tanúk meghallgatását, a dokumentáció elkészítését és a megelőző intézkedések meghatározását.</strong> A kivizsgálás célja, hogy a hasonló balesetek megelőzhetők legyenek."
+          },
+          {
+            q: "Ki köteles bejelenteni a munkabalesetet?",
+            a: "A munkabalesetet a <strong>munkáltatónak kell bejelentenie</strong> a hatóság felé, ha súlyos vagy halálos balesetről van szó. A dolgozó feladata, hogy azonnal jelezze a balesetet a felettesének, aki intézkedik a továbbiakról."
+          },
+          {
+            q: "Mit tartalmaz a munkabaleseti jegyzőkönyv?",
+            a: "A munkabaleseti jegyzőkönyv tartalmazza a <strong>baleset időpontját, helyszínét, a sérült adatait, a baleset leírását, a tanúk nyilatkozatait és a kivizsgálás megállapításait.</strong> Rögzíteni kell a felelősséget és a megtett intézkedéseket is."
+          },
+          {
+            q: "Kell-e jegyzőkönyv kisebb balesetekről is?",
+            a: "Igen, minden munkabalesetről kötelező jegyzőkönyvet készíteni, <strong>akkor is, ha kisebb sérülés történt</strong> (pl. vágás, horzsolás). Ennek célja, hogy nyoma legyen az eseménynek, és szükség esetén jogi vagy biztosítási eljárásban felhasználható legyen."
+          },
+          {
+            q: "Ki fizeti a dolgozó táppénzét baleset esetén?",
+            a: "Munkabalesetnél a dolgozó <strong>100%-os táppénzre jogosult,</strong> amit a társadalombiztosítás (TB) fedez. A munkáltatónak nincs külön kötelezettsége a táppénz kifizetésére, de a baleseti jegyzőkönyv és bejelentés elengedhetetlen a jogosultsághoz."
+          },
+          {
+            q: "Mi a különbség a munkabaleset és az üzemi baleset között?",
+            a: "A munkabaleset a munkahelyen vagy munkavégzés közben történik. Az <strong>üzemi baleset fogalma tágabb:</strong> ide tartozik a munkába járás közben bekövetkező baleset is. Tehát minden munkabaleset üzemi baleset is, de nem minden üzemi baleset számít munkabalesetnek."
+          },
+          {
+            q: "Mit vizsgál a munkavédelmi hatóság egy ellenőrzés során?",
+            a: "A hatóság ellenőrzi a <strong>munkavédelmi szabályzatok, kockázatértékelést, oktatási dokumentációt, orvosi alkalmassági vizsgálatokat és a védőfelszerelések meglétét.</strong> Emellett helyszíni szemlét tartanak, vizsgálják a munkaeszközök állapotát és a munkavállalók biztonsági feltételeit."
+          },
+          {
+            q: "Milyen dokumentumokat kell bemutatni ellenőrzéskor?",
+            a: "Kötelező bemutatni a <strong>munkavédelmi szabályzatot, kockázatértékelést, oktatási naplót, munkabaleseti jegyzőkönyveket, orvosi alkalmassági igazolásokat, védőeszköz nyilvántartást.</strong> Ha ezek hiányoznak, a hatóság bírságot szabhat ki, ezért fontos a naprakész dokumentáció."
+          },
+          {
+            q: "Mennyi ideig tart egy munkavédelmi ellenőrzés?",
+            a: "Az ellenőrzés időtartama a cég méretétől és tevékenységétől függ. Egy kisebb irodánál <strong>akár 1–2 óra alatt lezajlik,</strong> míg egy nagyobb termelő üzemnél több napot is igénybe vehet. A hatóság a dokumentumok és a helyszíni körülmények alapján dolgozik."
+          },
+          {
+            q: "Van-e lehetőség figyelmeztetésre bírság helyett?",
+            a: "Igen, bizonyos esetekben a hatóság <strong>először figyelmeztetést ad</strong> és határidőt szab a hiányosságok pótlására. Ha azonban súlyos vagy életveszélyes mulasztás történik, azonnali bírságot szabhatnak ki, amelynek mértéke több százezer forint is lehet."
+          },
+          {
+            q: "Hogyan készülhetek fel egy munkavédelmi ellenőrzésre?",
+            a: "A legfontosabb a <strong>naprakész dokumentáció, érvényes kockázatértékelés, oktatási jegyzőkönyvek és orvosi vizsgálatok megléte.</strong> Ellenőrizd a védőeszközök állapotát, a menekülési útvonalakat, és tarts egy belső ellenőrzést, így a hatósági vizsgálat során nem érhet meglepetés."
+          }
+          
+          
+          
+          
+          
+          
+           
         ]
     },
     { 
