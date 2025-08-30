@@ -508,7 +508,7 @@ const IntegratedApplication: React.FC = () => {
                 <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10">
                     <div
                         className="absolute w-36 h-36 text-cyan-500"
-                        style={{ top: '100px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
+                        style={{ top: '20px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}
                     >
                         <IoArrowUndoSharp className="w-full h-full" />
                     </div>

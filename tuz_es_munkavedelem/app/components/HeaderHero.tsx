@@ -73,7 +73,7 @@ const HeaderHero = () => {
 
             <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px]">
                 {/* Navbar */}
-                <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-around text-sm shadow-xl z-50 border-b border-slate-700">
+                <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50 border-b border-slate-700">
                     <div className="flex items-center gap-1">
                         <div className="font-bold text-lg tracking-wider relative top-[5px]">
                             <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span><span className="text-white">Szaki</span>
@@ -88,7 +88,7 @@ const HeaderHero = () => {
                         />
                     </div>
                     {/* E-mail és telefonszám elhelyezése */}
-                    <div className="hidden md:flex items-center gap-6 font-medium text-slate-300">
+                    <div className="hidden md:flex items-center mr-30 gap-6 font-medium text-slate-300 ">
                         <a href="mailto:info@tuz-munkavedelmiszaki.hu" className="hover:text-cyan-300 transition-colors duration-300">info@tuz-munkavedelmiszaki.hu</a>
                         <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">+36 30 272 2571</a>
                     </div>
@@ -108,7 +108,7 @@ const HeaderHero = () => {
                 </div>
 
                 {/* Fő tartalom */}
-                <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 text-center relative">
+                <div className="flex-grow flex mb-200 flex-col items-center justify-center p-4 sm:p-8 text-center relative">
                     <div className="max-w-5xl relative z-10 flex flex-col items-center">
                         
                         <motion.div
@@ -117,13 +117,13 @@ const HeaderHero = () => {
                           initial="hidden"
                           animate="visible"
                         >
-                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-2 z-20">
+                          <motion.div variants={ANIMATION_VARIANTS.item} className="mb-1 z-20">
                               {/* A középső logó méretének csökkentése */}
                               <Image
                                   src="/munkavedelmiszakiLOGO.png"
                                   alt="Munkavédelmi Szaki Logó"
-                                  width={150}
-                                  height={150}
+                                  width={100}
+                                  height={100}
                                   className="mx-auto"
                                   priority
                               />
@@ -144,14 +144,6 @@ const HeaderHero = () => {
                               {/* Új copy szöveg */}
                               A büntetés értéke 10 Millió forintig terjedhet!
                           </motion.h1>
-
-                          <motion.p
-                              className="text-lg md:text-xl mb-12 text-slate-300 max-w-3xl font-medium z-10"
-                              variants={ANIMATION_VARIANTS.item}
-                          >
-                              {/* Meglévő copy szöveg megtartása */}
-                              Segítünk kijutni a jogszabályi útvesztőből, és átláthatóvá tenni a Tűz, Munkavédelem, vagy akár a HACCP kérdéseit!
-                          </motion.p>
 
                           <motion.div
                               variants={ANIMATION_VARIANTS.item}
