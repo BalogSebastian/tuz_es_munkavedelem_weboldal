@@ -29,6 +29,99 @@ const faqData = [
           { q: "Mit vizsgál a katasztrófavédelem egy ellenőrzés során?", a: "A katasztrófavédelem ellenőrzi a <strong>tűzvédelmi szabályzatot</strong>, a <strong>tűzriadó tervet</strong>, a kihelyezett <strong>tűzoltó készülékeket</strong>, a <strong>menekülési útvonalakat</strong> és az <strong>oktatás dokumentációját</strong>. Azt is vizsgálják, hogy minden eszköz <strong>megfelelően karbantartott</strong>-e. Hiányosság esetén figyelmeztetés vagy bírság jár." },
           { q: "Mi történik, ha nincs tűzvédelmi szabályzat?", a: "Ha a cégnek kötelező lenne, de <strong>nincs tűzvédelmi szabályzata</strong>, a hatóság <strong>bírságot</strong> szabhat ki, és kötelezi annak pótlására. Hiányában nem csak <strong>anyagi szankció</strong> fenyeget, hanem <strong>tűzesetnél a cég vezetője személyesen is felelős</strong>, mert nem biztosította a szükséges megelőző intézkedéseket." },
           { q: "Mekkora bírságot kaphatok tűzvédelmi hiányosságok miatt?", a: "A <strong>tűzvédelmi bírság összege 50 000 Ft-tól több millió forintig</strong> terjedhet, a hiányosság súlyosságától függően. Például egy <strong>lejárt tűzoltó készülék kisebb bírság</strong> , míg egy <strong>hiányzó szabályzat vagy nem működő menekülési útvonal</strong> több százezres vagy milliós bírságot vonhat maga után." },
+          {
+            q: "Mi a következménye, ha nincs tűzvédelmi oktatás dokumentálva?",
+            a: "A <strong>tűzvédelmi oktatás megtartása és írásos dokumentálása kötelező</strong>. Ha ez hiányzik, a hatóság <strong>bírságot szabhat ki</strong> és előírja az oktatás pótlását. <strong>Tűzesetnél</strong> pedig a <strong> cégvezetőt személyesen felelőssé tehetik</strong>, mert nem bizonyítható, hogy a dolgozók <strong>felkészültek</strong> voltak a veszélyhelyzetek kezelésére."
+          },
+          {
+            q: "Ki felel a tűzvédelemért a cégnél? Az ügyvezető vagy a munkavédelmis?",
+            a : "A <strong>végső felelősség mindig az ügyvezetőé, </strong> hiszen ő képviseli a céget. A kijelölt <strong>tűzvédelmi szakember </strong> vagy <strong>munkavédelmis</strong> csak segíti a feladatok elvégzésében, de a hatóság előtt <strong>az ügyvezető felel.</strong> Ezért fontos, hogy a vezető <strong> biztosítsa a megfelelő szakember bevonását.</strong>"
+          },
+          {
+            q : "Hogyan kell kijelölni a menekülési útvonalakat?",
+            a : "A menekülési útvonalakat úgy kell kijelölni, hogy <strong>minden helyiségből gyorsan és biztonságosan elérhető legyen a kijárat. </strong>Ezeket <strong>  jól látható zöld táblákkal</strong>  kell jelölni, és mindig <strong> szabadon kell hagyni.</strong> Nem lehet rajtuk <strong>akadály, lezárt ajtó vagy tárolt áru,</strong> mert veszélyhelyzetben azonnal használhatónak kell lenniük."
+          },
+          {
+            q: "Kell-e biztonsági világítás a cégembe?",
+            a : "<strong>Igen, ha a helyiségben nincs természetes fény</strong> vagy az épület mérete és funkciója megköveteli. A biztonsági világítás biztosítja, hogy <strong> áramszünet vagy füst</strong> esetén is látható maradjon a menekülési útvonal. Kis alapterületű üzleteknél ez nem mindig kötelező, de <strong>szakemberrel kell ellenőriztetni</strong> a szükségességét."
+          },
+          {
+            q : "Milyen jelzőtáblákat kötelező kitenni?",
+            a : "Kötelező a <strong> menekülési útvonalakat, a vészkijáratokat </strong> a <strong> tűzoltó készülékek helyét</strong> és a <strong> tűzjelző berendezéseket</strong> jól látható táblákkal megjelölni. Ezen felül a <strong> dohányzási tilalom</strong> és a <strong>veszélyes anyagok jelölése</strong> is előírás lehet. A tábláknak <strong> MSZ szabvány szerintieknek</strong> kell lenniük, nem helyben készített verzióknak."
+          },
+          {
+            q: "Ki készítheti el a tűzvédelmi szabályzatot?",
+            a : "A tűzvédelmi szabályzatot csak <strong> szakképesített tűzvédelmi szakember</strong> készítheti el. Az ügyvezető nem írhatja meg saját maga, mert a szabályzatnak <strong>jogszabályi követelményeknek </strong> kell megfelelnie. A szakember biztosítja, hogy minden <strong> előírás, menekülési útvonal és tűzoltó eszköz </strong> előírásszerűen szerepeljen benne."
+          },
+          {
+            q : "Mi a különbség a tűzvédelmi szabályzat és a tűzriadó terv között?",
+            a : "A <strong>tűzvédelmi szabályzat</strong> egy átfogó dokumentum, amely tartalmazza a <strong> cég tűzvédelmi előírásait, kötelezettségeit és ellenőrzési rendjét.</strong> A <strong> tűzriadó terv </strong> viszont egy <strong> gyakorlati útmutató </strong> amely leírja, hogy <strong> űz esetén pontosan mit kell tenni, </strong>hogyan kell elhagyni az épületet, és kik az érintett felelősök. "
+          },
+          {
+            q : "Meddig érvényes egy elkészített tűzvédelmi szabályzat?",
+            a : "A tűzvédelmi szabályzatnak <strong> nincs lejárati ideje </strong> de <strong> módosítani kell,</strong> ha a cég tevékenysége, létszáma vagy épülete változik. Például új telephely, több dolgozó, vagy átalakítás esetén <strong> kötelező frissíteni.</strong> Ha nincs naprakészen tartva, a hatóság <strong> bírságot szabhat ki.</strong>"
+          },
+          {
+            q : "Mikor kell frissíteni a tűzvédelmi szabályzatot?",
+            a : "A szabályzatot <strong> minden jelentős változásnál </strong> frissíteni kell: ha <strong> új telephely</strong> nyílik, változik a <strong> létszám </strong>  átalakítják az épületet, vagy új <strong>technológiát</strong> vezetnek be. Ha nincs naprakészen tartva, a hatóság <strong> bírságot szabhat ki,</strong>  mert elavult szabályzat nem véd megfelelően."
+          },
+          {
+            q : "Ha költözik a cégem, kell új szabályzatot készíteni?",
+            a : "Igen. Költözéskor a <strong>korábbi szabályzat érvényét veszti,</strong> mert más a <strong>  menekülési útvonal,</strong> a <strong> helyiségek elrendezése</strong> és az <strong> eszközök helye</strong> Új telephelyen mindig<strong> új szabályzat</strong> kell, hogy megfeleljen az adott körülményeknek és jogszabályi előírásoknak."
+          },
+          {
+            q : "A bérelt irodában nekem vagy a tulajdonosnak kell gondoskodni a tűzvédelemről?",
+            a : "A <strong> bérlő felel a saját tevékenységéért </strong> és a dolgozók biztonságáért, így  a <strong> tűzvédelmi szabályzatot és oktatást</strong> neki kell biztosítania. Az épület <strong> közös részeinek tűzvédelméről</strong> viszont a <strong> tulajdonos vagy üzemeltető</strong> gondoskodik. Fontos, hogy a felelősségi körök tisztázva legyenek."
+          },
+          {
+            q : "Hogyan tudom tesztelni a füstérzékelőt?",
+            a : "Minden készüléken van egy <strong> teszt gomb</strong>  amelyet megnyomva a riasztónak sípolnia kell. Ez a próba <strong>havonta ajánlott.</strong> Léteznek <strong> teszt spray-k</strong> amelyekkel füstöt szimulálhatunk. Ha nem ad hangot a gombnyomásra, az eszközt <strong>azonnal cserélni kell.</strong>"
+          },
+          {
+            q : "Kell-e szén-monoxid érzékelő a munkahelyen?",
+            a : "Ott kötelező, ahol <strong>nyílt lánggal működő berendezés</strong> van (pl. gázkazán, vízmelegítő). Az érzékelő életet menthet, mert a szén-monoxid <strong>színtelen és szagtalan gáz,</strong> amit nem lehet észrevenni. Ha az irodában nincs ilyen berendezés, akkor nem szükséges, de <strong>ajánlott</strong>."
+          },
+          {
+            q : "Mennyi időt vesz igénybe a tűzvédelmi ellenőrzés?",
+            a : "Egy hatósági ellenőrzés általában <strong>  1–2 órát vesz igénybe,</strong> a cég méretétől és a dokumentációtól függően. Az ellenőr átnézi a szabályzatokat, naplókat, tűzoltó készülékeket és menekülési útvonalakat. Ha minden rendben, gyorsan lezajlik, hiányosság esetén azonban <strong>további vizsgálat </strong> is lehet."
+          },
+          {
+            q: "Ki jogosult tűzvédelmi bírságot kiszabni?",
+            a : "A <strong>katasztrófavédelem</strong> jogosult tűzvédelmi bírság kiszabására. A bírság mértéke függ a hiányosság súlyától, akár <strong>több százezer forint</strong> is lehet. Az ellenőr mérlegelhet, de jogszabály szerint minden hiányosság rögzítésre kerül, ezért fontos a dokumentáció és az eszközök naprakészen tartása."
+          },
+          {
+            q : "Ha van munkavédelmi szakemberem, akkor kell külön tűzvédelmi is?",
+            a : "Igen. A <strong>munkavédelem és a tűzvédelem külön szakterület</strong> ezért külön szakember szükséges hozzájuk. Van, aki mindkettőre rendelkezik képesítéssel, ilyenkor egy személy is elláthatja a feladatot. Ha viszont csak munkavédelmis van, akkor <strong> tűzvédelmi szakembert is kell bevonni.</strong>"
+          },
+          {
+            q : "Mennyi idő alatt készül el egy tűzvédelmi szabályzat?",
+            a : "Általában <strong> 1–1,5 hét alatt</strong> elkészíthető, ha minden adat rendelkezésre áll (pl. alaprajz, dolgozói létszám, tevékenységi kör). Sürgős esetben akár pár nap alatt is megoldható, de fontos, hogy a dokumentum pontosan a cég saját működésére legyen szabva, különben nem elfogadható."
+          },
+          {
+            q : "Kell-e oktatást tartani a diákoknak/gyakornokoknak is?",
+            a : "Igen. <strong>Minden dolgozó, beleértve a diákokat és gyakornokokat is,</strong> köteles részt venni tűzvédelmi oktatáson. A jogszabály nem tesz különbséget. Nekik is tudniuk kell, hogyan kell viselkedni tűz esetén, merre van a menekülési útvonal, és hogyan használhatók az eszközök."
+          },
+          { 
+            q : "Kötelező a dolgozóknak tudni a tűzoltó készülék használatát?",
+            a : "Igen. A tűzvédelmi oktatás során <strong>meg kell ismertetni a tűzoltó készülék kezelését.</strong> Nem elég elméletben, szükség esetén gyakorlatban is bemutatható. A cél, hogy minden dolgozó képes legyen <strong> veszélyhelyzetben azonnal reagálni,</strong> és biztonságosan elfojtani egy kezdeti tüzet."
+          },
+          { 
+            q : "Hogyan tudom bizonyítani, hogy a dolgozók részt vettek a tűzvédelmi oktatáson?",
+            a : "Az oktatásról <strong> írásos dokumentáció </strong>készül: jelenléti ív és oktatási tematika. Ezeket meg kell őrizni, és ellenőrzéskor bemutatni. Ha nincs dokumentálva, a hatóság úgy tekinti, mintha az oktatás <strong> meg sem történt volna,</strong> még akkor is, ha a dolgozók valóban részt vettek. "
+          },
+          { 
+            q : "Kell-e naplózni a tűzvédelmi eszközök ellenőrzését?",
+            a : "Igen. A tűzoltó készülékek és egyéb eszközök ellenőrzését <strong> nyilvántartásban kell vezetni.</strong> Ez tartalmazza az ellenőrzés dátumát, a felelős nevét és a készülék állapotát. Enélkül a hatóság nem tudja igazoltnak tekinteni, hogy az eszközök karbantartottak."
+          },
+          {
+            q : "Mi a teendő, ha tűzvédelmi hiányosságot találok a cégemnél?",
+            a : "Azonnal intézkedni kell a hiányosság megszüntetésére. Például ha lejárt egy tűzoltó készülék, gondoskodni kell a <strong>felülvizsgálatról vagy cseréről. </strong> Ha dokumentum hiányzik, azt pótolni kell. A hatóság a javító szándékot értékeli, de halogatás esetén <strong> bírságot szabhat ki.</strong>"
+          },
+          {
+            q : "Van-e lehetőség bírság helyett figyelmeztetésre első alkalommal?",
+            a : "Igen, előfordulhat. A katasztrófavédelem mérlegelheti, hogy <strong>figyelmeztetést adjon</strong> első alkalommal, főleg kisebb hiányosságoknál. Ez azonban nem garantált. Súlyos vagy veszélyes hiányosságoknál (pl. használhatatlan menekülési útvonal, hiányzó készülék) a bírság  <strong>kötelező.</strong>"
+          }
+
         ]
     },
     { 
