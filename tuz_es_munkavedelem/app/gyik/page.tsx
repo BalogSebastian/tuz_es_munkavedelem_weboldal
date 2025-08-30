@@ -143,10 +143,246 @@ const faqData = [
         category: "HACCP",
         icon: FaUtensils,
         questions: [
-            { q: "Kötelező a HACCP minden cégnek?", a: "<strong>Igen</strong>, minden olyan vállalkozásnak, ami élelmiszerrel foglalkozik (pl. étterem, pékség, büfé, kávézó, élelmiszerbolt), rendelkeznie kell HACCP-vel. Ez jogszabályi előírás az EU-ban és Magyarországon is." },
-            { q: "Mit tartalmaz egy HACCP dokumentáció?", a: "<ul><li><strong>a technológiai folyamatok leírását,</strong></li><li><strong>a lehetséges veszélyek elemzését,</strong></li><li><strong>a kritikus ellenőrzési pontokat</strong> (pl. hőmérséklet, tisztaság),</li><li><strong>az ellenőrzési módszereket és felelősöket,</strong></li><li><strong>a naplózás és nyomonkövetés módját.</strong></li></ul>" },
-            { q: "Milyen előnye van a HACCP-nek a cégem számára?", a: "<ul><li><strong>Biztonságosabb élelmiszert</strong> tudsz előállítani és forgalmazni.</li><li>Elkerülheted a <strong>hatósági bírságokat és bezárást</strong>.</li><li><strong>Növeli a vásárlók bizalmát</strong>, hiszen tudják, hogy szabályozott körülmények között dolgozol.</li><li>Segít rendszerezni a folyamatokat és <strong>csökkenti a hibák esélyét</strong>.</li></ul>" },
-            { q: "Mi az a HACCP?", a: "A HACCP (Hazard Analysis and Critical Control Points) egy élelmiszerbiztonsági rendszer, ami segít <strong>azonosítani, megelőzni és ellenőrizni</strong> azokat a veszélyeket, amelyek az élelmiszer előállítása vagy forgalmazása során előfordulhatnak. (pl: fertőzések, gomba megtelepedése, vírusok elkerülése)" },
+          {
+            q : "Mi az a HACCP és miért kötelező minden vendéglátó egységben?",
+            a : "A <strong>  HACCP (Veszélyelemzés és Kritikus Szabályozási Pontok rendszere) </strong> egy élelmiszerbiztonsági előírás, amely a szennyeződések és ételmérgezések megelőzését szolgálja. Minden vendéglátó egységnek kötelező, mert a fogyasztók egészségét védi, és a hatóság (NÉBIH) ellenőrzi a meglétét."
+          },
+          {
+            q : "Mely jogszabály írja elő a HACCP rendszer meglétét?",
+            a : "A HACCP-t az <strong>852/2004/EK rendelet</strong> és a hozzá kapcsolódó magyar élelmiszerbiztonsági jogszabályok írják elő. Ezek kimondják, hogy minden élelmiszert előállító vagy forgalmazó vállalkozás köteles a rendszert működtetni és dokumentálni. Ez tehát <strong>nem választható, </strong>hanem kötelező."
+          },
+          {
+            q : "Kinek a felelőssége a HACCP működtetése a cégnél?",
+            a : "A HACCP betartásáért mindig a <strong>vállalkozás vezetője (ügyvezető, üzletvezető)</strong> felel. Kijelölhet felelős személyt, de jogilag ő vonható felelősségre. Ezért fontos, hogy a dokumentáció naprakész legyen, és a dolgozók ismerjék az előírt szabályokat."
+          },
+          { 
+            q : "Kell-e HACCP dokumentáció egy kisebb büfének vagy kávézónak?",
+            a : "Igen, <strong> minden vendéglátó egységnek kötelező</strong> a HACCP, függetlenül a mérettől. Egy kisebb büfé vagy kávézó esetében egyszerűsített dokumentáció is elegendő lehet, de teljesen mellőzni nem lehet. Az ellenőrzésen a NÉBIH ezt ugyanúgy számon kéri."
+          },
+          { 
+            q : "Mi történik, ha nincs HACCP a vállalkozásnál?",
+            a : "Ha egy vállalkozás nem rendelkezik HACCP dokumentációval, a hatóság <strong>bírságot szab ki,</strong> súlyos esetben akár a működést is felfüggesztheti. A bírság mértéke több százezer forint is lehet, ezért mindig jobb előre gondoskodni a szabályos dokumentumról."
+          },
+          {
+            q : "Mi a különbség a HACCP és a GHP között?",
+            a : "A <strong>GHP (Helyes Higiéniai Gyakorlat)</strong> az alapvető tisztasági és higiéniai előírásokat tartalmazza. A <strong>HACCP </strong>ehhez képest egy kockázatelemző rendszer, amely konkrét veszélyeket és kritikus pontokat jelöl ki. A GHP az alap, a HACCP pedig a rendszer erre épülve."
+          },
+          {
+            q : "Mennyi ideig érvényes a HACCP dokumentáció?",
+            a : "A HACCP dokumentáció addig érvényes, amíg a vállalkozás tevékenysége és működése nem változik. Ha új technológia, új termék vagy nagyobb átalakítás történik, a dokumentációt <strong>frissíteni kell. </strong>Általában ajánlott <strong>évente átnézni.</strong>"
+          },
+          {
+            q : "Milyen gyakran kell felülvizsgálni a HACCP-t?",
+            a :"A HACCP rendszer felülvizsgálata <strong> évente egyszer kötelező,</strong> vagy minden olyan változásnál, ami az élelmiszerbiztonságot érinti. Például új étel felvétele a kínálatba, új előkészítő helyiség nyitása, vagy technológiai változtatás."
+          },
+          {
+            q : "Ki készítheti el a HACCP rendszert?",
+            a : "A HACCP dokumentációt elkészítheti <strong>szakértő tanácsadó, </strong> vagy olyan személy, aki megfelelő tapasztalattal rendelkezik élelmiszerbiztonság terén. A vezető felelőssége viszont akkor is megmarad. A sablonok önmagukban nem elegendőek, mindig a cégre kell szabni."
+          },
+          { 
+            q : "Milyen költségei lehetnek a HACCP bevezetésének?",
+            a : "A költségek nagysága a cég méretétől és tevékenységétől függ. Egy kisebb büfé esetében a dokumentáció ára <strong>pár tízezer forint</strong> míg egy nagy étterem vagy élelmiszerüzem esetében ennek sokszorosa lehet. A bírságnál azonban mindig <strong> olcsóbb megelőzni. </strong>"
+          },
+          {
+            q : " Milyen dokumentumokat kell tartalmaznia egy HACCP-nek?",
+            a : "Egy HACCP-ben szerepelnie kell a <strong>veszélyelemzésnek, a kritikus pontok meghatározásának, a folyamatábráknak, az ellenőrzési és naplózási rendszernek</strong>  (pl. hőmérsékletnapló, áruátvétel, takarítás). Ezek mellett a felelősök kijelölése és a szükséges intézkedési tervek is fontos részei."
+          },
+          { 
+            q : "Kötelező-e vezetni áruátvételi naplót?",
+            a : "Igen, <strong>kötelező.</strong> Az áruátvételi naplóban rögzíteni kell a beszállító nevét, az átvétel időpontját, a termékek állapotát és a hőmérsékletet, ha az előírt. Ez bizonyítja, hogy a vállalkozás ellenőrizte az alapanyagok minőségét és megfelelőségét."
+          },
+          {
+            q : "Hogyan kell vezetni a hűtő hőmérséklet naplót?",
+            a : "A hűtők hőmérsékletét <strong>naponta legalább egyszer, mindig azonos időpontban</strong> kell rögzíteni. A naplóban fel kell tüntetni a dátumot, a mért értéket és az aláírást. Ha eltérés tapasztalható, a szükséges intézkedést is dokumentálni kell."
+          },
+          {
+            q : "Kell-e takarítási napló a HACCP-ben?",
+            a : "Igen, a takarítási napló kötelező része a HACCP-nek. Ebben kell rögzíteni a <strong> akarítás dátumát, a helyiséget, az elvégzett feladatokat és a felelős személy nevét. </strong> Ez igazolja, hogy a higiéniai előírásokat rendszeresen betartják."
+          },
+          { 
+            q : "Mit kell dokumentálni a kártevőirtással kapcsolatban?",
+            a : "A kártevőirtási naplóban fel kell tüntetni az <strong>alkalmazott módszert, a felhasznált szereket, az ellenőrzés időpontját és az irtást végző személy adatait.</strong> Szerződés is kell egy hivatalos irtócéggel, és minden beavatkozásról jegyzőkönyvet kell vezetni."
+          },
+          { 
+            q : "Hogyan kell vezetni az oktatási naplót?",
+            a : "Az oktatási naplóban rögzíteni kell az <strong> oktatás dátumát, témáját, a résztvevők nevét és aláírását.</strong> Ez bizonyítja, hogy a dolgozók ismerik a higiéniai és élelmiszerbiztonsági előírásokat. Oktatást új dolgozó belépésekor és évente ismételni kell."
+          },
+          {
+            q : "Mennyi ideig kell megőrizni a HACCP naplókat?",
+            a : "A naplókat legalább <strong> 2 évig meg kell őrizni, </strong> de egyes dokumentumoknál (pl. veszélyes anyagok, kártevőirtás) hosszabb megőrzés is előírt lehet. A hatósági ellenőrzés során mindig a legutóbbi időszak naplóit kérik be először."
+          },
+          {
+            q : "Mi történik, ha hiányosan van vezetve a dokumentáció?",
+            a : "Ha a naplók hiányosak, a hatóság <strong> hiányosságot állapít meg </strong>és felszólít a pótlásra. Ismételt ellenőrzéskor bírság is lehet, amely akár több százezer forint. A naplók pontos vezetése tehát a cég jogi és anyagi biztonságát is védi."
+          },
+          {
+            q : "Kell-e külön napló a használt étolaj elszállításáról?",
+            a : "Igen, a használt étolaj elszállítását dokumentálni kell. A szerződés és a szállítólevelek bizonyítják, hogy a vállalkozás szabályosan kezeli a veszélyes hulladékot. Ez általában külön <strong> olajnyilvántartási naplóban</strong> szerepel."
+          },
+          { 
+            q : "Hogyan kell rögzíteni az ételminta eltevését?",
+            a : "Ha egy ételből 29 adagnál több készül, <strong>kötelező ételmintát eltenni.</strong> A naplóban fel kell tüntetni az étel nevét, a dátumot, a mintavétel időpontját, a mennyiséget és az aláírást. A mintát <strong> 72 óráig -18 °C-on</strong> kell tárolni."
+          },
+          {
+            q : "Mikor kell folyamatábrát készíteni a HACCP-hez?",
+            a : "Folyamatábrát kell készíteni minden olyan tevékenységhez, ahol <strong> élelmiszer előállítás, feldolgozás vagy kezelés történik.</strong> A folyamatábra a teljes technológiai sort mutatja, az áruátvételtől a tálalásig. Ez segít azonosítani a kritikus pontokat, ahol veszély léphet fel."
+          },
+          {
+            q : "Milyen folyamatokra kötelező folyamatábrát készíteni?",
+            a : "Kötelező ábrázolni az <strong>áruátvételt, tárolást, előkészítést, ételkészítést, hőkezelést, hűtést, tálalást és kiszállítást.</strong> Minden folyamatot úgy kell bemutatni, hogy látszódjon a termék útja, és meg lehessen határozni a veszélyeket, CCP-ket."
+          },
+          {
+            q : "Kell-e külön folyamatábra a kiszállításhoz?",
+            a : "Igen, ha az egység végez kiszállítást, akkor <strong> külön folyamatábra szükséges a szállítási lépésekhez. </strong>  Ebben szerepelnie kell a csomagolásnak, a szállító jármű hőmérsékletének és a kiszállítás módjának (pl. saját autó, Wolt, Foodora)."
+          },
+          { 
+            q : "Hogyan kell ábrázolni a raktározási folyamatot?",
+            a : "A raktározás folyamatát <strong>külön dobozban, nyilakkal kapcsolva</strong> kell feltüntetni. Fontos jelezni a hőmérsékleti előírásokat (pl. +2–5 °C, -18 °C), a polcok elkülönítését, valamint a FIFO-elvet („first in – first out”), amely a lejárati idők figyelését biztosítja."
+          },
+          {
+            q : "Miért fontos a termékek nyomon követhetősége a HACCP-ben?",
+            a : "A nyomon követhetőség lehetővé teszi, hogy <strong> egy alapanyag vagy késztermék útja teljesen visszakövethető legyen. </strong>Ha probléma merül fel (pl. fertőzés, lejárt termék), így azonnal azonosítható, melyik szállítmány vagy tétel érintett, és visszahívás indítható."
+          },
+          {
+            q : "Mi a teendő, ha visszahívás történik egy alapanyagra?",
+            a : "Visszahívás esetén a vállalkozásnak<strong> azonnal ki kell vonnia a forgalomból vagy a raktárból az érintett alapanyagot, </strong>dokumentálni a folyamatot, és értesíteni a beszállítót. A HACCP-ben külön eljárásleírás szükséges a visszahívások kezelésére."
+          },
+          {
+            q : "Hogyan kell kezelni a keresztszennyeződés veszélyét?",
+            a : "A keresztszennyeződés elkerüléséhez biztosítani kell az <strong> elkülönített tárolást, külön vágódeszkákat és eszközöket, valamint a dolgozók higiéniai szabályainak betartását.</strong> A takarítási és fertőtlenítési rend is fontos eszköz a szennyeződések megelőzésében."
+          },
+          {
+            q : "Kell-e külön szabály a nyers hús és a késztermék kezelésére?",
+            a : "Igen, a HACCP-ben mindig szerepelnie kell annak, hogy a <strong>nyers hús és a késztermék kezelése teljesen elkülönítve történik.</strong> Ez külön hűtőt, elkülönített eszközöket és munkafolyamatokat jelent, a keresztszennyeződés megelőzése érdekében."
+          },
+          {
+            q : "Hogyan kell szabályozni a tojás felhasználását?",
+            a : "A tojás nagy kockázatú alapanyag, ezért a HACCP-ben meg kell határozni a <strong>elhasználás módját.</strong> Fertőtlenített tojást vagy tojáslevet ajánlott használni, nyers tojásos ételek (pl. majonéz) esetén külön szabályozás szükséges, mert Salmonella veszély áll fenn."
+          },
+          {
+            q : "Mik a legfontosabb higiéniai szabályok a konyhában?",
+            a : "A dolgozóknak <strong>rendszeresen kezet kell mosniuk, </strong>tiszta munkaruhát kell viselniük, tilos ékszert hordaniuk, és csak egészséges állapotban dolgozhatnak. Az eszközöket tisztán kell tartani, a takarítási ütemtervet be kell tartani, és mindig kerülni kell a keresztszennyeződést."
+          },
+          {
+            q : "Kell-e szerződés rágcsáló- és rovarirtó céggel?",
+            a : "Igen, minden vendéglátó egységnek kötelező <strong>szerződést kötnie egy engedéllyel rendelkező kártevőirtó céggel. </strong>Ez biztosítja a folyamatos megelőzést, a csapdák karbantartását és az éves irtási tervet. A szerződés meglétét a NÉBIH ellenőrzi."
+          },
+          {
+            q : "Mit vizsgál a NÉBIH a kártevőirtás kapcsán?",
+            a : "A NÉBIH ellenőrzi, hogy van-e  <strong> érvényes kártevőirtási szerződés, dokumentált irtási napló, kihelyezett csapdák térképe,</strong> és azok folyamatosan karban vannak-e tartva. A vizsgálat célja, hogy az egységben ne fordulhasson elő rágcsáló vagy rovar."
+          },
+          {
+            q : "Hogyan kell dokumentálni a rovarirtást?",
+            a : "Az irtást végző cég minden alkalommal <strong> jegyzőkönyvet állít ki,</strong> amelyben szerepel a dátum, a használt szerek, a kihelyezett csapdák helyei és az eredmény. Ezeket a jegyzőkönyveket a HACCP dokumentációhoz kell csatolni és megőrizni."
+          },
+          {
+            q : "Mit kell biztosítani a személyi higiénia kapcsán a dolgozóknak?",
+            a : "A dolgozóknak biztosítani kell <strong> mosdót, kézmosót, szappant, fertőtlenítőt, papírtörlőt és tiszta munkaruhát. </strong>Emellett szükséges az egészségügyi alkalmassági vizsgálat, és kötelező a rendszeres higiéniai oktatás a helyes kézmosásról, öltözködésről és munkavégzésről."
+          },
+          {
+            q : "Kötelező-e külön öltöző és mosdó a dolgozóknak?",
+            a : "A jogszabály előírja, hogy a dolgozóknak <strong>külön öltöző és mosdóhelyiség</strong>  álljon rendelkezésre. Kisebb egységeknél, ahol ez nem megoldható, befogadó nyilatkozat vagy közös használatú helyiség is elfogadott, de mindenképp dokumentálni kell."
+          },
+          {
+            q : "Hogyan kell elhelyezni a kézmosókat a HACCP szerint?",
+            a : "A kézmosókat úgy kell elhelyezni, hogy <strong>minden előkészítő és konyhai területen közvetlenül hozzáférhetők legyenek</strong> A kézmosónál mindig legyen folyékony szappan, fertőtlenítőszer és egyszer használatos papírtörlő. Lábpedálos vagy szenzoros működtetés előnyös."
+          },
+          {
+            q : "Milyen fertőtlenítőszereket kell használni?",
+            a : "Csak olyan <strong> élelmiszeriparban engedélyezett tisztító- és fertőtlenítőszereket </strong> szabad használni, amelyek rendelkeznek hatósági engedéllyel. Fontos, hogy a felhasználási koncentrációt és behatási időt mindig betartsák, és ezekről dokumentációt vezessenek."
+          },
+          {
+            q : "Hogyan kell nyilvántartani a tisztítószereket?",
+            a : "A tisztítószerekről <strong>anyagbiztonsági adatlapot kell tartani, </strong>és nyilván kell tartani a felhasználásukat. A takarítási naplóban rögzíteni kell, hogy mikor, milyen helyiséget takarítottak, milyen szerrel és ki végezte a munkát."
+          },
+          {
+            q : "Kötelező-e allergén kezelési szabályzat?",
+            a : "Igen, az EU rendeletek alapján minden vendéglátó egységnek kötelező <strong>allergén információt adnia a vendégeknek.</strong> Ezért a HACCP részeként allergén kezelési szabályzatot kell készíteni, amely bemutatja, hogyan kezelik és jelölik az allergéneket."
+          },
+          {
+            q : "Hogyan kell eljárni ételallergiás vendég esetén?",
+            a : "Ételallergiás vendég esetén a dolgozónak <strong>tájékoztatnia kell a vendéget az allergén összetevőkről</strong>, és biztosítani a keresztszennyeződés elkerülését. Ha nem garantálható a teljes biztonság, azt is egyértelműen jelezni kell a vendég felé."
+          },
+          {
+            q : "Mit vizsgál a NÉBIH egy HACCP ellenőrzés során?",
+            a : "A NÉBIH ellenőrzi a <strong>HACCP dokumentáció meglétét, naplók vezetését, higiéniai szabályok betartását, kártevőirtási jegyzőkönyveket és a dolgozók oktatását.</strong> Emellett a helyszínen megnézik, hogy a gyakorlatban is a leírtak szerint működik-e az egység."
+          },
+          {
+            q : "Mennyi ideig tart egy HACCP ellenőrzés?",
+            a : "Az ellenőrzés időtartama a vendéglátóhely méretétől függ: egy kis büfében <strong>1–2 óra alatt lezajlik,</strong> míg egy nagy étteremben akár fél napig is tarthat. A folyamat részletes: dokumentumellenőrzés, helyszíni bejárás és dolgozók kikérdezése."
+          },
+          {
+            q : "Mi történik, ha hiányosságot talál az ellenőrzésen a hatóság?",
+            a : "Ha a NÉBIH kisebb hiányosságot talál, általában <strong>felszólítást ad a javításra</strong>  és határidőt szab. Súlyosabb esetben <strong>  bírság, ideiglenes bezárás</strong> vagy az élelmiszer-forgalmazás korlátozása is lehetséges. Minden hiányosságot dokumentálnak."
+          },
+          { 
+            q : "Mekkora bírságot szabhat ki a NÉBIH HACCP hiányosságért?",
+            a : "A bírság mértéke függ a hiányosság súlyától: kisebb hibák esetén néhány tízezer forint, komoly szabálytalanságoknál <strong>több százezer vagy akár milliós nagyságrendű bírság</strong>  is lehet. Ismételt hiányosság esetén a szankciók súlyosbodnak."
+          },
+          {
+            q : "Mikor kell új HACCP dokumentációt készíteni?",
+            a : "Új HACCP dokumentáció szükséges <strong> telephelyváltáskor, profilbővítéskor, nagyobb átalakítás után vagy új technológia bevezetésekor</strong> Ha jelentősen megváltozik az ételkínálat, az alapanyagok vagy a munkafolyamat, akkor is kötelező az aktualizálás."
+          },
+          {
+             q : "Kell-e külön HACCP minden telephelyre?",
+             a : "Igen, minden telephelyre <strong>külön HACCP dokumentáció szükséges,</strong> mert az eltérő helyszínek más-más kockázatokat és technológiákat tartalmazhatnak. Nem elegendő egyetlen központi dokumentum, a NÉBIH telephelyenként ellenőrzi a rendszert."
+          },
+          {
+            q : "Elfogadja-e a hatóság a sablon HACCP-t?",
+            a : "A NÉBIH nem fogadja el a <strong>módosítás nélküli sablon HACCP-t. </strong> A sablon csak kiindulópont lehet, de minden dokumentációt <strong> az adott cégre, telephelyre és tevékenységre kell testre szabni.</strong> Ha sablon marad, az hiányosságnak számít."
+          },
+          {
+            q : "Mi a leggyakoribb hiba, amiért bírságot kapnak a vendéglátósok?",
+            a : "A leggyakoribb hibák: <strong>hiányos naplóvezetés, lejárt engedélyek, elavult HACCP dokumentáció, nem megfelelő hőmérséklet-nyilvántartás, hiányzó ételminták és nem dokumentált oktatás. </strong> Ezek jellemzően könnyen javíthatók, de bírsághoz vezethetnek."
+          },
+          {
+            q : "Hogyan tudok felkészülni egy HACCP ellenőrzésre?",
+            a : "Felkészüléshez: ellenőrizd a <strong> naplók (hűtő, áruátvétel, takarítás) vezetését, kártevőirtási szerződést, oktatási jegyzőkönyveket és az ételminta eltételt. </strong> A dolgozókat érdemes átismételtetni a higiéniai szabályokkal, mert az ellenőr kérdezheti őket."
+          },
+          {
+            q : "Milyen előnyei vannak a jól működő HACCP rendszernek?",
+            a : "Egy jól működő HACCP nemcsak a hatósági megfelelést segíti, hanem <strong> biztonságosabbá teszi az élelmiszereket, megelőzi az ételfertőzéseket, csökkenti a kockázatokat és erősíti a vendégek bizalmát. </strong>Emellett jogilag is védelmet nyújt a cégnek."
+          },
+          {
+            q : "Mennyi idő alatt lehet elkészíteni egy HACCP dokumentációt?",
+            a : "A HACCP dokumentáció elkészítése általában <strong> 1–2 hét</strong> alatt megoldható, ha minden szükséges információ rendelkezésre áll. A pontos idő függ a vállalkozás méretétől és tevékenységétől. Fontos, hogy a dokumentum <strong> személyre szabott legyen,</strong> ne csak sablon."
+          },
+          {
+            q : "Minden változást (pl. új étel, új gép) be kell írni a HACCP-be?",
+            a : "Igen. Ha új étel, technológia vagy gép kerül bevezetésre, azt <strong>módosítani kell a HACCP-ben. </strong> Az ellenőrzéskor vizsgálják, hogy a dokumentáció naprakész-e. A változások átvezetése a jogszabály szerint kötelező."
+          },
+          {
+            q : "Kell HACCP, ha csak italokat árusítok?",
+            a : "Igen, minden élelmiszerrel kapcsolatos tevékenységhez kell HACCP, még ha csak kávét, üdítőt vagy alkoholt árulsz is. Ebben az esetben a dokumentáció <strong>egyszerűbb,</strong> de az alapvető higiéniai szabályokat és ellenőrzéseket tartalmaznia kell."
+          },
+          {
+            q : "Mi a különbség a HACCP és az ISO 22000 között?",
+            a : "A <strong>HACCP</strong> jogszabályban előírt kötelező rendszer az élelmiszerbiztonságra. Az <strong> ISO 22000 </strong> egy nemzetközi szabvány, amely a HACCP elveire épül, de sokkal részletesebb, és <strong> minőségirányítási rendszerként </strong> működik. ISO csak akkor kell, ha a partnerek vagy piac igényli. "
+          },
+          {
+            q : "Melyik hatóság ellenőrzi a HACCP meglétét?",
+            a : "Magyarországon a <strong> NÉBIH </strong> (Nemzeti Élelmiszerlánc-biztonsági Hivatal) és a helyi <strong> járási hivatalok </strong> ellenőrzik a HACCP meglétét és betartását. Az ellenőrzések előzetes bejelentés nélkül is történhetnek."
+          },
+          {
+            q : "Kötelező-e a HACCP-t a dolgozóknak ismerni?",
+            a : "Igen. A dolgozóknak <strong> meg kell ismerniük </strong> a HACCP alapvető szabályait, különösen a higiéniai és biztonsági előírásokat. Az oktatásról naplót kell vezetni. Ha a dolgozó nem ismeri a szabályokat, a felelősség a munkáltatót terheli."
+          },
+          {
+            q : "Hogyan kell kezelni a hűtő meghibásodását a HACCP szerint?",
+            a : "Ha a hűtő meghibásodik, azonnal rögzíteni kell a hibát a naplóban, és intézkedni kell az élelmiszerek <strong>biztonságos áthelyezéséről.</strong> A hőmérsékleti eltérés kockázatot jelenthet, ezért a HACCP előírja a <strong>vészhelyzeti eljárás</strong> meglétét."
+          },
+          {
+            q : "Kell külön HACCP a kitelepülésekre (pl. fesztivál, rendezvény)?",
+            a : "Nem kell külön teljes HACCP, de a meglévő rendszerben szerepeltetni kell a kitelepülést mint <strong>külön tevékenységet. </strong>Ez azt jelenti, hogy a veszélyelemzésben és a folyamatábrában is meg kell jelenjen a kiszállítás és a helyszíni értékesítés."
+          },
+          {
+            q : "Elég egy sablon HACCP, vagy személyre kell szabni?",
+            a : "A hatóság nem fogadja el a sima sablont. A HACCP-nek mindig <strong> személyre szabottan, </strong>az adott vállalkozásra kell vonatkoznia. A sablon jó kiindulópont, de ki kell egészíteni a <strong>cég telephelyére, termékeire és folyamataira</strong>  vonatkozó adatokkal."
+          },
+          {
+            q : "Milyen dokumentumokat kell a helyszínen tartani HACCP ellenőrzéskor?",
+            a : "Az ellenőrzéskor kérhetik a teljes HACCP dokumentációt, valamint a <strong>naplókat</strong> (áruátvételi, hőmérséklet, takarítás, kártevőirtás, oktatás). Ezeket mindig <strong>naprakészen </strong> kell vezetni, mert hiányosság esetén bírságot szabhatnak ki."
+          }
         ]
     },
 ];
