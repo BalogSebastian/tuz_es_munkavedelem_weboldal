@@ -223,71 +223,66 @@ const CombinedSections: React.FC = () => {
             </section>
 
             {/* --- FAQ ACCORDION SZEKCIÓ --- */}
-            <section
-                className="py-24 lg:py-32 font-['Poppins',_sans-serif] relative bg-white grid-pattern grid-pattern-light"
+           {/* --- FAQ ACCORDION SZEKCIÓ --- */}
+<section
+    className="py-12 lg:py-16 font-['Poppins',_sans-serif] relative bg-white grid-pattern grid-pattern-light"
+>
+    <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10">
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+                Gyakori <span className={ACCENT_COLOR_CYAN.text}>Kérdések</span>
+            </h2>
+            <p className="text-base text-slate-600 max-w-2xl mx-auto">
+                Rövid válaszok a legfontosabb munkavédelmi és tűzvédelmi kérdésekre.
+            </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-3">
+            {faqItems.map((item, index) => {
+                const isOpen = openIndex === index;
+                return (
+                    <div
+                        key={index}
+                        className={`rounded-lg shadow-md hover:shadow-lg transition-shadow border overflow-hidden
+                                    ${isOpen ? `bg-white/80 border-cyan-400` : 'bg-white/70 border-gray-100'}`}
+                    >
+                        <button
+                            onClick={() => toggleItem(index)}
+                            className="w-full flex justify-between items-center p-4 text-left focus:outline-none group hover:bg-slate-50 transition-colors"
+                        >
+                            <span className={`flex items-center text-sm sm:text-base font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-600'}`}>
+                                {item.isImportant && (
+                                    <ExclamationCircleIcon className="w-5 h-5 mr-2 text-red-500/80" />
+                                )}
+                                {item.question}
+                            </span>
+                            <ChevronDownIcon
+                                className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-500'}`}
+                            />
+                        </button>
+                        {isOpen && (
+                            <div className="px-4 pb-4 text-slate-700 text-sm leading-relaxed">
+                                {item.answer}
+                            </div>
+                        )}
+                    </div>
+                );
+            })}
+        </div>
+
+        <div className="text-center mt-10">
+            <p className="text-sm text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
+            <Link
+                href="/kapcsolat"
+                className={`inline-flex items-center ${ACCENT_COLOR_CYAN.bg} hover:bg-cyan-600 text-white font-medium py-3 px-6 rounded-lg text-sm shadow-md transition`}
             >
-                {/* A tetején lévő hullámot és az alsó paddingot is eltávolítottuk, hogy tökéletesen illeszkedjen */}
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16 lg:mb-20">
-                        <h2 className={`text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4`}>
-                            Gyakran Ismételt <span className={ACCENT_COLOR_CYAN.text}>Kérdések</span>
-                        </h2>
-                        <p className={`text-xl text-slate-600 max-w-3xl mx-auto`}>Válaszok a leggyakoribb munka- és tűzvédelemmel kapcsolatos kérdésekre.</p>
-                    </div>
+                <SparklesIcon className="w-5 h-5 mr-2" />
+                Kapcsolatfelvétel
+            </Link>
+        </div>
+    </div>
+</section>
 
-                    <div className="max-w-3xl mx-auto space-y-5">
-                        {faqItems.map((item, index) => {
-                            const isOpen = openIndex === index;
-                            return (
-                                <div
-                                    key={index}
-                                    className={`rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out border overflow-hidden backdrop-blur-md
-                                                ${isOpen ? `bg-white/80 border-cyan-400 ring-4 ring-cyan-500/20` : 'bg-white/60 border-transparent'}`}
-                                >
-                                    <button
-                                        onClick={() => toggleItem(index)}
-                                        className={`w-full flex justify-between items-center p-5 sm:p-6 text-left focus:outline-none focus-visible:ring-cyan-500 focus-visible:ring-offset-2 group hover:bg-slate-50/50 transition-colors duration-150`}
-                                        aria-expanded={isOpen}
-                                    >
-                                        <span className={`flex items-center text-md sm:text-lg font-semibold transition-colors duration-200 ${isOpen ? 'text-cyan-800' : `text-slate-800 group-hover:text-cyan-600`}`}>
-                                            {item.isImportant && (
-                                                <span className="mr-3">
-                                                    <ExclamationCircleIcon className="w-6 h-6 text-red-500/80" />
-                                                </span>
-                                            )}
-                                            {item.question}
-                                        </span>
-                                        <div
-                                            className={`ml-4 flex-shrink-0 p-2 ${isOpen ? 'bg-cyan-100/80' : 'bg-slate-100/80'} group-hover:bg-cyan-100/60 rounded-full shadow-sm group-hover:shadow-md transition-all duration-200`}
-                                        >
-                                            <ChevronDownIcon className={`w-5 h-5 transition-transform duration-300 ease-in-out ${isOpen ? `transform rotate-180 text-cyan-600` : `text-gray-500 group-hover:text-cyan-500`}`} />
-                                        </div>
-                                    </button>
-                                    {isOpen && (
-                                        <div key="content" className="overflow-hidden">
-                                            <div className="px-6 pb-6 pt-2 text-slate-700 leading-relaxed prose prose-cyan max-w-none">
-                                                <p>{item.answer}</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    <div className="text-center mt-16 lg:mt-20">
-                        <p className="text-lg text-slate-600 mb-6">Nem találtál rá választ? Vedd fel egy szakértőnkkel a kapcsolatot:</p>
-                        <div>
-                            <Link href="/kapcsolat"
-                                className={`inline-flex items-center bg-[#03BABE] hover:bg-cyan-600 text-white font-semibold py-4 px-10 rounded-xl text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-offset-2`}
-                            >
-                                <SparklesIcon className="w-6 h-6 mr-2" />
-                                Kapcsolatfelvétel
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </>
     );
 };
