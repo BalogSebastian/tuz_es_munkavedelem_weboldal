@@ -86,9 +86,9 @@ interface BaseQuestionConfig {
 const allQuestionsConfig: { [key: string]: BaseQuestionConfig } = {
     establishmentPhase: {
       id: 'establishmentPhase',
-      text: "Válassza ki vállalkozása jelenlegi helyzetét:",
+      text: "Válaszd ki a vállalkozásod jelenlegi helyzetét:",
       icon: BuildingStorefrontIcon,
-      detail: "Ez segít meghatározni az Önre vonatkozó teendőket.",
+      detail: "Ez segít meghatározni a rád vonatkozó teendőket.",
       options: [
         { value: 'HAS_COMPANY', text: 'Működő cégem van' },
         { value: 'OPENING_SOON', text: 'Hamarosan nyitok' },
