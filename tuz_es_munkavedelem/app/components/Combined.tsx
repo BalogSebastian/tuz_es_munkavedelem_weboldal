@@ -16,9 +16,6 @@ const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => {
     return (
         <svg
             className={className} width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M150 0H0V150" stroke="currentColor" strokeWidth="2"/>
-            <path d="M120 0H0V120" stroke="currentColor" strokeWidth="1"/>
-            <path d="M90 0H0V90" stroke="currentColor" strokeWidth="0.5"/>
             <circle cx="0" cy="0" r="5" fill="currentColor"/>
         </svg>
     );
