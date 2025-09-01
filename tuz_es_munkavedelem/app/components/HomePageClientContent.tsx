@@ -1,30 +1,102 @@
-// components/HomePageClientContent.tsx
-'use client'; // <-- EZ KULCSFONTOSSÁGÚ: Ez egy kliens komponens!
+'use client';
 
-import React from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+// JAVÍTVA: A hibás 'ScreenResolution' import eltávolítva
+import FingerprintJS, { Agent, Component, GetResult } from '@fingerprintjs/fingerprintjs';
 
-// Dinamikusan importált komponensek, most már egy kliens komponensben vannak
-const IntroSection = dynamic(() => import('./IntroSection'), { ssr: false });
-const CallToActionSection = dynamic(() => import('./CallToActionSection'), { ssr: false });
+// Komponensek importálása
+import ExitIntentPopup from './ExitIntentPopup';
 const ServiceHighlightCards = dynamic(() => import('./ServiceHighlightCards'), { ssr: false });
-const ProcessSteps = dynamic(() => import('./ProcessSteps'), { ssr: false });
 const StatsCounterSection = dynamic(() => import('./StatsCounterSection'), { ssr: false });
 const DownloadableDocsSection = dynamic(() => import('./DownloadableDocsSection'), { ssr: false });
-const FreeConsultationCtaSection = dynamic(() => import('./FreeConsultationCtaSection'), { ssr: false });
-const FaqAccordion = dynamic(() => import('./FaqAccordion'), { ssr: false });
-const TestimonialSlider = dynamic(() => import('./TestimonialSlider'), { ssr: false });
-const Footer = dynamic(() => import('./Footer'), { ssr: false }); // A Footer is mehet dinamikusan
-
-// Azonnali betöltésű komponensek (ha mégis ide kerülnek)
-import HeaderHero from './HeaderHero'; // A HeaderHero valószínűleg nem ide tartozik majd, hanem a page.tsx-be
-import PreConsultationForm from './PreConsultationForm'; // A PreConsultationForm valószínűleg nem ide tartozik majd, hanem a page.tsx-be
+const Footer = dynamic(() => import('./Footer'), { ssr: false });
 import IntegratedApplication from './IntegratedApplications';
 import CombinedSections from './Combined';
 
+// Segédfüggvény a biztonságos adatkinyeréshez (változatlan)
+function getComponentValue<T>(component: Component<T> | undefined): T | string {
+  if (component && 'value' in component) {
+    return component.value;
+  }
+  return 'N/A';
+}
+
 export default function HomePageClientContent() {
+  const [showExitPopup, setShowExitPopup] = useState(false);
+
+  useEffect(() => {
+    // ... (exit-intent logika változatlan)
+    const triggerPopup = () => {
+      if (!sessionStorage.getItem('exitIntentShown')) {
+        setShowExitPopup(true);
+        sessionStorage.setItem('exitIntentShown', 'true');
+      }
+    };
+    const handleMouseLeave = () => triggerPopup();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') triggerPopup();
+    };
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  const handleAccept = async () => {
+    try {
+      const fp: Agent = await FingerprintJS.load();
+      const result: GetResult = await fp.get();
+
+      // --- JAVÍTVA: Biztonságos és helyes képernyőfelbontás-kezelés ---
+      const screenResolutionComponent = result.components.screenResolution;
+      let resolutionString = 'N/A';
+      if (screenResolutionComponent && 'value' in screenResolutionComponent && Array.isArray(screenResolutionComponent.value)) {
+        // Csak akkor hívjuk a .join()-t, ha biztosan egy tömb
+        resolutionString = screenResolutionComponent.value.join('x');
+      }
+
+      const detailedData = {
+        visitorId: result.visitorId,
+        confidenceScore: result.confidence.score,
+        platform: getComponentValue(result.components.platform),
+        vendor: getComponentValue(result.components.vendor),
+        screen: {
+          resolution: resolutionString, // A biztonságosan létrehozott string
+          colorDepth: getComponentValue(result.components.colorDepth),
+        },
+        hardware: {
+          cpuCores: getComponentValue(result.components.hardwareConcurrency),
+          memory: getComponentValue(result.components.deviceMemory),
+        },
+        timezone: getComponentValue(result.components.timezone),
+        languages: getComponentValue(result.components.languages),
+        pageUrl: typeof window !== 'undefined' ? window.location.href : 'N/A',
+        referrer: typeof document !== 'undefined' ? document.referrer || 'Direct' : 'N/A',
+      };
+
+      await fetch('/api/log-exit-consent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(detailedData),
+      });
+
+      setShowExitPopup(false);
+    } catch (error) {
+      console.error('Hiba történt a részletes adatok gyűjtése és küldése közben:', error);
+    }
+  };
+
   return (
     <>
+      <ExitIntentPopup
+        isOpen={showExitPopup}
+        onClose={() => setShowExitPopup(false)}
+        onAccept={handleAccept}
+      />
+      
       <IntegratedApplication/>
       <ServiceHighlightCards />
       <StatsCounterSection />
