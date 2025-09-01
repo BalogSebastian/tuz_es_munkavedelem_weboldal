@@ -97,7 +97,7 @@ const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ te
               <StarIcon key={i} className={`w-6 h-6 ${i < testimonial.rating ? testimonialAccentColor.starActive : 'text-white/20'}`} />
             ))}
           </div>
-          <p className="text-base italic text-slate-300 mb-5 leading-relaxed flex-grow min-h-[120px] flex items-center justify-center">
+          <p className="text-base italic text-slate-300 mb-5 leading-relaxed flex-grow min-h-[80px] flex items-center justify-center">
             <span>"{testimonial.quote}"</span>
           </p>
           <div className="mt-auto">
@@ -128,6 +128,20 @@ const CombinedPage = () => {
         .cta-grid-pattern {
           background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px), linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px);
           background-size: 4rem 4rem;
+        }
+        .animate-scroll {
+          animation: scroll 15s linear infinite; /* Gyorsabb animáció */
+        }
+        .pause-on-hover:hover .animate-scroll {
+          animation-play-state: paused;
+        }
+        @keyframes scroll {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-33.333333%);
+          }
         }
       `}</style>
 
@@ -163,16 +177,16 @@ const CombinedPage = () => {
 
       {/* Header Hero */}
       <div className="flex-grow flex flex-col items-center justify-center text-center relative">
-        <div className="w-full relative z-10 flex flex-col items-center">
+        <div className="max-w-7xl relative z-10 flex flex-col items-center">
           <div className="flex flex-col items-center">
             <div className="mb-1 z-20">
-              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={80} height={80} className="mx-auto" priority />
+              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={100} height={100} className="mx-auto" priority />
             </div>
-            <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10 w-full px-4 sm:px-6 md:px-12">
+            <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10">
               Elkészítjük a jogszabályoknak megfelelő Tűz- Munkavédelmi, és HACCP dokumentációkat, hogy téged ne büntessenek meg.
             </h2>
             <h1
-              className="text-5xl sm:text-7xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white z-10 w-full px-4 sm:px-6 md:px-12"
+              className="text-5xl sm:text-7xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white z-10"
             >
               A büntetés értéke 10 Millió forintig terjedhet!
             </h1>
@@ -206,10 +220,10 @@ const CombinedPage = () => {
               Ők már <span className={testimonialAccentColor.primaryText}>jobban</span> alszanak:
             </h2>
           </div>
-          <div className="max-w-7xl mx-auto overflow-hidden relative">
-            <div className="flex">
+          <div className="max-w-7xl mx-auto overflow-hidden relative pause-on-hover">
+            <div className="flex animate-scroll">
               {combinedTestimonials.map((testimonial, index) => (
-                <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 p-4"> {/* Itt módosítottam lg:w-1/4 -> md:w-1/3-ra, hogy 3 férjen el nagy képernyőkön */}
                   <TestimonialCard testimonial={testimonial} />
                 </div>
               ))}
