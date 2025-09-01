@@ -48,7 +48,7 @@ const Kapcsolat = () => {
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             />
             <motion.div
-                className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 relative"
+                className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 relative flex flex-col items-center justify-center"
                 variants={pageVariants}
                 initial="initial"
                 animate="in"
@@ -61,8 +61,8 @@ const Kapcsolat = () => {
                         Kérdésed van, vagy csak szeretnél konzultálni? Keress minket bátran, segítünk mindenben!
                     </p>
                 </motion.header>
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
-                    <main className="lg:col-span-3">
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-16 w-full max-w-7xl">
+                    <main className="flex-grow">
                         <motion.div variants={itemVariants}>
                             <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200 space-y-6 flex flex-col items-center justify-center min-h-[600px]">
                                 <h2 className="text-3xl font-bold text-slate-800 mb-4">Foglalj időpontot egy ingyenes konzultációra!</h2>
@@ -87,9 +87,7 @@ const Kapcsolat = () => {
                                 />
                             </div>
                         </motion.div>
-                    </main>
-                    <aside className="lg:col-span-2 space-y-8">
-                        <motion.div variants={itemVariants} className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200">
+                        <motion.div variants={itemVariants} className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200 mt-8">
                             <h3 className="text-2xl font-bold text-slate-800 mb-4 flex items-center"><ClockIcon className="w-7 h-7 mr-3 text-cyan-500" />Telefonos elérhetőség</h3>
                             <ul className="space-y-2 text-slate-600">
                                 <li className="flex justify-between items-center p-2 rounded-md">
@@ -102,7 +100,7 @@ const Kapcsolat = () => {
                                 </li>
                             </ul>
                         </motion.div>
-                        <motion.div variants={itemVariants} className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200 space-y-4">
+                        <motion.div variants={itemVariants} className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-200 space-y-4 mt-8">
                             <h3 className="text-2xl font-bold text-slate-800 mb-4 flex items-center"><BuildingOfficeIcon className="w-7 h-7 mr-3 text-cyan-500" />Cégadatok</h3>
                             <div className="flex items-center gap-4 group">
                                 <div className="p-3 bg-slate-100 rounded-lg group-hover:bg-cyan-100 transition-colors"><PhoneIcon className="w-6 h-6 text-slate-500 group-hover:text-cyan-600 transition-colors" /></div>
@@ -126,33 +124,11 @@ const Kapcsolat = () => {
                                 </div>
                             </div>
                         </motion.div>
-                    </aside>
+                    </main>
                 </div>
                 <motion.footer variants={itemVariants} className="max-w-4xl mx-auto mt-24 text-center border-t border-slate-200 pt-16">
                     <h3 className="text-3xl font-bold text-slate-800 mb-4">Készen állsz a biztonságosabb működésre?</h3>
                     <p className="text-slate-600 text-lg mb-8">Az első lépés egy ingyenes konzultáció. Keress minket még ma!</p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link href="/">
-                            <motion.div
-                                className="w-full sm:w-auto text-center font-semibold py-3 px-8 rounded-xl bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors cursor-pointer"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <ArrowLeftIcon className="w-5 h-5 inline-block mr-2" />
-                                Vissza a főoldalra
-                            </motion.div>
-                        </Link>
-                        <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358">
-                            <motion.div
-                                className={`w-full sm:w-auto text-center font-bold py-3 px-8 rounded-xl bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg shadow-cyan-500/30 cursor-pointer`}
-                                whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <SparklesIcon className="w-5 h-5 inline-block mr-2" />
-                                Konzultációt kérek
-                            </motion.div>
-                        </Link>
-                    </div>
                 </motion.footer>
             </motion.div>
         </div>
