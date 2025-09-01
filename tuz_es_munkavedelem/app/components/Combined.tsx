@@ -9,6 +9,7 @@ import {
     WrenchScrewdriverIcon,
     CreditCardIcon,
 } from '@heroicons/react/24/outline';
+import { IoArrowRedo } from "react-icons/io5";
 
 // --- STÍLUS ÉS KOMPONENS DEFINÍCIÓK ---
 const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => {
@@ -153,6 +154,17 @@ const CombinedSections: React.FC = () => {
                 <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" />
                 <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" />
 
+                {/* ELSŐ NYÍL */}
+                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+                    style={{
+                        top: '10%',
+                        right: '5%',
+                        transform: 'translateY(-50%) rotate(85deg)'
+                    }}
+                >
+                    <IoArrowRedo className="w-full h-full" />
+                </div>
+
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="relative text-center mb-16 lg:mb-20">
                         <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4">
@@ -224,6 +236,16 @@ const CombinedSections: React.FC = () => {
 
             {/* --- CALL TO ACTION SZEKCIÓ --- */}
             <section className="bg-slate-900 pb-20 sm:pb-32 relative font-['Poppins',_sans-serif] grid-pattern grid-pattern-dark">
+                {/* MÁSODIK NYÍL */}
+                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+                    style={{
+                        top: '0%',
+                        left: '10%',
+                        transform: 'translateY(-50%) rotate(70deg)'
+                    }}
+                >
+                    <IoArrowRedo className="w-full h-full" />
+                </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-40">
                     <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                         <h2
@@ -262,6 +284,17 @@ const CombinedSections: React.FC = () => {
     ref={faqSectionRef}
     className={`py-16 lg:py-24 font-['Poppins',_sans-serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
 >
+    {/* HARMADIK NYÍL */}
+    <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+        style={{
+            top: '0%',
+            left: '80%',
+            transform: 'translateY(-50%) rotate(80deg)'
+        }}
+    >
+        <IoArrowRedo className="w-full h-full" />
+    </div>
+
     <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 lg:mb-12">
             <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">

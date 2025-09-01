@@ -1,3 +1,4 @@
+// DownloadableDocsSection
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
@@ -12,6 +13,7 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon
 } from '@heroicons/react/24/solid';
+import { IoArrowRedo } from "react-icons/io5";
 
 // --- SZÍNSÉMA ---
 const accentColor = {
@@ -225,8 +227,19 @@ const DownloadableDocsSection: React.FC = () => {
             }
         `}</style>
         <section
-            className="pt-24 lg:pt-32 pb-24 lg:pb-32 font-['Poppins',_sans-serif] relative bg-white overflow-hidden cta-grid-pattern"
+            className="pt-24 lg:pt-32 pb-24 lg:pb-32 font-['Poppins',_sans-serif] relative bg-white cta-grid-pattern"
         >
+            {/* A NYÍL ITT VAN, ÉS A FELETTE LÉVŐ SZEKCIÓRA MUTAT */}
+            <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+                style={{
+                    top: '0%',
+                    right: '10%',
+                    transform: 'translateY(-50%) rotate(60deg)'
+                }}
+            >
+                <IoArrowRedo className="w-full h-full" />
+            </div>
+
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="flex justify-center items-start gap-8 lg:gap-12">
                     <div

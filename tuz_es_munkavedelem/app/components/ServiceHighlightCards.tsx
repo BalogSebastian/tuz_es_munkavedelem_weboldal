@@ -1,3 +1,4 @@
+// ServiceHighlightCards
 'use client';
 
 import React, { useState } from 'react';
@@ -26,48 +27,48 @@ const accentColor = {
 // --- SZOLGÁLTATÁSI ADATOK ---
 const servicesData = [
   // 1. VILLAMOSBIZTONSÁG
-  { 
-    id: 4, 
-    title: "Villamosbiztonság", 
-    description: "Elvégezzük a méréseket a telephelyeden, és a jogszabálynak megfelelő jegyzőkönyvet készítünk róla, majd dokumentálunk számodra minden veszélyforrást, amivel megelőzheted az esetleges tűzeseteket.", 
-    icon: BoltIconOutline, 
-    gradientClasses: "from-blue-400 to-indigo-500", 
-    textColor: "text-blue-700", 
-    backSideText: "Helyszíni mérések elvégzése, dokumentálása, jegyzőkönyv elkészítése.", 
-    price: "40.000 Ft-tól" 
+  {
+    id: 4,
+    title: "Villamosbiztonság",
+    description: "Elvégezzük a méréseket a telephelyeden, és a jogszabálynak megfelelő jegyzőkönyvet készítünk róla, majd dokumentálunk számodra minden veszélyforrást, amivel megelőzheted az esetleges tűzeseteket.",
+    icon: BoltIconOutline,
+    gradientClasses: "from-blue-400 to-indigo-500",
+    textColor: "text-blue-700",
+    backSideText: "Helyszíni mérések elvégzése, dokumentálása, jegyzőkönyv elkészítése.",
+    price: "40.000 Ft-tól"
   },
   // 2. TŰZVÉDELEM
-  { 
-    id: 1, 
-    title: "Tűzvédelem", 
-    description: "Kidolgozzuk a telephelyre vonatkozó tűzvédelmi szabályokat, és elkészítjük a megfelelő menekülési útvonalat. Ezután egy oktatást készítünk a céged alkalmazottai számára.", 
-    icon: ExclamationTriangleIcon, 
-    gradientClasses: "from-red-500 to-rose-500", 
-    textColor: "text-red-700", 
-    backSideText: "Teljes tűzvédelmi szabályzat készítése a munkavállalók oktatásával.", 
-    price: "20.000 Ft-tól" 
+  {
+    id: 1,
+    title: "Tűzvédelem",
+    description: "Kidolgozzuk a telephelyre vonatkozó tűzvédelmi szabályokat, és elkészítjük a megfelelő menekülési útvonalat. Ezután egy oktatást készítünk a céged alkalmazottai számára.",
+    icon: ExclamationTriangleIcon,
+    gradientClasses: "from-red-500 to-rose-500",
+    textColor: "text-red-700",
+    backSideText: "Teljes tűzvédelmi szabályzat készítése a munkavállalók oktatásával.",
+    price: "20.000 Ft-tól"
   },
   // 3. MUNKAVÉDELEM
-  { 
-    id: 2, 
-    title: "Munkavédelem", 
-    description: "Megcsináljuk a munkahelyi kockázatok kezelésére vonatkozó szabályrendszert, illetve a cég teljes munkavédelmi szabályzatát, amiről oktatást készítünk a cég tevékenységére szabottan.", 
-    icon: FaHelmetSafety, 
-    gradientClasses: "from-amber-400 to-yellow-500", 
-    textColor: "text-amber-700", 
-    backSideText: "Teljes körű munkavédelmi kockázatértékelés készítése, szabályzattal és a munkavállalók oktatásával.", 
-    price: "30.000 Ft-tól" 
+  {
+    id: 2,
+    title: "Munkavédelem",
+    description: "Megcsináljuk a munkahelyi kockázatok kezelésére vonatkozó szabályrendszert, illetve a cég teljes munkavédelmi szabályzatát, amiről oktatást készítünk a cég tevékenységére szabottan.",
+    icon: FaHelmetSafety,
+    gradientClasses: "from-amber-400 to-yellow-500",
+    textColor: "text-amber-700",
+    backSideText: "Teljes körű munkavédelmi kockázatértékelés készítése, szabályzattal és a munkavállalók oktatásával.",
+    price: "30.000 Ft-tól"
   },
   // 4. HACCP
-  { 
-    id: 3, 
-    title: "HACCP", 
-    description: "Kidolgozzuk a higiéniai előírásoknak megfelelő kézikönyvet, segítünk kialakítani a megfelelő munkaterületet, és megtanítunk minden munkavállalót a jogszabály szerinti helyes munkavégzésre.", 
-    icon: ClipboardDocumentCheckIcon, 
-    gradientClasses: "from-blue-500 to-cyan-500", 
-    textColor: "text-blue-700", 
-    backSideText: "Teljes jegyzőkönyv kidolgozása és bevezetése mérési naplókkal, és oktatással.", 
-    price: "15.000 Ft-tól" 
+  {
+    id: 3,
+    title: "HACCP",
+    description: "Kidolgozzuk a higiéniai előírásoknak megfelelő kézikönyvet, segítünk kialakítani a megfelelő munkaterületet, és megtanítunk minden munkavállalót a jogszabály szerinti helyes munkavégzésre.",
+    icon: ClipboardDocumentCheckIcon,
+    gradientClasses: "from-blue-500 to-cyan-500",
+    textColor: "text-blue-700",
+    backSideText: "Teljes jegyzőkönyv kidolgozása és bevezetése mérési naplókkal, és oktatással.",
+    price: "15.000 Ft-tól"
   },
 ];
 
@@ -173,7 +174,7 @@ const ServiceHighlightCards: React.FC = () => {
       `}</style>
 
       <div className="relative font-['Poppins',_sans-serif]">
-        <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] overflow-hidden pt-28 sm:pt-40 relative grid-pattern-light">
+        <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] pt-28 sm:pt-40 relative grid-pattern-light">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative text-center mb-16 lg:mb-20">
               <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
@@ -189,16 +190,16 @@ const ServiceHighlightCards: React.FC = () => {
             </div>
 
             <div className="text-center mt-16 lg:mt-20">
-              <Link 
+              <Link
                 href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
                 passHref
               >
                 <button
                     className={`
-                        inline-flex items-center gap-3 
-                        ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} 
-                        font-bold py-8 px-12 rounded-xl text-3xl 
-                        cta-button 
+                        inline-flex items-center gap-3
+                        ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent}
+                        font-bold py-8 px-12 rounded-xl text-3xl
+                        cta-button
                         focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900
                     `}
                 >

@@ -1,7 +1,9 @@
+// StatsCounterSection
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { IoArrowRedo } from "react-icons/io5";
 
 // --- Natív Intersection Observer Hook ---
 const useInViewObserver = (ref: React.RefObject<any>, options: IntersectionObserverInit) => {
@@ -10,7 +12,7 @@ const useInViewObserver = (ref: React.RefObject<any>, options: IntersectionObser
         const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
                 setIsInView(true);
-                observer.unobserve(entry.target); 
+                observer.unobserve(entry.target);
             }
         }, options);
 
@@ -39,14 +41,14 @@ const stats = [
 ];
 
 const StatsCounterSection = () => {
-    const sectionRef = useRef<HTMLElement>(null); 
-    const isInView = useInViewObserver(sectionRef, { threshold: 0.3 }); 
-    
+    const sectionRef = useRef<HTMLElement>(null);
+    const isInView = useInViewObserver(sectionRef, { threshold: 0.3 });
+
     return (
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-                
+
                 .cta-grid-pattern {
                     background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px),
                                       linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px);
@@ -80,9 +82,19 @@ const StatsCounterSection = () => {
                     box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
                 }
             `}</style>
-            <section ref={sectionRef} className="pt-24 sm:pt-32 pb-24 sm:pb-32 font-['Poppins',_sans-serif] bg-slate-900 text-white relative overflow-hidden">
+            <section ref={sectionRef} className="pt-24 sm:pt-32 pb-24 sm:pb-32 font-['Poppins',_sans-serif] bg-slate-900 text-white relative">
+                {/* A nyíl módosított pozícióval */}
+                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+                    style={{
+                        top: '0%',
+                        left: '10%',
+                        transform: 'translateY(-50%) rotate(50deg)'
+                    }}
+                >
+                    <IoArrowRedo className="w-full h-full" />
+                </div>
                 <div className="absolute inset-0 cta-grid-pattern z-0"></div>
-                
+
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="text-center mb-16 lg:mb-20">
                         <h2 className="text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 mb-4">
@@ -104,7 +116,7 @@ const StatsCounterSection = () => {
                                     <div className="relative mb-5 p-4 bg-white/10 rounded-full ring-2 ring-white/20 shadow-lg">
                                         <stat.icon className="w-10 h-10 text-cyan-400" />
                                     </div>
-                                    
+
                                     <div className="text-5xl lg:text-7xl font-extrabold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
                                         <StaticCounter value={stat.value} isInView={isInView} />
                                         {stat.suffix}
