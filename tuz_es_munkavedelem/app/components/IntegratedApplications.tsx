@@ -415,7 +415,7 @@ const DownloadForm = ({ onDownloadCompleted }: { onDownloadCompleted: () => void
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">Töltsd le az útmutatót!</h2>
-      <p className="text-slate-600 mb-6 text-sm sm:text-base max-w-md mx-auto">Add meg adataidat a letöltéshez. Kérdéseiddel pedig keress minket bátran!</p>
+      <p className="text-slate-600 mb-6 te  xt-sm sm:text-base max-w-md mx-auto">Add meg adataidat a letöltéshez. Kérdéseiddel pedig keress minket bátran!</p>
       <div className="relative group">
         <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
             <UserIcon className="h-5 w-5 text-gray-400 group-focus-within:text-cyan-500" />

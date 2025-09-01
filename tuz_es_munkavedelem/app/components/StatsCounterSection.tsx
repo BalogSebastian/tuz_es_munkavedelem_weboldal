@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
-import { IoArrowRedo } from "react-icons/io5";
+import { IoArrowUndoSharp } from "react-icons/io5";
 
 // --- Natív Intersection Observer Hook ---
 const useInViewObserver = (ref: React.RefObject<any>, options: IntersectionObserverInit) => {
@@ -85,12 +85,12 @@ const StatsCounterSection = () => {
                 {/* A nyíl módosított pozícióval */}
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
-                        top: '0%',
+                        top: '2%',
                         left: '10%',
-                        transform: 'translateY(-50%) rotate(50deg)'
+                        transform: 'translateY(-50%) rotate(210deg)'
                     }}
                 >
-                    <IoArrowRedo className="w-full h-full" />
+                    <IoArrowUndoSharp className="w-full h-full" />
                 </div>
                 <div className="absolute inset-0 cta-grid-pattern z-0"></div>
 

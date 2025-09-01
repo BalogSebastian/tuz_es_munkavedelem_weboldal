@@ -232,9 +232,9 @@ const DownloadableDocsSection: React.FC = () => {
             {/* A NYÍL ITT VAN, ÉS A FELETTE LÉVŐ SZEKCIÓRA MUTAT */}
             <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                 style={{
-                    top: '0%',
+                    top: '1%',
                     right: '10%',
-                    transform: 'translateY(-50%) rotate(60deg)'
+                    transform: 'translateY(-50%) rotate(160deg)'
                 }}
             >
                 <IoArrowRedo className="w-full h-full" />

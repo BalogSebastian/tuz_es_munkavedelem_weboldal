@@ -9,7 +9,7 @@ import {
     WrenchScrewdriverIcon,
     CreditCardIcon,
 } from '@heroicons/react/24/outline';
-import { IoArrowRedo } from "react-icons/io5";
+import { IoArrowUndoSharp, IoArrowRedo } from "react-icons/io5";
 
 // --- STÍLUS ÉS KOMPONENS DEFINÍCIÓK ---
 const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => {
@@ -154,9 +154,9 @@ const CombinedSections: React.FC = () => {
                 {/* ELSŐ NYÍL */}
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
-                        top: '10%',
+                        top: '11%',
                         right: '5%',
-                        transform: 'translateY(-50%) rotate(85deg)'
+                        transform: 'translateY(-50%) rotate(150deg)'
                     }}
                 >
                     <IoArrowRedo className="w-full h-full" />
@@ -236,12 +236,12 @@ const CombinedSections: React.FC = () => {
                 {/* MÁSODIK NYÍL */}
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
-                        top: '0%',
+                        top: '1%',
                         left: '10%',
-                        transform: 'translateY(-50%) rotate(70deg)'
+                        transform: 'translateY(-50%) rotate(200deg)'
                     }}
                 >
-                    <IoArrowRedo className="w-full h-full" />
+                    <IoArrowUndoSharp className="w-full h-full" />
                 </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-40">
                     <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
@@ -284,9 +284,9 @@ const CombinedSections: React.FC = () => {
     {/* HARMADIK NYÍL */}
     <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
         style={{
-            top: '0%',
+            top: '1%',
             left: '80%',
-            transform: 'translateY(-50%) rotate(80deg)'
+            transform: 'translateY(-50%) rotate(150deg)'
         }}
     >
         <IoArrowRedo className="w-full h-full" />
