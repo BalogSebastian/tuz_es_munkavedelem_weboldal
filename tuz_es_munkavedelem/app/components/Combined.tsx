@@ -211,23 +211,6 @@ const CombinedSections: React.FC = () => {
                             Igen jól látod, nálunk csak a munka befejezése után kell fizetni!
                         </p>
                     </div>
-                    <div className="text-center mt-10 lg:mt-12">
-                        <Link
-                            href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
-                            className={`
-                                inline-flex items-center
-                                ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                                font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-                                shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
-                                transition-all duration-300 ease-in-out
-                                focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
-                                cta-button
-                            `}
-                        >
-                            <SparklesIcon className="w-6 h-6 mr-2" />
-                            Ingyenes konzultációt foglalok
-                        </Link>
-                    </div>
                 </div>
             </section>
 
