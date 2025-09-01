@@ -654,11 +654,10 @@ const IntegratedApplication: React.FC = () => {
                             <motion.div
                                 variants={ANIMATION_VARIANTS.item}
                             >
-                                <motion.button
-                                
-                                    onClick={() => setIsModalOpen(true)}
-                                    whileHover={{ scale: 1.05, boxShadow: `0 0 45px ${RED_ACCENT_COLOR.baseHex}80, 0 0 90px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 30px ${RED_ACCENT_COLOR.baseHex}40` }}
-                                    whileTap={{ scale: 0.98, boxShadow: `0 0 15px ${RED_ACCENT_COLOR.baseHex}40, 0 0 30px ${RED_ACCENT_COLOR.baseHex}30, inset 0 0 10px ${RED_ACCENT_COLOR.baseHex}20` }}
+                                <a
+                                    href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className={`
                                         inline-flex items-center gap-3 
                                         ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} 
@@ -668,7 +667,7 @@ const IntegratedApplication: React.FC = () => {
                                     `}
                                 >
                                     Foglalj egy ingyenes konzultiót!
-                                </motion.button>
+                                </a>
                             </motion.div>
                         </motion.div>
                     </div>
