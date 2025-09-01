@@ -163,16 +163,16 @@ const CombinedPage = () => {
 
       {/* Header Hero */}
       <div className="flex-grow flex flex-col items-center justify-center text-center relative">
-        <div className="max-w-5xl relative z-10 flex flex-col items-center">
+        <div className="w-full relative z-10 flex flex-col items-center">
           <div className="flex flex-col items-center">
             <div className="mb-1 z-20">
-              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={100} height={100} className="mx-auto" priority />
+              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={80} height={80} className="mx-auto" priority />
             </div>
-            <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10">
+            <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10 w-full px-4 sm:px-6 md:px-12">
               Elkészítjük a jogszabályoknak megfelelő Tűz- Munkavédelmi, és HACCP dokumentációkat, hogy téged ne büntessenek meg.
             </h2>
             <h1
-              className="text-5xl sm:text-7xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white z-10"
+              className="text-5xl sm:text-7xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white z-10 w-full px-4 sm:px-6 md:px-12"
             >
               A büntetés értéke 10 Millió forintig terjedhet!
             </h1>
