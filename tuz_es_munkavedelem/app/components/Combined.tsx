@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { SparklesIcon, ChevronDownIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import {
@@ -73,8 +73,36 @@ const faqItems = [
 
 const CombinedSections: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const faqSectionRef = useRef<HTMLElement>(null);
+    const [isFaqVisible, setIsFaqVisible] = useState(false);
 
     const toggleItem = (index: number) => { setOpenIndex(openIndex === index ? null : index); };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsFaqVisible(true);
+                } else {
+                    setIsFaqVisible(false);
+                }
+            },
+            {
+                threshold: 0.5,
+            }
+        );
+
+        if (faqSectionRef.current) {
+            observer.observe(faqSectionRef.current);
+        }
+
+        return () => {
+            if (faqSectionRef.current) {
+                observer.unobserve(faqSectionRef.current);
+            }
+        };
+    }, []);
+
 
     return (
         <>
@@ -108,6 +136,13 @@ const CombinedSections: React.FC = () => {
                 }
                 .cta-button:active {
                     transform: scale(0.98);
+                }
+
+                .faq-full-height {
+                    transition: min-height 0.8s ease-in-out;
+                }
+                .faq-full-height.is-visible {
+                    min-height: 100vh;
                 }
             `}</style>
 
@@ -203,7 +238,7 @@ const CombinedSections: React.FC = () => {
                         </p>
                         <div>
                             <Link
-                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358                                "
+                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
                                 className={`
                                     inline-flex items-center gap-3
                                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
@@ -223,13 +258,13 @@ const CombinedSections: React.FC = () => {
             </section>
 
             {/* --- FAQ ACCORDION SZEKCIÓ --- */}
-           {/* --- FAQ ACCORDION SZEKCIÓ --- */}
 <section
-    className="py-12 lg:py-16 font-['Poppins',_sans-serif] relative bg-white grid-pattern grid-pattern-light"
+    ref={faqSectionRef}
+    className={`py-16 lg:py-24 font-['Poppins',_sans-serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
 >
     <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+        <div className="text-center mb-10 lg:mb-12">
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
                 Gyakori <span className={ACCENT_COLOR_CYAN.text}>Kérdések</span>
             </h2>
             <p className="text-base text-slate-600 max-w-2xl mx-auto">
@@ -250,18 +285,18 @@ const CombinedSections: React.FC = () => {
                             onClick={() => toggleItem(index)}
                             className="w-full flex justify-between items-center p-4 text-left focus:outline-none group hover:bg-slate-50 transition-colors"
                         >
-                            <span className={`flex items-center text-sm sm:text-base font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-600'}`}>
+                            <span className={`flex items-center text-lg sm:text-xl font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-600'}`}>
                                 {item.isImportant && (
-                                    <ExclamationCircleIcon className="w-5 h-5 mr-2 text-red-500/80" />
+                                    <ExclamationCircleIcon className="w-6 h-6 mr-2 text-red-500/80" />
                                 )}
                                 {item.question}
                             </span>
                             <ChevronDownIcon
-                                className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-500'}`}
+                                className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-500'}`}
                             />
                         </button>
                         {isOpen && (
-                            <div className="px-4 pb-4 text-slate-700 text-sm leading-relaxed">
+                            <div className="px-4 pb-4 text-slate-700 text-xl lg:text-2xl leading-relaxed">
                                 {item.answer}
                             </div>
                         )}
@@ -271,14 +306,22 @@ const CombinedSections: React.FC = () => {
         </div>
 
         <div className="text-center mt-10">
-            <p className="text-sm text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
+            <p className="text-base text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
             <Link
-                href="/kapcsolat"
-                className={`inline-flex items-center ${ACCENT_COLOR_CYAN.bg} hover:bg-cyan-600 text-white font-medium py-3 px-6 rounded-lg text-sm shadow-md transition`}
-            >
-                <SparklesIcon className="w-5 h-5 mr-2" />
-                Kapcsolatfelvétel
-            </Link>
+                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+                                className={`
+                                    inline-flex items-center gap-3
+                                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                                    font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
+                                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                                    transition-all duration-300 ease-in-out
+                                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
+                                    cta-button
+                                `}
+                            >
+                                <SparklesIcon className="w-6 h-6" />
+                                Foglalj egy ingyenes konzultációt!
+                            </Link>
         </div>
     </div>
 </section>
