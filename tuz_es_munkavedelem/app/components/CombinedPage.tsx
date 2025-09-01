@@ -83,15 +83,15 @@ const testimonials = [
   { id: 12, name: 'Juhász Krisztina', company: 'Mezőgazdasági Vállalat', quote: 'A telephelyi felmérés és a tanácsadás sokat segített a specifikus kérdéseinkben. Külön köszönöm a részletes útmutatót!', rating: 5 },
 ];
 
-// --- TESTIMONIAL KÁRTYA ---
+// --- TESTIMONIAL KÁRTya ---
 const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ testimonial }) => {
   return (
     <div className="h-full group">
-      <div className="h-full bg-white/5 backdrop-blur-md rounded-2xl p-8 flex flex-col justify-between border border-white/10 overflow-hidden relative shadow-lg">
+      <div className="h-full min-h-[340px] bg-white/5 backdrop-blur-md rounded-2xl flex flex-col border border-white/10 overflow-hidden relative shadow-lg">
         <div className={`absolute -top-4 -left-2 text-8xl font-serif ${testimonialAccentColor.quoteMark} z-0`}>
           “
         </div>
-        <div className="relative z-10 text-center flex flex-col flex-grow">
+        <div className="relative z-10 text-center flex flex-col flex-grow p-8">
           <div className="flex justify-center mb-4">
             {[...Array(5)].map((_, i) => (
               <StarIcon key={i} className={`w-6 h-6 ${i < testimonial.rating ? testimonialAccentColor.starActive : 'text-white/20'}`} />
@@ -116,7 +116,7 @@ const CombinedPage = () => {
   const combinedTestimonials = [...testimonials, ...testimonials, ...testimonials];
 
   return (
-    <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px]">
+    <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px] pb-24">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
         .cta-glow {
@@ -176,7 +176,7 @@ const CombinedPage = () => {
       </div>
 
       {/* Header Hero */}
-      <div className="flex-grow flex flex-col items-center justify-center text-center relative">
+      <div className="flex-grow flex flex-col items-center justify-center text-center relative px-4">
         <div className="max-w-7xl relative z-10 flex flex-col items-center">
           <div className="flex flex-col items-center">
             <div className="mb-1 z-20">
@@ -210,20 +210,20 @@ const CombinedPage = () => {
       </div>
 
       {/* Testimonials */}
-      <section className="relative overflow-hidden pt-12 pb-24">
+      <section className="relative overflow-hidden py-8 flex-shrink-0">
         <BlueprintCorner className="absolute top-0 left-0 text-cyan-400/10 hidden md:block" />
         <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-400/10 transform rotate-180 hidden md:block" />
         <div className="container mx-auto relative z-10">
-          <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
-            <MdEmojiPeople className="w-12 h-12 text-cyan-400 shrink-0" />
-            <h2 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
+          <div className="flex flex-col items-center gap-2 mb-4">
+            <MdEmojiPeople className="w-10 h-10 text-cyan-400 shrink-0" />
+            <h2 className="text-3xl lg:text-4xl font-black text-white tracking-tight">
               Ők már <span className={testimonialAccentColor.primaryText}>jobban</span> alszanak:
             </h2>
           </div>
           <div className="max-w-7xl mx-auto overflow-hidden relative pause-on-hover">
             <div className="flex animate-scroll">
               {combinedTestimonials.map((testimonial, index) => (
-                <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 p-4"> {/* Itt módosítottam lg:w-1/4 -> md:w-1/3-ra, hogy 3 férjen el nagy képernyőkön */}
+                <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 p-4">
                   <TestimonialCard testimonial={testimonial} />
                 </div>
               ))}
