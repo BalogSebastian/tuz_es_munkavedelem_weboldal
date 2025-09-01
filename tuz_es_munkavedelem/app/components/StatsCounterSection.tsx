@@ -1,4 +1,3 @@
-// StatsCounterSection
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -127,8 +126,12 @@ const StatsCounterSection = () => {
                         </div>
                     </div>
 
-                    <div
-                        className={`mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden cta-card ${isInView ? 'visible' : ''}`}
+                    {/* Itt módosítottam a CTA kártyát egy <a> tag-gé */}
+                    <a
+                        href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+                        target="_blank" // Ajánlott új lapon megnyitni a linket
+                        rel="noopener noreferrer" // Biztonsági okokból
+                        className={`mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden cta-card block cursor-pointer ${isInView ? 'visible' : ''}`}
                         style={{ transitionDelay: '1.0s' }}
                     >
                         <div className="absolute inset-0 bg-white/5 opacity-20 transform -skew-y-12 scale-150"></div>
@@ -141,7 +144,7 @@ const StatsCounterSection = () => {
                         <p className="text-red-200 text-base sm:text-lg mt-4 relative z-10">
                         Ne kockáztass - légy felkészült!
                         </p>
-                    </div>
+                    </a>
                 </div>
             </section>
         </>
