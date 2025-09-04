@@ -175,8 +175,7 @@ const CombinedPage = () => {
       <div className="flex-grow flex flex-col items-center justify-center text-center relative px-4">
         <div className="max-w-7xl relative z-10 flex flex-col items-center">
           <div className="flex flex-col items-center">
-            <div className="mb-1 z-20">
-              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={100} height={100} className="mx-auto" priority />
+            <div className="mb-1 mt-4 z-20">
             </div>
             <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10">
               Elkészítjük a jogszabályoknak megfelelő Tűz- Munkavédelmi, és HACCP dokumentációkat, hogy téged ne büntessenek meg.
