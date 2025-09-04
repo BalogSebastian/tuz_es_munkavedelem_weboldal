@@ -26,22 +26,19 @@ export default function HomePageClientContent() {
   const [showExitPopup, setShowExitPopup] = useState(false);
 
   useEffect(() => {
-    // ... (exit-intent logika változatlan)
     const triggerPopup = () => {
       if (!sessionStorage.getItem('exitIntentShown')) {
         setShowExitPopup(true);
         sessionStorage.setItem('exitIntentShown', 'true');
       }
     };
-    const handleMouseLeave = () => triggerPopup();
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') triggerPopup();
-    };
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // --- JAVÍTVA: Az eseményfigyelők helyett egy 7 másodperces időzítő indítása ---
+    const timer = setTimeout(triggerPopup, 7000);
+    
+    // A cleanup funkció eltávolítja az időzítőt, ha a komponens elhagyásra kerül
     return () => {
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      clearTimeout(timer);
     };
   }, []);
 
