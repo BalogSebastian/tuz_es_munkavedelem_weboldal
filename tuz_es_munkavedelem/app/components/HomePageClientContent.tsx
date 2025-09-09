@@ -100,7 +100,6 @@ export default function HomePageClientContent() {
       <StatsCounterSection />
       <CombinedSections/>
       <DownloadableDocsSection />
-      <QuizComponent/>
       <Footer />
     </>
   );
