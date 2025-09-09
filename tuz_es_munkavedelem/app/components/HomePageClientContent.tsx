@@ -13,6 +13,8 @@ const DownloadableDocsSection = dynamic(() => import('./DownloadableDocsSection'
 const Footer = dynamic(() => import('./Footer'), { ssr: false });
 import IntegratedApplication from './IntegratedApplications';
 import CombinedSections from './Combined';
+import MainPage from './MainPage';
+import QuizComponent from './QuizComponent';
 
 // Segédfüggvény a biztonságos adatkinyeréshez (változatlan)
 function getComponentValue<T>(component: Component<T> | undefined): T | string {
@@ -93,12 +95,12 @@ export default function HomePageClientContent() {
         onClose={() => setShowExitPopup(false)}
         onAccept={handleAccept}
       />
-      
-      <IntegratedApplication/>
+      <MainPage/>
       <ServiceHighlightCards />
       <StatsCounterSection />
-      <DownloadableDocsSection />
       <CombinedSections/>
+      <DownloadableDocsSection />
+      <QuizComponent/>
       <Footer />
     </>
   );

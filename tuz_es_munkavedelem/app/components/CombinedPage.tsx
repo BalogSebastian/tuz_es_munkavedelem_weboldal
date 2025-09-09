@@ -1,6 +1,3 @@
-// This file was created by combining components/HeaderHero.tsx and components/sections/TestimonialSlider.tsx
-// All animations and dynamic effects have been removed to ensure the page loads with all content in place.
-
 'use client';
 
 import React, { useState } from 'react';
@@ -47,7 +44,7 @@ const RED_ACCENT_COLOR = {
 };
 
 const testimonialAccentColor = {
-  starActive: 'text-cyan-400',
+  starActive: 'text-yellow-400',
   quoteMark: 'text-cyan-200/10',
   primaryText: 'text-cyan-400',
 };
@@ -79,26 +76,26 @@ const testimonials = [
   { id: 12, name: 'Juhász Krisztina', company: 'Mezőgazdasági Vállalat', quote: 'A telephelyi felmérés és a tanácsadás sokat segített a specifikus kérdéseinkben. Külön köszönöm a részletes útmutatót!', rating: 5 },
 ];
 
-// --- TESTIMONIAL KÁRTya ---
 const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ testimonial }) => {
   return (
     <div className="h-full group">
-      <div className="h-full min-h-[340px] bg-white/5 backdrop-blur-md rounded-2xl flex flex-col border border-white/10 overflow-hidden relative shadow-lg">
-        <div className={`absolute -top-4 -left-2 text-8xl font-serif ${testimonialAccentColor.quoteMark} z-0`}>
-          “
-        </div>
-        <div className="relative z-10 text-center flex flex-col flex-grow p-8">
-          <div className="flex justify-center mb-4">
-            {[...Array(5)].map((_, i) => (
-              <StarIcon key={i} className={`w-6 h-6 ${i < testimonial.rating ? testimonialAccentColor.starActive : 'text-white/20'}`} />
-            ))}
+      <div className="h-full bg-slate-800/50 backdrop-blur-md rounded-2xl flex flex-col border border-slate-700 overflow-hidden relative shadow-2xl transition-all duration-300 group-hover:bg-slate-700/60 p-8"> {/* Visszaállítva p-8-ra */}
+        <div className="relative z-10 flex flex-col flex-grow">
+          <div className="flex-grow mb-6"> {/* Visszaállítva mb-6-ra */}
+            <p className="text-base italic text-slate-300 leading-relaxed"> {/* Betűméret növelve */}
+              "{testimonial.quote}"
+            </p>
           </div>
-          <p className="text-base italic text-slate-300 mb-5 leading-relaxed flex-grow min-h-[80px] flex items-center justify-center">
-            <span>"{testimonial.quote}"</span>
-          </p>
-          <div className="mt-auto">
-            <p className="font-semibold text-base text-white">{testimonial.name}</p>
-            <p className="text-xs text-slate-400">{testimonial.company}</p>
+          <div className="flex items-center justify-between mt-auto">
+            <div>
+              <p className="font-semibold text-base text-white">{testimonial.name}</p>
+              <p className="text-xs text-slate-400">{testimonial.company}</p>
+            </div>
+            <div className="flex-shrink-0">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon key={i} className={`w-5 h-5 inline-block ${i < testimonial.rating ? testimonialAccentColor.starActive : 'text-slate-500'}`} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -106,10 +103,9 @@ const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ te
   );
 };
 
-// --- FŐ KOMPONENS ---
 const CombinedPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const combinedTestimonials = [...testimonials, ...testimonials, ...testimonials];
+  const combinedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials];
 
   return (
     <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px] pb-24">
@@ -125,18 +121,18 @@ const CombinedPage = () => {
           background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px), linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px);
           background-size: 4rem 4rem;
         }
-        .animate-scroll {
-          animation: scroll 15s linear infinite; /* Gyorsabb animáció */
+        .animate-scroll-fast {
+          animation: scroll-fast 30s linear infinite;
         }
-        .pause-on-hover:hover .animate-scroll {
+        .pause-on-hover:hover .animate-scroll-fast {
           animation-play-state: paused;
         }
-        @keyframes scroll {
-          from {
+        @keyframes scroll-fast {
+          0% {
             transform: translateX(0);
           }
-          to {
-            transform: translateX(-33.333333%);
+          100% {
+            transform: translateX(calc(-12.5% * 4)); /* 4 x 1/8 = 50% */
           }
         }
       `}</style>
@@ -177,9 +173,14 @@ const CombinedPage = () => {
           <div className="flex flex-col items-center">
             <div className="mb-1 mt-4 z-20">
             </div>
-            <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10">
-              Elkészítjük a jogszabályoknak megfelelő Tűz- Munkavédelmi, és HACCP dokumentációkat, hogy téged ne büntessenek meg.
-            </h2>
+            {/* Hozzáadott rész */}
+            <div className="flex flex-col items-center">
+              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={80} height={100} />
+              <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10">
+                Elkészítjük a jogszabályoknak megfelelő Tűz- Munkavédelmi, és HACCP dokumentációkat, hogy téged ne büntessenek meg.
+              </h2>
+            </div>
+            {/* Vége a hozzáadott résznek */}
             <h1
               className="text-5xl sm:text-7xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white z-10"
             >
@@ -205,20 +206,14 @@ const CombinedPage = () => {
       </div>
 
       {/* Testimonials */}
-      <section className="relative overflow-hidden py-8 flex-shrink-0">
+      <section className="relative overflow-hidden py-4 flex-shrink-0">
         <BlueprintCorner className="absolute top-0 left-0 text-cyan-400/10 hidden md:block" />
         <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-400/10 transform rotate-180 hidden md:block" />
-        <div className="container mx-auto relative z-10">
-          <div className="flex flex-col items-center gap-2 mb-4">
-            <MdEmojiPeople className="w-10 h-10 text-cyan-400 shrink-0" />
-            <h2 className="text-3xl lg:text-4xl font-black text-white tracking-tight">
-              Ők már <span className={testimonialAccentColor.primaryText}>jobban</span> alszanak:
-            </h2>
-          </div>
-          <div className="max-w-7xl mx-auto overflow-hidden relative pause-on-hover">
-            <div className="flex animate-scroll">
+        <div className="relative z-10">
+          <div className="max-w-full mx-auto overflow-hidden relative pause-on-hover">
+            <div className="flex animate-scroll-fast gap-6">
               {combinedTestimonials.map((testimonial, index) => (
-                <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 p-4">
+                <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-[350px]">
                   <TestimonialCard testimonial={testimonial} />
                 </div>
               ))}

@@ -152,15 +152,6 @@ const CombinedSections: React.FC = () => {
                 <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" />
 
                 {/* ELSŐ NYÍL */}
-                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
-                    style={{
-                        top: '11%',
-                        right: '5%',
-                        transform: 'translateY(-50%) rotate(150deg)'
-                    }}
-                >
-                    <IoArrowRedo className="w-full h-full" />
-                </div>
 
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="relative text-center mb-16 lg:mb-20">

@@ -58,7 +58,7 @@ const Kapcsolat = () => {
                         Lépj velünk <span className={accentColor.text}>kapcsolatba!</span>
                     </h1>
                     <p className="text-xl text-slate-600 leading-snug max-w-2xl mx-auto">
-                        Kérdésed van, vagy csak szeretnél konzultálni? Keress minket bátran, segítünk mindenben!
+                        Kérdésed van, vagy csak szeretnél konzultálni? Keress minket bátran!
                     </p>
                 </motion.header>
                 <div className="flex flex-col lg:flex-row items-center justify-center gap-16 w-full max-w-7xl">
@@ -126,10 +126,6 @@ const Kapcsolat = () => {
                         </motion.div>
                     </main>
                 </div>
-                <motion.footer variants={itemVariants} className="max-w-4xl mx-auto mt-24 text-center border-t border-slate-200 pt-16">
-                    <h3 className="text-3xl font-bold text-slate-800 mb-4">Készen állsz a biztonságosabb működésre?</h3>
-                    <p className="text-slate-600 text-lg mb-8">Az első lépés egy ingyenes konzultáció. Keress minket még ma!</p>
-                </motion.footer>
             </motion.div>
         </div>
     );
