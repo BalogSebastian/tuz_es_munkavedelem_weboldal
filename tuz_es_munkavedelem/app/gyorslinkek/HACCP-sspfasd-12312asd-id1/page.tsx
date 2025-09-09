@@ -90,13 +90,6 @@ const HaccpPage = () => {
       <div
         className={`max-w-6xl mx-auto ${accentColor.containerBg} backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-12 relative z-10 border ${accentColor.containerBorder}`}
       >
-        <button
-          onClick={() => router.back()}
-          className={`inline-flex items-center justify-center p-3 rounded-full ${accentColor.bg} text-white shadow-lg ${accentColor.glow} ${accentColor.hoverBg} transition-all duration-300 mb-8`}
-          aria-label="Vissza az előző oldalra"
-        >
-          <ArrowLeftIcon className="w-6 h-6" />
-        </button>
 
         <div className="text-center mb-16">
             <h2 className="text-2xl font-bold text-white mb-6">Mi az a HACCP?</h2>
@@ -160,24 +153,14 @@ const HaccpPage = () => {
             </div>
         </section>
 
-        <div
-          className="text-center mt-12 mb-8 p-10 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-3xl shadow-2xl relative overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-          <h3 className="text-3xl font-bold text-white mb-4 drop-shadow-md">Garantálja az élelmiszer-biztonságot vállalkozásában!</h3>
-          <p className="text-lg text-cyan-100 max-w-2xl mx-auto drop-shadow">
-            Ne bízza a véletlenre az élelmiszer-biztonságot! Keressen minket egy díjmentes konzultációért, ahol részletesen átbeszéljük az Ön egyedi igényeit és a HACCP-rendszer kiépítésének lépéseit.
-          </p>
-          <div className="mt-8">
+        <div className="text-center mt-12 mb-8">
             <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
               <button
-                className={`inline-flex items-center justify-center font-bold py-4 px-10 rounded-xl text-lg sm:text-xl text-cyan-600 bg-white shadow-2xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105 hover:-translate-y-1`}
+                className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
               >
-                <CalendarDaysIcon className="w-6 h-6 mr-3" />
                 Ingyenes Konzultációt Foglalok
               </button>
             </Link>
-          </div>
         </div>
       </div>
     </div>

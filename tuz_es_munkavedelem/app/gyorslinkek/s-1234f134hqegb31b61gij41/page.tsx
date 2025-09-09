@@ -70,13 +70,6 @@ const TuzvedelmiSzabalyzatPage = () => {
 
       <div className={`max-w-6xl mx-auto ${themeColors.containerBg} backdrop-blur-xl rounded-2xl shadow-2xl p-8 sm:p-12 relative z-10 border ${themeColors.border}`}>
         
-        <button
-          onClick={() => router.back()}
-          className={`inline-flex items-center justify-center p-3 rounded-full bg-cyan-500 text-white shadow-lg shadow-cyan-500/40 hover:bg-cyan-600 transition-all duration-300 mb-8 hover:scale-110`}
-          aria-label="Vissza az előző oldalra"
-        >
-          <ArrowLeftIcon className="w-6 h-6" />
-        </button>
 
         {/* --- FRISSÍTETT TARTALOM: Bevezető --- */}
         <section className="text-center mb-16">
@@ -124,21 +117,14 @@ const TuzvedelmiSzabalyzatPage = () => {
         </section>
 
         {/* --- VÁLTOZATLAN: Call to Action --- */}
-        <div className={`text-center mt-12 p-10 bg-gradient-to-br ${themeColors.cta.gradientFrom} ${themeColors.cta.gradientTo} rounded-2xl shadow-2xl`}>
-          <h3 className="text-3xl font-bold text-white mb-4">Elakadtál a tűzvédelem útvesztőjében?</h3>
-          <p className="text-lg text-cyan-100 max-w-2xl mx-auto">
-            Beszélj egy kollégánkkal, és tedd fel neki a kérdéseidet egy ingyenes online konzultáción!
-          </p>
-          <div className="mt-8">
+        <div className={`text-center mt-12`}>
             <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
               <button
-                className={`inline-flex items-center justify-center font-bold py-4 px-10 rounded-xl text-lg text-cyan-600 bg-white shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105`}
+                className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
               >
-                <CalendarDaysIcon className="w-6 h-6 mr-3" />
                 Tűzvédelmi konzultáció szakemberrel!
               </button>
             </Link>
-          </div>
         </div>
       </div>
     </div>

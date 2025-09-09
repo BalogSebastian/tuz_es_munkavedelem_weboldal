@@ -68,13 +68,6 @@ const TuzvedelmiOktatasPage = () => {
     <div className={`min-h-screen ${themeColors.base.pageBg} font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8`}>
       <div className={`max-w-6xl mx-auto ${themeColors.base.containerBg}/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8 sm:p-10 relative z-10 border ${themeColors.base.border}`}>
         
-        <button
-          onClick={() => router.back()}
-          className={`inline-flex items-center justify-center p-3 rounded-full ${themeColors.primary.bg} text-white shadow-lg ${themeColors.primary.hoverBg} transition-all duration-300 mb-8 hover:scale-110 hover:shadow-red-500/40`}
-          aria-label="Vissza az előző oldalra"
-        >
-          <ArrowLeftIcon className="w-6 h-6" />
-        </button>
 
         {/* --- 1. KÉP TARTALMA: Bevezető --- */}
         <section className="text-center mb-16">
@@ -121,21 +114,14 @@ const TuzvedelmiOktatasPage = () => {
         </section>
 
         {/* --- 3. KÉP TARTALMA: Call to Action (Piros gombbal) --- */}
-        <div className={`text-center mt-12 p-10 bg-gradient-to-br ${themeColors.cta.gradientFrom} ${themeColors.cta.gradientTo} rounded-2xl shadow-2xl`}>
-          <h3 className="text-3xl font-bold text-white mb-4">Ne várj a hatósági ellenőrzésre, tedd meg az első lépést!</h3>
-          <p className="text-lg text-red-100 max-w-2xl mx-auto">
-            Gyere el egy ingyenes online konzultációra, és gondoskodj a megfelelő tűzvédelmi oktatásról.
-          </p>
-          <div className="mt-8">
-            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-              <button
-                className={`inline-flex items-center justify-center font-bold py-4 px-10 rounded-xl text-lg ${themeColors.primary.text} bg-white shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105`}
-              >
-                <CalendarDaysIcon className="w-6 h-6 mr-3" />
-                Foglalj ingyenes konzultációt!
-              </button>
-            </Link>
-          </div>
+        <div className={`text-center mt-12`}>
+          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+            <button
+              className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+            >
+              Foglalj ingyenes konzultációt!
+            </button>
+          </Link>
         </div>
       </div>
     </div>

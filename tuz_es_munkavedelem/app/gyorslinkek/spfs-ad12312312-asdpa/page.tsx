@@ -69,13 +69,6 @@ const KiuritesSzamitasPage = () => {
 
         <div className="max-w-6xl mx-auto bg-white/80 backdrop-blur-lg rounded-lg shadow-2xl p-8 sm:p-12 relative z-10 border border-slate-200">
           
-          <button
-            onClick={() => router.back()}
-            className={`inline-flex items-center justify-center p-3 rounded-full ${accentColor.bg} text-white shadow-lg ${accentColor.hoverBg} transition-all duration-300 mb-8 hover:shadow-cyan-500/40`}
-            aria-label="Vissza az előző oldalra"
-          >
-            <ArrowLeftIcon className="w-6 h-6" />
-          </button>
 
           {/* Címsor szekció */}
           <div className="text-center mb-12 border-b border-slate-200 pb-8">
@@ -83,7 +76,7 @@ const KiuritesSzamitasPage = () => {
               Kiürítési <span className={accentColor.text}>Számítás</span>
             </h1>
             <p className="text-lg text-slate-600 max-w-4xl mx-auto">
-            <strong className={strongClass}>A kiürítés számítás</strong>  egy kulcsfontosságú tűzvédelmi dokumentum, amely tudományosan igazolja, hogy egy adott épületben vagy helyiségben vészhelyzet esetén abenntartózkodók időben, biztonságosan el tudják hagyni a területet. A számítás során figyelembe vesszük az épület paramétereit (méret, elrendezés), a benne tartózkodók számát és a menekülési útvonalak kapacitását, hogy meghatározzuk a maximálisan megengedett kiürítési időt. Ez az elemzés elengedhetetlen a biztonságos épületüzemeltetéshez és a jogszabályoknak való megfeleléshez.
+            <strong className={strongClass}>A kiürítés számítás</strong>  egy kulcsfontosságú tűzvédelmi dokumentum, amely tudományosan igazolja, hogy egy adott épületben vagy helyiségben vészhelyzet esetén abenntartózkodók időben, biztonságosan el tudnak hagyni a területet. A számítás során figyelembe vesszük az épület paramétereit (méret, elrendezés), a benne tartózkodók számát és a menekülési útvonalak kapacitását, hogy meghatározzuk a maximálisan megengedett kiürítési időt. Ez az elemzés elengedhetetlen a biztonságos épületüzemeltetéshez és a jogszabályoknak való megfeleléshez.
             </p>
           </div>
           
@@ -139,21 +132,14 @@ const KiuritesSzamitasPage = () => {
             </div>
           </section>
 
-          <div className="text-center mt-12 p-8 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg shadow-2xl">
-            <h3 className="text-2xl font-bold text-white mb-3">Számoljon a biztonsággal!</h3>
-            <p className="text-lg text-cyan-100 max-w-2xl mx-auto">
-              Ne kockáztasson a számokkal! Keressen minket egy ingyenes konzultációért, és győződjön meg róla, hogy épülete minden szempontból biztonságos.
-            </p>
-            <div className="mt-8">
+          <div className="text-center mt-12">
               <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
                 <button
-                  className={`inline-flex items-center justify-center font-bold py-3 px-8 rounded-lg text-lg text-cyan-600 bg-white shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105`}
+                  className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
                 >
-                  <CalendarDaysIcon className="w-6 h-6 mr-3" />
                   Ingyenes Konzultációt Foglalok
                 </button>
               </Link>
-            </div>
           </div>
         </div>
       </div>
