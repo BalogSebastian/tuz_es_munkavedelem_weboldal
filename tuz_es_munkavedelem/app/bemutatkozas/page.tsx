@@ -186,25 +186,16 @@ const Bemutatkozas = () => {
         </motion.section>
 
         <motion.div
-          className="text-center mt-12 mb-8 p-8 bg-gradient-to-r from-cyan-100 to-teal-50 rounded-2xl shadow-inner border border-cyan-200"
+          className="text-center mt-12 mb-8 p-8" // Eltávolítottam a kék háttér stílusait
           variants={itemVariants}
         >
-          <h3 className="text-2xl font-bold text-slate-800 mb-3">Készen áll a <strong className={strongClass}>biztonságosabb</strong> működésre?</h3>
-          <p className="text-lg text-slate-700 max-w-2xl mx-auto">
-            Vegye fel velünk a kapcsolatot egy ingyenes konzultációért!
-          </p>
-          <motion.div variants={itemVariants} className="mt-8">
-            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-              <motion.button
-                className={`inline-flex items-center justify-center font-bold py-4 px-10 rounded-xl text-lg sm:text-xl text-white bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} shadow-lg shadow-cyan-500/30 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2`}
-                whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <CalendarDaysIcon className="w-6 h-6 mr-3" />
-                Lefoglalom a konzultációmat!
-              </motion.button>
-            </Link>
-          </motion.div>
+          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+            <button
+              className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+            >
+              Lefoglalom a konzultációmat!
+            </button>
+          </Link>
         </motion.div>
       </motion.div>
     </motion.div>

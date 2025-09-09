@@ -52,13 +52,6 @@ const KockazatErtekelesPage = () => {
 
       <div className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-8 sm:p-10 relative z-10 border border-slate-200">
         
-        <button
-          onClick={() => router.back()}
-          className={`inline-flex items-center justify-center p-3 rounded-full ${accentColor.bg} text-white shadow-md ${accentColor.hoverBg} transition-all duration-300 mb-8 hover:scale-110`}
-          aria-label="Vissza az előző oldalra"
-        >
-          <ArrowLeftIcon className="w-6 h-6" />
-        </button>
 
         <div className="text-center mb-16">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-4">
@@ -123,21 +116,14 @@ const KockazatErtekelesPage = () => {
             </div>
         </section>
         
-        <div className="text-center mt-12 mb-8 p-10 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-3xl shadow-2xl relative overflow-hidden">
-          <h3 className="text-3xl font-bold text-white mb-4 drop-shadow-md"><strong className="font-extrabold">Megér neked egy ingyenes konzultációt?</strong></h3>
-          <p className="text-lg text-cyan-100 max-w-2xl mx-auto drop-shadow">
-            Ne kockáztass, inkább legyél felkészült. Ha úgy érzed megoldásra van szükséged, vagy érdekel mélyebben a téma, keress minket egy díjmentes konzultációért, ahol részletesen átbeszéljük az egyedi igényeket.
-          </p>
-          <div className="mt-8">
+        <div className="text-center mt-12 mb-8">
             <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
               <button
-                className={`inline-flex items-center justify-center font-bold py-4 px-10 rounded-xl text-lg text-cyan-600 bg-white shadow-2xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105`}
+                className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
               >
-                <CalendarDaysIcon className="w-6 h-6 mr-3" />
                 Ingyenes Konzultációt Foglalok
               </button>
             </Link>
-          </div>
         </div>
       </div>
     </div>

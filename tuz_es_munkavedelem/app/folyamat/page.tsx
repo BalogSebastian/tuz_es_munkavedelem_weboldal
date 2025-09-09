@@ -1,4 +1,3 @@
-// components/sections/Folyamatunk.tsx
 'use client';
 
 import React from 'react';
@@ -136,14 +135,9 @@ const Folyamatunk = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 {/* A "Vissza a főoldalra" gomb eltávolítva a kérésedre */}
                 <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-                  <motion.div
-                    className={`w-full sm:w-auto text-center font-bold py-3 px-8 rounded-xl bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white shadow-lg shadow-cyan-500/30 cursor-pointer`}
-                    whileHover={{ scale: 1.05, y: -2, boxShadow: '0 10px 30px -10px rgba(3, 186, 190, 0.5)' }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <CalendarDaysIcon className="w-5 h-5 inline-block mr-2" />
+                  <button className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}>
                     Konzultációt foglalok egy szakemberrel
-                  </motion.div>
+                  </button>
                 </Link>
               </div>
             </motion.footer>

@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/outline';
 import {
     FireIcon as FireIconSolid,
-    CalendarDaysIcon as CalendarDaysIconSolid,
+    CalendarDaysIcon as CalendarDaysIconSolid, // Ez már nem lesz használva a gombban
 } from '@heroicons/react/24/solid';
 import { FaHelmetSafety } from 'react-icons/fa6';
 import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5';
@@ -144,7 +144,10 @@ const MainPage: React.FC = () => {
               @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
               .gradient-text { background: linear-gradient(to right, #06b6d4, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
               .modal-grid-bg { background-color: #1a202c; background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px); background-size: 4rem 4rem; }
-              .cta-glow-red { box-shadow: 0 0 30px ${RED_ACCENT_COLOR.baseHex}80, 0 0 60px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 20px ${RED_ACCENT_COLOR.baseHex}40; }
+              /* Itt van a korrigált cta-glow-red stílus */
+              .cta-glow-red {
+                box-shadow: 0 0 30px ${RED_ACCENT_COLOR.baseHex}80, 0 0 60px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
+              }
             `}</style>
 
             <div style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '4rem 4rem' }} className="font-['Poppins',_sans-serif] min-h-screen relative">
@@ -178,7 +181,17 @@ const MainPage: React.FC = () => {
                         </div>
                         <motion.div variants={introItemVariants} className="text-center mt-20">
                             <p className="mb-6 text-xl text-slate-600">Beszélj egy hozzáértő szakemberrel!</p>
-                            <motion.div variants={ANIMATION_VARIANTS.item}><a href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}>Foglalj egy ingyenes konzultiót!</a></motion.div>
+                            {/* ITT A GOMB MÓDOSÍTÁSA */}
+                            <motion.a 
+                              href="https://app.minup.io/book/munkavedelmiszaki/service/46358" 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.hoverBg} ${RED_ACCENT_COLOR.textOnAccent}
+                                font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out
+                                focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+                            >
+                                Foglalj egy ingyenes konzultiót!
+                            </motion.a>
                         </motion.div>
                     </div>
                 </motion.section>

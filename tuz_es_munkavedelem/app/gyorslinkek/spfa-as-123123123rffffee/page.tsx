@@ -57,13 +57,6 @@ const MunkavedelmiSzabalyzatPage = () => {
 
       <div className="min-h-screen bg-slate-50 font-['Poppins',_sans-serif] py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <button
-            onClick={() => router.back()}
-            className={`inline-flex items-center justify-center p-3 rounded-full ${accentColor.bg} text-white shadow-lg ${accentColor.hoverBg} transition-all duration-300 mb-8 hover:scale-110 hover:shadow-cyan-500/40`}
-            aria-label="Vissza az előző oldalra"
-          >
-            <ArrowLeftIcon className="w-6 h-6" />
-          </button>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 lg:gap-16">
             
@@ -183,21 +176,14 @@ const MunkavedelmiSzabalyzatPage = () => {
                 </div>
               </section>
 
-              <div className="text-center mt-12 p-8 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-lg shadow-2xl">
-                <h3 className="text-2xl font-bold text-white mb-3">Gondoskodjon munkatársai biztonságáról és cége jogszerű működéséről!</h3>
-                <p className="text-lg text-cyan-100 max-w-2xl mx-auto">
-                  Ne kockáztasson! Keressen minket egy ingyenes konzultációért, hogy átbeszéljük az Ön egyedi munkavédelmi igényeit és elkészítsük a szabályzatot.
-                </p>
-                <div className="mt-8">
-                  <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-                    <button
-                      className={`inline-flex items-center justify-center font-bold py-3 px-8 rounded-lg text-lg text-cyan-600 bg-white shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-white/50 hover:scale-105`}
-                    >
-                      <CalendarDaysIcon className="w-6 h-6 mr-3" />
-                      Ingyenes Konzultációt Foglalok
-                    </button>
-                  </Link>
-                </div>
+              <div className="text-center mt-12">
+                <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+                  <button
+                    className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+                  >
+                    Ingyenes Konzultációt Foglalok
+                  </button>
+                </Link>
               </div>
 
             </main>
