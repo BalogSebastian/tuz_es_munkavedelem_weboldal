@@ -168,7 +168,7 @@ const MunkavedelmiOktatasPage = () => {
             <button
               className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
             >
-              Konzultálni szeretnék egy szakemberrel!
+              Foglalj egy ingyenes konzultációt!
             </button>
           </Link>
         </motion.div>

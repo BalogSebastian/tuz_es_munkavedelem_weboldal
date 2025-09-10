@@ -156,7 +156,7 @@ const CombinedSections: React.FC = () => {
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="relative text-center mb-16 lg:mb-20">
                         <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4">
-                            Együttműködésünk <span className={ACCENT_COLOR_CYAN.text}>Folyamata</span>
+                            Együttműködésünk <span className='text-cyan-400'>Folyamata</span>
                         </h2>
                         <p className="text-xl text-slate-600 max-w-3xl mx-auto">
                             Átlátható közös munkát biztosítunk, ahol a munka befejezése után is folyamatosan kapcsolatban maradunk, és kezeljük az ügyeket, ellentétben azokkal, akik eltűnnek.
@@ -164,38 +164,38 @@ const CombinedSections: React.FC = () => {
                     </div>
                     <div className="relative max-w-xl mx-auto lg:max-w-4xl">
                         <div
-                            className="hidden lg:block absolute left-1/2 top-10 bottom-10 w-1 bg-gradient-to-b from-cyan-200 via-cyan-300 to-cyan-200 rounded-full transform -translate-x-1/2"
+                            className="hidden lg:block absolute left-1/2 top-10 bottom-10 w-1 bg-gradient-to-b from-cyan-400 via-cyan-300 to-cyan-200 rounded-full transform -translate-x-1/2"
                             style={{ transformOrigin: 'top' }}
                         />
                         <div className="space-y-20">
-                            {steps.map((step, index) => (
-                                <div
-                                    key={step.step}
-                                    className={`lg:flex items-center relative ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
-                                >
-                                    <div className={`w-full lg:w-1/2 flex mb-8 lg:mb-0 ${index % 2 === 0 ? 'lg:justify-start lg:pl-[calc(50%+3rem)]' : 'lg:justify-end lg:pr-[calc(50%+3rem)]'}`}>
-                                        <div className="relative inline-block">
-                                            <div
-                                                className="hidden lg:block absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
-                                                style={{ borderColor: ACCENT_COLOR_CYAN.base, borderWidth: '2px', left: index % 2 === 0 ? 'auto' : 'calc(100% + 2rem)', right: index % 2 === 0 ? 'calc(100% + 2rem)' : 'auto' }}
-                                            />
-                                            <div className="bg-gradient-to-br from-white to-slate-100 p-6 rounded-full inline-flex items-center justify-center shadow-xl border border-gray-100 ring-8 ring-white/50">
-                                                <div className={`absolute -top-3 ${index % 2 === 0 ? '-right-3' : '-left-3'} ${ACCENT_COLOR_CYAN.bg} text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg z-20 ring-4 ring-white`}>
-                                                    <span>{step.step}</span>
-                                                </div>
-                                                <step.icon className={`w-14 h-14 ${ACCENT_COLOR_CYAN.text}`} aria-hidden="true" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'}`}>
-                                        <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full">
-                                            <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
-                                            <p className="text-gray-600 leading-relaxed">{step.description}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+    {steps.map((step, index) => (
+        <div
+            key={step.step}
+            className={`lg:flex items-center relative ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+        >
+            <div className={`w-full lg:w-1/2 flex mb-8 lg:mb-0 ${index % 2 === 0 ? 'lg:justify-start lg:pl-[calc(50%+3rem)]' : 'lg:justify-end lg:pr-[calc(50%+3rem)]'}`}>
+                <div className="relative inline-block">
+                    <div
+                        className="hidden lg:block absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
+                        style={{ borderColor: 'rgb(34 211 238)', borderWidth: '2px', left: index % 2 === 0 ? 'auto' : 'calc(100% + 2rem)', right: index % 2 === 0 ? 'calc(100% + 2rem)' : 'auto' }}
+                    />
+                    <div className="bg-gradient-to-br from-white to-slate-100 p-6 rounded-full inline-flex items-center justify-center shadow-xl border border-gray-100 ring-8 ring-cyan-400">
+                        <div className={`absolute -top-3 ${index % 2 === 0 ? '-right-3' : '-left-3'} bg-cyan-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg z-20 ring-4 ring-cyan-400`}>
+                            <span>{step.step}</span>
                         </div>
+                        <step.icon className="w-14 h-14 text-cyan-400" aria-hidden="true" />
+                    </div>
+                </div>
+            </div>
+            <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'}`}>
+                <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full">
+                    <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                </div>
+            </div>
+        </div>
+    ))}
+</div>
                     </div>
                     <div className="text-center mt-16 lg:mt-20 px-4">
                         <p className="text-lg md:text-xl text-slate-700 font-medium max-w-xl mx-auto">
@@ -220,7 +220,7 @@ const CombinedSections: React.FC = () => {
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-40">
                     <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                         <h2
-                            className={`text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r ${ACCENT_COLOR_CYAN.textGradient} mb-6 tracking-tight`}
+                            className={`text-4xl sm:text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r ${ACCENT_COLOR_CYAN.textGradient} mb-6 tracking-tight`}
                         >
                             Készen állsz a biztonságra?
                         </h2>
@@ -268,8 +268,8 @@ const CombinedSections: React.FC = () => {
 
     <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 lg:mb-12">
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
-                Gyakori <span className={ACCENT_COLOR_CYAN.text}>Kérdések</span>
+            <h2 className="text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                Gyakori <span className='text-cyan-400'>Kérdések</span>
             </h2>
             <p className="text-base text-slate-600 max-w-2xl mx-auto">
                 Rövid válaszok a legfontosabb munkavédelmi és tűzvédelmi kérdésekre.

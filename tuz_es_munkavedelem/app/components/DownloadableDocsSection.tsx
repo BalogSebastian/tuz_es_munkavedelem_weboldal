@@ -19,12 +19,12 @@ import { IoArrowRedo } from "react-icons/io5";
 const accentColor = {
   baseHex: '#03BABE',
   bg: 'bg-[#03BABE]',
-  text: 'text-[#03BABE]',
+  text: 'text-cyan-400',
   textOnAccent: 'text-white',
   hoverBg: 'hover:bg-cyan-600',
   ring: 'focus:ring-cyan-500',
   borderFocus: 'focus:border-cyan-500',
-  iconDefault: 'text-gray-400',
+  iconDefault: 'text-cyan-400',
   successText: 'text-green-600',
   successBg: 'bg-green-50',
 };
@@ -97,17 +97,17 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownlo
         <div className={`p-6 sm:p-8 flex flex-col h-full transition-opacity duration-300 ${isSubmitted ? 'opacity-0' : 'opacity-100'}`}>
             <div className="flex-grow flex flex-col">
                 <div className="w-fit mx-auto mb-5">
-                    <DocumentArrowDownIcon className={`w-12 h-12 sm:w-14 sm:h-14 ${accentColor.text}`} />
+                    <DocumentArrowDownIcon className={`w-12 h-12 sm:w-14 sm:h-14 text-cyan-400`} />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3 text-center">{doc.title}</h3>
                 <p className="text-slate-600 leading-relaxed mb-6 text-center text-sm line-clamp-3 flex-grow">{doc.description}</p>
                 <form onSubmit={handleSubmit} className="space-y-4 mt-auto">
                     {(['name', 'email', 'phone'] as Array<keyof FormDataState>).map(fieldName => (
                     <div key={fieldName} className="relative group">
-                        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:${accentColor.text}`}>
-                            {fieldName === 'name' && <UserIcon className={`h-5 w-5 ${accentColor.iconDefault} group-focus-within:${accentColor.text}`} />}
-                            {fieldName === 'email' && <EnvelopeIcon className={`h-5 w-5 ${accentColor.iconDefault} group-focus-within:${accentColor.text}`} />}
-                            {fieldName === 'phone' && <PhoneIcon className={`h-5 w-5 ${accentColor.iconDefault} group-focus-within:${accentColor.text}`} />}
+                        <div className={`absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:text-cyan-400`}>
+                            {fieldName === 'name' && <UserIcon className={`h-5 w-5 text-cyan-400 group-focus-within:text-cyan-400`} />}
+                            {fieldName === 'email' && <EnvelopeIcon className={`h-5 w-5 text-cyan-400 group-focus-within:text-cyan-400`} />}
+                            {fieldName === 'phone' && <PhoneIcon className={`h-5 w-5 text-cyan-400 group-focus-within:text-cyan-400`} />}
                         </div>
                         <input
                             type={fieldName === 'email' ? 'email' : fieldName === 'phone' ? 'tel' : 'text'}
@@ -115,7 +115,7 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownlo
                             id={`${fieldName}-${doc.id}`}
                             value={formData[fieldName]}
                             onChange={handleChange}
-                            className={`block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none ${accentColor.ring} ${accentColor.borderFocus} sm:text-sm transition-all duration-200 hover:shadow-md focus:shadow-md`}
+                            className={`block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm transition-all duration-200 hover:shadow-md focus:shadow-md`}
                             placeholder={fieldName === 'name' ? 'Teljes Név*' : fieldName === 'email' ? 'Email cím*' : 'Telefonszám'}
                             required={fieldName !== 'phone'}
                         />
@@ -126,7 +126,7 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownlo
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className={`w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-lg shadow-lg text-base font-semibold ${accentColor.textOnAccent} ${accentColor.bg} ${accentColor.hoverBg} focus:outline-none focus:ring-2 focus:ring-offset-2 ${accentColor.ring} transition-all duration-200 ease-in-out disabled:bg-cyan-300 disabled:cursor-not-allowed`}
+                            className={`w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-lg shadow-lg text-base font-semibold text-white bg-cyan-400 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-all duration-200 ease-in-out disabled:bg-cyan-300 disabled:cursor-not-allowed`}
                         >
                             {isLoading ? 'Mentés és letöltés...' : 'Letöltés és Adatlap Küldése'}
                             {!isLoading && <span> <ArrowRightIcon className="ml-3 h-5 w-5" /> </span>}
@@ -135,9 +135,9 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ doc, initialState, onDownlo
                 </form>
             </div>
         </div>
-        <div className={`absolute top-0 left-0 w-full h-full p-6 sm:p-8 flex flex-col justify-center items-center text-center rounded-2xl ${accentColor.successBg} border border-green-200 transition-opacity duration-300 ${isSubmitted ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} >
-            <CheckCircleIcon className={`w-20 h-20 ${accentColor.successText} mx-auto mb-4`} />
-            <h4 className={`text-xl sm:text-2xl font-bold ${accentColor.successText} mb-2`}>Sikeres Letöltés!</h4>
+        <div className={`absolute top-0 left-0 w-full h-full p-6 sm:p-8 flex flex-col justify-center items-center text-center rounded-2xl bg-green-50 border border-green-200 transition-opacity duration-300 ${isSubmitted ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} >
+            <CheckCircleIcon className={`w-20 h-20 text-green-600 mx-auto mb-4`} />
+            <h4 className={`text-xl sm:text-2xl font-bold text-green-600 mb-2`}>Sikeres Letöltés!</h4>
             <p className="text-gray-700 text-sm">Köszönjük! A letöltés automatikusan elindult.</p>
         </div>
       </div>
@@ -246,8 +246,8 @@ const DownloadableDocsSection: React.FC = () => {
                     className="w-full max-w-3xl shrink-0 text-center mb-16 lg:mb-20"
                     >
                     <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-5 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-[#03BABE] to-teal-500">
-                    <span className='text-cyan-500'>Töltsd le</span> <span className='text-black'>a számodra</span> leghasznosabb <span className='text-black'>anyagunkat!</span>
-                    </h2>
+    <span className='text-cyan-400'>Töltsd le</span> <span className='text-black'>a számodra</span> <span className='text-cyan-400'>leghasznosabb</span> <span className='text-black'>anyagunkat!</span>
+</h2>
                     <p className="text-2xl text-slate-700 leading-relaxed max-w-xl mx-auto">
                     Ezek az az anyagok jól jöhetnek ha még több információra van szükséged, hogy többet tudj meg, és elkerüld a büntetést.
                     </p>

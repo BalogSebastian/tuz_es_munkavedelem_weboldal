@@ -132,7 +132,6 @@ const StatsCounterSection = () => {
                         target="_blank" // Ajánlott új lapon megnyitni a linket
                         rel="noopener noreferrer" // Biztonsági okokból
                         className={`mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden cta-card block cursor-pointer ${isInView ? 'visible' : ''}`}
-                        style={{ transitionDelay: '1.0s' }}
                     >
                         <div className="absolute inset-0 bg-white/5 opacity-20 transform -skew-y-12 scale-150"></div>
                         <p className="text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight relative z-10">

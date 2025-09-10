@@ -3,24 +3,25 @@
 import React, { useState, useMemo, ChangeEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ArrowLeftIcon,
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
 import { FaFire, FaHardHat, FaUtensils } from 'react-icons/fa';
 
+// --- TÍPUSDEFINÍCIÓK (JAVÍTVA) ---
 interface FaqItemData {
   q: string;
   a: string;
+  category?: string; // JAVÍTÁS: A 'category' mező opcionális
 }
 
 interface FaqCategory {
   category: string;
   icon: React.ComponentType<{ className?: string }>;
-  questions: FaqItemData[];
+  questions: { q: string; a: string }[];
 }
 
-const faqData = [
+const faqData : FaqCategory[] = [
     { 
         category: "Tűzvédelem",
         icon: FaFire,
@@ -595,253 +596,282 @@ const faqData = [
     },
 ];
 
+// --- ANIMÁCIÓS VARIANSOK ---
 const pageVariants = {
-  initial: { opacity: 0 },
-  in: { opacity: 1, transition: { duration: 0.5, staggerChildren: 0.1 } },
+  initial: { opacity: 0, y: 20 },
+  in: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.15, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, y: -20, transition: { duration: 0.3 } } // Kilépési animáció hozzáadva
 };
 
 const itemVariants = {
-  initial: { opacity: 0, y: 40 },
-  in: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  initial: { opacity: 0, y: 30 },
+  in: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const FaqItem = ({ q, a, isOpen, onClick }: { q: string; a: string; isOpen: boolean; onClick: () => void }) => {
+const fadeAndSlideIn = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.2, ease: 'easeIn' } },
+};
+
+
+// --- ALKOMPONENS: FaqItem ---
+const FaqItem = ({ item, isOpen, onClick }: { item: FaqItemData; isOpen: boolean; onClick: () => void }) => {
   return (
-      <div className="border-b border-slate-200">
-          <motion.button
-              onClick={onClick}
-              className="w-full flex justify-between items-center py-5 text-left group transition-colors duration-300"
+    <motion.div
+        layout // Segít a Framer Motion-nek kezelni az elemek átrendeződését
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 mb-5 overflow-hidden border border-gray-100"
+    >
+      <button
+        onClick={onClick}
+        className="w-full flex justify-between items-center p-5 md:p-6 text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-2xl"
+      >
+        <div className="flex-1 pr-4">
+            {item.category && (
+                 <span className="inline-block bg-emerald-50 text-emerald-700 text-xs font-semibold mb-2 px-3 py-1 rounded-full border border-emerald-100 uppercase tracking-wide">
+                    {item.category}
+                </span>
+            )}
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 group-hover:text-cyan-700 transition-colors leading-relaxed">
+                {item.q}
+            </h3>
+        </div>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+          className={`flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-cyan-100 text-cyan-600' : 'bg-gray-100 text-gray-500 group-hover:bg-cyan-50 group-hover:text-cyan-500'}`}
+        >
+          <ChevronDownIcon className="w-5 h-5" />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
           >
-              <span className="text-lg sm:text-xl font-semibold text-slate-800 group-hover:text-cyan-600">
-                  {q}
-              </span>
-              <motion.div
-                  className="p-2 bg-slate-100 rounded-full group-hover:bg-cyan-100 transition-colors"
-                  animate={{ rotate: isOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-              >
-                  <ChevronDownIcon className={`w-5 h-5 transition-colors ${isOpen ? 'text-cyan-600' : 'text-gray-500'}`} />
-              </motion.div>
-          </motion.button>
-          <AnimatePresence initial={false}>
-              {isOpen && (
-                  <motion.div
-                      key="content"
-                      initial="collapsed"
-                      animate="open"
-                      exit="collapsed"
-                      variants={{
-                          open: { opacity: 1, height: 'auto', transition: { duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] } },
-                          collapsed: { opacity: 0, height: 0, transition: { duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] } },
-                      }}
-                      className="overflow-hidden"
-                  >
-                      <motion.div
-                          variants={itemVariants}
-                          className="text-xl lg:text-2xl text-slate-700 pb-5"
-                      >
-                          <div dangerouslySetInnerHTML={{ __html: a }} />
-                      </motion.div>
-                  </motion.div>
-              )}
-          </AnimatePresence>
-      </div>
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.2 }}
+                className="px-5 md:px-6 pb-6 text-gray-600 text-base leading-relaxed prose max-w-none text-left"
+                dangerouslySetInnerHTML={{ __html: item.a }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
+
+// --- FŐ KOMPONENS: GyakoriKerdesek ---
 const GyakoriKerdesek = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('Tűzvédelem');
+  const [activeCategory, setActiveCategory] = useState<string>(faqData[0].category);
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [isSearchActive, setIsSearchActive] = useState(false);
+  
+  const isSearchActive = !!searchQuery;
 
   const allQuestions = useMemo(() => {
-      return faqData.flatMap(cat => cat.questions.map(q => ({
-          ...q,
-          category: cat.category,
-      })));
+    return faqData.flatMap(cat => cat.questions.map(q => ({
+      ...q,
+      category: cat.category,
+    }))) as FaqItemData[];
   }, []);
 
-  const displayedQuestions = useMemo(() => {
-      if (searchQuery) {
-          return allQuestions.filter(q =>
-              q.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              q.a.toLowerCase().includes(searchQuery.toLowerCase())
-          );
-      }
-      const currentCategory = faqData.find(cat => cat.category === activeCategory);
-      return currentCategory ? currentCategory.questions : [];
-  }, [activeCategory, searchQuery, allQuestions]);
-
+  const displayedQuestions: FaqItemData[] = useMemo(() => {
+    if (isSearchActive) {
+      const lowerCaseQuery = searchQuery.toLowerCase();
+      return allQuestions.filter(q =>
+        q.q.toLowerCase().includes(lowerCaseQuery) ||
+        q.a.toLowerCase().includes(lowerCaseQuery) ||
+        q.category?.toLowerCase().includes(lowerCaseQuery) // Keresés a kategóriában is
+      );
+    }
+    const currentCategory = faqData.find(cat => cat.category === activeCategory);
+    // Kategória nézetben a FAQItem-nek is átadjuk a kategóriát, hogy az megjelenhessen
+    return currentCategory ? currentCategory.questions.map(q => ({ ...q, category: currentCategory.category })) : [];
+  }, [activeCategory, searchQuery, allQuestions, isSearchActive]);
+  
   const handleCategoryClick = (categoryName: string) => {
-      setActiveCategory(categoryName);
-      setActiveQuestion(null);
-      setIsMobileNavOpen(false);
-      setSearchQuery('');
+    setActiveCategory(categoryName);
+    setActiveQuestion(null);
+    setIsMobileNavOpen(false);
+    setSearchQuery(''); // Kategóriaváltáskor töröljük a keresést
   };
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const query = event.target.value;
-      setSearchQuery(query);
-      setIsSearchActive(!!query);
-      setActiveQuestion(null);
-      if (!query) {
-          setActiveCategory(faqData[0].category);
-      }
-  };
+    setSearchQuery(event.target.value);
+    setActiveQuestion(null); // Kereséskor zárjuk be az összes kérdést
+    setIsMobileNavOpen(false); // Kereséskor zárjuk be a mobil nav-ot
+  }
 
-  const handleBackToCategories = () => {
-      setIsSearchActive(false);
-      setSearchQuery('');
-      setActiveQuestion(null);
-  };
+  const handleClearSearch = () => {
+    setSearchQuery('');
+    setActiveQuestion(null);
+  }
 
-  const handleQuestionClick = (q: string) => {
-      setActiveQuestion(activeQuestion === q ? null : q);
-  };
+  const handleQuestionClick = (q: string) => setActiveQuestion(prev => (prev === q ? null : q));
 
   return (
-      <section id="gyik" className="py-16 lg:py-24 relative bg-slate-50 overflow-hidden font-['Poppins',_sans-serif]">
-          <div className="container mx-auto px-4">
-              <motion.div
-                  initial="initial"
-                  animate="in"
-                  variants={pageVariants}
-                  className="max-w-7xl mx-auto w-full"
-              >
-                  <div className="text-center mb-10 lg:mb-12">
-                      <motion.h2
-                          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight"
-                          variants={itemVariants}
+    <section id="gyik" className="py-16 lg:py-24 bg-gradient-to-br from-indigo-50 to-purple-50 font-['Poppins',_sans-serif] text-gray-900">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <motion.div
+            initial="initial"
+            animate="in"
+            variants={pageVariants}
+        >
+            <motion.div variants={itemVariants} className="text-center mb-12 lg:mb-16">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-5 leading-tight tracking-tight">
+                Gyakran Ismételt Kérdések
+              </h2>
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto font-light">
+                Találj gyorsan választ a leggyakoribb felvetésekre munkavédelem, tűzvédelem és HACCP témákban.
+              </p>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-start">
+              {/* --- Bal oldali, "sticky" kategória navigáció (Desktop) --- */}
+              <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
+                <div className="sticky top-28 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                  <h3 className="text-xl font-bold text-gray-800 mb-5">Kategóriák</h3>
+                  <nav className="flex flex-col space-y-3">
+                    {faqData.map(category => (
+                      <button
+                        key={category.category}
+                        onClick={() => handleCategoryClick(category.category)}
+                        className={`flex items-center space-x-4 w-full text-left px-5 py-3 rounded-xl transition-all duration-300 transform group
+                          ${activeCategory === category.category && !isSearchActive
+                            ? 'bg-cyan-600 text-white shadow-lg font-semibold scale-105'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-cyan-700 hover:scale-103'
+                          }
+                        `}
                       >
-                          Gyakran Ismételt Kérdések
-                      </motion.h2>
-                      <motion.p
-                          className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto"
-                          variants={itemVariants}
-                      >
-                          Összegyűjtöttük a leggyakrabban felmerülő kérdéseket és válaszokat, hogy segítsünk eligazodni a <strong>tűzvédelem, munkavédelem és HACCP</strong> világában.
-                      </motion.p>
+                        <category.icon className={`w-6 h-6 flex-shrink-0 transition-colors duration-300 
+                          ${activeCategory === category.category && !isSearchActive ? 'text-white' : 'text-gray-500 group-hover:text-cyan-500'}
+                        `} />
+                        <span className="text-lg">{category.category}</span>
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </aside>
+
+              {/* --- Jobb oldali tartalom: Kereső és kérdések --- */}
+              <main className="lg:col-span-8 xl:col-span-9">
+                <div className="mb-8">
+                  <div className="relative mb-5">
+                    <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                      placeholder="Keress a kérdések között..."
+                      className="w-full pl-12 pr-10 py-3.5 rounded-full border border-gray-200 bg-white focus:outline-none focus:ring-3 focus:ring-cyan-200 focus:border-cyan-400 transition-all duration-300 shadow-sm text-gray-700 text-base"
+                    />
+                    <AnimatePresence>
+                        {searchQuery && (
+                            <motion.button
+                                {...fadeAndSlideIn}
+                                onClick={handleClearSearch}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                                aria-label="Keresés törlése"
+                            >
+                                <XMarkIcon className="w-5 h-5" />
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
                   </div>
 
+                  {/* Mobil kategóriaválasztó */}
+                  <div className="lg:hidden mt-4">
+                     <button
+                        onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                        className="w-full flex justify-between items-center px-5 py-3.5 bg-white border border-gray-200 rounded-xl shadow-md text-gray-800 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 transition-all duration-300"
+                      >
+                        <span className="text-lg">{isSearchActive ? 'Keresési találatok' : activeCategory}</span>
+                        {!isSearchActive && <ChevronDownIcon className={`w-5 h-5 transition-transform duration-300 ${isMobileNavOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500'}`} />}
+                      </button>
+                    <AnimatePresence>
+                        {isMobileNavOpen && !isSearchActive && (
+                            <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                            className="mt-3 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+                            >
+                            {faqData.map(category => (
+                                <button
+                                    key={category.category}
+                                    onClick={() => handleCategoryClick(category.category)}
+                                    className="w-full text-left px-5 py-3 flex items-center space-x-4 text-gray-700 hover:bg-gray-50 hover:text-cyan-700 transition-colors text-lg"
+                                >
+                                    <category.icon className="w-6 h-6 text-gray-500" />
+                                    <span>{category.category}</span>
+                                </button>
+                            ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* --- Kérdések listája --- */}
+                <AnimatePresence mode="wait">
                   <motion.div
-                      className="relative mb-8"
-                      variants={itemVariants}
+                    key={isSearchActive ? 'search-results' : activeCategory}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
                   >
-                      <div className="relative">
-                          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <input
-                              type="text"
-                              value={searchQuery}
-                              onChange={handleSearchChange}
-                              placeholder="Keresés kérdésekben és válaszokban..."
-                              className="w-full pl-12 pr-4 py-3 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors shadow-sm bg-white text-slate-800"
+                    {displayedQuestions.length > 0 ? (
+                      <motion.div layout> {/* layout prop a simább átrendeződéshez */}
+                        {displayedQuestions.map((item) => (
+                          <FaqItem
+                            key={item.q}
+                            item={item}
+                            isOpen={activeQuestion === item.q}
+                            onClick={() => handleQuestionClick(item.q)}
                           />
-                      </div>
-                      <AnimatePresence>
-                          {isSearchActive && (
-                              <motion.button
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, x: -20 }}
-                                  transition={{ duration: 0.3 }}
-                                  onClick={handleBackToCategories}
-                                  className="mt-4 flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors"
-                              >
-                                  <ArrowLeftIcon className="w-4 h-4 mr-1" /> Vissza a kategóriákhoz
-                              </motion.button>
-                          )}
-                      </AnimatePresence>
-                  </motion.div>
-
-                  {!isSearchActive && (
-                      <motion.div
-                          className="mb-8"
-                          variants={itemVariants}
-                      >
-                          <nav className="hidden lg:flex justify-center space-x-3 p-2 bg-slate-100 rounded-full shadow-lg border border-slate-200">
-                              {faqData.map(category => (
-                                  <button
-                                      key={category.category}
-                                      onClick={() => handleCategoryClick(category.category)}
-                                      className={`flex items-center space-x-2 px-6 py-3 rounded-full transition-all duration-300 ease-in-out
-                                          ${activeCategory === category.category
-                                              ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white shadow-lg transform scale-105'
-                                              : 'text-gray-600 hover:bg-white hover:text-cyan-600'
-                                          }
-                                      `}
-                                  >
-                                      <category.icon className="w-5 h-5" />
-                                      <span className="font-semibold text-sm md:text-base">{category.category}</span>
-                                  </button>
-                              ))}
-                          </nav>
-
-                          <div className="lg:hidden">
-                              <button
-                                  onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-                                  className="w-full flex justify-between items-center px-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm text-slate-800"
-                              >
-                                  <span className="font-semibold">{activeCategory}</span>
-                                  <ChevronDownIcon className={`w-5 h-5 transition-transform ${isMobileNavOpen ? 'transform rotate-180' : ''}`} />
-                              </button>
-                              <AnimatePresence>
-                                  {isMobileNavOpen && (
-                                      <motion.nav
-                                          initial={{ opacity: 0, height: 0 }}
-                                          animate={{ opacity: 1, height: 'auto' }}
-                                          exit={{ opacity: 0, height: 0 }}
-                                          transition={{ duration: 0.3 }}
-                                          className="mt-2 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden"
-                                      >
-                                          {faqData.map(category => (
-                                              <button
-                                                  key={category.category}
-                                                  onClick={() => handleCategoryClick(category.category)}
-                                                  className="w-full text-left px-4 py-3 text-slate-700 hover:bg-slate-100 transition-colors rounded-xl"
-                                              >
-                                                  <span className="font-semibold">{category.category}</span>
-                                              </button>
-                                          ))}
-                                      </motion.nav>
-                                  )}
-                              </AnimatePresence>
-                          </div>
+                        ))}
                       </motion.div>
-                  )}
-
-                  <div className="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-slate-200">
-                      <AnimatePresence mode="wait">
-                          <motion.div
-                              key={isSearchActive ? 'search-results' : activeCategory}
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -20 }}
-                              transition={{ duration: 0.3 }}
-                          >
-                              {displayedQuestions.length > 0 ? (
-                                  displayedQuestions.map((item, index) => (
-                                      <FaqItem
-                                          key={index}
-                                          q={item.q}
-                                          a={item.a}
-                                          isOpen={activeQuestion === item.q}
-                                          onClick={() => handleQuestionClick(item.q)}
-                                      />
-                                  ))
-                              ) : (
-                                  <div className="text-center py-10 text-gray-500">
-                                      <p>Nincs találat a keresési feltételeknek megfelelően.</p>
-                                  </div>
-                              )}
-                          </motion.div>
-                      </AnimatePresence>
-                  </div>
-              </motion.div>
-          </div>
-      </section>
+                    ) : (
+                      <motion.div
+                        key="no-results"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="text-center py-20 bg-white rounded-2xl shadow-md border border-gray-100"
+                      >
+                        <p className="text-gray-500 text-lg font-medium">Nincs a keresésnek megfelelő találat. Próbálj másik kifejezést!</p>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </main>
+            </motion.div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
 export default GyakoriKerdesek;
+
+
+
+
+
+

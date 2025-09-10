@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-// JAVÍTVA: A hibás 'ScreenResolution' import eltávolítva
 import FingerprintJS, { Agent, Component, GetResult } from '@fingerprintjs/fingerprintjs';
 
 // Komponensek importálása
@@ -14,7 +13,7 @@ const Footer = dynamic(() => import('./Footer'), { ssr: false });
 import IntegratedApplication from './IntegratedApplications';
 import CombinedSections from './Combined';
 import MainPage from './MainPage';
-import QuizComponent from './QuizComponent';
+import QuizModal from './QuizModal';
 
 // Segédfüggvény a biztonságos adatkinyeréshez (változatlan)
 function getComponentValue<T>(component: Component<T> | undefined): T | string {
@@ -26,21 +25,36 @@ function getComponentValue<T>(component: Component<T> | undefined): T | string {
 
 export default function HomePageClientContent() {
   const [showExitPopup, setShowExitPopup] = useState(false);
+  const [showQuizModal, setShowQuizModal] = useState(false);
 
+  // A 7 másodperces időzítő a kilépési felugró ablak számára
   useEffect(() => {
-    const triggerPopup = () => {
-      if (!sessionStorage.getItem('exitIntentShown')) {
+    const timer = setTimeout(() => {
+      // Csak akkor jelenítjük meg, ha a kvíz pop-up még nem volt látható
+      if (!sessionStorage.getItem('quizModalShown')) {
         setShowExitPopup(true);
         sessionStorage.setItem('exitIntentShown', 'true');
       }
+    }, 7000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Az egér kilépését figyelő eseményfigyelő a kvíz pop-up számára
+  useEffect(() => {
+    const handleMouseLeave = (e: MouseEvent) => {
+      // Csak akkor jelenítjük meg, ha az egér a böngészőablakon kívülre megy
+      // és a kvíz pop-up még nem volt látható
+      if (e.clientY < 50 && !sessionStorage.getItem('quizModalShown')) {
+        setShowQuizModal(true);
+        sessionStorage.setItem('quizModalShown', 'true');
+      }
     };
     
-    // --- JAVÍTVA: Az eseményfigyelők helyett egy 7 másodperces időzítő indítása ---
-    const timer = setTimeout(triggerPopup, 7000);
+    document.addEventListener('mouseleave', handleMouseLeave);
     
-    // A cleanup funkció eltávolítja az időzítőt, ha a komponens elhagyásra kerül
     return () => {
-      clearTimeout(timer);
+      document.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
@@ -49,11 +63,9 @@ export default function HomePageClientContent() {
       const fp: Agent = await FingerprintJS.load();
       const result: GetResult = await fp.get();
 
-      // --- JAVÍTVA: Biztonságos és helyes képernyőfelbontás-kezelés ---
       const screenResolutionComponent = result.components.screenResolution;
       let resolutionString = 'N/A';
       if (screenResolutionComponent && 'value' in screenResolutionComponent && Array.isArray(screenResolutionComponent.value)) {
-        // Csak akkor hívjuk a .join()-t, ha biztosan egy tömb
         resolutionString = screenResolutionComponent.value.join('x');
       }
 
@@ -63,7 +75,7 @@ export default function HomePageClientContent() {
         platform: getComponentValue(result.components.platform),
         vendor: getComponentValue(result.components.vendor),
         screen: {
-          resolution: resolutionString, // A biztonságosan létrehozott string
+          resolution: resolutionString,
           colorDepth: getComponentValue(result.components.colorDepth),
         },
         hardware: {
@@ -95,6 +107,12 @@ export default function HomePageClientContent() {
         onClose={() => setShowExitPopup(false)}
         onAccept={handleAccept}
       />
+      
+      <QuizModal
+        isOpen={showQuizModal}
+        onClose={() => setShowQuizModal(false)}
+      />
+
       <MainPage/>
       <ServiceHighlightCards />
       <StatsCounterSection />

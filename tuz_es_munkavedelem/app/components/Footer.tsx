@@ -105,8 +105,8 @@ const Footer: React.FC = () => {
             
             {/* Cég Logó és Rövid Leírás */}
             <div className="md:col-span-2 lg:col-span-1">
-              <Link href="/" className="font-bold text-3xl tracking-wider mb-4 block text-gradient">
-              Munkavédelmi<span className="text-white">Szaki</span>
+              <Link href="/" className="font-bold text-3xl text-white mb-4 block ">
+              Munkavédelmi<span className="text-cyan-400">Szaki</span>
               </Link>
               <p className="text-base text-slate-400 leading-relaxed max-w-xs sm:max-w-none">
               Profi megoldások a Tűz- Munkavédelem és HACCP kérdésekben is, hogy neked ne legyen gondod vele! Keress minket bátran!”

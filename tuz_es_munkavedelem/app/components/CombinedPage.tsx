@@ -141,7 +141,7 @@ const CombinedPage = () => {
       <div className="fixed top-0 left-0 right-0 bg-slate-950/70 backdrop-blur-lg py-3 px-4 sm:px-6 flex items-center justify-between text-sm shadow-xl z-50 border-b border-slate-700">
         <div className="flex items-center gap-1">
           <div className="font-bold text-lg tracking-wider relative top-[5px]">
-            <span className={ACCENT_COLOR.textLight}>Munkavédelmi</span>
+            <span className='text-cyan-400'>Munkavédelmi</span>
             <span className="text-white">Szaki</span>
           </div>
           <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={32} height={32} className="h-8 w-auto" />
@@ -155,34 +155,34 @@ const CombinedPage = () => {
           </a>
         </div>
         <div>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className={`${ACCENT_COLOR.bg} ${ACCENT_COLOR.hoverBg} ${ACCENT_COLOR.textOnAccent}
-              font-bold py-2.5 px-5 rounded-lg text-sm
-              transition-all duration-300 ease-in-out
-              focus:outline-none focus-visible:ring-2 ${ACCENT_COLOR.ring}`}
-          >
-            Ajánlatkérés
-          </button>
+        <button
+    onClick={() => setIsModalOpen(true)}
+    className={`bg-cyan-400 hover:bg-cyan-600 text-white
+      font-bold py-2.5 px-5 rounded-lg text-sm
+      transition-all duration-300 ease-in-out
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500`}
+>
+    Ajánlatkérés
+</button>
         </div>
       </div>
 
       {/* Header Hero */}
       <div className="flex-grow flex flex-col items-center justify-center text-center relative px-4">
-        <div className="max-w-7xl relative z-10 flex flex-col items-center">
+        <div className="max-w-8xl relative z-10 flex flex-col items-center">
           <div className="flex flex-col items-center">
             <div className="mb-1 mt-4 z-20">
             </div>
             {/* Hozzáadott rész */}
             <div className="flex flex-col items-center">
-              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={80} height={100} />
-              <h2 className="text-3xl md:text-4xl text-slate-300 mb-2 z-10">
+              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={120} height={100} />
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-2 z-10">
                 Elkészítjük a jogszabályoknak megfelelő Tűz- Munkavédelmi, és HACCP dokumentációkat, hogy téged ne büntessenek meg.
               </h2>
             </div>
             {/* Vége a hozzáadott résznek */}
             <h1
-              className="text-5xl sm:text-7xl md:text-7xl font-black mb-8 leading-tight tracking-tighter text-white z-10"
+              className="text-5xl sm:text-7xl md:text-6xl text-slate-300 mb-8 leading-tight tracking-tighter z-10"
             >
               A büntetés értéke 10 Millió forintig terjedhet!
             </h1>
@@ -193,7 +193,7 @@ const CombinedPage = () => {
                     font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out
                     focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
                 >
-                  Foglald le ingyenes konzultációdat!
+                  Foglalj egy ingyenes konzultációt!
                 </button>
               </Link>
             </div>
