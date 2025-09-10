@@ -786,7 +786,6 @@ const GyakoriKerdesek = () => {
                                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
                                 aria-label="Keresés törlése"
                             >
-                                <XMarkIcon className="w-5 h-5" />
                             </motion.button>
                         )}
                     </AnimatePresence>
