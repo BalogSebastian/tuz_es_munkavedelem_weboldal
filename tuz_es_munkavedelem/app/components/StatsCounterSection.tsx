@@ -135,13 +135,13 @@ const StatsCounterSection = () => {
                     >
                         <div className="absolute inset-0 bg-white/5 opacity-20 transform -skew-y-12 scale-150"></div>
                         <p className="text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight relative z-10">
-                            Egyetlen büntetés megközelítőleg
+                            Egyetlen büntetés akár
                         </p>
                         <p className="text-white text-4xl sm:text-5xl lg:text-6xl font-black mt-2 relative z-10">
                             <span className="text-yellow-300 drop-shadow-lg">2 000 000 Ft</span> is lehet!
                         </p>
                         <p className="text-red-200 text-base sm:text-lg mt-4 relative z-10">
-                        Ne kockáztass - légy felkészült!
+                        Ne kockáztass - legyél felkészült!
                         </p>
                     </a>
                 </div>
