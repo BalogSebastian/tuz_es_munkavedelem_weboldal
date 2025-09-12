@@ -68,7 +68,7 @@ const Kapcsolat = () => {
                                 <h2 className="text-3xl font-bold text-slate-800 mb-4">Foglalj időpontot egy ingyenes konzultációra!</h2>
                                 <iframe 
                                     src="https://app.minup.io/embed/munkavedelmiszaki/service/46358?canStartPayment=true" 
-                                    style={{ width: '850px', height: '790px' }} 
+                                    style={{ width: '950px', height: '790px' }} 
                                     frameBorder="0"
                                 ></iframe>
                                 <script 
