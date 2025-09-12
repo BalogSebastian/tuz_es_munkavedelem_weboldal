@@ -13,11 +13,11 @@ import {
   UserGroupIcon,
   CheckBadgeIcon,
   DocumentTextIcon,
-  SparklesIcon,
   CalendarDaysIcon,
   MapPinIcon,
   ComputerDesktopIcon
 } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/solid'; // Módosítva 'solid'-ra
 import Link from 'next/link';
 
 // Színséma az oldalhoz
@@ -32,6 +32,16 @@ const accentColor = {
   lightBorder: 'border-cyan-200',
   darkText: 'text-slate-800',
   lightText: 'text-slate-600'
+};
+
+// Gomb stílusdefiníciók (Hozzáadva)
+const ACCENT_COLOR_RED = {
+    baseHex: '#DC2626',
+    bg: 'bg-red-600',
+    textOnAccent: 'text-white',
+    ring: 'focus-visible:ring-red-500',
+    shadow: 'shadow-red-500/40',
+    hoverShadow: 'hover:shadow-red-400/60',
 };
 
 // Animációs variánsok
@@ -84,11 +94,24 @@ const MunkavedelmiOktatasPage = () => {
 
   return (
     <motion.div
-      className="min-h-screen bg-slate-50 font-['Poppins',_sans-serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-slate-50 font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
       initial="initial"
       animate="animate"
       variants={pageVariants}
     >
+        <style>{`
+            .cta-button {
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:hover {
+                transform: scale(1.02);
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:active {
+                transform: scale(0.98);
+            }
+        `}</style>
       <div className="absolute inset-0 z-0 opacity-10" style={{
         backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.08) 1px, transparent 1px)`,
         backgroundSize: '3.5rem 3.5rem',
@@ -160,15 +183,24 @@ const MunkavedelmiOktatasPage = () => {
             </div>
         </motion.section>
 
+        {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
         <motion.div
-          className="text-center mt-12 mb-8"
-          variants={itemVariants}
+            className="text-center mt-12 mb-8 p-8"
+            variants={itemVariants}
         >
           <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-            <button
-              className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+             <button
+                className={`
+                    inline-flex items-center gap-3
+                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                    font-bold py-8 px-12 rounded-xl text-3xl
+                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                    transition-all duration-300 ease-in-out
+                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+                    cta-button
+                `}
             >
-              Foglalj egy ingyenes konzultációt!
+                Foglalj egy ingyenes konzultációt!
             </button>
           </Link>
         </motion.div>

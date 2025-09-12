@@ -1,15 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring, useInView } from 'framer-motion';
 import {
   UsersIcon,
   ScaleIcon,
   CheckBadgeIcon,
-  CalendarDaysIcon,
-  BuildingStorefrontIcon
 } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
 // Színséma az oldalhoz
@@ -21,9 +20,17 @@ const accentColor = {
   gradientFrom: 'from-cyan-500',
   gradientTo: 'to-teal-400',
   lightBg: 'bg-cyan-50',
-  lightBorder: 'border-cyan-200',
   darkText: 'text-slate-800',
-  lightText: 'text-slate-600'
+};
+
+// Gomb stílusdefiníciók
+const ACCENT_COLOR_RED = {
+    baseHex: '#DC2626',
+    bg: 'bg-red-600',
+    textOnAccent: 'text-white',
+    ring: 'focus-visible:ring-red-500',
+    shadow: 'shadow-red-500/40',
+    hoverShadow: 'hover:shadow-red-400/60',
 };
 
 // Animációs variánsok
@@ -46,7 +53,36 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 12 } }
 };
 
-// Egyedi kártya komponens a "Miért mi?" szekcióhoz
+
+function AnimatedCounter({ value, text }: { value: number, text?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  const motionValue = useMotionValue(0);
+  
+  const springValue = useSpring(motionValue, {
+    damping: 60,
+    stiffness: 200,
+  });
+
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value);
+    }
+  }, [isInView, value, motionValue]);
+
+  useEffect(() => {
+    springValue.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = `${Math.round(latest)}${text || ''}`;
+      }
+    });
+  }, [springValue, text]);
+
+  return <span ref={ref}>0</span>;
+}
+
+
 const InfoCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: string }) => (
   <motion.div variants={itemVariants} className="flex items-start gap-5 p-6 bg-white rounded-xl shadow-lg border border-slate-100 group transition-all duration-300 hover:border-cyan-200 hover:shadow-xl">
     <div className={`p-3 rounded-full ${accentColor.lightBg} ${accentColor.text} flex-shrink-0`}>
@@ -59,7 +95,6 @@ const InfoCard = ({ icon: Icon, title, content }: { icon: React.ElementType; tit
   </motion.div>
 );
 
-// Az új, egyedi FounderCard a "Németh János" szekcióhoz
 const FounderCard = ({ name, role, children }: { name: string, role: string, children: React.ReactNode }) => {
     const cardRef = React.useRef<HTMLDivElement>(null);
     const mouseX = useMotionValue(0);
@@ -106,15 +141,28 @@ const FounderCard = ({ name, role, children }: { name: string, role: string, chi
 };
 
 const Bemutatkozas = () => {
-  const strongClass = "font-bold text-slate-900";
-
   return (
     <motion.div
-      className="min-h-screen bg-slate-50 font-['Poppins',_sans-serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-slate-50 font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
       initial="initial"
       animate="animate"
       variants={pageVariants}
     >
+        <style>{`
+            .cta-button {
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:hover {
+                transform: scale(1.02); /* Maradt a kisebb nagyítás */
+                /* --- ITT TÖRTÉNT A MÓDOSÍTÁS: box-shadow értékek csökkentve --- */
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:active {
+                transform: scale(0.98);
+            }
+        `}</style>
+
       <div className="absolute inset-0 z-0 opacity-10" style={{
         backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.08) 1px, transparent 1px)`,
         backgroundSize: '3.5rem 3.5rem',
@@ -131,7 +179,7 @@ const Bemutatkozas = () => {
           className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-6 text-center"
           variants={itemVariants}
         >
-          A <span className={accentColor.text}>Biztonság</span> Mesterei.
+          Ismerj meg minket:
         </motion.h1>
 
         <motion.p
@@ -143,16 +191,22 @@ const Bemutatkozas = () => {
         
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-3xl mx-auto text-center mb-16">
             <motion.div variants={itemVariants} className="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-slate-200/80">
-                <p className={`text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo}`}>100+</p>
+                <p className={`text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo}`}>
+                    <AnimatedCounter value={100} text="+" />
+                </p>
                 <p className="text-slate-600 font-semibold mt-1">elégedett partner</p>
             </motion.div>
             <motion.div variants={itemVariants} className="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-slate-200/80">
-                <p className={`text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo}`}>0 Ft</p>
+                <p className={`text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo}`}>
+                    <AnimatedCounter value={0} text=" Ft" />
+                </p>
                 <p className="text-slate-600 font-semibold mt-1">bírság</p>
             </motion.div>
             <motion.div variants={itemVariants} className="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-slate-200/80">
-                <p className={`text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo}`}>10 fős</p>
-                <p className="text-slate-600 font-semibold mt-1">szakmai csapat!</p>
+                <p className={`text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r ${accentColor.gradientFrom} ${accentColor.gradientTo}`}>
+                    <AnimatedCounter value={10} text=" fős" />
+                </p>
+                <p className="text-slate-600 font-semibold mt-1">szakmai csapat</p>
             </motion.div>
         </div>
 
@@ -186,14 +240,25 @@ const Bemutatkozas = () => {
         </motion.section>
 
         <motion.div
-          className="text-center mt-12 mb-8 p-8" // Eltávolítottam a kék háttér stílusait
+          className="text-center mt-12 mb-8 p-8"
           variants={itemVariants}
         >
-          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-            <button
-              className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-6 text-center">
+            Te is egy ilyen csapatot keresel?
+          </h2>
+          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="\_blank" rel="noopener noreferrer">
+             <button
+                className={`
+                    inline-flex items-center gap-3
+                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                    font-bold py-8 px-12 rounded-xl text-3xl
+                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                    transition-all duration-300 ease-in-out
+                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+                    cta-button
+                `}
             >
-              Lefoglalom a konzultációmat!
+                Foglalj egy ingyenes konzultációt!
             </button>
           </Link>
         </motion.div>

@@ -5,20 +5,21 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   ArrowLeftIcon,
-  BoltIcon, // Fő ikon
-  ArrowPathIcon, // Rendszeres ellenőrzés
-  BuildingOffice2Icon, // Vállalkozások
-  EyeIcon, // Szemrevételezés
-  BeakerIcon, // Mérések
-  DocumentCheckIcon, // Minősítő irat
-  ExclamationTriangleIcon, // Veszély
-  BanknotesIcon, // Bírság
-  ShieldExclamationIcon, // Biztosítás
-  MagnifyingGlassIcon, // Hibafeltárás
-  WrenchScrewdriverIcon, // Javítás
-  LightBulbIcon, // Tanácsadás
-  CalendarDaysIcon, // Időszakos ellenőrzés / Konzultáció
+  BoltIcon,
+  ArrowPathIcon,
+  BuildingOffice2Icon,
+  EyeIcon,
+  BeakerIcon,
+  DocumentCheckIcon,
+  ExclamationTriangleIcon,
+  BanknotesIcon,
+  ShieldExclamationIcon,
+  MagnifyingGlassIcon,
+  WrenchScrewdriverIcon,
+  LightBulbIcon,
+  CalendarDaysIcon,
 } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
 import Link from 'next/link';
 
 // A dizájn és a színséma változatlan marad a kérésnek megfelelően.
@@ -30,6 +31,16 @@ const accentColor = {
   focusRingOffset: 'focus:ring-offset-white',
   gradientFrom: 'from-cyan-500',
   gradientTo: 'to-teal-400',
+};
+
+// Gomb stílusdefiníciók (Hozzáadva)
+const ACCENT_COLOR_RED = {
+    baseHex: '#DC2626',
+    bg: 'bg-red-600',
+    textOnAccent: 'text-white',
+    ring: 'focus-visible:ring-red-500',
+    shadow: 'shadow-red-500/40',
+    hoverShadow: 'hover:shadow-red-400/60',
 };
 
 const pageVariants = {
@@ -95,12 +106,25 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
 
   return (
     <motion.div
-      className="min-h-screen bg-slate-50 font-['Poppins',_sans-serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-slate-50 font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
       initial="initial"
       animate="animate"
       exit="exit"
       variants={pageVariants}
     >
+        <style>{`
+            .cta-button {
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:hover {
+                transform: scale(1.02);
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:active {
+                transform: scale(0.98);
+            }
+        `}</style>
       <div className="absolute inset-0 z-0 opacity-10" style={{
         backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.1) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.1) 1px, transparent 1px)`,
         backgroundSize: '3rem 3rem',
@@ -239,20 +263,24 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
             />
         </div>
 
-        {/* 5. KÉP TARTALMA: Call to Action */}
+        {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
         <motion.div
-          className="text-center mt-12 mb-8"
-          variants={itemVariants}
+            className="text-center mt-12 mb-8 p-8"
+            variants={itemVariants}
         >
-          <Link 
-            href="https://app.minup.io/book/munkavedelmiszaki/service/46358" 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            <button
-              className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
+          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+             <button
+                className={`
+                    inline-flex items-center gap-3
+                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                    font-bold py-8 px-12 rounded-xl text-3xl
+                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                    transition-all duration-300 ease-in-out
+                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+                    cta-button
+                `}
             >
-              Foglalj egy ingyenes konzultációt!
+                Foglalj egy ingyenes konzultációt!
             </button>
           </Link>
         </motion.div>

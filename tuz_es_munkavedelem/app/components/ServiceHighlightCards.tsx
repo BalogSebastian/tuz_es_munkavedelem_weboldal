@@ -8,6 +8,7 @@ import {
   BoltIcon as BoltIconOutline,
   ClipboardDocumentCheckIcon,
 } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
 import { FaHelmetSafety } from 'react-icons/fa6';
 
 
@@ -17,6 +18,8 @@ const RED_ACCENT_COLOR = {
     bg: 'bg-red-600',
     textOnAccent: 'text-white',
     ring: 'focus-visible:ring-red-500',
+    shadow: 'shadow-red-500/40',       // Hozzáadva
+    hoverShadow: 'hover:shadow-red-400/60', // Hozzáadva
 };
 
 // --- EGYÉB SZÍNEK ÉS STÍLUSOK ---
@@ -154,14 +157,13 @@ const ServiceHighlightCards: React.FC = () => {
         .custom-scroll::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
         }
-        /* CTA GLOW STÍLUS BEILLESZTÉSE - egyszerűsítve a teljesítményért */
         .cta-button {
             transition: all 0.3s ease-in-out;
             box-shadow: 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
         }
         .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px ${RED_ACCENT_COLOR.baseHex}60, 0 0 70px ${RED_ACCENT_COLOR.baseHex}40;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px ${RED_ACCENT_COLOR.baseHex}60, 0 0 30px ${RED_ACCENT_COLOR.baseHex}40;
         }
         .cta-button:active {
             transform: scale(0.98);
@@ -189,18 +191,18 @@ const ServiceHighlightCards: React.FC = () => {
               ))}
             </div>
 
-            <div className="text-center mt-16 lg:mt-20">
-              <Link
-                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
-                passHref
-              >
+            {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
+            <div className="text-center mt-16 lg:mt-20 p-8">
+              <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
                 <button
                     className={`
                         inline-flex items-center gap-3
                         ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent}
                         font-bold py-8 px-12 rounded-xl text-3xl
+                        shadow-lg ${RED_ACCENT_COLOR.shadow} ${RED_ACCENT_COLOR.hoverShadow}
+                        transition-all duration-300 ease-in-out
+                        focus:outline-none focus:ring-4 ${RED_ACCENT_COLOR.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                         cta-button
-                        focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900
                     `}
                 >
                     Foglalj egy ingyenes konzultációt!

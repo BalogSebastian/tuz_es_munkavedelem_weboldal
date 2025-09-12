@@ -107,7 +107,6 @@ const CombinedSections: React.FC = () => {
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
 
-                /* Egységes 4rem x 4rem rácsméret mindhárom szekcióhoz */
                 .grid-pattern {
                     background-size: 4rem 4rem;
                 }
@@ -128,9 +127,10 @@ const CombinedSections: React.FC = () => {
                     transition: all 0.3s ease-in-out;
                     box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
                 }
+                /* --- ITT TÖRTÉNT A MÓDOSÍTÁS --- */
                 .cta-button:hover {
-                    transform: scale(1.05);
-                    box-shadow: 0 0 35px ${ACCENT_COLOR_RED.baseHex}60, 0 0 70px ${ACCENT_COLOR_RED.baseHex}40;
+                    transform: scale(1.02);
+                    box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
                 }
                 .cta-button:active {
                     transform: scale(0.98);
@@ -146,12 +146,10 @@ const CombinedSections: React.FC = () => {
 
             {/* --- PROCESS STEPS SZEKCIÓ --- */}
             <section
-                className="pt-20 lg:pt-28 pb-32 lg:pb-40 font-['Poppins',_sans-serif] relative z-20 overflow-hidden bg-white grid-pattern grid-pattern-light"
+                className="pt-20 lg:pt-28 pb-32 lg:pb-40 font-['Poppins',_sans_serif] relative z-20 overflow-hidden bg-white grid-pattern grid-pattern-light"
             >
                 <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" />
                 <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" />
-
-                {/* ELSŐ NYÍL */}
 
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="relative text-center mb-16 lg:mb-20">
@@ -168,34 +166,34 @@ const CombinedSections: React.FC = () => {
                             style={{ transformOrigin: 'top' }}
                         />
                         <div className="space-y-20">
-    {steps.map((step, index) => (
-        <div
-            key={step.step}
-            className={`lg:flex items-center relative ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
-        >
-            <div className={`w-full lg:w-1/2 flex mb-8 lg:mb-0 ${index % 2 === 0 ? 'lg:justify-start lg:pl-[calc(50%+3rem)]' : 'lg:justify-end lg:pr-[calc(50%+3rem)]'}`}>
-                <div className="relative inline-block">
-                    <div
-                        className="hidden lg:block absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
-                        style={{ borderColor: 'rgb(34 211 238)', borderWidth: '2px', left: index % 2 === 0 ? 'auto' : 'calc(100% + 2rem)', right: index % 2 === 0 ? 'calc(100% + 2rem)' : 'auto' }}
-                    />
-                    <div className="bg-gradient-to-br from-white to-slate-100 p-6 rounded-full inline-flex items-center justify-center shadow-xl border border-gray-100 ring-8 ring-cyan-400">
-                        <div className={`absolute -top-3 ${index % 2 === 0 ? '-right-3' : '-left-3'} bg-cyan-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg z-20 ring-4 ring-cyan-400`}>
-                            <span>{step.step}</span>
+                            {steps.map((step, index) => (
+                                <div
+                                    key={step.step}
+                                    className={`lg:flex items-center relative ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+                                >
+                                    <div className={`w-full lg:w-1/2 flex mb-8 lg:mb-0 ${index % 2 === 0 ? 'lg:justify-start lg:pl-[calc(50%+3rem)]' : 'lg:justify-end lg:pr-[calc(50%+3rem)]'}`}>
+                                        <div className="relative inline-block">
+                                            <div
+                                                className="hidden lg:block absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
+                                                style={{ borderColor: 'rgb(34 211 238)', borderWidth: '2px', left: index % 2 === 0 ? 'auto' : 'calc(100% + 2rem)', right: index % 2 === 0 ? 'calc(100% + 2rem)' : 'auto' }}
+                                            />
+                                            <div className="bg-gradient-to-br from-white to-slate-100 p-6 rounded-full inline-flex items-center justify-center shadow-xl border border-gray-100 ring-8 ring-cyan-400">
+                                                <div className={`absolute -top-3 ${index % 2 === 0 ? '-right-3' : '-left-3'} bg-cyan-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg z-20 ring-4 ring-cyan-400`}>
+                                                    <span>{step.step}</span>
+                                                </div>
+                                                <step.icon className="w-14 h-14 text-cyan-400" aria-hidden="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'}`}>
+                                        <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full">
+                                            <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
+                                            <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                        <step.icon className="w-14 h-14 text-cyan-400" aria-hidden="true" />
-                    </div>
-                </div>
-            </div>
-            <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'}`}>
-                <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full">
-                    <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{step.description}</p>
-                </div>
-            </div>
-        </div>
-    ))}
-</div>
                     </div>
                     <div className="text-center mt-16 lg:mt-20 px-4">
                         <p className="text-lg md:text-xl text-slate-700 font-medium max-w-xl mx-auto">
@@ -206,8 +204,7 @@ const CombinedSections: React.FC = () => {
             </section>
 
             {/* --- CALL TO ACTION SZEKCIÓ --- */}
-            <section className="bg-slate-900 pb-20 sm:pb-32 relative font-['Poppins',_sans-serif] grid-pattern grid-pattern-dark">
-                {/* MÁSODIK NYÍL */}
+            <section className="bg-slate-900 pb-20 sm:pb-32 relative font-['Poppins',_sans_serif] grid-pattern grid-pattern-dark">
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
                         top: '1%',
@@ -242,7 +239,6 @@ const CombinedSections: React.FC = () => {
                                     cta-button
                                 `}
                             >
-                                <SparklesIcon className="w-6 h-6" />
                                 Foglalj egy ingyenes konzultációt!
                             </Link>
                         </div>
@@ -251,67 +247,66 @@ const CombinedSections: React.FC = () => {
             </section>
 
             {/* --- FAQ ACCORDION SZEKCIÓ --- */}
-<section
-    ref={faqSectionRef}
-    className={`py-16 lg:py-24 font-['Poppins',_sans-serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
->
-    {/* HARMADIK NYÍL */}
-    <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
-        style={{
-            top: '1%',
-            left: '80%',
-            transform: 'translateY(-50%) rotate(150deg)'
-        }}
-    >
-        <IoArrowRedo className="w-full h-full" />
-    </div>
+            <section
+                ref={faqSectionRef}
+                className={`py-16 lg:py-24 font-['Poppins',_sans_serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
+            >
+                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+                    style={{
+                        top: '1%',
+                        left: '80%',
+                        transform: 'translateY(-50%) rotate(150deg)'
+                    }}
+                >
+                    <IoArrowRedo className="w-full h-full" />
+                </div>
 
-    <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10 lg:mb-12">
-            <h2 className="text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-                Gyakori <span className='text-cyan-400'>Kérdések</span>
-            </h2>
-            <p className="text-base text-slate-600 max-w-2xl mx-auto">
-                Rövid válaszok a legfontosabb munkavédelmi és tűzvédelmi kérdésekre.
-            </p>
-        </div>
-
-        <div className="max-w-3xl mx-auto space-y-3">
-            {faqItems.map((item, index) => {
-                const isOpen = openIndex === index;
-                return (
-                    <div
-                        key={index}
-                        className={`rounded-lg shadow-md hover:shadow-lg transition-shadow border overflow-hidden
-                                    ${isOpen ? `bg-white/80 border-cyan-400` : 'bg-white/70 border-gray-100'}`}
-                    >
-                        <button
-                            onClick={() => toggleItem(index)}
-                            className="w-full flex justify-between items-center p-4 text-left focus:outline-none group hover:bg-slate-50 transition-colors"
-                        >
-                            <span className={`flex items-center text-lg sm:text-xl font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-600'}`}>
-                                {item.isImportant && (
-                                    <ExclamationCircleIcon className="w-6 h-6 mr-2 text-red-500/80" />
-                                )}
-                                {item.question}
-                            </span>
-                            <ChevronDownIcon
-                                className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-500'}`}
-                            />
-                        </button>
-                        {isOpen && (
-                            <div className="px-4 pb-4 text-slate-700 text-xl lg:text-2xl leading-relaxed">
-                                {item.answer}
-                            </div>
-                        )}
+                <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-10 lg:mb-12">
+                        <h2 className="text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                            Gyakori <span className='text-cyan-400'>Kérdések</span>
+                        </h2>
+                        <p className="text-base text-slate-600 max-w-2xl mx-auto">
+                            Rövid válaszok a legfontosabb munkavédelmi és tűzvédelmi kérdésekre.
+                        </p>
                     </div>
-                );
-            })}
-        </div>
 
-        <div className="text-center mt-10">
-            <p className="text-base text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
-            <Link
+                    <div className="max-w-3xl mx-auto space-y-3">
+                        {faqItems.map((item, index) => {
+                            const isOpen = openIndex === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className={`rounded-lg shadow-md hover:shadow-lg transition-shadow border overflow-hidden
+                                                ${isOpen ? `bg-white/80 border-cyan-400` : 'bg-white/70 border-gray-100'}`}
+                                >
+                                    <button
+                                        onClick={() => toggleItem(index)}
+                                        className="w-full flex justify-between items-center p-4 text-left focus:outline-none group hover:bg-slate-50 transition-colors"
+                                    >
+                                        <span className={`flex items-center text-lg sm:text-xl font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-600'}`}>
+                                            {item.isImportant && (
+                                                <ExclamationCircleIcon className="w-6 h-6 mr-2 text-red-500/80" />
+                                            )}
+                                            {item.question}
+                                        </span>
+                                        <ChevronDownIcon
+                                            className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-500'}`}
+                                        />
+                                    </button>
+                                    {isOpen && (
+                                        <div className="px-4 pb-4 text-slate-700 text-xl lg:text-2xl leading-relaxed">
+                                            {item.answer}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="text-center mt-10">
+                        <p className="text-base text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
+                        <Link
                                 href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
                                 className={`
                                     inline-flex items-center gap-3
@@ -319,17 +314,15 @@ const CombinedSections: React.FC = () => {
                                     font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
                                     shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                                     transition-all duration-300 ease-in-out
-                                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
+                                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                                     cta-button
                                 `}
                             >
-                                <SparklesIcon className="w-6 h-6" />
                                 Foglalj egy ingyenes konzultációt!
                             </Link>
-        </div>
-    </div>
-</section>
-
+                    </div>
+                </div>
+            </section>
         </>
     );
 };

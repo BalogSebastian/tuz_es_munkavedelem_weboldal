@@ -13,11 +13,13 @@ import {
 } from '@heroicons/react/24/outline';
 import {
     FireIcon as FireIconSolid,
-    CalendarDaysIcon as CalendarDaysIconSolid, // Ez már nem lesz használva a gombban
+    CalendarDaysIcon as CalendarDaysIconSolid,
+    SparklesIcon, // Hozzáadva
 } from '@heroicons/react/24/solid';
 import { FaHelmetSafety } from 'react-icons/fa6';
 import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5';
 import { HiDocument } from 'react-icons/hi';
+import Link from 'next/link';
 
 // --- STÍLUS KONSTANSOK ---
 const accentColor = {
@@ -26,7 +28,7 @@ const accentColor = {
 };
 
 const RED_ACCENT_COLOR = {
-    baseHex: '#DC2626', bg: 'bg-red-600', hoverBg: 'hover:bg-red-700', ring: 'focus-visible:ring-red-500', textOnAccent: 'text-white',
+    baseHex: '#DC2626', bg: 'bg-red-600', hoverBg: 'hover:bg-red-700', ring: 'focus-visible:ring-red-500', textOnAccent: 'text-white', shadow: 'shadow-red-500/40', hoverShadow: 'hover:shadow-red-400/60',
 };
 
 const ANIMATION_VARIANTS = {
@@ -121,7 +123,16 @@ const ServicesModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                                         </motion.li>
                                     ))}
                                 </ul>
-                                <motion.div className="text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}><motion.button type="submit" disabled={isLoading} className={`inline-flex items-center gap-3 ${accentColor.bg} text-white font-bold py-4 px-10 rounded-xl text-lg transition-shadow duration-300 focus:outline-none focus:ring-4 ${accentColor.ring} focus:ring-offset-2 disabled:bg-cyan-300 disabled:cursor-not-allowed`} whileHover={{ scale: 1.05, y: -4, boxShadow: '0 10px 20px -5px rgba(3, 186, 190, 0.5)' }} whileTap={{ scale: 0.98 }}><CalendarDaysIconSolid className="w-6 h-6" /> {isLoading ? 'Küldés...' : 'Időpontfoglalás'}</motion.button></motion.div>
+                                {/* --- MODAL GOMB MÓDOSÍTVA --- */}
+                                <motion.div className="text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}>
+                                    <button
+                                        type="submit"
+                                        disabled={isLoading}
+                                        className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent} font-bold py-3 px-8 rounded-xl text-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 ${RED_ACCENT_COLOR.ring} focus:ring-offset-2 disabled:bg-red-400 cta-button`}
+                                    >
+                                        <CalendarDaysIconSolid className="w-6 h-6" /> {isLoading ? 'Küldés...' : 'Időpontfoglalás'}
+                                    </button>
+                                </motion.div>
                             </form>
                         ) : (
                              <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}><CheckCircleIcon className={`w-20 h-20 mx-auto mb-4 ${accentColor.text}`} /><h3 className="text-2xl font-bold text-slate-800 mb-2">Köszönjük a kérését!</h3><p className="text-slate-600">Hamarosan felvesszük Önnel a kapcsolatot a megadott elérhetőségeken.</p></motion.div>
@@ -144,20 +155,24 @@ const MainPage: React.FC = () => {
               @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
               .gradient-text { background: linear-gradient(to right, #06b6d4, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
               .modal-grid-bg { background-color: #1a202c; background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px); background-size: 4rem 4rem; }
-              /* Itt van a korrigált cta-glow-red stílus */
-              .cta-glow-red {
-                box-shadow: 0 0 30px ${RED_ACCENT_COLOR.baseHex}80, 0 0 60px ${RED_ACCENT_COLOR.baseHex}60, inset 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
+              .cta-button {
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 20px ${RED_ACCENT_COLOR.baseHex}40;
+              }
+              .cta-button:hover {
+                  transform: scale(1.02);
+                  box-shadow: 0 0 20px ${RED_ACCENT_COLOR.baseHex}60, 0 0 30px ${RED_ACCENT_COLOR.baseHex}40;
+              }
+              .cta-button:active {
+                  transform: scale(0.98);
               }
             `}</style>
 
-            <div style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '4rem 4rem' }} className="font-['Poppins',_sans-serif] min-h-screen relative">
+            <div style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '4rem 4rem' }} className="font-['Poppins',_sans_serif] min-h-screen relative">
                 <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10"><div className="absolute w-36 h-36 text-cyan-500" style={{ top: '20px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}><IoArrowUndoSharp className="w-full h-full" /></div></div>
-                
-                {/* A kvíz komponens helye üresen hagyva, vagy ide jöhet más tartalom */}
                 
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20" style={{ top: '75%', right: '15%', transform: 'translateY(-50%) rotate(150deg)' }}><IoArrowRedo className="w-full h-full" /></div>
 
-                {/* --- A "SIMA" TARTALMI RÉSZ --- */}
                 <motion.section ref={introSectionRef} id="bemutatkozas" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8" variants={introSectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                     <div className="max-w-6xl mx-auto flex flex-col items-center">
                         <motion.h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-6 text-center" variants={introItemVariants}>Ezt a három alapvető dolgot ismerned kell ahhoz, <span className='text-cyan-400'>hogy biztonságban tudd a vállalkozásodat</span>!</motion.h2>
@@ -179,19 +194,23 @@ const MainPage: React.FC = () => {
                                 <p className="text-slate-600 leading-relaxed">A HACCP az élelmiszer biztonság alapköve. Minden esetben ki kell dolgozni ha valaki élelmiszerrel foglalkozik, és természetesen e-szerint kell eljárni a későbbiekben. Fontos tudni, hogy nem üzemelhetsz HACCP rendszer nélkül, különben bármikor bezárathatják az egységedet!</p>
                             </motion.div>
                         </div>
-                        <motion.div variants={introItemVariants} className="text-center mt-10">
-                            <p className="mb-6 text-xl text-slate-600">Beszélj egy hozzáértő szakemberrel!</p>
-                            {/* ITT A GOMB MÓDOSÍTÁSA */}
-                            <motion.a 
-                              href="https://app.minup.io/book/munkavedelmiszaki/service/46358" 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className={`inline-flex items-center gap-3 ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.hoverBg} ${RED_ACCENT_COLOR.textOnAccent}
-                                font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out
-                                focus:outline-none focus-visible:ring-2 ${RED_ACCENT_COLOR.ring} focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
-                            >
-                                Foglalj egy ingyenes konzultációt!
-                            </motion.a>
+                        {/* --- FŐOLDALI CTA MÓDOSÍTVA --- */}
+                        <motion.div className="text-center mt-16 p-8" variants={introItemVariants}>
+                            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+                                <button
+                                    className={`
+                                        inline-flex items-center gap-3
+                                        ${RED_ACCENT_COLOR.bg} ${RED_ACCENT_COLOR.textOnAccent}
+                                        font-bold py-8 px-12 rounded-xl text-3xl
+                                        shadow-lg ${RED_ACCENT_COLOR.shadow} ${RED_ACCENT_COLOR.hoverShadow}
+                                        transition-all duration-300 ease-in-out
+                                        focus:outline-none focus:ring-4 ${RED_ACCENT_COLOR.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+                                        cta-button
+                                    `}
+                                >
+                                    Foglalj egy ingyenes konzultációt!
+                                </button>
+                            </Link>
                         </motion.div>
                     </div>
                 </motion.section>

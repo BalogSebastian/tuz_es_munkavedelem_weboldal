@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion'; // Hozzáadva
 import {
   ArrowLeftIcon,
   BookOpenIcon,
@@ -13,6 +14,7 @@ import {
   ComputerDesktopIcon, // Online oktatáshoz
   MapPinIcon // Helyszíni oktatáshoz
 } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
 
 // A meglévő, tűzvédelmi témájú színséma
 const themeColors = {
@@ -47,6 +49,15 @@ const themeColors = {
   }
 };
 
+// Gomb stílusdefiníciók (Hozzáadva)
+const ACCENT_COLOR_RED = {
+    baseHex: '#DC2626',
+    bg: 'bg-red-600',
+    textOnAccent: 'text-white',
+    ring: 'focus-visible:ring-red-500',
+    shadow: 'shadow-red-500/40',
+    hoverShadow: 'hover:shadow-red-400/60',
+};
 
 const ServiceCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: React.ReactNode }) => (
     <div className={`${themeColors.base.containerBg} p-6 rounded-xl shadow-md border ${themeColors.base.border} transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-red-200 h-full`}>
@@ -66,6 +77,19 @@ const TuzvedelmiOktatasPage = () => {
 
   return (
     <div className={`min-h-screen ${themeColors.base.pageBg} font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8`}>
+        <style>{`
+            .cta-button {
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:hover {
+                transform: scale(1.02);
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:active {
+                transform: scale(0.98);
+            }
+        `}</style>
       <div className={`max-w-6xl mx-auto ${themeColors.base.containerBg}/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8 sm:p-10 relative z-10 border ${themeColors.base.border}`}>
         
 
@@ -113,15 +137,23 @@ const TuzvedelmiOktatasPage = () => {
             </div>
         </section>
 
-        {/* --- 3. KÉP TARTALMA: Call to Action (Piros gombbal) --- */}
-        <div className={`text-center mt-12`}>
-          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-            <button
-              className={`inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold py-8 px-12 rounded-xl text-3xl shadow-lg cta-glow-red transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
-            >
-              Foglalj egy ingyenes konzultációt!
-            </button>
-          </Link>
+        {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
+        <div className="text-center mt-12 mb-8 p-8">
+            <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+              <button
+                className={`
+                    inline-flex items-center gap-3
+                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                    font-bold py-8 px-12 rounded-xl text-3xl
+                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                    transition-all duration-300 ease-in-out
+                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+                    cta-button
+                `}
+              >
+                Foglalj egy ingyenes konzultációt!
+              </button>
+            </Link>
         </div>
       </div>
     </div>
