@@ -217,7 +217,7 @@ const Bemutatkozas = () => {
         </motion.section>
         
         <motion.section className="mb-16" variants={sectionVariants}>
-            <motion.h2 className="text-3xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
+            <motion.h2 className="text-5xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
                 Miért mi?
             </motion.h2>
             <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
