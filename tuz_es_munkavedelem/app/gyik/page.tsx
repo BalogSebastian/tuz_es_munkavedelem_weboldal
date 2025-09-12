@@ -12,7 +12,7 @@ import { FaFire, FaHardHat, FaUtensils } from 'react-icons/fa';
 interface FaqItemData {
   q: string;
   a: string;
-  category?: string; // JAVÍTÁS: A 'category' mező opcionális
+  category?: string;
 }
 
 interface FaqCategory {
@@ -600,7 +600,7 @@ const faqData : FaqCategory[] = [
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   in: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.15, ease: [0.22, 1, 0.36, 1] } },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.3 } } // Kilépési animáció hozzáadva
+  exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
 };
 
 const itemVariants = {
@@ -614,12 +614,11 @@ const fadeAndSlideIn = {
     exit: { opacity: 0, y: -10, transition: { duration: 0.2, ease: 'easeIn' } },
 };
 
-
 // --- ALKOMPONENS: FaqItem ---
 const FaqItem = ({ item, isOpen, onClick }: { item: FaqItemData; isOpen: boolean; onClick: () => void }) => {
   return (
     <motion.div
-        layout // Segít a Framer Motion-nek kezelni az elemek átrendeződését
+        layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
@@ -671,10 +670,9 @@ const FaqItem = ({ item, isOpen, onClick }: { item: FaqItemData; isOpen: boolean
   );
 };
 
-
 // --- FŐ KOMPONENS: GyakoriKerdesek ---
 const GyakoriKerdesek = () => {
-  const [activeCategory, setActiveCategory] = useState<string>(faqData[0].category);
+  const [activeCategory, setActiveCategory] = useState<string>(faqData[0]?.category || 'Alapértelmezett');
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -694,11 +692,10 @@ const GyakoriKerdesek = () => {
       return allQuestions.filter(q =>
         q.q.toLowerCase().includes(lowerCaseQuery) ||
         q.a.toLowerCase().includes(lowerCaseQuery) ||
-        q.category?.toLowerCase().includes(lowerCaseQuery) // Keresés a kategóriában is
+        q.category?.toLowerCase().includes(lowerCaseQuery)
       );
     }
     const currentCategory = faqData.find(cat => cat.category === activeCategory);
-    // Kategória nézetben a FAQItem-nek is átadjuk a kategóriát, hogy az megjelenhessen
     return currentCategory ? currentCategory.questions.map(q => ({ ...q, category: currentCategory.category })) : [];
   }, [activeCategory, searchQuery, allQuestions, isSearchActive]);
   
@@ -706,13 +703,13 @@ const GyakoriKerdesek = () => {
     setActiveCategory(categoryName);
     setActiveQuestion(null);
     setIsMobileNavOpen(false);
-    setSearchQuery(''); // Kategóriaváltáskor töröljük a keresést
+    setSearchQuery('');
   };
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
-    setActiveQuestion(null); // Kereséskor zárjuk be az összes kérdést
-    setIsMobileNavOpen(false); // Kereséskor zárjuk be a mobil nav-ot
+    setActiveQuestion(null);
+    setIsMobileNavOpen(false);
   }
 
   const handleClearSearch = () => {
@@ -723,154 +720,160 @@ const GyakoriKerdesek = () => {
   const handleQuestionClick = (q: string) => setActiveQuestion(prev => (prev === q ? null : q));
 
   return (
-    <section id="gyik" className="py-16 lg:py-24 bg-gradient-to-br from-indigo-50 to-purple-50 font-['Poppins',_sans-serif] text-gray-900">
-      <div className="container mx-auto px-4 max-w-7xl">
-        <motion.div
-            initial="initial"
-            animate="in"
-            variants={pageVariants}
-        >
-            <motion.div variants={itemVariants} className="text-center mb-12 lg:mb-16">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-5 leading-tight tracking-tight">
-                Gyakran Ismételt Kérdések
-              </h2>
-              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto font-light">
-                Találj gyorsan választ a leggyakoribb felvetésekre munkavédelem, tűzvédelem és HACCP témákban.
-              </p>
-            </motion.div>
+    <>
+      {/* A `style` tag hozzáadva a kód tetejére */}
+      <style>{`
+        .grid-pattern-light {
+            background-image: linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px),
+                              linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px);
+            background-size: 4rem 4rem;
+        }
+      `}</style>
+      
+      <section id="gyik" className="py-16 lg:py-24 font-['Poppins',_sans-serif] text-gray-900 relative">
+        <div className="absolute inset-0 z-0 grid-pattern-light"></div>
+        <div className="container mx-auto px-4 max-w-7xl relative z-10">
+          <motion.div
+              initial="initial"
+              animate="in"
+              variants={pageVariants}
+          >
+              <motion.div variants={itemVariants} className="text-center mb-12 lg:mb-16">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-5 leading-tight tracking-tight">
+                  Gyakran Ismételt Kérdések
+                </h2>
+                <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto font-light">
+                  Találj gyorsan választ a leggyakoribb felvetésekre munkavédelem, tűzvédelem és HACCP témákban.
+                </p>
+              </motion.div>
 
-            <motion.div variants={itemVariants} className="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-start">
-              {/* --- Bal oldali, "sticky" kategória navigáció (Desktop) --- */}
-              <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
-                <div className="sticky top-28 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
-                  <h3 className="text-xl font-bold text-gray-800 mb-5">Kategóriák</h3>
-                  <nav className="flex flex-col space-y-3">
-                    {faqData.map(category => (
-                      <button
-                        key={category.category}
-                        onClick={() => handleCategoryClick(category.category)}
-                        className={`flex items-center space-x-4 w-full text-left px-5 py-3 rounded-xl transition-all duration-300 transform group
-                          ${activeCategory === category.category && !isSearchActive
-                            ? 'bg-cyan-600 text-white shadow-lg font-semibold scale-105'
-                            : 'text-gray-700 hover:bg-gray-50 hover:text-cyan-700 hover:scale-103'
-                          }
-                        `}
-                      >
-                        <category.icon className={`w-6 h-6 flex-shrink-0 transition-colors duration-300 
-                          ${activeCategory === category.category && !isSearchActive ? 'text-white' : 'text-gray-500 group-hover:text-cyan-500'}
-                        `} />
-                        <span className="text-lg">{category.category}</span>
-                      </button>
-                    ))}
-                  </nav>
-                </div>
-              </aside>
+              <motion.div variants={itemVariants} className="lg:grid lg:grid-cols-12 lg:gap-10 lg:items-start">
+                {/* --- Bal oldali, "sticky" kategória navigáció (Desktop) --- */}
+                <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
+                  <div className="sticky top-28 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                    <h3 className="text-xl font-bold text-gray-800 mb-5">Kategóriák</h3>
+                    <nav className="flex flex-col space-y-3">
+                      {faqData.map(category => (
+                        <button
+                          key={category.category}
+                          onClick={() => handleCategoryClick(category.category)}
+                          className={`flex items-center space-x-4 w-full text-left px-5 py-3 rounded-xl transition-all duration-300 transform group
+                            ${activeCategory === category.category && !isSearchActive
+                              ? 'bg-cyan-600 text-white shadow-lg font-semibold scale-105'
+                              : 'text-gray-700 hover:bg-gray-50 hover:text-cyan-700 hover:scale-103'
+                            }
+                          `}
+                        >
+                          <category.icon className={`w-6 h-6 flex-shrink-0 transition-colors duration-300 
+                            ${activeCategory === category.category && !isSearchActive ? 'text-white' : 'text-gray-500 group-hover:text-cyan-500'}
+                          `} />
+                          <span className="text-lg">{category.category}</span>
+                        </button>
+                      ))}
+                    </nav>
+                  </div>
+                </aside>
 
-              {/* --- Jobb oldali tartalom: Kereső és kérdések --- */}
-              <main className="lg:col-span-8 xl:col-span-9">
-                <div className="mb-8">
-                  <div className="relative mb-5">
-                    <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                      placeholder="Keress a kérdések között..."
-                      className="w-full pl-12 pr-10 py-3.5 rounded-full border border-gray-200 bg-white focus:outline-none focus:ring-3 focus:ring-cyan-200 focus:border-cyan-400 transition-all duration-300 shadow-sm text-gray-700 text-base"
-                    />
-                    <AnimatePresence>
-                        {searchQuery && (
-                            <motion.button
-                                {...fadeAndSlideIn}
-                                onClick={handleClearSearch}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
-                                aria-label="Keresés törlése"
-                            >
-                            </motion.button>
-                        )}
-                    </AnimatePresence>
+                {/* --- Jobb oldali tartalom: Kereső és kérdések --- */}
+                <main className="lg:col-span-8 xl:col-span-9">
+                  <div className="mb-8">
+                    <div className="relative mb-5">
+                      <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        placeholder="Keress a kérdések között..."
+                        className="w-full pl-12 pr-10 py-3.5 rounded-full border border-gray-200 bg-white focus:outline-none focus:ring-3 focus:ring-cyan-200 focus:border-cyan-400 transition-all duration-300 shadow-sm text-gray-700 text-base"
+                      />
+                      <AnimatePresence>
+                          {searchQuery && (
+                              <motion.button
+                                  {...fadeAndSlideIn}
+                                  onClick={handleClearSearch}
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+                                  aria-label="Keresés törlése"
+                              >
+                              </motion.button>
+                          )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Mobil kategóriaválasztó */}
+                    <div className="lg:hidden mt-4">
+                       <button
+                          onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                          className="w-full flex justify-between items-center px-5 py-3.5 bg-white border border-gray-200 rounded-xl shadow-md text-gray-800 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 transition-all duration-300"
+                        >
+                          <span className="text-lg">{isSearchActive ? 'Keresési találatok' : activeCategory}</span>
+                          {!isSearchActive && <ChevronDownIcon className={`w-5 h-5 transition-transform duration-300 ${isMobileNavOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500'}`} />}
+                        </button>
+                      <AnimatePresence>
+                          {isMobileNavOpen && !isSearchActive && (
+                              <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3, ease: 'easeOut' }}
+                              className="mt-3 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+                              >
+                              {faqData.map(category => (
+                                  <button
+                                      key={category.category}
+                                      onClick={() => handleCategoryClick(category.category)}
+                                      className="w-full text-left px-5 py-3 flex items-center space-x-4 text-gray-700 hover:bg-gray-50 hover:text-cyan-700 transition-colors text-lg"
+                                  >
+                                      <category.icon className="w-6 h-6 text-gray-500" />
+                                      <span>{category.category}</span>
+                                  </button>
+                              ))}
+                              </motion.div>
+                          )}
+                      </AnimatePresence>
+                    </div>
                   </div>
 
-                  {/* Mobil kategóriaválasztó */}
-                  <div className="lg:hidden mt-4">
-                     <button
-                        onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-                        className="w-full flex justify-between items-center px-5 py-3.5 bg-white border border-gray-200 rounded-xl shadow-md text-gray-800 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 transition-all duration-300"
-                      >
-                        <span className="text-lg">{isSearchActive ? 'Keresési találatok' : activeCategory}</span>
-                        {!isSearchActive && <ChevronDownIcon className={`w-5 h-5 transition-transform duration-300 ${isMobileNavOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500'}`} />}
-                      </button>
-                    <AnimatePresence>
-                        {isMobileNavOpen && !isSearchActive && (
-                            <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3, ease: 'easeOut' }}
-                            className="mt-3 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
-                            >
-                            {faqData.map(category => (
-                                <button
-                                    key={category.category}
-                                    onClick={() => handleCategoryClick(category.category)}
-                                    className="w-full text-left px-5 py-3 flex items-center space-x-4 text-gray-700 hover:bg-gray-50 hover:text-cyan-700 transition-colors text-lg"
-                                >
-                                    <category.icon className="w-6 h-6 text-gray-500" />
-                                    <span>{category.category}</span>
-                                </button>
-                            ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-
-                {/* --- Kérdések listája --- */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={isSearchActive ? 'search-results' : activeCategory}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {displayedQuestions.length > 0 ? (
-                      <motion.div layout> {/* layout prop a simább átrendeződéshez */}
-                        {displayedQuestions.map((item) => (
-                          <FaqItem
-                            key={item.q}
-                            item={item}
-                            isOpen={activeQuestion === item.q}
-                            onClick={() => handleQuestionClick(item.q)}
-                          />
-                        ))}
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="no-results"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-center py-20 bg-white rounded-2xl shadow-md border border-gray-100"
-                      >
-                        <p className="text-gray-500 text-lg font-medium">Nincs a keresésnek megfelelő találat. Próbálj másik kifejezést!</p>
-                      </motion.div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </main>
-            </motion.div>
-        </motion.div>
-      </div>
-    </section>
+                  {/* --- Kérdések listája --- */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={isSearchActive ? 'search-results' : activeCategory}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {displayedQuestions.length > 0 ? (
+                        <motion.div layout>
+                          {displayedQuestions.map((item) => (
+                            <FaqItem
+                              key={item.q}
+                              item={item}
+                              isOpen={activeQuestion === item.q}
+                              onClick={() => handleQuestionClick(item.q)}
+                            />
+                          ))}
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="no-results"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3 }}
+                          className="text-center py-20 bg-white rounded-2xl shadow-md border border-gray-100"
+                        >
+                          <p className="text-gray-500 text-lg font-medium">Nincs a keresésnek megfelelő találat. Próbálj másik kifejezést!</p>
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </main>
+              </motion.div>
+          </motion.div>
+        </div>
+      </section>
+    </>
   );
 };
 
 export default GyakoriKerdesek;
-
-
-
-
-
-
