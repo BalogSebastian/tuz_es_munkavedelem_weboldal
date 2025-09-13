@@ -80,7 +80,7 @@ const Footer: React.FC = () => {
         .footer-grid-pattern {
             background-image: linear-gradient(${accentColor.gridLines} 1px, transparent 1px),
                               linear-gradient(to right, ${accentColor.gridLines} 1px, transparent 1px);
-            background-size: 3.5rem 3.5rem;
+            background-size: 4rem 4rem;
         }
         .text-gradient {
             background: linear-gradient(to right, ${accentColor.base}, #ffffff);
@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
               Munkavédelmi<span className="text-cyan-400">Szaki</span>
               </Link>
               <p className="text-base text-slate-400 leading-relaxed max-w-xs sm:max-w-none">
-              Profi megoldások a Tűz- Munkavédelem és HACCP kérdésekben is, hogy neked ne legyen gondod vele! Keress minket bátran!”
+              Profi megoldások a Tűz- Munkavédelem és HACCP kérdésekben is, hogy neked ne legyen gondod vele! Keress minket bátran!
               </p>
             </div>
 

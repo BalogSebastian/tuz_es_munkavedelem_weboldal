@@ -217,7 +217,7 @@ const CombinedSections: React.FC = () => {
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-40">
                     <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                         <h2
-                            className={`text-4xl sm:text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r ${ACCENT_COLOR_CYAN.textGradient} mb-6 tracking-tight`}
+                            className={`text-4xl sm:text-5xl lg:text-7xl font-black text-cyan-400 bg-clip-text ${ACCENT_COLOR_CYAN.textGradient} mb-6 tracking-tight`}
                         >
                             Készen állsz a biztonságra?
                         </h2>
@@ -284,14 +284,14 @@ const CombinedSections: React.FC = () => {
                                         onClick={() => toggleItem(index)}
                                         className="w-full flex justify-between items-center p-4 text-left focus:outline-none group hover:bg-slate-50 transition-colors"
                                     >
-                                        <span className={`flex items-center text-lg sm:text-xl font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-600'}`}>
+                                        <span className={`flex items-center text-lg sm:text-xl font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-400'}`}>
                                             {item.isImportant && (
                                                 <ExclamationCircleIcon className="w-6 h-6 mr-2 text-red-500/80" />
                                             )}
                                             {item.question}
                                         </span>
                                         <ChevronDownIcon
-                                            className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-500'}`}
+                                            className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-400'}`}
                                         />
                                     </button>
                                     {isOpen && (

@@ -126,8 +126,8 @@ const Folyamatunk = () => {
       >
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
             <motion.header variants={itemVariants} className="mb-20">
-              <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">
-              Nézd meg hogyan történik a munka <span className={accentColor.text}>lépésről lépésre:</span>
+              <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-4">
+              Nézd meg hogyan történik a munka <span className={accentColor.text}>lépésről, lépésre:</span>
               </h1>
               <p className="text-2xl text-slate-600 leading-snug">
                 A legfontosabb az átláthatóság, ezt vagyunk hivatottak biztosítani, és folyamatosan tájékoztatni téged, anélkül hogy ezt kérned kellene.

@@ -4,23 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
-import { MdEmojiPeople } from 'react-icons/md';
-
-// --- MODAL ---
-const QuoteRequestModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-  return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full">
-        <h2 className="text-2xl font-bold mb-4">Ajánlatkérés</h2>
-        <p>A modal ablak tartalma ide kerül.</p>
-        <button onClick={onClose} className="mt-6 px-4 py-2 bg-blue-500 text-white rounded">
-          Bezár
-        </button>
-      </div>
-    </div>
-  );
-};
+import OfferModal from './OfferModal'; // Importáljuk az új, intelligens modális ablakot
 
 // --- STÍLUS KONSTANSOK ---
 const ACCENT_COLOR = {
@@ -74,10 +58,10 @@ const testimonials = [
 const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ testimonial }) => {
   return (
     <div className="h-full group">
-      <div className="h-full bg-slate-800/50 backdrop-blur-md rounded-2xl flex flex-col border border-slate-700 overflow-hidden relative shadow-2xl transition-all duration-300 group-hover:bg-slate-700/60 p-8"> {/* Visszaállítva p-8-ra */}
+      <div className="h-full bg-slate-800/50 backdrop-blur-md rounded-2xl flex flex-col border border-slate-700 overflow-hidden relative shadow-2xl transition-all duration-300 group-hover:bg-slate-700/60 p-8">
         <div className="relative z-10 flex flex-col flex-grow">
-          <div className="flex-grow mb-6"> {/* Visszaállítva mb-6-ra */}
-            <p className="text-base italic text-slate-300 leading-relaxed"> {/* Betűméret növelve */}
+          <div className="flex-grow mb-6">
+            <p className="text-base italic text-slate-300 leading-relaxed">
               "{testimonial.quote}"
             </p>
           </div>
@@ -127,7 +111,7 @@ const CombinedPage = () => {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-12.5% * 4)); /* 4 x 1/8 = 50% */
+            transform: translateX(calc(-12.5% * 4));
           }
         }
       `}</style>
@@ -151,14 +135,14 @@ const CombinedPage = () => {
         </div>
         <div>
         <button
-    onClick={() => setIsModalOpen(true)}
-    className={`bg-cyan-400 hover:bg-cyan-600 text-white
-      font-bold py-2.5 px-5 rounded-lg text-sm
-      transition-all duration-300 ease-in-out
-      focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500`}
->
-    Ajánlatkérés
-</button>
+            onClick={() => setIsModalOpen(true)}
+            className={`bg-cyan-400 hover:bg-cyan-600 text-white
+            font-bold py-2.5 px-5 rounded-lg text-sm
+            transition-all duration-300 ease-in-out
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500`}
+        >
+            Ajánlatkérés
+        </button>
         </div>
       </div>
 
@@ -168,18 +152,15 @@ const CombinedPage = () => {
           <div className="flex flex-col items-center">
             <div className="mb-1 mt-4 z-20">
             </div>
-            {/* Hozzáadott rész */}
             <div className="flex flex-col items-center">
-              <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={120} height={100} />
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-2 z-10">
-              Elkészítjük a megfelelő Tűzvédelmi, Munkavédelmi, HACCP dokumentációkat, hogy téged ne büntessenek meg.
-              </h2>
+              <h2 className="text-3xl md:text-6xl font-black text-white mb-2 z-10 md:leading-snug">
+    Elkészítjük a megfelelő Tűzvédelmi, Munkavédelmi, HACCP dokumentációkat, hogy téged ne büntessenek meg.
+</h2>
             </div>
-            {/* Vége a hozzáadott résznek */}
             <h1
-              className="text-5xl sm:text-7xl md:text-6xl text-slate-300 mb-8 leading-tight tracking-tighter z-10"
+              className="text-5xl sm:text-7xl md:text-3xl text-white mb-8 leading-tight tracking-tighter z-10"
             >
-              A büntetés értéke 10 millió forintig terjedhet!
+              Teljes jegyzőkönyv készítés, hogy <span className='text-cyan-400 font-black'>TE</span> elkerüld a többmillíó forintos bírságokat!
             </h1>
             <div>
               <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" passHref className="inline-flex">
@@ -217,7 +198,7 @@ const CombinedPage = () => {
         </div>
       </section>
 
-      <QuoteRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <OfferModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

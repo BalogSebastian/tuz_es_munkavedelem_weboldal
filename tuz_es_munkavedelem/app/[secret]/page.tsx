@@ -8,11 +8,11 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   PaperClipIcon,
-  LightBulbIcon // Új ikon a kvízhez
+  LightBulbIcon
 } from '@heroicons/react/24/solid';
 import {
   ChatBubbleLeftRightIcon
-} from '@heroicons/react/24/outline'; // Új ikon a kontaktokhoz
+} from '@heroicons/react/24/outline';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,50 +21,60 @@ if (!uri) {
   throw new Error('Kérlek add meg a MONGODB_URI környezeti változót a .env.local fájlban');
 }
 
-const client = new MongoClient(uri);
+// Teljesítmény optimalizálás: Connection Caching
+let client: MongoClient;
+let clientPromise: Promise<MongoClient>;
 
-// Adatlekérdezés kiegészítve a 'kvíz' és 'kontakt' kollekciókkal
-const getSecretData = async (filter: { from?: string; to?: string }) => {
-  try {
-    await client.connect();
-    const database = client.db('TuzEsMunkaVedelmiLeadek');
-
-    const downloadsCollection = database.collection('Letoltesek');
-    const consultationCollection = database.collection('erroljoha tudsz');
-    const offerRequestCollection = database.collection('ajanlatkeres');
-    const quizCollection = database.collection('kvíz');
-    const contactCollection = database.collection('kontakt'); // Új kollekció a kontaktoknak
-
-    // A dátumszűréshez a megfelelő mezőneveket használjuk
-    const dateQuery = (fieldName: string) => (filter.from && filter.to
-      ? { [fieldName]: { $gte: new Date(filter.from), $lte: new Date(filter.to) } }
-      : {});
-
-    const downloads = await downloadsCollection.find(dateQuery('downloadedAt')).sort({ downloadedAt: -1 }).toArray();
-    const consultations = await consultationCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
-    const offerRequests = await offerRequestCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
-    const quizLeads = await quizCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
-    const contactMessages = await contactCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray(); // Lekérdezés
-
-    return {
-      downloads: JSON.parse(JSON.stringify(downloads)),
-      consultations: JSON.parse(JSON.stringify(consultations)),
-      offerRequests: JSON.parse(JSON.stringify(offerRequests)),
-      quizLeads: JSON.parse(JSON.stringify(quizLeads)),
-      contactMessages: JSON.parse(JSON.stringify(contactMessages)), // Hozzáadva
-    };
-  } finally {
-    await client.close();
+if (process.env.NODE_ENV === 'development') {
+  let globalWithMongo = global as typeof globalThis & {
+    _mongoClientPromise: Promise<MongoClient>
   }
+  if (!globalWithMongo._mongoClientPromise) {
+    client = new MongoClient(uri);
+    globalWithMongo._mongoClientPromise = client.connect();
+  }
+  clientPromise = globalWithMongo._mongoClientPromise;
+} else {
+  client = new MongoClient(uri);
+  clientPromise = client.connect();
+}
+
+
+const getSecretData = async (filter: { from?: string; to?: string }) => {
+  const mongoClient = await clientPromise;
+  const database = mongoClient.db('TuzEsMunkaVedelmiLeadek');
+
+  const downloadsCollection = database.collection('Letoltesek');
+  const consultationCollection = database.collection('erroljoha tudsz');
+  const offerRequestCollection = database.collection('ajanlatkeres');
+  const quizCollection = database.collection('kvíz');
+  const contactCollection = database.collection('kontakt');
+
+  const dateQuery = (fieldName: string) => (filter.from && filter.to
+    ? { [fieldName]: { $gte: new Date(filter.from), $lte: new Date(filter.to) } }
+    : {});
+
+  const downloads = await downloadsCollection.find(dateQuery('downloadedAt')).sort({ downloadedAt: -1 }).toArray();
+  const consultations = await consultationCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
+  const offerRequests = await offerRequestCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
+  const quizLeads = await quizCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
+  const contactMessages = await contactCollection.find(dateQuery('submittedAt')).sort({ submittedAt: -1 }).toArray();
+
+  return {
+    downloads: JSON.parse(JSON.stringify(downloads)),
+    consultations: JSON.parse(JSON.stringify(consultations)),
+    offerRequests: JSON.parse(JSON.stringify(offerRequests)),
+    quizLeads: JSON.parse(JSON.stringify(quizLeads)),
+    contactMessages: JSON.parse(JSON.stringify(contactMessages)),
+  };
 };
 
-// Külön oldalszámok minden kategóriához
 interface SearchParams {
-  dpage?: string; // downloads page
-  cpage?: string; // consultations page
-  opage?: string; // offers page
-  qpage?: string; // quiz page
-  kpage?: string; // kontakt page
+  dpage?: string;
+  cpage?: string;
+  opage?: string;
+  qpage?: string;
+  kpage?: string;
   from?: string;
   to?: string;
 }
@@ -91,7 +101,7 @@ export default async function SecretPage({
   const currentConsultationPage = parseInt(cpage, 10);
   const currentOfferPage = parseInt(opage, 10);
   const currentQuizPage = parseInt(qpage, 10);
-  const currentKontaktPage = parseInt(kpage, 10); // Új oldalszám a kontaktoknak
+  const currentKontaktPage = parseInt(kpage, 10);
 
   const { downloads, consultations, offerRequests, quizLeads, contactMessages } = await getSecretData({ from, to });
 
@@ -99,13 +109,13 @@ export default async function SecretPage({
   const paginatedConsultations = consultations.slice((currentConsultationPage - 1) * itemsPerPage, currentConsultationPage * itemsPerPage);
   const paginatedOfferRequests = offerRequests.slice((currentOfferPage - 1) * itemsPerPage, currentOfferPage * itemsPerPage);
   const paginatedQuizLeads = quizLeads.slice((currentQuizPage - 1) * itemsPerPage, currentQuizPage * itemsPerPage);
-  const paginatedKontaktMessages = contactMessages.slice((currentKontaktPage - 1) * itemsPerPage, currentKontaktPage * itemsPerPage); // Lapozás
+  const paginatedKontaktMessages = contactMessages.slice((currentKontaktPage - 1) * itemsPerPage, currentKontaktPage * itemsPerPage);
 
   const totalDownloadPages = Math.ceil(downloads.length / itemsPerPage);
   const totalConsultationPages = Math.ceil(consultations.length / itemsPerPage);
   const totalOfferPages = Math.ceil(offerRequests.length / itemsPerPage);
   const totalQuizPages = Math.ceil(quizLeads.length / itemsPerPage);
-  const totalKontaktPages = Math.ceil(contactMessages.length / itemsPerPage); // Összes oldalszám
+  const totalKontaktPages = Math.ceil(contactMessages.length / itemsPerPage);
 
   const renderPagination = (totalPages: number, currentPage: number, pageParamName: 'dpage' | 'cpage' | 'opage' | 'qpage' | 'kpage') => {
     const otherParams = new URLSearchParams({
@@ -115,13 +125,15 @@ export default async function SecretPage({
         cpage: cpage,
         opage: opage,
         qpage: qpage,
-        kpage: kpage, // Hozzáadva
+        kpage: kpage,
     });
 
     const createPageLink = (page: number) => {
         otherParams.set(pageParamName, page.toString());
         return `?${otherParams.toString()}`;
     };
+
+    if (totalPages <= 1) return null;
 
     return (
         <div className="flex justify-center items-center space-x-2 mt-4">
@@ -154,17 +166,15 @@ export default async function SecretPage({
 
   return (
     <>
-      <style>
-        {`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap');
         .bg-pattern { background-color: #0f172a; background-image: radial-gradient(rgba(3, 186, 190, 0.2) 1px, transparent 1px); background-size: 30px 30px; }
         .text-gradient { background: linear-gradient(to right, #03BABE, #5eead4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #03BABE; border-radius: 10px; border: 2px solid #1e293b; }
-        `}
-      </style>
-      <div className="font-['Poppins',_sans-serif] bg-pattern text-gray-300 min-h-screen p-4 sm:p-8">
+      `}</style>
+      <div className="font-['Poppins',_sans_serif] bg-pattern text-gray-300 min-h-screen p-4 sm:p-8">
         <header className="relative text-center mb-12 sm:mb-16 pb-8 border-b border-gray-700">
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2 text-white">Adminisztrátori Felület</h1>
             <p className="text-lg text-gray-400">Beérkezett leadek és kérések kezelése</p>
@@ -184,33 +194,80 @@ export default async function SecretPage({
         </div>
 
         <div className="max-w-7xl mx-auto">
-          {/* A grid oszlopainak száma megnövelve 4-re */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
-             {/* ÚJ: Kontakt üzenetek szekció */}
-             <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
-  <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><ChatBubbleLeftRightIcon className="h-6 w-6" />Kapcsolatfelvételek ({contactMessages.length})</h2>
-  {paginatedKontaktMessages.length === 0 ? (<p className="text-gray-400">Nincsenek beérkezett üzenetek.</p>) : (
-    <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
-      {paginatedKontaktMessages.map((item: any) => (
-        <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
-          <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
-          {/* A telefonszám megjelenítése, ha létezik */}
-          {item.phone && <p className="text-sm text-gray-500">Telefon: <span className="font-medium text-cyan-400">{item.phone}</span></p>}
-          <p className="text-xs text-gray-500 mt-1">Üzenet: <span className="font-medium text-cyan-400">{item.message}</span></p>
-          <p className="text-xs text-gray-500">Dátum: {new Date(item.submittedAt).toLocaleString('hu-HU')}</p>
-        </div>
-      ))}
-    </div>
-  )}
-  {totalKontaktPages > 1 && renderPagination(totalKontaktPages, currentKontaktPage, 'kpage')}
-</div>
+            {/* --- MÓDOSÍTOTT AJÁNLATKÉRÉSEK SZEKCIÓ --- */}
+            <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><PaperClipIcon className="h-6 w-6" />Ajánlatkérések ({offerRequests.length})</h2>
+              {paginatedOfferRequests.length === 0 ? (<p className="text-gray-400">Nincsenek ajánlatkérési adatok.</p>) : (
+                <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                  {paginatedOfferRequests.map((item: any) => (
+                    <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md flex flex-col">
+                        {/* Alap adatok */}
+                        <div>
+                            <p className="text-sm font-semibold text-white">{item.name}</p>
+                            <p className="text-xs text-gray-400 truncate" title={item.email}>{item.email}</p>
+                            {item.phone && item.phone !== 'Nincs megadva' && (
+                                <p className="text-xs text-gray-500">Telefon: <span className="font-medium text-cyan-400">{item.phone}</span></p>
+                            )}
+                        </div>
 
-            {/* ÚJ: Kvíz leadek szekció */}
+                        {/* Technikai Részletek */}
+                        <div className="mt-3 pt-3 border-t border-slate-700 text-xs text-gray-400 space-y-2">
+                            <h4 className="font-bold text-gray-300 text-sm">Részletek</h4>
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                                <span>Alkalmazottak: <b className="text-cyan-400">{item.employeeCount}</b></span>
+                                <span>Telephelyek: <b className="text-cyan-400">{item.premiseCount}</b></span>
+                                <span className="col-span-2">Tevékenység: <b className="text-cyan-400">{item.activity}</b></span>
+                                <span className="col-span-2">Méret: <b className="text-cyan-400">{item.premiseSize}</b></span>
+                                <span className="col-span-2">Lokáció: <b className="text-cyan-400">{item.premiseLocation}</b></span>
+                            </div>
+                        </div>
+
+                        {/* Kért Szolgáltatások */}
+                        <div className="mt-3 pt-3 border-t border-slate-700 text-xs text-gray-400 flex-grow min-h-[100px]">
+                            <h4 className="font-bold text-gray-300 text-sm mb-2">Kért Szolgáltatások</h4>
+                            <ul className="list-disc list-inside space-y-1 text-cyan-400 max-h-24 overflow-y-auto custom-scrollbar pr-2">
+                                {Array.isArray(item.services) && item.services.map((service: string, index: number) => (
+                                    <li key={index}><span className="text-gray-300">{service}</span></li>
+                                ))}
+                            </ul>
+                        </div>
+                        
+                        {/* Dátum */}
+                        <p className="text-xs text-gray-500 mt-3 pt-2 border-t border-slate-800 text-right">
+                            {new Date(item.submittedAt).toLocaleString('hu-HU')}
+                        </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {totalOfferPages > 1 && renderPagination(totalOfferPages, currentOfferPage, 'opage')}
+            </div>
+
+            {/* Kontakt üzenetek szekció */}
+            <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><ChatBubbleLeftRightIcon className="h-6 w-6" />Kapcsolatfelvételek ({contactMessages.length})</h2>
+              {paginatedKontaktMessages.length === 0 ? (<p className="text-gray-400">Nincsenek beérkezett üzenetek.</p>) : (
+                <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                  {paginatedKontaktMessages.map((item: any) => (
+                    <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
+                      <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
+                      {item.phone && <p className="text-sm text-gray-500">Telefon: <span className="font-medium text-cyan-400">{item.phone}</span></p>}
+                      <p className="text-xs text-gray-500 mt-1">Üzenet: <span className="font-medium text-cyan-400">{item.message}</span></p>
+                      <p className="text-xs text-gray-500">Dátum: {new Date(item.submittedAt).toLocaleString('hu-HU')}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {totalKontaktPages > 1 && renderPagination(totalKontaktPages, currentKontaktPage, 'kpage')}
+            </div>
+
+            {/* Kvíz leadek szekció */}
             <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><LightBulbIcon className="h-6 w-6" />Kvíz Letöltések ({quizLeads.length})</h2>
               {paginatedQuizLeads.length === 0 ? (<p className="text-gray-400">Nincsenek kvíz adatok.</p>) : (
-                <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
                   {paginatedQuizLeads.map((item: any) => (
                     <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
                       <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
@@ -229,7 +286,7 @@ export default async function SecretPage({
             <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><DocumentArrowDownIcon className="h-6 w-6" />Letöltések ({downloads.length})</h2>
               {paginatedDownloads.length === 0 ? (<p className="text-gray-400">Nincsenek letöltési adatok.</p>) : (
-                <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
                   {paginatedDownloads.map((item: any) => (
                     <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
                       <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
@@ -247,7 +304,7 @@ export default async function SecretPage({
             <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><CheckCircleIcon className="h-6 w-6" />Konzultációs kérések ({consultations.length})</h2>
               {paginatedConsultations.length === 0 ? (<p className="text-gray-400">Nincsenek konzultációs kérések.</p>) : (
-                <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                <div className="space-y-4 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
                   {paginatedConsultations.map((item: any) => (
                     <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
                       <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
@@ -261,33 +318,6 @@ export default async function SecretPage({
               {totalConsultationPages > 1 && renderPagination(totalConsultationPages, currentConsultationPage, 'cpage')}
             </div>
             
-            {/* Ajánlatkérések szekció */}
-            <div className="bg-slate-800 p-6 rounded-xl shadow-lg border border-slate-700 flex flex-col">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 text-gradient"><PaperClipIcon className="h-6 w-6" />Ajánlatkérések ({offerRequests.length})</h2>
-              {paginatedOfferRequests.length === 0 ? (<p className="text-gray-400">Nincsenek ajánlatkérési adatok.</p>) : (
-                <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar flex-grow">
-                  {paginatedOfferRequests.map((item: any) => (
-                    <div key={item._id} className="bg-slate-900 p-4 rounded-lg border border-slate-700 shadow-md">
-                      <p className="text-sm font-semibold text-white">{item.name} - <span className="text-gray-400">{item.email}</span></p>
-                      {item.phone && <p className="text-sm text-gray-500">Telefon: <span className="font-medium text-cyan-400">{item.phone}</span></p>}
-                      <div className="mt-2 pt-2 border-t border-slate-700 text-xs text-gray-500 space-y-1">
-                          <p>Érdeklődés: <b className="font-medium text-cyan-400">{item.services.join(', ')}</b></p>
-                          <div className="grid grid-cols-2 gap-1">
-                            <span>Munkavállalók: <b className="text-cyan-400">{item.employeeCount}</b></span>
-                            <span>Tevékenység: <b className="text-cyan-400">{item.activity}</b></span>
-                            <span>Telephelyek: <b className="text-cyan-400">{item.premiseCount}</b></span>
-                            <span>Méret: <b className="text-cyan-400">{item.premiseSize}</b></span>
-                            <span className="col-span-2">Lokáció: <b className="text-cyan-400">{item.premiseLocation}</b></span>
-                          </div>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-2">Dátum: {new Date(item.submittedAt).toLocaleString('hu-HU')}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {totalOfferPages > 1 && renderPagination(totalOfferPages, currentOfferPage, 'opage')}
-            </div>
-
           </div>
         </div>
       </div>
