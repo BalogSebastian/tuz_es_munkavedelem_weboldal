@@ -9,7 +9,7 @@ import {
     WrenchScrewdriverIcon,
     CreditCardIcon,
 } from '@heroicons/react/24/outline';
-import { IoArrowUndoSharp, IoArrowRedo } from "react-icons/io5";
+import { IoArrowUndoSharp, IoArrowRedo, IoArrowUndoOutline } from "react-icons/io5";
 
 // --- STÍLUS ÉS KOMPONENS DEFINÍCIÓK ---
 const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => {
@@ -70,7 +70,7 @@ const faqItems = [
 ];
 
 const CombinedSections: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
     const faqSectionRef = useRef<HTMLElement>(null);
     const [isFaqVisible, setIsFaqVisible] = useState(false);
 
@@ -126,6 +126,9 @@ const CombinedSections: React.FC = () => {
                 .cta-button {
                     transition: all 0.3s ease-in-out;
                     box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
+                    font-size: 1.5rem;
+                    padding-top: 1.25rem;
+                    padding-bottom: 1.25rem;
                 }
                 /* --- ITT TÖRTÉNT A MÓDOSÍTÁS --- */
                 .cta-button:hover {
@@ -305,22 +308,22 @@ const CombinedSections: React.FC = () => {
                     </div>
 
                     <div className="text-center mt-10">
-                        <p className="text-base text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
-                        <Link
-                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
-                                className={`
-                                    inline-flex items-center gap-3
-                                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                                    font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-                                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
-                                    transition-all duration-300 ease-in-out
-                                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
-                                    cta-button
-                                `}
-                            >
-                                Foglalj egy ingyenes konzultációt!
-                            </Link>
-                    </div>
+    <p className="text-base text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
+    <Link
+        href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+        className={`
+            inline-flex items-center gap-3
+            ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+            font-bold py-8 px-20 rounded-xl text-3xl
+            shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+            transition-all duration-300 ease-in-out
+            focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+            cta-button
+        `}
+    >
+        Foglalj egy ingyenes konzultációt!
+    </Link>
+</div>
                 </div>
             </section>
         </>
