@@ -9,7 +9,7 @@ import {
     WrenchScrewdriverIcon,
     CreditCardIcon,
 } from '@heroicons/react/24/outline';
-import { IoArrowUndoSharp, IoArrowRedo, IoArrowUndoOutline } from "react-icons/io5";
+import { IoArrowUndoSharp, IoArrowRedo, IoArrowUndoOutline, IoArrowRedoSharp } from "react-icons/io5";
 
 // --- STÍLUS ÉS KOMPONENS DEFINÍCIÓK ---
 const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => {
@@ -261,7 +261,7 @@ const CombinedSections: React.FC = () => {
                         transform: 'translateY(-50%) rotate(150deg)'
                     }}
                 >
-                    <IoArrowRedo className="w-full h-full" />
+                    <IoArrowRedoSharp className="w-full h-full" />
                 </div>
 
                 <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

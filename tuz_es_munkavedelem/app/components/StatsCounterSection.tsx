@@ -85,7 +85,7 @@ const StatsCounterSection = () => {
                 {/* A nyíl módosított pozícióval */}
                 <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
-                        top: '2%',
+                        top: '1%',
                         left: '10%',
                         transform: 'translateY(-50%) rotate(210deg)'
                     }}

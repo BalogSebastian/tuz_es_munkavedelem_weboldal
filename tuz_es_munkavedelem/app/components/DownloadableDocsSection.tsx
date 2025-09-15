@@ -13,7 +13,7 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon
 } from '@heroicons/react/24/solid';
-import { IoArrowRedo } from "react-icons/io5";
+import { IoArrowRedo, IoArrowRedoSharp } from "react-icons/io5";
 
 // --- SZÍNSÉMA ---
 const accentColor = {
@@ -237,7 +237,7 @@ const DownloadableDocsSection: React.FC = () => {
                     transform: 'translateY(-50%) rotate(160deg)'
                 }}
             >
-                <IoArrowRedo className="w-full h-full" />
+                <IoArrowRedoSharp className="w-full h-full" />
             </div>
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

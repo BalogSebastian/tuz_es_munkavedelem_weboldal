@@ -17,7 +17,7 @@ import {
     SparklesIcon, // Hozzáadva
 } from '@heroicons/react/24/solid';
 import { FaHelmetSafety } from 'react-icons/fa6';
-import { IoArrowUndoSharp, IoArrowRedo } from 'react-icons/io5';
+import { IoArrowUndoSharp, IoArrowRedo, IoArrowRedoSharp } from 'react-icons/io5';
 import { HiDocument } from 'react-icons/hi';
 import Link from 'next/link';
 
@@ -169,9 +169,9 @@ const MainPage: React.FC = () => {
             `}</style>
 
             <div style={{ backgroundColor: '#ffffff', backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px)`, backgroundSize: '4rem 4rem' }} className="font-['Poppins',_sans_serif] min-h-screen relative">
-                <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10"><div className="absolute w-36 h-36 text-cyan-500" style={{ top: '20px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}><IoArrowUndoSharp className="w-full h-full" /></div></div>
+                <div className="absolute top-0 left-0 w-full h-[100px] pointer-events-none z-10"><div className="absolute w-36 h-36 text-cyan-500" style={{ top: '10px', left: '10%', transform: 'translateY(-50%) rotate(205deg)' }}><IoArrowUndoSharp className="w-full h-full" /></div></div>
                 
-                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20" style={{ top: '75%', right: '15%', transform: 'translateY(-50%) rotate(150deg)' }}><IoArrowRedo className="w-full h-full" /></div>
+                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20" style={{ top: '85%', right: '10%', transform: 'translateY(-50%) rotate(150deg)' }}><IoArrowRedoSharp className="w-full h-full" /></div>
 
                 <motion.section ref={introSectionRef} id="bemutatkozas" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8" variants={introSectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                     <div className="max-w-6xl mx-auto flex flex-col items-center">
