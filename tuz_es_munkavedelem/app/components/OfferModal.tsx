@@ -304,7 +304,7 @@ const OfferModal = ({
                               <PaperAirplaneIcon className="w-5 h-5" />{' '}
                               {isLoading
                                 ? 'Küldés...'
-                                : 'Foglalj egy ingyenes konzultációt!'}
+                                : 'Árajánlatkérés!'}
                             </button>
                           </div>
                         </form>
