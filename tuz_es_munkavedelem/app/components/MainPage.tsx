@@ -175,7 +175,7 @@ const MainPage: React.FC = () => {
 
                 <motion.section ref={introSectionRef} id="bemutatkozas" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8" variants={introSectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                     <div className="max-w-6xl mx-auto flex flex-col items-center">
-                        <motion.h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-6 text-center" variants={introItemVariants}>Ezt a három alapvető dolgot ismerned kell ahhoz, <span className='text-cyan-400'>hogy biztonságban tudd a vállalkozásodat!</span></motion.h2>
+                    <motion.h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-12 text-center" variants={introItemVariants}>Ezt a három alapvető dolgot ismerned kell ahhoz, <span className='text-cyan-400'>hogy biztonságban tudd a vállalkozásodat!</span></motion.h2>
                         <motion.p variants={introItemVariants} className="text-center text-lg lg:text-xl text-slate-600 max-w-3xl mb-16 leading-relaxed">Fontos tudni, hogy minden vállalkozásra más-más előírás vonatkozik, ezért nem egyszerű ezeknek megfelelni. Segítünk abban, hogy neked mire is kell figyelmet fordítani.</motion.p>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16 w-full">
                             <motion.div variants={introItemVariants} whileHover={{ y: -8, scale: 1.03 }} className="relative bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-200/80 transition-all duration-300 hover:shadow-2xl">
