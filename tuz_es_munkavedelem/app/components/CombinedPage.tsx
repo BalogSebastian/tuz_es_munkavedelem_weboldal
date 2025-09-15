@@ -126,8 +126,8 @@ const CombinedPage = () => {
           <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={32} height={32} className="h-8 w-auto" />
         </div>
         <div className="hidden md:flex items-center mr-30 gap-6 font-medium text-slate-300 ">
-          <a href="mailto:info@tuz-munkavedelmiszaki.hu" className="hover:text-cyan-300 transition-colors duration-300">
-            info@tuz-munkavedelmiszaki.hu
+          <a href="mailto:iroda@tuz-munkavedelmiszaki.hu" className="hover:text-cyan-300 transition-colors duration-300">
+            iroda@tuz-munkavedelmiszaki.hu
           </a>
           <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">
             +36 30 272 2571

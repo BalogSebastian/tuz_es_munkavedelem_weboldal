@@ -11,36 +11,12 @@ import {
   PaperAirplaneIcon,
 } from '@heroicons/react/24/solid';
 
-// Kettébontva a jobb átláthatóságért
 const comprehensiveServices = [
   "Teljes Munkavédelmi Szolgáltatás",
   "Teljes Tűzvédelmi Szolgáltatás",
   "Teljes HACCP rendszer szolgáltatás",
   "Teljes Tűz- Munkavédelmi és HACCP szolgáltatás",
 ];
-
-const individualServices = [
-  "Munkahelyi kockázatértékelés",
-  "Kémia kockázatértékelés",
-  "Biológiai kockázatértékelés",
-  "Egyéni védőeszköz juttatási rend kialakítása",
-  "Munkavédelmi oktatás",
-  "Munkaköri orvosi vizsgálatok rendje kialakítása",
-  "Tűzvédelmi Oktatás",
-  "Tűzvédelmi szabályzat",
-  "Tűzriadó terv",
-  "Menekülési tervrajz",
-  "Kiürítés számítás",
-  "HACCP",
-  "HACCP oktatás",
-  "Emelőgép felülvizsgálat",
-  "Gépek üzembe helyezése",
-  "Környezetvédelem",
-  "Villamos biztonsági Felülvizsgálat",
-  "Baleset kivizsgálása",
-  "Oktatási tematika és tananyag készítés",
-];
-
 
 const OfferModal = ({
   isOpen,
@@ -188,29 +164,6 @@ const OfferModal = ({
                         {/* Komplex csomagok */}
                         <div className="space-y-3">
                           {comprehensiveServices.map((service) => (
-                            <label
-                              key={service}
-                              className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={selectedServices.includes(service)}
-                                onChange={() => handleServiceToggle(service)}
-                                className="form-checkbox h-5 w-5 rounded border-gray-300 text-cyan-500 focus:ring-cyan-500 cursor-pointer"
-                              />
-                              <span className="text-slate-700 select-none">
-                                {service}
-                              </span>
-                            </label>
-                          ))}
-                        </div>
-
-                        {/* Elválasztó vonal */}
-                        <hr className="my-6 border-slate-200" />
-
-                        {/* Egyedi szolgáltatások */}
-                        <div className="space-y-3">
-                          {individualServices.map((service) => (
                             <label
                               key={service}
                               className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors"

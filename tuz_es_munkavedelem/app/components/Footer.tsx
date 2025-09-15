@@ -174,11 +174,11 @@ const Footer: React.FC = () => {
               </h3>
               <address className="not-italic space-y-3 text-slate-400 text-base mb-8">
                 <a 
-                    href="mailto:info@tuz-munkavedelmiszaki.hu" 
+                    href="mailto:iroda@tuz-munkavedelmiszaki.hu" 
                     className="flex items-center p-2 -ml-2 rounded-lg transition-colors duration-200 hover:bg-white/5 hover:text-white"
                 >
                   <EnvelopeIcon className="w-5 h-5 mr-3 text-cyan-400" />
-                  <span>info@tuz-munkavedelmiszaki.hu</span>
+                  <span>iroda@tuz-munkavedelmiszaki.hu</span>
                 </a>
                 <a 
                     href="tel:+36209791719"
