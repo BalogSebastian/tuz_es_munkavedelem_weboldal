@@ -107,20 +107,20 @@ export default function ExitIntentPopup({ isOpen, onAccept, onClose }: ExitInten
               {/* Jobb oldali tartalom szekció */}
               <div className="md:col-span-2 p-8 sm:p-10 text-center md:text-left">
                 <motion.h2 variants={itemVariants} className="text-3xl lg:text-4xl font-black text-white mb-3">
-                  Mielőtt elmész...
+                  Elfogadsz egy sütit?
                 </motion.h2>
                 <motion.p variants={itemVariants} className="text-slate-300 mb-6 text-base lg:text-lg leading-relaxed">
-                  Segíts nekünk, hogy az oldalunk a jövőben is biztonságos és releváns maradhasson! A hozzájárulásoddal anonim statisztikai adatokat gyűjthetünk a felhasználói élmény javítására.
+                  Kedves olvasó, az oldal sütiket használ a jobb felhasználói élmény érdekében. A böngészés folytatásával elfogadod a sütik használatát.
                 </motion.p>
                 <motion.p variants={itemVariants} className="text-xs text-slate-400 mb-8">
-                  Az elfogadással hozzájárulsz anonimizált technikai adatok (pl. böngésző típusa, geolokáció) rögzítéséhez. Részletek az <a href="/adattaj" target="_blank" className="underline hover:text-cyan-300">Adatkezelési Tájékoztatóban</a>.
+                  részletek az adatkezelési tájékoztatóban
                 </motion.p>
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                   <button
                     onClick={onAccept}
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-400 to-sky-500 text-white font-bold py-3 px-8 rounded-xl text-lg transition-all duration-300 ease-in-out shadow-lg hover:shadow-cyan-400/50 hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 animate-pulse-slow"
                   >
-                    Elfogadom és Segítek
+                    Elfogadom
                   </button>
                   <button
                     onClick={onClose}
@@ -137,4 +137,3 @@ export default function ExitIntentPopup({ isOpen, onAccept, onClose }: ExitInten
     </AnimatePresence>
   );
 }
-
