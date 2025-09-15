@@ -721,17 +721,19 @@ const GyakoriKerdesek = () => {
 
   return (
     <>
-      {/* A `style` tag hozzáadva a kód tetejére */}
+      {/* A `style` tag hozzáadva a kód tetejére - FRISSÍTVE az első kód alapján */}
       <style>{`
-        .grid-pattern-light {
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
+        .cta-grid-pattern {
             background-image: linear-gradient(rgba(3, 186, 190, 0.15) 1px, transparent 1px),
                               linear-gradient(to right, rgba(3, 186, 190, 0.15) 1px, transparent 1px);
             background-size: 4rem 4rem;
+            background-attachment: fixed;
+            background-position: 0  170px;
         }
       `}</style>
       
-      <section id="gyik" className="py-16 lg:py-24 font-['Poppins',_sans-serif] text-gray-900 relative">
-        <div className="absolute inset-0 z-0 grid-pattern-light"></div>
+      <section id="gyik" className="py-16 lg:py-24 font-['Poppins',_sans-serif] text-gray-900 relative bg-white cta-grid-pattern">
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
           <motion.div
               initial="initial"
