@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
-import OfferModal from './OfferModal'; // Importáljuk az új, intelligens modális ablakot
+import OfferModal from './OfferModal';
 
 // --- STÍLUS KONSTANSOK ---
 const ACCENT_COLOR = {
@@ -46,13 +46,13 @@ const BlueprintCorner: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 const testimonials = [
-  { id: 1, name: 'Szabó György', company: 'Egyéni Vállalkozó', quote: 'Gyors és korrekt munkavégzés.', rating: 5 },
-  { id: 2, name: 'Gémes Péter', company: 'Apagyi Görögkatólikus egyház', quote: 'Az Apagyi templom tűzvédelmére kértem fel a MunkavédelmiSzaki-t, a munka gördülékenyen ment, számomra kiváló partner.', rating: 5 },
-  { id: 3, name: 'Nagy Mária', company: 'Falatozó Bisztró', quote: 'Online konzultáltunk, rendkívül kedvesek voltak, majd a HACCP teljes dokumentáció is gyorsan kész lett.', rating: 5 },
-  { id: 4, name: 'Kiss Imre', company: 'Kiss 2000 Bt.', quote: 'Korrekt ár érték arány, mindig egy szakember veszi fel a telefont, aki ért is hozzá.', rating: 5 },
-  { id: 5, name: 'Nagy Árpád', company: 'Leveleki Egyház', quote: 'Érintésvédelmi vizsgálatra volt szükségünk sürgősen, 3 nap múlva már a jegyzőkönyvet is megkaptam.', rating: 5 },
-  { id: 6, name: 'Nagy Kincső', company: 'Nails by: Kincső', quote: 'Üzletnyitás után segítettek mindenben amire szükségem volt, szuper csapat.', rating: 5 },
-  { id: 7, name: 'Gaál Marcell', company: '', quote: 'Üzletnyitás előtt állok, teljeskörű tájékoztatást kaptam tőlük, és készségesen segítettek bármilyen kérdésem is volt.', rating: 5 },
+    { id: 1, name: 'Szabó György', company: 'Egyéni Vállalkozó', quote: 'Gyors és korrekt munkavégzés.', rating: 5 },
+    { id: 2, name: 'Gémes Péter', company: 'Apagyi Görögkatólikus egyház', quote: 'Az Apagyi templom tűzvédelmére kértem fel a MunkavédelmiSzaki-t, a munka gördülékenyen ment, számomra kiváló partner.', rating: 5 },
+    { id: 3, name: 'Nagy Mária', company: 'Falatozó Bisztró', quote: 'Online konzultáltunk, rendkívül kedvesek voltak, majd a HACCP teljes dokumentáció is gyorsan kész lett.', rating: 5 },
+    { id: 4, name: 'Kiss Imre', company: 'Kiss 2000 Bt.', quote: 'Korrekt ár érték arány, mindig egy szakember veszi fel a telefont, aki ért is hozzá.', rating: 5 },
+    { id: 5, name: 'Nagy Árpád', company: 'Leveleki Egyház', quote: 'Érintésvédelmi vizsgálatra volt szükségünk sürgősen, 3 nap múlva már a jegyzőkönyvet is megkaptam.', rating: 5 },
+    { id: 6, name: 'Nagy Kincső', company: 'Nails by: Kincső', quote: 'Üzletnyitás után segítettek mindenben amire szükségem volt, szuper csapat.', rating: 5 },
+    { id: 7, name: 'Gaál Marcell', company: '', quote: 'Üzletnyitás előtt állok, teljeskörű tájékoztatást kaptam tőlük, és készségesen segítettek bármilyen kérdésem is volt.', rating: 5 },
 ];
 
 const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ testimonial }) => {
@@ -85,6 +85,29 @@ const TestimonialCard: React.FC<{ testimonial: typeof testimonials[0] }> = ({ te
 const CombinedPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const combinedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials];
+
+  // --- ÚJ RÉSZ KEZDETE ---
+  const [emailText, setEmailText] = useState('iroda@tuz-munkavedelmiszaki.hu');
+
+  const handleCopyToClipboard = () => {
+    const email = 'iroda@tuz-munkavedelmiszaki.hu';
+    navigator.clipboard.writeText(email).then(() => {
+      // Sikeres másolás
+      setEmailText('Email cím másolva!');
+      // Visszaállítás 2 másodperc után
+      setTimeout(() => {
+        setEmailText(email);
+      }, 2000);
+    }).catch(err => {
+      console.error('Hiba a másolás során: ', err);
+      // Opcionális: Hiba visszajelzése a felhasználónak
+      setEmailText('Sikertelen másolás');
+       setTimeout(() => {
+        setEmailText(email);
+      }, 2000);
+    });
+  };
+  // --- ÚJ RÉSZ VÉGE ---
 
   return (
     <div className="min-h-screen w-screen flex flex-col text-white antialiased relative overflow-hidden bg-slate-900 font-['Poppins',_sans-serif] cta-grid-pattern pt-[60px] pb-24">
@@ -126,9 +149,10 @@ const CombinedPage = () => {
           <Image src="/munkavedelmiszakiLOGO.png" alt="Munkavédelmi Szaki Logó" width={32} height={32} className="h-8 w-auto" />
         </div>
         <div className="hidden md:flex items-center mr-30 gap-6 font-medium text-slate-300 ">
-          <a href="mailto:iroda@tuz-munkavedelmiszaki.hu" className="hover:text-cyan-300 transition-colors duration-300">
-            iroda@tuz-munkavedelmiszaki.hu
-          </a>
+          {/* --- MÓDOSÍTOTT RÉSZ --- */}
+          <button onClick={handleCopyToClipboard} className="hover:text-cyan-300 transition-colors duration-300 cursor-pointer">
+            {emailText}
+          </button>
           <a href="tel:+36302722571" className="hover:text-cyan-300 transition-colors duration-300 whitespace-nowrap">
             +36 30 272 2571
           </a>
