@@ -243,7 +243,7 @@ const Bemutatkozas = () => {
           className="text-center mt-12 mb-8 p-8"
           variants={itemVariants}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-6 text-center">
+          <h2 className="text-3xl sm:text-4xl lg:text-3xl font-extrabold text-slate-900 mb-6 text-center">
             Te is egy ilyen csapatot keresel?
           </h2>
           <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="\_blank" rel="noopener noreferrer">

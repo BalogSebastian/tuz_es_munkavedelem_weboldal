@@ -179,7 +179,7 @@ const ServiceHighlightCards: React.FC = () => {
         <section className="py-16 lg:py-24 bg-white font-['Poppins',_sans-serif] pt-28 sm:pt-40 relative grid-pattern-light">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative text-center mb-16 lg:mb-20">
-              <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter mb-4">
+            <h2 className="relative z-10 text-4xl lg:text-5xl font-black text-slate-900 tracking-normal mb-4">
                 Főbb <span className='text-cyan-400'>szolgáltatásaink:</span>
               </h2>
               <p className="relative z-10 text-xl text-slate-600 max-w-3xl mx-auto">Jó helyen jársz! Itt mindent egy helyen megtalálsz!</p>

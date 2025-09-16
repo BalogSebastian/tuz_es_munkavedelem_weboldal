@@ -36,11 +36,6 @@ const downloadableDocs = [
     { id: 3, title: "Általános Munkavédelmi Kisokos", description: "Praktikus összefoglaló, amit minden vállalkozónak és munkavállalónak ismernie kell.", fileName: "altalanos_munkavedelmi_kisokos.pdf" },
     { id: 4, title: "Építkezési Munkavédelem", description: "Ellenőrző lista az építkezéseken betartandó legfontosabb munkavédelmi szabályokról.", fileName: "epitkezesi_ellenorzo_lista.pdf" },
     { id: 5, title: "HACCP Útmutató Vendéglátóhelyeknek", description: "Részletes útmutató az élelmiszer-biztonsági rendszer (HACCP) kiépítéséhez.", fileName: "vendeglatos_haccp_utmutato.pdf" },
-    { id: 6, "title": "Veszélyes Anyagok Kezelése", "description": "Információs anyag a veszélyes anyagok tárolásának és kezelésének szabályairól.", "fileName": "veszelyes_anyagok_kezelesi_utmutato.pdf" },
-    { id: 7, "title": "Tűzvédelmi Szabályzat Minta", "description": "Letölthető és személyre szabható tűzvédelmi szabályzat minta kisebb vállalkozások számára.", "fileName": "tuzvedelmi_szabalyzat_minta.pdf" },
-    { id: 8, "title": "Munkabalesetek Kivizsgálása", "description": "Lépésről lépésre útmutató a munkabalesetek szakszerű kivizsgálásához és dokumentálásához.", "fileName": "munkabaleset_kivizsgalasi_protokoll.pdf" },
-    { id: 9, "title": "Raktárak Munkavédelme", "description": "Gyakorlati tanácsok és előírások a biztonságos raktári munkavégzéshez.", "fileName": "raktari_munkavedelem_kisokos.pdf" },
-    { id: 10, "title": "Elsősegélynyújtás a Munkahelyen", "description": "Azonnali teendők és alapvető elsősegélynyújtási ismeretek munkahelyi vészhelyzetek esetére.", "fileName": "elsosegelynyujtas_munkahelyen.pdf" }
 ];
 
 // --- TÍPUSOK ---

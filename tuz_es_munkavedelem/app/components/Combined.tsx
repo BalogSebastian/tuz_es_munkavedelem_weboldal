@@ -156,7 +156,7 @@ const CombinedSections: React.FC = () => {
 
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="relative text-center mb-16 lg:mb-20">
-                        <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-4">
+                        <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-normal mb-4">
                             Együttműködésünk <span className='text-cyan-400'>Folyamata</span>
                         </h2>
                         <p className="text-xl text-slate-600 max-w-3xl mx-auto">
@@ -230,21 +230,22 @@ const CombinedSections: React.FC = () => {
                             Tedd meg az első lépést, és tudd biztonságban minden értékedet, előzd meg az esetleges tüzet, és a baleseteket!
                         </p>
                         <div>
-                            <Link
-                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
-                                className={`
-                                    inline-flex items-center gap-3
-                                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                                    font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-                                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
-                                    transition-all duration-300 ease-in-out
-                                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
-                                    cta-button
-                                `}
-                            >
-                                Foglalj egy ingyenes konzultációt!
-                            </Link>
-                        </div>
+ <Link
+  href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+  className={`
+   inline-flex items-center gap-3
+   ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+   font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
+   shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+   hover:shadow-2xl hover:shadow-red-500/50 hover:scale-105 hover:brightness-110
+   transition-all duration-300 ease-in-out
+   focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
+   cta-button
+   `}
+ >
+  Foglalj egy ingyenes konzultációt!
+ </Link>
+</div>
                     </div>
                 </div>
             </section>

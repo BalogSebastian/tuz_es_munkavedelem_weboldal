@@ -126,9 +126,9 @@ const Folyamatunk = () => {
       >
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
             <motion.header variants={itemVariants} className="mb-20">
-              <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-4">
-              Nézd meg hogyan történik a munka <span className={accentColor.text}>lépésről, lépésre:</span>
-              </h1>
+            <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-normal mb-4 leading-tight">
+ Nézd meg hogyan történik a munka <span className={accentColor.text}>lépésről, lépésre:</span>
+</h1>
               <p className="text-2xl text-slate-600 leading-snug">
                 A legfontosabb az átláthatóság, ezt vagyunk hivatottak biztosítani, és folyamatosan tájékoztatni téged, anélkül hogy ezt kérned kellene.
               </p>
@@ -150,7 +150,7 @@ const Folyamatunk = () => {
             </main>
 
             <motion.footer variants={itemVariants} className="w-full mt-24 text-center border-t border-slate-200 pt-16">
-              <h3 className="text-3xl font-bold text-slate-800 mb-4">Mennyit kell neked ezzel foglalkoznod?</h3>
+              <h3 className="text-2xl font-bold text-slate-800 mb-4">Mennyit kell neked ezzel foglalkoznod?</h3>
               <p className="text-slate-600 text-lg mb-8">A konzultáción átláthatóan elmondjuk a munka menetét, és lépéseit, majd a végén kézhez kapod a jegyzőkönyveket. Önállóak vagyunk, te koncentrálhatsz az egyéb dolgaidra.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 

@@ -742,7 +742,7 @@ const GyakoriKerdesek = () => {
           >
               <motion.div variants={itemVariants} className="text-center mb-12 lg:mb-16">
                 <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-5 leading-tight tracking-tight">
-                  Gyakran Ismételt Kérdések
+                  <span className='text-cyan-400'>Gyakran </span>Ismételt Kérdések
                 </h2>
                 <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto font-light">
                   Találj gyorsan választ a leggyakoribb felvetésekre munkavédelem, tűzvédelem és HACCP témákban.

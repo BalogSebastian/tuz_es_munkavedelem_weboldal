@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion'; // Hozzáadva
+import { motion } from 'framer-motion';
 import {
   ArrowLeftIcon,
   DocumentMagnifyingGlassIcon,
@@ -14,7 +14,7 @@ import {
   CalendarDaysIcon,
   AcademicCapIcon
 } from '@heroicons/react/24/outline';
-import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
+import { SparklesIcon } from '@heroicons/react/24/solid';
 
 // Az oldal stílusát meghatározó színséma
 const accentColor = {
@@ -30,7 +30,7 @@ const accentColor = {
   lightText: 'text-slate-600'
 };
 
-// Gomb stílusdefiníciók (Hozzáadva)
+// Gomb stílusdefiníciók
 const ACCENT_COLOR_RED = {
     baseHex: '#DC2626',
     bg: 'bg-red-600',
@@ -56,7 +56,7 @@ const KockazatErtekelesPage = () => {
   const strongClass = "font-bold text-slate-900"; // A kiemelések stílusa
 
   return (
-    <div className="min-h-screen bg-slate-50 font-['Poppins',_sans-serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#0F172A] font-['Poppins',_sans-serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8 cta-grid-pattern">
         <style>{`
             .cta-button {
                 transition: all 0.3s ease-in-out;
@@ -69,11 +69,11 @@ const KockazatErtekelesPage = () => {
             .cta-button:active {
                 transform: scale(0.98);
             }
+            .cta-grid-pattern {
+                background-image: linear-gradient(rgba(45, 62, 80, 0.5) 1px, transparent 1px), linear-gradient(to right, rgba(45, 62, 80, 0.5) 1px, transparent 1px);
+                background-size: 4rem 4rem;
+              }
         `}</style>
-      <div className="absolute inset-0 z-0 opacity-10" style={{
-        backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.08) 1px, transparent 1px)`,
-        backgroundSize: '3.5rem 3.5rem',
-      }}></div>
 
       <div className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-8 sm:p-10 relative z-10 border border-slate-200">
         
