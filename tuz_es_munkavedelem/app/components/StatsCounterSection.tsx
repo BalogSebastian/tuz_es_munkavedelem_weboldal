@@ -76,14 +76,31 @@ const StatsCounterSection = () => {
                     opacity: 1;
                     transform: scale(1);
                 }
-                .cta-card:hover {
-                    transform: scale(1.02);
-                    box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
+
+                /* Desktop és tablet hover effektek */
+                @media (min-width: 768px) {
+                    .cta-card:hover {
+                        transform: scale(1.02);
+                        box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
+                    }
+                }
+
+                /* Mobilon egyszerűbb hover/active effektek */
+                @media (max-width: 767px) {
+                    .stat-card:hover {
+                        transform: scale(1.02) translateY(-4px);
+                    }
+                    .cta-card:active {
+                        transform: scale(0.95);
+                    }
+                    .mobile-hide-arrows {
+                        display: none !important;
+                    }
                 }
             `}</style>
-            <section ref={sectionRef} className="pt-24 sm:pt-32 pb-24 sm:pb-32 font-['Poppins',_sans-serif] bg-slate-900 text-white relative">
-                {/* A nyíl módosított pozícióval */}
-                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+            <section ref={sectionRef} className="pt-16 sm:pt-24 sm:pt-32 pb-16 sm:pb-24 sm:pb-32 font-['Poppins',_sans-serif] bg-slate-900 text-white relative">
+                {/* A nyíl - mobilon elrejtve */}
+                <div className="mobile-hide-arrows absolute w-20 sm:w-36 h-20 sm:h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
                         top: '1%',
                         left: '10%',
@@ -94,53 +111,53 @@ const StatsCounterSection = () => {
                 </div>
                 <div className="absolute inset-0 cta-grid-pattern z-0"></div>
 
-                <div className="container mx-auto px-6 relative z-10">
-                    <div className="text-center mb-16 lg:mb-20">
-                        <h2 className="text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 mb-4">
+                <div className="container mx-auto px-4 sm:px-6 relative z-10">
+                    <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+                        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 mb-3 sm:mb-4 px-2">
                             Eredményeink <span className='text-white'>számokban:</span>
                         </h2>
-                        <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+                        <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto px-4">
                             Fontos számunkra, hogy az ügyfeleink ne stresszeljenek egy ellenőrzés során.
                         </p>
                     </div>
 
                     <div className="max-w-2xl mx-auto">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-16 sm:gap-y-12 gap-x-8 text-center">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-12 sm:gap-y-16 sm:gap-y-12 gap-x-8 text-center">
                             {stats.map((stat, index) => (
                                 <div
                                     key={index}
                                     className={`flex flex-col items-center stat-card ${isInView ? 'visible' : ''}`}
                                     style={{ transitionDelay: `${index * 0.15 + 0.4}s` }}
                                 >
-                                    <div className="relative mb-5 p-4 bg-white/10 rounded-full ring-2 ring-white/20 shadow-lg">
-                                        <stat.icon className="w-10 h-10 text-cyan-400" />
+                                    <div className="relative mb-4 sm:mb-5 p-3 sm:p-4 bg-white/10 rounded-full ring-2 ring-white/20 shadow-lg">
+                                        <stat.icon className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400" />
                                     </div>
 
-                                    <div className="text-5xl lg:text-7xl font-extrabold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
+                                    <div className="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-300">
                                         <StaticCounter value={stat.value} isInView={isInView} />
                                         {stat.suffix}
                                     </div>
-                                    <div className="text-base lg:text-xl font-medium text-slate-400">{stat.label}</div>
+                                    <div className="text-sm sm:text-base lg:text-xl font-medium text-slate-400 px-2">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Itt módosítottam a CTA kártyát egy <a> tag-gé */}
+                    {/* CTA kártya mobilra optimalizálva */}
                     <a
                         href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
-                        target="_blank" // Ajánlott új lapon megnyitni a linket
-                        rel="noopener noreferrer" // Biztonsági okokból
-                        className={`mt-20 p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden cta-card block cursor-pointer ${isInView ? 'visible' : ''}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`mt-16 sm:mt-20 p-6 sm:p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-2xl sm:rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden cta-card block cursor-pointer ${isInView ? 'visible' : ''} mx-2 sm:mx-0`}
                     >
                         <div className="absolute inset-0 bg-white/5 opacity-20 transform -skew-y-12 scale-150"></div>
-                        <p className="text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight relative z-10">
+                        <p className="text-white text-xl sm:text-2xl sm:text-3xl lg:text-4xl font-black leading-tight relative z-10">
                             Egyetlen büntetés akár
                         </p>
-                        <p className="text-white text-4xl sm:text-5xl lg:text-6xl font-black mt-2 relative z-10">
+                        <p className="text-white text-3xl sm:text-4xl sm:text-5xl lg:text-6xl font-black mt-2 relative z-10">
                             <span className="text-yellow-300 drop-shadow-lg">2 000 000 Ft</span> is lehet!
                         </p>
-                        <p className="text-red-200 text-base sm:text-lg mt-4 relative z-10">
+                        <p className="text-red-200 text-sm sm:text-base sm:text-lg mt-3 sm:mt-4 relative z-10 px-2">
                         Ne kockáztass - legyél felkészült!
                         </p>
                     </a>

@@ -78,7 +78,7 @@ const itemVariants = {
 const FeatureCard = ({ icon: Icon, title, description }: { icon: React.ElementType, title: string, description: string }) => (
   <motion.div
     variants={itemVariants}
-    className="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-slate-200/80 text-center flex flex-col items-center"
+    className="bg-slate-50 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-slate-200/80 text-center flex flex-col items-center"
   >
     <div className={`p-4 rounded-full ${accentColor.bg} text-white mb-4`}>
       <Icon className="w-8 h-8" />
@@ -90,7 +90,7 @@ const FeatureCard = ({ icon: Icon, title, description }: { icon: React.ElementTy
 
 // Ez a komponens a részletesebb, listaelem-szerű tartalmakhoz ideális.
 const ServiceDetailCard = ({ icon: Icon, title, content }: { icon: React.ElementType, title: string, content: string }) => (
-    <motion.div variants={itemVariants} className="flex items-start gap-4 p-5 bg-white/70 backdrop-blur-md rounded-xl shadow border border-slate-100 h-full">
+    <motion.div variants={itemVariants} className="flex items-start gap-4 p-5 bg-slate-50 backdrop-blur-md rounded-xl shadow-sm border border-slate-100 h-full">
         <div className={`p-3 rounded-full bg-cyan-100 ${accentColor.text} flex-shrink-0 mt-1`}>
             <Icon className="w-6 h-6" />
         </div>
@@ -106,7 +106,7 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
 
   return (
     <motion.div
-      className="min-h-screen bg-slate-50 font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-[#0F172A] font-['Poppins',_sans_serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8 cta-grid-pattern"
       initial="initial"
       animate="animate"
       exit="exit"
@@ -124,11 +124,11 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
             .cta-button:active {
                 transform: scale(0.98);
             }
+            .cta-grid-pattern {
+                background-image: linear-gradient(rgba(45, 62, 80, 0.5) 1px, transparent 1px), linear-gradient(to right, rgba(45, 62, 80, 0.5) 1px, transparent 1px);
+                background-size: 4rem 4rem;
+            }
         `}</style>
-      <div className="absolute inset-0 z-0 opacity-10" style={{
-        backgroundImage: `linear-gradient(rgba(3, 186, 190, 0.1) 1px, transparent 1px), linear-gradient(to right, rgba(3, 186, 190, 0.1) 1px, transparent 1px)`,
-        backgroundSize: '3rem 3rem',
-      }}></div>
 
       <motion.div
         className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-8 sm:p-10 relative z-10 border border-slate-100"

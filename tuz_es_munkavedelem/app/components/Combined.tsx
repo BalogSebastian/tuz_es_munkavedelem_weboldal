@@ -126,17 +126,33 @@ const CombinedSections: React.FC = () => {
                 .cta-button {
                     transition: all 0.3s ease-in-out;
                     box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
-                    font-size: 1.5rem;
-                    padding-top: 1.25rem;
-                    padding-bottom: 1.25rem;
                 }
-                /* --- ITT TÖRTÉNT A MÓDOSÍTÁS --- */
-                .cta-button:hover {
-                    transform: scale(1.02);
-                    box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
+                
+                /* Desktop és tablet CTA gombok */
+                @media (min-width: 768px) {
+                    .cta-button {
+                        font-size: 1.5rem;
+                        padding-top: 1.25rem;
+                        padding-bottom: 1.25rem;
+                    }
+                    .cta-button:hover {
+                        transform: scale(1.02);
+                        box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
+                    }
+                    .cta-button:active {
+                        transform: scale(0.98);
+                    }
                 }
-                .cta-button:active {
-                    transform: scale(0.98);
+
+                /* Mobil CTA gombok - egyszerűbb animációk */
+                @media (max-width: 767px) {
+                    .cta-button {
+                        font-size: 1.125rem;
+                        padding: 1rem 1.5rem;
+                    }
+                    .cta-button:active {
+                        transform: scale(0.95);
+                    }
                 }
 
                 .faq-full-height {
@@ -145,39 +161,52 @@ const CombinedSections: React.FC = () => {
                 .faq-full-height.is-visible {
                     min-height: 100vh;
                 }
+
+                /* Nyilak elrejtése mobilon */
+                @media (max-width: 767px) {
+                    .mobile-hide-arrows {
+                        display: none !important;
+                    }
+                }
             `}</style>
 
             {/* --- PROCESS STEPS SZEKCIÓ --- */}
             <section
-                className="pt-20 lg:pt-28 pb-32 lg:pb-40 font-['Poppins',_sans_serif] relative z-20 overflow-hidden bg-white grid-pattern grid-pattern-light"
+                className="pt-12 sm:pt-20 lg:pt-28 pb-8 sm:pb-32 lg:pb-40 font-['Poppins',_sans_serif] relative z-20 overflow-hidden bg-white grid-pattern grid-pattern-light"
             >
                 <BlueprintCorner className="absolute top-0 left-0 text-cyan-900/10 hidden md:block" />
                 <BlueprintCorner className="absolute bottom-0 right-0 text-cyan-900/10 transform rotate-180 hidden md:block" />
 
-                <div className="container mx-auto px-6 relative z-10">
-                    <div className="relative text-center mb-16 lg:mb-20">
-                        <h2 className="text-4xl lg:text-5xl font-black text-slate-900 tracking-normal mb-4">
+                <div className="container mx-auto px-4 sm:px-6 relative z-10">
+                    <div className="relative text-center mb-12 sm:mb-16 lg:mb-20">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-normal mb-3 sm:mb-4 px-2">
                             Együttműködésünk <span className='text-cyan-400'>Folyamata</span>
                         </h2>
-                        <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                        <p className="text-base sm:text-xl text-slate-600 max-w-3xl mx-auto px-4">
                             Átlátható közös munkát biztosítunk, ahol a munka befejezése után is folyamatosan kapcsolatban maradunk, és kezeljük az ügyeket, ellentétben azokkal, akik eltűnnek.
                         </p>
                     </div>
                     <div className="relative max-w-xl mx-auto lg:max-w-4xl">
+                        {/* Desktop timeline vonal */}
                         <div
                             className="hidden lg:block absolute left-1/2 top-10 bottom-10 w-1 bg-gradient-to-b from-cyan-400 via-cyan-300 to-cyan-200 rounded-full transform -translate-x-1/2"
                             style={{ transformOrigin: 'top' }}
                         />
-                        <div className="space-y-20">
+                        
+                        {/* Mobil timeline vonal */}
+                        <div className="block lg:hidden absolute left-8 top-16 bottom-16 w-0.5 bg-gradient-to-b from-cyan-400 via-cyan-300 to-cyan-200 rounded-full" />
+                        
+                        <div className="space-y-12 sm:space-y-16 lg:space-y-20">
                             {steps.map((step, index) => (
                                 <div
                                     key={step.step}
                                     className={`lg:flex items-center relative ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
                                 >
-                                    <div className={`w-full lg:w-1/2 flex mb-8 lg:mb-0 ${index % 2 === 0 ? 'lg:justify-start lg:pl-[calc(50%+3rem)]' : 'lg:justify-end lg:pr-[calc(50%+3rem)]'}`}>
+                                    {/* Desktop layout */}
+                                    <div className={`hidden lg:flex w-full lg:w-1/2 mb-8 lg:mb-0 ${index % 2 === 0 ? 'lg:justify-start lg:pl-[calc(50%+3rem)]' : 'lg:justify-end lg:pr-[calc(50%+3rem)]'}`}>
                                         <div className="relative inline-block">
                                             <div
-                                                className="hidden lg:block absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
+                                                className="absolute top-1/2 w-5 h-5 bg-white rounded-full z-10"
                                                 style={{ borderColor: 'rgb(34 211 238)', borderWidth: '2px', left: index % 2 === 0 ? 'auto' : 'calc(100% + 2rem)', right: index % 2 === 0 ? 'calc(100% + 2rem)' : 'auto' }}
                                             />
                                             <div className="bg-gradient-to-br from-white to-slate-100 p-6 rounded-full inline-flex items-center justify-center shadow-xl border border-gray-100 ring-8 ring-cyan-400">
@@ -188,18 +217,33 @@ const CombinedSections: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'}`}>
-                                        <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full">
-                                            <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
-                                            <p className="text-gray-600 leading-relaxed">{step.description}</p>
+
+                                    {/* Mobil layout */}
+                                    <div className="flex lg:hidden items-start mb-6 relative">
+                                        <div className="flex-shrink-0 relative">
+                                            <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 transform -translate-x-1/2 -translate-y-1/2" style={{ borderColor: 'rgb(34 211 238)', borderWidth: '2px' }} />
+                                            <div className="bg-gradient-to-br from-white to-slate-100 p-4 rounded-full inline-flex items-center justify-center shadow-lg border border-gray-100 ring-4 ring-cyan-400 relative">
+                                                <div className="absolute -top-2 -right-2 bg-cyan-400 text-white w-6 h-6 rounded-full flex items-center justify-center font-bold text-sm shadow-lg z-20">
+                                                    <span>{step.step}</span>
+                                                </div>
+                                                <step.icon className="w-8 h-8 text-cyan-400" aria-hidden="true" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'} ml-0 lg:ml-0 pl-0 lg:pl-0`}>
+                                        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full ml-4 lg:ml-0">
+                                            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
+                                            <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{step.description}</p>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="text-center mt-16 lg:mt-20 px-4">
-                        <p className="text-lg md:text-xl text-slate-700 font-medium max-w-xl mx-auto">
+                    <div className="text-center mt-12 sm:mt-16 lg:mt-20 px-4">
+                        <p className="text-base sm:text-lg md:text-xl text-slate-700 font-medium max-w-xl mx-auto">
                             Igen jól látod, nálunk csak a munka befejezése után kell fizetni!
                         </p>
                     </div>
@@ -207,8 +251,9 @@ const CombinedSections: React.FC = () => {
             </section>
 
             {/* --- CALL TO ACTION SZEKCIÓ --- */}
-            <section className="bg-slate-900 pb-20 sm:pb-32 relative font-['Poppins',_sans_serif] grid-pattern grid-pattern-dark">
-                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+            <section className="bg-slate-900 pb-8 sm:pb-20 sm:pb-32 relative font-['Poppins',_sans_serif] grid-pattern grid-pattern-dark">
+                {/* Nyilak elrejtése mobilon */}
+                <div className="mobile-hide-arrows absolute w-20 sm:w-36 h-20 sm:h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
                         top: '1%',
                         left: '10%',
@@ -217,35 +262,35 @@ const CombinedSections: React.FC = () => {
                 >
                     <IoArrowUndoSharp className="w-full h-full" />
                 </div>
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-40">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 sm:pt-40">
                     <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                         <h2
-                            className={`text-4xl sm:text-5xl lg:text-7xl font-black text-cyan-400 bg-clip-text ${ACCENT_COLOR_CYAN.textGradient} mb-6 tracking-tight`}
+                            className={`text-3xl sm:text-4xl sm:text-5xl lg:text-7xl font-black text-cyan-400 bg-clip-text ${ACCENT_COLOR_CYAN.textGradient} mb-4 sm:mb-6 tracking-tight px-2`}
                         >
                             Készen állsz a biztonságra?
                         </h2>
                         <p
-                            className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed"
+                            className="text-base sm:text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
                         >
                             Tedd meg az első lépést, és tudd biztonságban minden értékedet, előzd meg az esetleges tüzet, és a baleseteket!
                         </p>
-                        <div>
- <Link
-  href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
-  className={`
-   inline-flex items-center gap-3
-   ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-   font-bold py-4 px-10 rounded-xl text-lg sm:text-xl
-   shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
-   hover:shadow-2xl hover:shadow-red-500/50 hover:scale-105 hover:brightness-110
-   transition-all duration-300 ease-in-out
-   focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
-   cta-button
-   `}
- >
-  Foglalj egy ingyenes konzultációt!
- </Link>
-</div>
+                        <div className="px-4 w-full max-w-lg">
+                            <Link
+                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+                                className={`
+                                    inline-flex items-center justify-center gap-2 sm:gap-3 w-full
+                                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                                    font-bold py-4 px-6 sm:px-10 rounded-xl text-lg sm:text-xl
+                                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                                    hover:shadow-2xl hover:shadow-red-500/50 hover:scale-105 hover:brightness-110
+                                    transition-all duration-300 ease-in-out
+                                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
+                                    cta-button text-center
+                                `}
+                            >
+                                Foglalj egy ingyenes konzultációt!
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -253,9 +298,10 @@ const CombinedSections: React.FC = () => {
             {/* --- FAQ ACCORDION SZEKCIÓ --- */}
             <section
                 ref={faqSectionRef}
-                className={`py-16 lg:py-24 font-['Poppins',_sans_serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
+                className={`py-12 sm:py-16 lg:py-24 font-['Poppins',_sans_serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
             >
-                <div className="absolute w-36 h-36 text-cyan-500 pointer-events-none z-20"
+                {/* Nyilak elrejtése mobilon */}
+                <div className="mobile-hide-arrows absolute w-20 sm:w-36 h-20 sm:h-36 text-cyan-500 pointer-events-none z-20"
                     style={{
                         top: '1%',
                         left: '80%',
@@ -266,11 +312,11 @@ const CombinedSections: React.FC = () => {
                 </div>
 
                 <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-10 lg:mb-12">
-                        <h2 className="text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                    <div className="text-center mb-8 sm:mb-10 lg:mb-12">
+                        <h2 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-3 sm:mb-4 px-2">
                             Gyakori <span className='text-cyan-400'>Kérdések</span>
                         </h2>
-                        <p className="text-base text-slate-600 max-w-2xl mx-auto">
+                        <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto px-4">
                             Rövid válaszok a legfontosabb munkavédelmi és tűzvédelmi kérdésekre.
                         </p>
                     </div>
@@ -286,20 +332,20 @@ const CombinedSections: React.FC = () => {
                                 >
                                     <button
                                         onClick={() => toggleItem(index)}
-                                        className="w-full flex justify-between items-center p-4 text-left focus:outline-none group hover:bg-slate-50 transition-colors"
+                                        className="w-full flex justify-between items-center p-3 sm:p-4 text-left focus:outline-none group hover:bg-slate-50 transition-colors"
                                     >
-                                        <span className={`flex items-center text-lg sm:text-xl font-semibold ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-400'}`}>
+                                        <span className={`flex items-center text-base sm:text-lg sm:text-xl font-semibold pr-2 ${isOpen ? 'text-cyan-700' : 'text-slate-800 group-hover:text-cyan-400'}`}>
                                             {item.isImportant && (
-                                                <ExclamationCircleIcon className="w-6 h-6 mr-2 text-red-500/80" />
+                                                <ExclamationCircleIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-red-500/80 flex-shrink-0" />
                                             )}
                                             {item.question}
                                         </span>
                                         <ChevronDownIcon
-                                            className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-400'}`}
+                                            className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180 text-cyan-600' : 'text-gray-500 group-hover:text-cyan-400'}`}
                                         />
                                     </button>
                                     {isOpen && (
-                                        <div className="px-4 pb-4 text-slate-700 text-xl lg:text-2xl leading-relaxed">
+                                        <div className="px-3 sm:px-4 pb-3 sm:pb-4 text-slate-700 text-sm sm:text-xl lg:text-2xl leading-relaxed">
                                             {item.answer}
                                         </div>
                                     )}
@@ -308,23 +354,25 @@ const CombinedSections: React.FC = () => {
                         })}
                     </div>
 
-                    <div className="text-center mt-10">
-    <p className="text-base text-slate-600 mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
-    <Link
-        href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
-        className={`
-            inline-flex items-center gap-3
-            ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-            font-bold py-8 px-20 rounded-xl text-3xl
-            shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
-            transition-all duration-300 ease-in-out
-            focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
-            cta-button
-        `}
-    >
-        Foglalj egy ingyenes konzultációt!
-    </Link>
-</div>
+                    <div className="text-center mt-8 sm:mt-10 px-4">
+                        <p className="text-sm sm:text-base text-slate-600 mb-3 sm:mb-4">Nem találtál választ? Lépj kapcsolatba velünk:</p>
+                        <div className="max-w-lg mx-auto">
+                            <Link
+                                href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
+                                className={`
+                                    inline-flex items-center justify-center gap-2 sm:gap-3 w-full
+                                    ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                                    font-bold py-6 sm:py-8 px-8 sm:px-20 rounded-xl text-xl sm:text-3xl
+                                    shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                                    transition-all duration-300 ease-in-out
+                                    focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+                                    cta-button text-center
+                                `}
+                            >
+                                Foglalj egy ingyenes konzultációt!
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>

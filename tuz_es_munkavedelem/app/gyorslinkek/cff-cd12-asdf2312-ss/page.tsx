@@ -53,46 +53,48 @@ const MunkahelyiBalesetPage = () => {
   const strongClass = "font-bold text-slate-900";
 
   return (
-    <>
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
-        .grid-bg {
-          background-color: #f8fafc;
-          background-image:
-            linear-gradient(${accentColor.gridLines} 1px, transparent 1px),
-            linear-gradient(to right, ${accentColor.gridLines} 1px, transparent 1px);
-          background-size: 3rem 3rem;
-        }
-        .step-connector::after {
-          content: '';
-          position: absolute;
-          top: 2rem;
-          left: 2rem;
-          height: calc(100% - 2rem);
-          width: 2px;
-          background: ${'#e2e8f0'}; /* slate-200 */
-          z-index: 0;
-        }
-        .step-item:last-child .step-connector::after {
-          display: none;
-        }
-        .cta-button {
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
-        }
-        .cta-button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
-        }
-        .cta-button:active {
-            transform: scale(0.98);
-        }
-      `}</style>
+    <div className="min-h-screen bg-[#0F172A] font-['Poppins',_sans-serif] relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8 cta-grid-pattern">
+        <style>{`
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+            .grid-bg {
+              background-color: #f8fafc;
+              background-image:
+                linear-gradient(${accentColor.gridLines} 1px, transparent 1px),
+                linear-gradient(to right, ${accentColor.gridLines} 1px, transparent 1px);
+              background-size: 3rem 3rem;
+            }
+            .step-connector::after {
+              content: '';
+              position: absolute;
+              top: 2rem;
+              left: 2rem;
+              height: calc(100% - 2rem);
+              width: 2px;
+              background: #e2e8f0; /* slate-200 */
+              z-index: 0;
+            }
+            .step-item:last-child .step-connector::after {
+              display: none;
+            }
+            .cta-button {
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:hover {
+                transform: scale(1.02);
+                box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
+            }
+            .cta-button:active {
+                transform: scale(0.98);
+            }
+            .cta-grid-pattern {
+                background-image: linear-gradient(rgba(45, 62, 80, 0.5) 1px, transparent 1px), linear-gradient(to right, rgba(45, 62, 80, 0.5) 1px, transparent 1px);
+                background-size: 4rem 4rem;
+            }
+        `}</style>
 
-      <div className="min-h-screen bg-slate-50 font-['Poppins',_sans_serif] py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-
-          <main className="grid-bg p-8 sm:p-12 rounded-2xl shadow-2xl border border-slate-200/80">
+          <main className="bg-white rounded-2xl shadow-xl p-8 sm:p-12 relative z-10 border border-slate-200">
             {/* Felső szekció: Cím és bevezető */}
             <section className="text-center border-b border-slate-200 pb-10 mb-10">
               <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-4">
@@ -107,14 +109,14 @@ const MunkahelyiBalesetPage = () => {
             <div className="space-y-10">
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="bg-white p-6 rounded-lg border border-slate-200 flex items-start gap-5">
+                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm flex items-start gap-5">
                       <div className={`p-3 rounded-lg ${accentColor.text} bg-slate-100 flex-shrink-0`}><MagnifyingGlassCircleIcon className="w-8 h-8"/></div>
                       <div>
                           <h3 className="text-xl font-bold text-slate-800 mb-1">Tényfeltárás és Megelőzés</h3>
                           <p className="text-slate-600 text-sm">Szakértőink felderítik a baleset pontos okait, legyen szó technikai, szervezési vagy emberi tényezőkről, hogy elkerülhetővé váljanak a jövőbeni esetek.</p>
                       </div>
                   </div>
-                  <div className="bg-white p-6 rounded-lg border border-slate-200 flex items-start gap-5">
+                                        <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm flex items-start gap-5">
                       <div className={`p-3 rounded-lg ${accentColor.text} bg-slate-100 flex-shrink-0`}><ScaleIcon className="w-8 h-8"/></div>
                       <div>
                          <h3 className="text-xl font-bold text-slate-800 mb-1">Komplex Jogi Kötelezettség</h3>
@@ -139,7 +141,7 @@ const MunkahelyiBalesetPage = () => {
                           <step.icon className={`w-6 h-6 ${accentColor.text}`} />
                         </div>
                       </div>
-                      <div className="bg-white p-5 rounded-lg border border-slate-200 ml-2">
+                      <div className="bg-slate-50 p-5 rounded-lg border border-slate-200 shadow-sm ml-2">
                         <h4 className="font-bold text-slate-800">{step.title}</h4>
                         <p className="text-sm text-slate-600">{step.content}</p>
                       </div>
@@ -151,9 +153,9 @@ const MunkahelyiBalesetPage = () => {
               <section>
                 <h2 className="text-3xl font-bold text-slate-900 mb-6">Komplex Munkahelyi Baleset Kivizsgálási Szolgáltatásaink</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-white p-6 rounded-lg border border-slate-200"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><WrenchScrewdriverIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Teljes körű kivizsgálás</h4><p className="text-sm text-slate-600">Szakértőink elvégzik a baleset teljes körű kivizsgálását, és elkészítik a jogszabályoknak megfelelő baleseti jegyzőkönyvet.</p></div>
-                  <div className="bg-white p-6 rounded-lg border border-slate-200"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><FolderOpenIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Dokumentumok rendszerezése</h4><p className="text-sm text-slate-600">Segítünk az összes szükséges dokumentum (orvosi papírok, oktatási jegyzőkönyvek, kockázatértékelés) rendszerezésében és a bejelentési kötelezettségek teljesítésében.</p></div>
-                  <div className="bg-white p-6 rounded-lg border border-slate-200"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><LightBulbIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Szaktanácsadás és támogatás</h4><p className="text-sm text-slate-600">A baleset kivizsgálása után tanácsot adunk a megelőző intézkedések bevezetésére, hogy hasonló esetek ne fordulhassanak elő.</p></div>
+                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><WrenchScrewdriverIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Teljes körű kivizsgálás</h4><p className="text-sm text-slate-600">Szakértőink elvégzik a baleset teljes körű kivizsgálását, és elkészítik a jogszabályoknak megfelelő baleseti jegyzőkönyvet.</p></div>
+                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><FolderOpenIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Dokumentumok rendszerezése</h4><p className="text-sm text-slate-600">Segítünk az összes szükséges dokumentum (orvosi papírok, oktatási jegyzőkönyvek, kockázatértékelés) rendszerezésében és a bejelentési kötelezettségek teljesítésében.</p></div>
+                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><LightBulbIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Szaktanácsadás és támogatás</h4><p className="text-sm text-slate-600">A baleset kivizsgálása után tanácsot adunk a megelőző intézkedések bevezetésére, hogy hasonló esetek ne fordulhassanak elő.</p></div>
                 </div>
               </section>
 
@@ -176,8 +178,8 @@ const MunkahelyiBalesetPage = () => {
                     </ul>
                 </div>
                 <div className="text-center mt-12 mb-8">
-                    <p className="text-3xl text-black mb-4">Gondoskodj a céged jogi védelméről!</p>
-                    <p className="text-md text-black mb-6">Vedd igénybe szakértelmünket a szakszerű eljárás érdekében.</p>
+                    <p className="text-3xl text-slate-900 mb-4">Gondoskodj a céged jogi védelméről!</p>
+                    <p className="text-md text-slate-600 mb-6">Vedd igénybe szakértelmünket a szakszerű eljárás érdekében.</p>
                     <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
                         <button
                             className={`
@@ -197,8 +199,7 @@ const MunkahelyiBalesetPage = () => {
             </section>
           </main>
         </div>
-      </div>
-    </>
+    </div>
   );
 };
 
