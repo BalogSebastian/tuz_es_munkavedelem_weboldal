@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion } from 'framer-motion'; // Hozzáadva
 import {
   ArrowLeftIcon,
@@ -18,7 +19,6 @@ import {
   CheckBadgeIcon
 } from '@heroicons/react/24/outline';
 import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
-import Link from 'next/link';
 
 // Sötét témájú, felturbózott színséma
 const accentColor = {
@@ -55,13 +55,13 @@ const ACCENT_COLOR_RED = {
 // Kártya komponensek sötét témára szabva
 const PillarCard = ({ icon: Icon, title, description }: { icon: React.ElementType; title: string; description: React.ReactNode }) => (
     <div
-      className={`${accentColor.cardBg} backdrop-blur-sm p-8 rounded-2xl shadow-lg border ${accentColor.containerBorder} text-center flex flex-col items-center h-full transition-all duration-300 hover:border-cyan-500/50 hover:-translate-y-1`}
+      className={`${accentColor.cardBg} backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg border ${accentColor.containerBorder} text-center flex flex-col items-center h-full transition-all duration-300 hover:border-cyan-500/50 hover:-translate-y-1`}
     >
       <div className={`p-4 rounded-full bg-gradient-to-br ${accentColor.gradientFrom} ${accentColor.gradientTo} text-white mb-5 shadow-lg ${accentColor.glow}`}>
         <Icon className="w-8 h-8" />
       </div>
       <h3 className={`text-xl font-bold ${accentColor.headingText} mb-2`}>{title}</h3>
-      <p className={`${accentColor.subtleText} leading-relaxed text-center flex-grow`}>{description}</p>
+      <p className={`${accentColor.subtleText} leading-relaxed text-center flex-grow text-sm`}>{description}</p>
     </div>
   );
 
@@ -75,7 +75,7 @@ const ServiceCard = ({ icon: Icon, title, content }: { icon: React.ElementType; 
         </div>
         <h3 className={`text-xl font-bold ${accentColor.headingText}`}>{title}</h3>
       </div>
-      <div className={`${accentColor.bodyText} leading-relaxed`}>{content}</div>
+      <div className={`${accentColor.bodyText} leading-relaxed text-sm`}>{content}</div>
     </div>
   );
 
@@ -114,12 +114,12 @@ const HaccpPage = () => {
       </div>
 
       <div
-        className={`max-w-6xl mx-auto ${accentColor.containerBg} backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-12 relative z-10 border ${accentColor.containerBorder}`}
+        className={`max-w-6xl mx-auto ${accentColor.containerBg} backdrop-blur-xl rounded-3xl shadow-2xl p-4 sm:p-8 lg:p-12 relative z-10 border ${accentColor.containerBorder}`}
       >
 
         <div className="text-center mb-16">
-            <h2 className="text-2xl font-bold text-white mb-6">Mi az a HACCP?</h2>
-            <p className="text-lg text-slate-300 leading-relaxed max-w-4xl mx-auto">
+            <h2 className={`text-2xl sm:text-3xl font-bold ${accentColor.headingText} mb-6`}>Mi az a HACCP?</h2>
+            <p className={`text-base sm:text-lg ${accentColor.bodyText} leading-relaxed max-w-4xl mx-auto`}>
               A <strong className={strongClass}>HACCP</strong> (Hazard Analysis and Critical Control Points) egy nemzetközileg elfogadott, dinamikus élelmiszerbiztonsági rendszer, amelynek célja a fogyasztók egészségének védelme. Lényege a veszélyek elemzése és a kritikus ellenőrző pontok meghatározása az élelmiszer-előállítás és -forgalmazás teljes folyamatában. Ez a rendszer segít azonosítani, értékelni és kezelni az élelmiszerbiztonságot fenyegető biológiai, kémiai és fizikai kockázatokat, még a problémák felmerülése előtt. A HACCP bevezetése nem csupán jogszabályi kötelezettség, hanem a fogyasztók bizalmának alapja.
             </p>
         </div>
@@ -132,12 +132,12 @@ const HaccpPage = () => {
         </div>
 
         <section className="mb-20">
-            <h2 className="text-3xl font-bold text-white mb-10 text-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-10 text-center">
                 Miből épül fel a HACCP?
             </h2>
-            <div className={`${accentColor.cardBg} p-8 rounded-2xl shadow-xl border ${accentColor.containerBorder}`}>
-                <p className="text-slate-300 mb-6">A HACCP-rendszer 7 alapelvre épül, amelyek a következők:</p>
-                <ol className="list-decimal list-inside space-y-4 text-slate-300">
+            <div className={`${accentColor.cardBg} p-6 sm:p-8 rounded-2xl shadow-xl border ${accentColor.containerBorder}`}>
+                <p className={`${accentColor.bodyText} text-sm mb-6`}>A HACCP-rendszer 7 alapelvre épül, amelyek a következők:</p>
+                <ol className="list-decimal list-inside space-y-4 text-slate-300 text-sm">
                     <li><strong className="font-semibold text-white">Veszélyelemzés:</strong> A potenciális élelmiszerbiztonsági veszélyek azonosítása és értékelése.</li>
                     <li><strong className="font-semibold text-white">Kritikus ellenőrző pontok (CCP-k) meghatározása:</strong> Azoknak a pontoknak a kijelölése a folyamatban, ahol a veszélyek kontrollálhatók.</li>
                     <li><strong className="font-semibold text-white">Kritikus határértékek megállapítása:</strong> A CCP-khez tartozó elfogadható paraméterek (pl. hőmérséklet, idő) meghatározása.</li>
@@ -150,16 +150,16 @@ const HaccpPage = () => {
         </section>
 
         <section className="mb-20">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
                 Mi ennek a jogi kötelezettsége?
             </h2>
-            <div className={`${accentColor.warningBg} border-l-8 ${accentColor.warningBorder} p-8 rounded-xl ${accentColor.warningText} shadow-xl relative overflow-hidden`}>
+            <div className={`${accentColor.warningBg} border-l-8 ${accentColor.warningBorder} p-6 sm:p-8 rounded-xl ${accentColor.warningText} shadow-xl relative overflow-hidden`}>
                 <ExclamationTriangleIcon className="absolute -right-8 -bottom-8 w-40 h-40 text-red-500/10" />
-                <p className="mb-6 text-lg text-red-200">
+                <p className={`mb-6 text-sm sm:text-base ${accentColor.warningText}`}>
                     A HACCP-rendszer működtetése az Európai Unióban a <strong className={strongClass}>852/2004/EK rendeleten</strong> alapul, amelynek előírásait a magyar jog is átültette. A <strong className={strongClass}>Nemzeti Élelmiszerlánc-biztonsági Hivatal (Nébih)</strong> rendszeresen ellenőrzi a vállalkozásokat a HACCP-rendszer meglétét és hatékony működését illetően.
                 </p>
-                <h4 className="font-bold text-xl text-white mb-4">A HACCP hiánya vagy nem megfelelő működtetése súlyos következményekkel járhat:</h4>
-                <ul className="space-y-3 text-red-200">
+                <h4 className="font-bold text-lg mb-4 text-white">A HACCP hiánya vagy nem megfelelő működtetése súlyos következményekkel járhat:</h4>
+                <ul className={`space-y-3 text-sm ${accentColor.warningText}`}>
                     <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-400 mt-1 flex-shrink-0" /><span><strong className="font-semibold text-white">Magas bírságok:</strong> A Nébih több százezer forintos, akár milliós nagyságrendű bírságot is kiszabhat.</span></li>
                     <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-400 mt-1 flex-shrink-0" /><span><strong className="font-semibold text-white">Működés felfüggesztése/bezárása:</strong> Súlyos élelmiszer-biztonsági kockázat esetén a hatóság ideiglenesen vagy véglegesen is bezárathatja a vállalkozást.</span></li>
                     <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-400 mt-1 flex-shrink-0" /><span><strong className="font-semibold text-white">Fogyasztói bizalom elvesztése:</strong> Az élelmiszer-botrányok komoly bizalmatlanságot okozhatnak, ami hosszú távon károsítja a cég hírnevét és üzletmenetét.</span></li>
@@ -168,7 +168,7 @@ const HaccpPage = () => {
         </section>
         
         <section className="mb-20">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-12 text-center">
                 Komplex HACCP Szolgáltatásaink
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -180,20 +180,21 @@ const HaccpPage = () => {
         </section>
 
         {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
-        <div className="text-center mt-12 mb-8 p-8">
+        <div className="text-center mt-12 mb-8 p-4 sm:p-8">
           <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
             <button
                 className={`
-                    inline-flex items-center gap-3
+                    inline-flex items-center justify-center gap-2
                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                    font-bold py-8 px-12 rounded-xl text-3xl
+                    font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-2xl sm:text-xl lg:text-3xl
                     shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
                     cta-button
                 `}
             >
-                Foglalj egy ingyenes konzultációt!
+                <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
             </button>
           </Link>
         </div>

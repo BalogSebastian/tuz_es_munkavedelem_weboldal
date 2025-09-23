@@ -17,7 +17,7 @@ import {
   MapPinIcon,
   ComputerDesktopIcon
 } from '@heroicons/react/24/outline';
-import { SparklesIcon } from '@heroicons/react/24/solid'; // Módosítva 'solid'-ra
+import { SparklesIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
 // Színséma az oldalhoz
@@ -34,7 +34,7 @@ const accentColor = {
   lightText: 'text-slate-600'
 };
 
-// Gomb stílusdefiníciók (Hozzáadva)
+// Gomb stílusdefiníciók
 const ACCENT_COLOR_RED = {
     baseHex: '#DC2626',
     bg: 'bg-red-600',
@@ -66,13 +66,13 @@ const itemVariants = {
 
 // Egyedi kártya komponensek
 const InfoCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: string }) => (
-  <motion.div variants={itemVariants} className="flex items-start gap-5 p-6 bg-white rounded-xl shadow-lg border border-slate-100 group transition-all duration-300 hover:border-cyan-200 hover:shadow-xl">
+  <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start gap-5 p-6 bg-white rounded-xl shadow-lg border border-slate-100 group transition-all duration-300 hover:border-cyan-200 hover:shadow-xl">
     <div className={`p-3 rounded-full ${accentColor.lightBg} ${accentColor.text} flex-shrink-0`}>
       <Icon className="w-7 h-7" />
     </div>
     <div>
       <h3 className="text-xl font-bold text-slate-800 mb-2">{title}</h3>
-      <p className="text-slate-600 leading-relaxed">{content}</p>
+      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{content}</p>
     </div>
   </motion.div>
 );
@@ -83,7 +83,7 @@ const BenefitCard = ({ icon: Icon, title, content }: { icon: React.ElementType; 
         <Icon className="w-8 h-8" />
       </div>
       <h3 className="text-xl font-bold text-slate-800 mb-2">{title}</h3>
-      <p className="text-slate-600 leading-relaxed text-center flex-grow">{content}</p>
+      <p className="text-slate-600 leading-relaxed text-center flex-grow text-sm">{content}</p>
     </motion.div>
   );
 
@@ -118,7 +118,7 @@ const MunkavedelmiOktatasPage = () => {
       }}></div>
 
       <motion.div
-        className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-8 sm:p-10 relative z-10 border border-slate-200"
+        className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-4 sm:p-8 lg:p-10 relative z-10 border border-slate-200"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -133,20 +133,20 @@ const MunkavedelmiOktatasPage = () => {
         </motion.h1>
 
         <motion.p
-          className="text-lg sm:text-xl text-slate-700 leading-relaxed mb-12 text-center max-w-4xl mx-auto"
+          className="text-base sm:text-lg lg:text-xl text-slate-700 leading-relaxed mb-12 text-center max-w-4xl mx-auto"
           variants={itemVariants}
         >
           A <strong>munkavédelmi oktatás</strong> célja a munkavállalók felkészítése a biztonságos munkavégzésre, és a balesetek, foglalkozási megbetegedések megelőzésére. A munkáltató köteles gondoskodni arról, hogy minden munkavállaló (beleértve a diálkmunkásokat, alkalmi munkavállalókat és a táv dolgozókat is) a munkába álláskor és rendszeresen részesüljön munkavédelmi oktatásban.
         </motion.p>
 
         <motion.section className="mb-16" variants={sectionVariants}>
-            <motion.h2 className="text-3xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
+            <motion.h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
                 Miből épül fel egy munkavédelmi oktatás?
             </motion.h2>
-            <motion.p className="text-center text-slate-600 max-w-3xl mx-auto mb-10" variants={itemVariants}>
+            <motion.p className="text-center text-slate-600 max-w-3xl mx-auto mb-10 text-sm sm:text-base" variants={itemVariants}>
                 Szakmailag felépített munkavédelmi oktatásunk az alábbi elemekre fókuszál:
             </motion.p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <InfoCard icon={BookOpenIcon} title="Általános szabályok" content="A munkavédelemről szóló alapvető jogszabályok, a munkáltató és a munkavállaló jogainak és kötelezettségeinek ismertetése." />
                 <InfoCard icon={ExclamationTriangleIcon} title="Egyedi kockázatok" content="A cégre és a munkakörre vonatkozó specifikus veszélyforrások (pl. gépek, vegyi anyagok, ergonómiai terhelés) és a megelőző intézkedések részletes bemutatása." />
                 <InfoCard icon={ShieldCheckIcon} title="Védőeszközök használata" content="A kötelező egyéni védőeszközök (PPE) helyes használatának, karbantartásának és tárolásának bemutatása." />
@@ -155,15 +155,15 @@ const MunkavedelmiOktatasPage = () => {
         </motion.section>
 
         <motion.section className="mb-16" variants={sectionVariants}>
-            <motion.h2 className="text-3xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
+            <motion.h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
                 Mi ennek a jogi kötelezettsége?
             </motion.h2>
-            <div className="bg-red-50 border-l-4 border-red-500 p-8 rounded-r-lg text-red-900 shadow-md">
-                <motion.p className="mb-4" variants={itemVariants}>
+            <div className="bg-red-50 border-l-4 border-red-500 p-6 sm:p-8 rounded-r-lg text-red-900 shadow-md">
+                <motion.p className="mb-4 text-sm sm:text-base" variants={itemVariants}>
                     A munkavédelmi oktatás kötelezettségét a <strong className={strongClass}>munkavédelemről szóló 1993. évi XCIII. törvény</strong> és a 6/2024. (II. 8.) NGM rendelet szabályozza. A törvény meghatározza, hogy az oktatást a munkába lépéskor, munkakör vagy technológia megváltozásakor, valamint baleset után kell elvégezni. A jogszabály azt is előírja, hogy az oktatásnak naprakésznek, hatékonynak és ellenőrizhetőnek kell lennie.
                 </motion.p>
                 <motion.h4 className="font-bold text-lg mb-3" variants={itemVariants}>Az elmaradás vagy hiányos dokumentálás komoly büntetéseket vonhat maga után:</motion.h4>
-                <ul className="list-disc list-inside space-y-2">
+                <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
                     <motion.li variants={itemVariants}><strong className={strongClass}>Hatósági bírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki az elmaradt vagy szabálytalanul megtartott munkavédelmi oktatás miatt.</motion.li>
                     <motion.li variants={itemVariants}><strong className={strongClass}>Felelősség növekedése:</strong> Munkahelyi baleset esetén, ha bebizonyosodik, hogy a munkavállaló nem kapott megfelelő munkavédelmi oktatást, a cég jogi és anyagi felelőssége nagy mértékben növekedhet.</motion.li>
                     <motion.li variants={itemVariants}><strong className={strongClass}>Személyi sérülések:</strong> A legfontosabb következmény, hogy a felkészületlen dolgozók veszélybe sodorhatják önmagukat és másokat.</motion.li>
@@ -172,10 +172,10 @@ const MunkavedelmiOktatasPage = () => {
         </motion.section>
         
         <motion.section className="mb-16" variants={sectionVariants}>
-            <motion.h2 className="text-3xl font-bold text-slate-900 mb-10 text-center" variants={itemVariants}>
+            <motion.h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-10 text-center" variants={itemVariants}>
                 Mi felkészültek vagyunk erre:
             </motion.h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <BenefitCard icon={AcademicCapIcon} title="Szakmailag felkészült oktatók" content="Tapasztalt munkavédelmi szakembereink garantálják a színvonalas és érthető oktatást, a legújabb jogszabályi ismeretek átadásával." />
                 <BenefitCard icon={ComputerDesktopIcon} title="Helyszíni, vagy online képzés" content={<>Igény szerint a helyszínen tartott, <strong className={strongClass}>interaktív képzéseket</strong> tartunk, amelyek a valós környezetben a leginkább hatékonyak.</>} />
                 <BenefitCard icon={SparklesIcon} title="Cégére szabott tematika" content={<>A tananyagot a <strong className={strongClass}>vállalkozásod profiljához</strong> és a munkakörök specifikus kockázataihoz igazítjuk, hogy a képzés releváns és hasznos legyen.</>} />
@@ -185,22 +185,23 @@ const MunkavedelmiOktatasPage = () => {
 
         {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
         <motion.div
-            className="text-center mt-12 mb-8 p-8"
+            className="text-center mt-12 mb-8 p-4 sm:p-8"
             variants={itemVariants}
         >
           <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
              <button
                 className={`
-                    inline-flex items-center gap-3
+                    inline-flex items-center justify-center gap-2
                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                    font-bold py-8 px-12 rounded-xl text-3xl
+                    font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-2xl sm:text-xl lg:text-3xl
                     shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                     cta-button
                 `}
             >
-                Foglalj egy ingyenes konzultációt!
+                <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
             </button>
           </Link>
         </motion.div>

@@ -94,21 +94,21 @@ const MunkahelyiBalesetPage = () => {
         `}</style>
 
         <div className="max-w-7xl mx-auto">
-          <main className="bg-white rounded-2xl shadow-xl p-8 sm:p-12 relative z-10 border border-slate-200">
+          <main className="bg-white rounded-2xl shadow-xl p-4 sm:p-8 lg:p-12 relative z-10 border border-slate-200">
             {/* Felső szekció: Cím és bevezető */}
             <section className="text-center border-b border-slate-200 pb-10 mb-10">
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-4">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
                 Munkahelyi Baleset <span className={accentColor.text}>Kivizsgálása</span>
               </h1>
-              <p className="text-lg text-slate-600 max-w-4xl mx-auto">
+              <p className="text-base sm:text-lg text-slate-600 max-w-4xl mx-auto">
                 A munkahelyi baleset olyan sérüléssel járó esemény, amely a munkavégzés során éri a munkavállalót. Ilyenkor a sérült ellátásán túl a munkáltató legfontosabb feladata a baleset szakszerű kivizsgálása. Ennek célja kettős: egyrészt feltárja a baleset okait, megelőzve ezzel a hasonló esetek jövőbeli bekövetkezését, másrészt pedig megállapítja a munkáltatói felelősséget.
               </p>
             </section>
 
-            {/* Fő tartalmi rész - most már teljes szélességben */}
+            {/* Fő tartalmi rész */}
             <div className="space-y-10">
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm flex items-start gap-5">
                       <div className={`p-3 rounded-lg ${accentColor.text} bg-slate-100 flex-shrink-0`}><MagnifyingGlassCircleIcon className="w-8 h-8"/></div>
                       <div>
@@ -116,7 +116,7 @@ const MunkahelyiBalesetPage = () => {
                           <p className="text-slate-600 text-sm">Szakértőink felderítik a baleset pontos okait, legyen szó technikai, szervezési vagy emberi tényezőkről, hogy elkerülhetővé váljanak a jövőbeni esetek.</p>
                       </div>
                   </div>
-                                        <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm flex items-start gap-5">
+                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm flex items-start gap-5">
                       <div className={`p-3 rounded-lg ${accentColor.text} bg-slate-100 flex-shrink-0`}><ScaleIcon className="w-8 h-8"/></div>
                       <div>
                          <h3 className="text-xl font-bold text-slate-800 mb-1">Komplex Jogi Kötelezettség</h3>
@@ -126,7 +126,7 @@ const MunkahelyiBalesetPage = () => {
               </div>
 
               <section>
-                <h2 className="text-3xl font-bold text-slate-900 mb-6">Miből áll egy munkahelyi baleset kivizsgálása?</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6">Miből áll egy munkahelyi baleset kivizsgálása?</h2>
                 <div className="space-y-4">
                   {[
                     { icon: MapIcon, title: 'Helyszíni szemle', content: 'A baleset helyszínének felmérése, a körülmények rögzítése, fényképek és rajzok készítése.' },
@@ -142,7 +142,7 @@ const MunkahelyiBalesetPage = () => {
                         </div>
                       </div>
                       <div className="bg-slate-50 p-5 rounded-lg border border-slate-200 shadow-sm ml-2">
-                        <h4 className="font-bold text-slate-800">{step.title}</h4>
+                        <h4 className="font-bold text-slate-800 text-base sm:text-lg">{step.title}</h4>
                         <p className="text-sm text-slate-600">{step.content}</p>
                       </div>
                     </div>
@@ -151,7 +151,7 @@ const MunkahelyiBalesetPage = () => {
               </section>
 
               <section>
-                <h2 className="text-3xl font-bold text-slate-900 mb-6">Komplex Munkahelyi Baleset Kivizsgálási Szolgáltatásaink</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6">Komplex Munkahelyi Baleset Kivizsgálási Szolgáltatásaink</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><WrenchScrewdriverIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Teljes körű kivizsgálás</h4><p className="text-sm text-slate-600">Szakértőink elvégzik a baleset teljes körű kivizsgálását, és elkészítik a jogszabályoknak megfelelő baleseti jegyzőkönyvet.</p></div>
                   <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 shadow-sm"><div className={`mb-3 w-fit p-3 rounded-md ${accentColor.lightBg} ${accentColor.text}`}><FolderOpenIcon className="w-6 h-6"/></div><h4 className="font-bold text-slate-900 mb-1">Dokumentumok rendszerezése</h4><p className="text-sm text-slate-600">Segítünk az összes szükséges dokumentum (orvosi papírok, oktatási jegyzőkönyvek, kockázatértékelés) rendszerezésében és a bejelentési kötelezettségek teljesítésében.</p></div>
@@ -159,44 +159,44 @@ const MunkahelyiBalesetPage = () => {
                 </div>
               </section>
 
+              {/* --- Teljes szélességű lezáró szekció --- */}
+              <section className="mt-16 pt-10 border-t border-slate-200">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 text-center">
+                      Mi a jogi kötelezettség?
+                  </h2>
+                  <div className={`p-4 sm:p-8 rounded-lg border-l-8 ${accentColor.warningBorder} ${accentColor.warningBg} max-w-4xl mx-auto shadow-lg`}>
+                      <p className={`mb-4 text-base sm:text-lg ${accentColor.warningText}`}>
+                          A munkahelyi balesetek bejelentését és kivizsgálását a munkavédelemről szóló 1993. évi XCIII. törvény és a 33/1998. (VI. 24.) NM rendelet írja elő. A kivizsgálási eljárás határideje a baleset bejelentésétől számított 8 nap, súlyos baleset esetén pedig azonnal értesíteni kell a hatóságot.
+                      </p>
+                      <h4 className="font-bold text-lg mb-3 text-slate-800">A szakszerűtlen kivizsgálás vagy annak elmulasztása súlyos következményekkel járhat:</h4>
+                      <ul className="list-disc list-inside space-y-2 text-sm sm:text-base text-slate-700">
+                          <li><strong className={strongClass}>Hatósági bírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki a hiányos vagy nem megfelelő kivizsgálás miatt.</li>
+                          <li><strong className={strongClass}>Jogi felelősség:</strong> A munkáltatót polgári- és büntetőjogi felelősség is terhelheti, ha a baleset a munkavédelmi szabályok megszegése miatt következett be.</li>
+                          <li><strong className={strongClass}>Kártérítési kötelezettség:</strong> A munkáltatónak a sérült felé kártérítési felelőssége van, amelynek összege jelentősen megnövekedhet egy hibásan lefolytatott eljárás miatt.</li>
+                      </ul>
+                  </div>
+                  <div className="text-center mt-12 mb-8">
+                      <p className="text-xl sm:text-3xl text-slate-900 mb-4">Gondoskodj a céged jogi védelméről!</p>
+                      <p className="text-sm sm:text-base text-slate-600 mb-6">Vedd igénybe szakértelmünket a szakszerű eljárás érdekében.</p>
+                      <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
+                          <button
+                              className={`
+                                  inline-flex items-center justify-center gap-2
+                                  ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
+                                  font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-2xl sm:text-xl lg:text-3xl
+                                  shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
+                                  transition-all duration-300 ease-in-out
+                                  focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
+                                  cta-button
+                              `}
+                          >
+                              <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                              <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
+                          </button>
+                      </Link>
+                  </div>
+              </section>
             </div>
-
-            {/* --- Teljes szélességű lezáró szekció --- */}
-            <section className="mt-16 pt-10 border-t border-slate-200">
-                <h2 className="text-3xl font-bold text-slate-900 mb-6 text-center">
-                    Mi a jogi kötelezettség?
-                </h2>
-                <div className={`p-8 rounded-lg border-l-8 ${accentColor.warningBorder} ${accentColor.warningBg} max-w-4xl mx-auto shadow-lg`}>
-                    <p className={`mb-4 ${accentColor.warningText}`}>
-                        A munkahelyi balesetek bejelentését és kivizsgálását a munkavédelemről szóló 1993. évi XCIII. törvény és a 33/1998. (VI. 24.) NM rendelet írja elő. A kivizsgálási eljárás határideje a baleset bejelentésétől számított 8 nap, súlyos baleset esetén pedig azonnal értesíteni kell a hatóságot.
-                    </p>
-                    <h4 className="font-bold text-lg mb-3 text-slate-800">A szakszerűtlen kivizsgálás vagy annak elmulasztása súlyos következményekkel járhat:</h4>
-                    <ul className="list-disc list-inside space-y-2 text-slate-700">
-                        <li><strong className={strongClass}>Hatósági bírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki a hiányos vagy nem megfelelő kivizsgálás miatt.</li>
-                        <li><strong className={strongClass}>Jogi felelősség:</strong> A munkáltatót polgári- és büntetőjogi felelősség is terhelheti, ha a baleset a munkavédelmi szabályok megszegése miatt következett be.</li>
-                        <li><strong className={strongClass}>Kártérítési kötelezettség:</strong> A munkáltatónak a sérült felé kártérítési felelőssége van, amelynek összege jelentősen megnövekedhet egy hibásan lefolytatott eljárás miatt.</li>
-                    </ul>
-                </div>
-                <div className="text-center mt-12 mb-8">
-                    <p className="text-3xl text-slate-900 mb-4">Gondoskodj a céged jogi védelméről!</p>
-                    <p className="text-md text-slate-600 mb-6">Vedd igénybe szakértelmünket a szakszerű eljárás érdekében.</p>
-                    <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
-                        <button
-                            className={`
-                                inline-flex items-center gap-3
-                                ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                                font-bold py-8 px-12 rounded-xl text-3xl
-                                shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
-                                transition-all duration-300 ease-in-out
-                                focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
-                                cta-button
-                            `}
-                        >
-                            Foglalj egy ingyenes konzultációt!
-                        </button>
-                    </Link>
-                </div>
-            </section>
           </main>
         </div>
     </div>

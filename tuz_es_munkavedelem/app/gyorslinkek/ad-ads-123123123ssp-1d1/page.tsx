@@ -75,14 +75,14 @@ const KockazatErtekelesPage = () => {
               }
         `}</style>
 
-      <div className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-8 sm:p-10 relative z-10 border border-slate-200">
+      <div className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-4 sm:p-8 lg:p-10 relative z-10 border border-slate-200">
         
 
         <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
               Kockázatértékelés
             </h1>
-            <p className="text-lg sm:text-xl text-slate-700 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed max-w-4xl mx-auto">
               A munkahelyi balesetek és megbetegedések megelőzése nemcsak erkölcsi kötelesség, hanem törvényi előírás. A kockázatértékelés célja a munkahelyi környezetben előforduló veszélyek és kockázatok szisztematikus azonosítása, elemzése és kezelése. Megfelelő elkészítése nemcsak emberi tragédiákat akadályoz meg, hanem anyagi károktól és jelentős jogi szankcióktól is óvja meg vállalkozását.
             </p>
         </div>
@@ -134,30 +134,31 @@ const KockazatErtekelesPage = () => {
                 </p>
                 <h4 className="font-bold text-lg mb-4 text-red-800">Ennek hiánya vagy hiányos elkészítése súlyos következményekkel jár:</h4>
                 <ul className="space-y-3">
-                    <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Pénzbírságok:</strong> A munkavédelmi bírság összege <strong className={strongClass}>50 000 Ft-tól 10 000 000 Ft-ig</strong> terjedhet, attól függően mekkora a mulasztás.</span></li>
-                    <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Működés felfüggesztése:</strong> Súlyos hiányosság esetén a hatóság felfüggesztheti a cég tevékenységét.</span></li>
-                    <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Baleset esetén felmerülő felelősség:</strong> Ha baleset történik és kiderül, hogy a kockázatértékelés nem volt meg vagy hiányos, a munkáltatót kártérítési perek érik, és teljes mértékben meg kell térítenie a sérült kárát.</span></li>
+                    <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-500 mt-1 flex-shrink-0" /><span className="text-sm sm:text-base"><strong className={strongClass}>Pénzbírságok:</strong> A munkavédelmi bírság összege <strong className={strongClass}>50 000 Ft-tól 10 000 000 Ft-ig</strong> terjedhet, attól függően mekkora a mulasztás.</span></li>
+                    <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-500 mt-1 flex-shrink-0" /><span className="text-sm sm:text-base"><strong className={strongClass}>Működés felfüggesztése:</strong> Súlyos hiányosság esetén a hatóság felfüggesztheti a cég tevékenységét.</span></li>
+                    <li className="flex items-start gap-3"><CheckBadgeIcon className="w-6 h-6 text-red-500 mt-1 flex-shrink-0" /><span className="text-sm sm:text-base"><strong className={strongClass}>Baleset esetén felmerülő felelősség:</strong> Ha baleset történik és kiderül, hogy a kockázatértékelés nem volt meg vagy hiányos, a munkáltatót kártérítési perek érik, és teljes mértékben meg kell térítenie a sérült kárát.</span></li>
                 </ul>
             </div>
         </section>
         
         {/* --- MÓDOSÍTOTT CTA GOMB --- */}
-        <div className="text-center mt-12 mb-8 p-8">
+        <div className="text-center mt-12 mb-8 p-4 sm:p-8">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-6 text-center">
             </h2>
             <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
               <button
                 className={`
-                    inline-flex items-center gap-3
+                    inline-flex items-center justify-center gap-2
                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                    font-bold py-8 px-12 rounded-xl text-3xl
+                    font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-xl sm:text-xl lg:text-3xl
                     shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                     cta-button
                 `}
               >
-                Foglalj egy ingyenes konzultációt!
+                <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
               </button>
             </Link>
         </div>

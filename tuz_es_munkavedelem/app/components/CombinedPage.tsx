@@ -266,7 +266,7 @@ const CombinedPage = () => {
       <div className="flex-grow flex flex-col items-center justify-center text-center relative px-4 py-8 sm:py-12 md:py-0">
         <div className="max-w-8xl relative z-10 flex flex-col items-center">
           <div className="flex flex-col items-center">
-            <h2 className="text-2xl sm:text-3xl md:text-6xl font-black text-white mb-4 sm:mb-2 z-10 mt-7 leading-tight sm:leading-snug md:leading-snug px-2">
+            <h2 className="text-2xl sm:text-3xl md:text-6xl font-black text-white mb-4 sm:mb-2 z-10 leading-tight sm:leading-snug md:leading-snug px-2">
               Elkészítjük a megfelelő Tűzvédelmi, Munkavédelmi, HACCP dokumentációkat, hogy téged ne büntessenek meg.
             </h2>
             <h1 className="text-xl sm:text-2xl md:text-3xl text-white mb-6 sm:mb-8 leading-tight tracking-tighter z-10 px-2">

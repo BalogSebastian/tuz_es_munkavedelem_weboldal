@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 import { IoArrowUndoSharp } from "react-icons/io5";
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Natív Intersection Observer Hook ---
 const useInViewObserver = (ref: React.RefObject<any>, options: IntersectionObserverInit) => {
@@ -39,15 +41,25 @@ const stats = [
     { value: 150, label: "Elkerült Büntetés", suffix: "", icon: ShieldCheckIcon },
 ];
 
+const ACCENT_COLOR_RED = {
+    baseHex: '#DC2626',
+    bg: 'bg-red-600',
+    textOnAccent: 'text-white',
+    ring: 'focus-visible:ring-red-500',
+    shadow: 'shadow-red-500/40',
+    hoverShadow: 'hover:shadow-red-400/60',
+};
+
 const StatsCounterSection = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const isInView = useInViewObserver(sectionRef, { threshold: 0.3 });
 
     return (
         <>
-            <style>{`
+            <style jsx global>{`
                 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&display=swap');
-
+            `}</style>
+            <style jsx>{`
                 .cta-grid-pattern {
                     background-image: linear-gradient(rgba(203, 213, 225, 0.05) 1px, transparent 1px),
                                       linear-gradient(to right, rgba(203, 213, 225, 0.05) 1px, transparent 1px);
@@ -77,7 +89,6 @@ const StatsCounterSection = () => {
                     transform: scale(1);
                 }
 
-                /* Desktop és tablet hover effektek */
                 @media (min-width: 768px) {
                     .cta-card:hover {
                         transform: scale(1.02);
@@ -85,7 +96,6 @@ const StatsCounterSection = () => {
                     }
                 }
 
-                /* Mobilon egyszerűbb hover/active effektek */
                 @media (max-width: 767px) {
                     .stat-card:hover {
                         transform: scale(1.02) translateY(-4px);
@@ -113,16 +123,16 @@ const StatsCounterSection = () => {
 
                 <div className="container mx-auto px-4 sm:px-6 relative z-10">
                     <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-                        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 mb-3 sm:mb-4 px-2">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 mb-3 sm:mb-4 px-2">
                             Eredményeink <span className='text-white'>számokban:</span>
                         </h2>
-                        <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto px-4">
+                        <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto px-4">
                             Fontos számunkra, hogy az ügyfeleink ne stresszeljenek egy ellenőrzés során.
                         </p>
                     </div>
 
                     <div className="max-w-2xl mx-auto">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-12 sm:gap-y-16 sm:gap-y-12 gap-x-8 text-center">
+                        <div className="grid grid-cols-2 gap-y-12 sm:gap-y-16 sm:gap-y-12 gap-x-8 text-center">
                             {stats.map((stat, index) => (
                                 <div
                                     key={index}
@@ -137,14 +147,14 @@ const StatsCounterSection = () => {
                                         <StaticCounter value={stat.value} isInView={isInView} />
                                         {stat.suffix}
                                     </div>
-                                    <div className="text-sm sm:text-base lg:text-xl font-medium text-slate-400 px-2">{stat.label}</div>
+                                    <div className="text-base sm:text-lg lg:text-xl font-medium text-slate-400 px-2">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     {/* CTA kártya mobilra optimalizálva */}
-                    <a
+                    <Link
                         href="https://app.minup.io/book/munkavedelmiszaki/service/46358"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -157,10 +167,10 @@ const StatsCounterSection = () => {
                         <p className="text-white text-3xl sm:text-4xl sm:text-5xl lg:text-6xl font-black mt-2 relative z-10">
                             <span className="text-yellow-300 drop-shadow-lg">2 000 000 Ft</span> is lehet!
                         </p>
-                        <p className="text-red-200 text-sm sm:text-base sm:text-lg mt-3 sm:mt-4 relative z-10 px-2">
-                        Ne kockáztass - legyél felkészült!
+                        <p className="text-red-200 text-base sm:text-lg mt-3 sm:mt-4 relative z-10 px-2">
+                            Ne kockáztass - legyél felkészült!
                         </p>
-                    </a>
+                    </Link>
                 </div>
             </section>
         </>

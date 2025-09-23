@@ -19,7 +19,7 @@ import {
   LightBulbIcon,
   CalendarDaysIcon,
 } from '@heroicons/react/24/outline';
-import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
+import { SparklesIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
 // A dizájn és a színséma változatlan marad a kérésnek megfelelően.
@@ -84,7 +84,7 @@ const FeatureCard = ({ icon: Icon, title, description }: { icon: React.ElementTy
       <Icon className="w-8 h-8" />
     </div>
     <h3 className="text-xl font-bold text-slate-800 mb-2">{title}</h3>
-    <p className="text-slate-600 leading-relaxed text-center">{description}</p>
+    <p className="text-slate-600 leading-relaxed text-center text-sm">{description}</p>
   </motion.div>
 );
 
@@ -95,8 +95,8 @@ const ServiceDetailCard = ({ icon: Icon, title, content }: { icon: React.Element
             <Icon className="w-6 h-6" />
         </div>
         <div>
-            <h3 className="text-xl font-bold text-slate-800 mb-1">{title}</h3>
-            <p className="text-slate-600 leading-relaxed">{content}</p>
+            <h3 className="text-lg font-bold text-slate-800 mb-1">{title}</h3>
+            <p className="text-slate-600 leading-relaxed text-sm">{content}</p>
         </div>
     </motion.div>
 );
@@ -131,7 +131,7 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
         `}</style>
 
       <motion.div
-        className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-8 sm:p-10 relative z-10 border border-slate-100"
+        className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-8 lg:p-12 relative z-10 border border-slate-100"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -147,13 +147,13 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
         </motion.h1>
 
         <motion.p
-          className="text-lg sm:text-xl text-slate-700 leading-relaxed mb-12 text-center max-w-4xl mx-auto"
+          className="text-base sm:text-lg text-slate-700 leading-relaxed mb-12 text-center max-w-4xl mx-auto"
           variants={itemVariants}
         >
           A villamos biztonsági felülvizsgálat (VBF), vagy köznyelvben <strong className="font-extrabold text-slate-800">érintésvédelmi felülvizsgálat</strong>, egy kötelezően elvégzendő, szisztematikus ellenőrzés. Célja a villamos berendezések, gépek és hálózatok hibáinak felderítése, hogy <strong className="font-extrabold text-slate-800">megelőzzük az áramütéses baleseteket és a tűzeseteket</strong>. Ez a folyamat nem csupán egy jogi előírás, hanem a legfontosabb eszköz a vagyonvédelemre és a munkatársak biztonságára.
         </motion.p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-4xl mx-auto">
             <FeatureCard
                 icon={ArrowPathIcon}
                 title="Rendszeres Ellenőrzés és Megelőzés"
@@ -168,20 +168,20 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
 
         {/* 2. KÉP TARTALMA: A felülvizsgálat lépései */}
         <motion.h2
-          className="text-3xl font-bold text-slate-900 mb-8 text-center"
+          className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 text-center"
           variants={itemVariants}
         >
           Miből épül fel egy Villamos Biztonsági Felülvizsgálat?
         </motion.h2>
 
         <motion.p
-            className="text-slate-700 leading-relaxed mb-10 max-w-4xl mx-auto text-center"
+            className="text-slate-700 leading-relaxed mb-10 max-w-4xl mx-auto text-center text-base"
             variants={itemVariants}
         >
             Egy teljes körű VBF a következő lépésekből áll:
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             <ServiceDetailCard
                 icon={EyeIcon}
                 title="Szemrevételezés"
@@ -201,14 +201,14 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
 
         {/* 3. KÉP TARTALMA: Jogi kötelezettségek */}
          <motion.h2
-          className="text-3xl font-bold text-slate-900 mb-8 text-center"
+          className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 text-center"
           variants={itemVariants}
         >
           Mi ennek a jogi kötelezettsége?
         </motion.h2>
 
         <motion.p
-          className="text-slate-700 leading-relaxed mb-10 max-w-4xl mx-auto"
+          className="text-slate-700 leading-relaxed mb-10 max-w-4xl mx-auto text-base"
           variants={itemVariants}
         >
           A felülvizsgálat elvégzését a <strong className="font-extrabold text-slate-800">40/2017. (XII. 4.) NGM rendelet</strong> és a <strong className="font-extrabold text-slate-800">2016. évi CLXXXIX. törvény</strong> a villamos energiáról írja elő. A felülvizsgálat gyakorisága a munkahelyi környezettől és a berendezések típusától függ, de elmulasztása súlyos következményekkel jár:
@@ -234,7 +234,7 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
 
         {/* 4. KÉP TARTALMA: "Így csináljuk mi" */}
         <motion.h2
-          className="text-3xl font-bold text-slate-900 mb-8 text-center"
+          className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 text-center"
           variants={itemVariants}
         >
           Így csináljuk mi:
@@ -265,22 +265,26 @@ const VillamosBiztonsagiFelulvizsgalatPage: React.FC = () => {
 
         {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
         <motion.div
-            className="text-center mt-12 mb-8 p-8"
+            className="text-center mt-12 mb-8 p-4 sm:p-8"
             variants={itemVariants}
         >
+          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto mb-8">
+            Számolj a biztonsággal! Keress minket egy ingyenes konzultációért, és segítünk elkészíteni a telephelyed villamos biztonsági felülvizsgálatát.
+          </p>
           <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
              <button
                 className={`
-                    inline-flex items-center gap-3
+                    inline-flex items-center justify-center gap-2
                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                    font-bold py-8 px-12 rounded-xl text-3xl
+                    font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-2xl sm:text-xl lg:text-3xl
                     shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                     cta-button
                 `}
             >
-                Foglalj egy ingyenes konzultációt!
+                <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
             </button>
           </Link>
         </motion.div>

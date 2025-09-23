@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion'; // Hozzáadva
+import { motion } from 'framer-motion';
 import {
   ArrowLeftIcon,
   FireIcon,
@@ -14,7 +14,7 @@ import {
   CalendarDaysIcon,
   InformationCircleIcon
 } from '@heroicons/react/24/outline';
-import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
+import { SparklesIcon } from '@heroicons/react/24/solid';
 
 // A sötét témájú, felturbózott színséma
 const themeColors = {
@@ -44,7 +44,7 @@ const themeColors = {
   warningText: 'text-red-200'
 };
 
-// Gomb stílusdefiníciók (Hozzáadva)
+// Gomb stílusdefiníciók
 const ACCENT_COLOR_RED = {
     baseHex: '#DC2626',
     bg: 'bg-red-600',
@@ -54,7 +54,6 @@ const ACCENT_COLOR_RED = {
     hoverShadow: 'hover:shadow-red-400/60',
 };
 
-// A kártya komponens változatlan
 const PillarCard = ({ icon: Icon, title, description }: { icon: React.ElementType; title: string; description: string }) => (
     <div className={`${themeColors.cardBg} backdrop-blur-sm p-8 rounded-2xl shadow-lg border ${themeColors.border} text-center flex flex-col items-center h-full transition-all duration-300 hover:border-red-500/50 hover:-translate-y-1`}>
       <div className={`p-4 rounded-full bg-red-500/10 ${themeColors.primary.text} mb-5`}>
@@ -93,15 +92,15 @@ const TuzvedelmiSzabalyzatPage = () => {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>
       </div>
 
-      <div className={`max-w-6xl mx-auto ${themeColors.containerBg} backdrop-blur-xl rounded-2xl shadow-2xl p-8 sm:p-12 relative z-10 border ${themeColors.border}`}>
+      <div className={`max-w-6xl mx-auto ${themeColors.containerBg} backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-8 lg:p-12 relative z-10 border ${themeColors.border}`}>
         
 
         {/* --- FRISSÍTETT TARTALOM: Bevezető --- */}
         <section className="text-center mb-16">
-            <h1 className={`text-4xl sm:text-5xl font-extrabold ${themeColors.headingText} mb-4`}>
+            <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold ${themeColors.headingText} mb-4`}>
               Tűzvédelmi <span className={themeColors.primary.text}>Szabályzat</span>
             </h1>
-            <div className={`text-lg sm:text-xl ${themeColors.bodyText} leading-relaxed max-w-4xl mx-auto space-y-4`}>
+            <div className={`text-base sm:text-lg ${themeColors.bodyText} leading-relaxed max-w-4xl mx-auto space-y-4`}>
                 <p>
                     A magyar tűzvédelmi jogszabályok értelmében a tűzvédelmi szabályzat kötelező elkészítésének kérdése főként a munkavállalók száma, a tevékenység jellege és az épület vagy létesítmény egyéb jellemzői alapján dől el.
                 </p>
@@ -119,14 +118,14 @@ const TuzvedelmiSzabalyzatPage = () => {
 
         {/* --- FRISSÍTETT TARTALOM: Speciális esetek és jogi háttér --- */}
         <section className="mb-20">
-            <h2 className={`text-3xl font-bold ${themeColors.headingText} mb-12 text-center`}>
+            <h2 className={`text-2xl sm:text-3xl font-bold ${themeColors.headingText} mb-12 text-center`}>
                 Egyéb speciális esetek
             </h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
-                <div className={`${themeColors.cardBg} p-6 rounded-lg border ${themeColors.border}`}><p className={themeColors.bodyText}>Ha a fokozottan tűz- vagy robbanásveszélyes anyagok egy telephelyen tárolt együttes, egyidejű mennyisége meghaladja az <strong className={strongClass}>1000 kg-ot vagy litert</strong>. (festékek, lakkok, oldószerek, gázolaj)</p></div>
-                <div className={`${themeColors.cardBg} p-6 rounded-lg border ${themeColors.border}`}><p className={themeColors.bodyText}>Ha a cég <strong className={strongClass}>mérsékelten tűzveszélyes osztályba</strong> tartozó anyagot vagy terméket tárol szabadtéren, és az erre használt összesített alapterület meghaladja az <strong className={strongClass}>1000 m²-t</strong>. (szárított deszka, gerenda, textil, tűzifa, brikett, kartonpapír)</p></div>
-                <div className={`${themeColors.cardBg} p-6 rounded-lg border ${themeColors.border}`}><p className={themeColors.bodyText}>Intézmények, ahol menekülésben korlátozott személyek vannak - Iskolák, óvodák, bölcsődék, gyermekotthonok, ápolási otthonok esetében, ahol <strong className={strongClass}>20 főnél több</strong> menekülésben korlátozott személy (gyermek, beteg, idős) tartózkodik egyidejűleg, a tűzvédelmi szabályzat elkészítése és a <strong className={strongClass}>rendkívül szigorú előírások betartása létfontosságú</strong>.</p></div>
+                <div className={`${themeColors.cardBg} p-6 rounded-lg border ${themeColors.border}`}><p className={`${themeColors.bodyText} text-sm`}>Ha a fokozottan tűz- vagy robbanásveszélyes anyagok egy telephelyen tárolt együttes, egyidejű mennyisége meghaladja az <strong className={strongClass}>1000 kg-ot vagy litert</strong>. (festékek, lakkok, oldószerek, gázolaj)</p></div>
+                <div className={`${themeColors.cardBg} p-6 rounded-lg border ${themeColors.border}`}><p className={`${themeColors.bodyText} text-sm`}>Ha a cég <strong className={strongClass}>mérsékelten tűzveszélyes osztályba</strong> tartozó anyagot vagy terméket tárol szabadtéren, és az erre használt összesített alapterület meghaladja az <strong className={strongClass}>1000 m²-t</strong>. (szárított deszka, gerenda, textil, tűzifa, brikett, kartonpapír)</p></div>
+                <div className={`${themeColors.cardBg} p-6 rounded-lg border ${themeColors.border}`}><p className={`${themeColors.bodyText} text-sm`}>Intézmények, ahol menekülésben korlátozott személyek vannak - Iskolák, óvodák, bölcsődék, gyermekotthonok, ápolási otthonok esetében, ahol <strong className={strongClass}>20 főnél több</strong> menekülésben korlátozott személy (gyermek, beteg, idős) tartózkodik egyidejűleg, a tűzvédelmi szabályzat elkészítése és a <strong className={strongClass}>rendkívül szigorú előírások betartása létfontosságú</strong>.</p></div>
             </div>
 
             <div className={`${themeColors.cardBg} p-8 rounded-2xl border ${themeColors.border} space-y-4`}>
@@ -142,20 +141,21 @@ const TuzvedelmiSzabalyzatPage = () => {
         </section>
 
         {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
-        <div className="text-center mt-12 mb-8 p-8">
+        <div className="text-center mt-12 mb-8 p-4 sm:p-8">
             <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
               <button
                 className={`
-                    inline-flex items-center gap-3
+                    inline-flex items-center justify-center gap-2
                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                    font-bold py-8 px-12 rounded-xl text-3xl
+                    font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-2xl sm:text-xl lg:text-3xl
                     shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-900
                     cta-button
                 `}
               >
-                Foglalj egy ingyenes konzultációt!
+                <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
               </button>
             </Link>
         </div>

@@ -68,7 +68,7 @@ const itemVariants = {
 const ProcessStepCard = ({ step, icon: Icon, title, description, isLast }: { step: number, icon: React.ElementType, title: string, description: string, isLast: boolean }) => (
     <motion.div 
         variants={itemVariants}
-        className="relative pl-16"
+        className="relative pl-12"
     >
         {!isLast && (
             <div className="absolute left-[23px] top-14 h-full w-0.5 bg-slate-200"></div>
@@ -78,11 +78,11 @@ const ProcessStepCard = ({ step, icon: Icon, title, description, isLast }: { ste
         </div>
         <motion.div 
             whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)' }}
-            className="bg-white/70 backdrop-blur-md p-10 rounded-2xl shadow-lg border border-slate-200/80"
+            className="bg-white/70 backdrop-blur-md p-6 sm:p-10 rounded-2xl shadow-lg border border-slate-200/80"
         >
             <Icon className={`w-10 h-10 mb-4 ${accentColor.text}`} />
-            <h2 className="text-3xl font-bold text-slate-800 mb-2">{title}</h2>
-            <p className="text-slate-600 text-lg leading-relaxed">{description}</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">{title}</h2>
+            <p className="text-slate-600 text-sm sm:text-lg leading-relaxed">{description}</p>
         </motion.div>
     </motion.div>
 );
@@ -119,17 +119,17 @@ const Folyamatunk = () => {
       />
 
       <motion.div
-        className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 relative"
+        className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative"
         variants={pageVariants}
         initial="initial"
         animate="in"
       >
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-            <motion.header variants={itemVariants} className="mb-20">
-            <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-normal mb-4 leading-tight">
- Nézd meg hogyan történik a munka <span className={accentColor.text}>lépésről, lépésre:</span>
-</h1>
-              <p className="text-2xl text-slate-600 leading-snug">
+            <motion.header variants={itemVariants} className="mb-16 sm:mb-20">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-normal mb-4 leading-tight">
+                 Nézd meg hogyan történik a munka <span className={accentColor.text}>lépésről, lépésre:</span>
+              </h1>
+              <p className="text-lg sm:text-2xl text-slate-600 leading-snug">
                 A legfontosabb az átláthatóság, ezt vagyunk hivatottak biztosítani, és folyamatosan tájékoztatni téged, anélkül hogy ezt kérned kellene.
               </p>
             </motion.header>
@@ -149,25 +149,26 @@ const Folyamatunk = () => {
                 </div>
             </main>
 
-            <motion.footer variants={itemVariants} className="w-full mt-24 text-center border-t border-slate-200 pt-16">
-              <h3 className="text-2xl font-bold text-slate-800 mb-4">Mennyit kell neked ezzel foglalkoznod?</h3>
-              <p className="text-slate-600 text-lg mb-8">A konzultáción átláthatóan elmondjuk a munka menetét, és lépéseit, majd a végén kézhez kapod a jegyzőkönyveket. Önállóak vagyunk, te koncentrálhatsz az egyéb dolgaidra.</p>
+            <motion.footer variants={itemVariants} className="w-full mt-16 sm:mt-24 text-center border-t border-slate-200 pt-16">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-4">Mennyit kell neked ezzel foglalkoznod?</h3>
+              <p className="text-sm sm:text-lg text-slate-600 mb-8">A konzultáción átláthatóan elmondjuk a munka menetét, és lépéseit, majd a végén kézhez kapod a jegyzőkönyveket. Önállóak vagyunk, te koncentrálhatsz az egyéb dolgaidra.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 
                 <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
                   {/* --- MÓDOSÍTOTT CTA GOMB --- */}
                   <button
                     className={`
-                        inline-flex items-center gap-3
+                        inline-flex items-center justify-center gap-2
                         ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                        font-bold py-8 px-12 rounded-xl text-3xl
+                        font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-2xl sm:text-xl lg:text-3xl
                         shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                         transition-all duration-300 ease-in-out
                         focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                         cta-button
                     `}
                   >
-                    Foglalj egy ingyenes konzultációt!
+                    <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                    <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
                   </button>
                 </Link>
               </div>

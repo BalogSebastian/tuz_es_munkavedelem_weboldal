@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion'; // Hozzáadva
+import { motion } from 'framer-motion';
 import {
   ArrowLeftIcon,
   DocumentTextIcon,
@@ -17,7 +17,7 @@ import {
   LightBulbIcon,
   MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
-import { SparklesIcon } from '@heroicons/react/24/solid'; // Hozzáadva
+import { SparklesIcon } from '@heroicons/react/24/solid';
 
 // Az oldal stílusát meghatározó színséma
 const accentColor = {
@@ -35,7 +35,7 @@ const accentColor = {
   warningBorder: 'border-red-500'
 };
 
-// Gomb stílusdefiníciók (Hozzáadva)
+// Gomb stílusdefiníciók
 const ACCENT_COLOR_RED = {
     baseHex: '#DC2626',
     bg: 'bg-red-600',
@@ -47,7 +47,7 @@ const ACCENT_COLOR_RED = {
 
 const MunkavedelmiSzabalyzatPage = () => {
   const router = useRouter();
-  const strongClass = "font-bold text-slate-800"; // A strong tag stílusa
+  const strongClass = "font-bold text-slate-800";
 
   return (
     <>
@@ -57,10 +57,10 @@ const MunkavedelmiSzabalyzatPage = () => {
           content: '';
           position: absolute;
           top: 2.5rem;
-          left: 1.25rem; /* calc(1.25rem) */
+          left: 1.25rem;
           width: 2px;
           height: calc(100% - 2.5rem);
-          background-color: #e2e8f0; /* slate-200 */
+          background-color: #e2e8f0;
         }
         .timeline-item:last-child .timeline-connector::before {
           display: none;
@@ -91,10 +91,10 @@ const MunkavedelmiSzabalyzatPage = () => {
                 <div className={`p-4 mb-4 inline-block rounded-lg bg-slate-100 ${accentColor.text}`}>
                     <DocumentTextIcon className="w-8 h-8"/>
                 </div>
-                <h1 className="text-3xl font-extrabold text-slate-900 mb-4">
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">
                   Mi az a Munkavédelmi Szabályzat?
                 </h1>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
                   A munkavédelmi szabályzat egy olyan kötelező, írásos dokumentum, amely minden vállalkozás számára alapvető fontosságú. Célja, hogy részletesen meghatározza a munkavédelmi feladatokat, a felelősségi köröket és a munkavégzés biztonságos feltételeit. A szabályzatban rögzített előírások segítenek a munkabalesetek és a foglalkozási megbetegedések megelőzésében, ezzel védve a dolgozók egészségét és testi épségét. A dokumentum elkészítése nem csupán jogszabályi előírás, hanem a <strong className={strongClass}>biztonságtudatos</strong> és felelős cégvezetés elengedhetetlen eszköze.
                 </p>
               </div>
@@ -150,9 +150,9 @@ const MunkavedelmiSzabalyzatPage = () => {
                     </p>
                     <h4 className="font-bold text-lg mb-3 text-slate-800">A jogi előírások figyelmen kívül hagyása súlyos következményekkel járhat:</h4>
                     <ul className="space-y-2 text-slate-700">
-                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Pénzbírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki a hiányzó vagy elavult szabályzat miatt.</span></li>
-                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Baleset esetén felelősség:</strong> Munkabaleset során a cég jogi és anyagi felelőssége nagyban nőhet a megfelelő szabályzat vagy a hiányos munkavédelem miatt.</span></li>
-                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span><strong className={strongClass}>Működés felfüggesztése:</strong> Súlyos mulasztások esetén a hatóság felfüggesztheti a cég tevékenységét.</span></li>
+                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span className="text-sm sm:text-base"><strong className={strongClass}>Pénzbírság:</strong> A munkavédelmi hatóság jelentős bírságot szabhat ki a hiányzó vagy elavult szabályzat miatt.</span></li>
+                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span className="text-sm sm:text-base"><strong className={strongClass}>Baleset esetén felelősség:</strong> Munkabaleset során a cég jogi és anyagi felelőssége nagyban nőhet a megfelelő szabályzat vagy a hiányos munkavédelem miatt.</span></li>
+                        <li className="flex items-start gap-2"><ExclamationTriangleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" /><span className="text-sm sm:text-base"><strong className={strongClass}>Működés felfüggesztése:</strong> Súlyos mulasztások esetén a hatóság felfüggesztheti a cég tevékenységét.</span></li>
                     </ul>
                 </div>
               </section>
@@ -197,25 +197,25 @@ const MunkavedelmiSzabalyzatPage = () => {
                         <h4 className={`text-lg font-bold mb-2 ${accentColor.text}`}>Szaktanácsadás és Támogatás</h4>
                         <p className={`text-sm ${accentColor.lightText} flex-grow`}>Folyamatos szakmai támogatást nyújtunk a munkavédelemmel kapcsolatos kérdésekben, segítünk a jogszabályi bizonytalanságok tisztázásában.</p>
                     </div>
-
                 </div>
               </section>
 
               {/* --- MÓDOSÍTOTT CTA SZEKCIÓ --- */}
-              <div className="text-center mt-12 mb-8 p-8">
+              <div className="text-center mt-12 mb-8 p-4 sm:p-8">
                 <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
                   <button
                     className={`
-                        inline-flex items-center gap-3
+                        inline-flex items-center justify-center gap-2
                         ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                        font-bold py-8 px-12 rounded-xl text-3xl
+                        font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-xl sm:text-xl lg:text-3xl
                         shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                         transition-all duration-300 ease-in-out
                         focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                         cta-button
                     `}
                   >
-                    Foglalj egy ingyenes konzultációt!
+                    <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                    <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
                   </button>
                 </Link>
               </div>

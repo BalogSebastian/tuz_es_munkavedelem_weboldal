@@ -84,13 +84,13 @@ function AnimatedCounter({ value, text }: { value: number, text?: string }) {
 
 
 const InfoCard = ({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: string }) => (
-  <motion.div variants={itemVariants} className="flex items-start gap-5 p-6 bg-white rounded-xl shadow-lg border border-slate-100 group transition-all duration-300 hover:border-cyan-200 hover:shadow-xl">
+  <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start gap-5 p-6 bg-white rounded-xl shadow-lg border border-slate-100 group transition-all duration-300 hover:border-cyan-200 hover:shadow-xl">
     <div className={`p-3 rounded-full ${accentColor.lightBg} ${accentColor.text} flex-shrink-0`}>
       <Icon className="w-7 h-7" />
     </div>
     <div>
       <h3 className="text-xl font-bold text-slate-800 mb-2">{title}</h3>
-      <p className="text-slate-600 leading-relaxed">{content}</p>
+      <p className="text-slate-600 leading-relaxed text-sm">{content}</p>
     </div>
   </motion.div>
 );
@@ -122,12 +122,12 @@ const FounderCard = ({ name, role, children }: { name: string, role: string, chi
         >
             <motion.div
                 style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                className="bg-white/60 backdrop-blur-lg rounded-3xl p-8 border border-slate-200 shadow-2xl flex flex-col items-center gap-8"
+                className="bg-white/60 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-2xl flex flex-col md:flex-row items-center gap-8"
             >
                 <motion.div style={{ transform: "translateZ(20px)" }} className="flex-grow text-center md:text-left">
-                    <h3 className="text-3xl font-bold text-slate-800">{name}</h3>
-                    <p className={`${accentColor.text} font-semibold text-lg mb-4`}>{role}</p>
-                    <div className="text-slate-600 leading-relaxed text-lg">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-slate-800">{name}</h3>
+                    <p className={`${accentColor.text} font-semibold text-base sm:text-lg mb-4`}>{role}</p>
+                    <div className="text-slate-600 leading-relaxed text-sm sm:text-lg">
                         {children}
                     </div>
                 </motion.div>
@@ -154,8 +154,7 @@ const Bemutatkozas = () => {
                 box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}40;
             }
             .cta-button:hover {
-                transform: scale(1.02); /* Maradt a kisebb nagyítás */
-                /* --- ITT TÖRTÉNT A MÓDOSÍTÁS: box-shadow értékek csökkentve --- */
+                transform: scale(1.02);
                 box-shadow: 0 0 20px ${ACCENT_COLOR_RED.baseHex}60, 0 0 30px ${ACCENT_COLOR_RED.baseHex}40;
             }
             .cta-button:active {
@@ -169,7 +168,7 @@ const Bemutatkozas = () => {
       }}></div>
 
       <motion.div
-        className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-8 sm:p-10 relative z-10 border border-slate-200"
+        className="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl p-4 sm:p-8 lg:p-10 relative z-10 border border-slate-200"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -183,7 +182,7 @@ const Bemutatkozas = () => {
         </motion.h1>
 
         <motion.p
-          className="text-lg sm:text-xl text-slate-700 leading-relaxed mb-8 text-center max-w-4xl mx-auto"
+          className="text-base sm:text-lg lg:text-xl text-slate-700 leading-relaxed mb-8 text-center max-w-4xl mx-auto"
           variants={itemVariants}
         >
           Célunk, hogy a lehető legnagyobb szakértelmet biztosítsuk, a jogszabályok útvesztőjében, átlátható, és precíz munkavégzéssel. Itt soha nem ügyfélszolgálatot, hanem szakembert fogsz kapni, a céged számára, mert mi a személyes kapcsolatokban hiszünk.
@@ -217,7 +216,7 @@ const Bemutatkozas = () => {
         </motion.section>
         
         <motion.section className="mb-16" variants={sectionVariants}>
-            <motion.h2 className="text-5xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
+            <motion.h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-8 text-center" variants={itemVariants}>
                 Miért mi?
             </motion.h2>
             <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
@@ -240,25 +239,26 @@ const Bemutatkozas = () => {
         </motion.section>
 
         <motion.div
-          className="text-center mt-12 mb-8 p-8"
+          className="text-center mt-12 mb-8 p-4 sm:p-8"
           variants={itemVariants}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-3xl font-extrabold text-slate-900 mb-6 text-center">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 mb-6 text-center">
             Te is egy ilyen csapatot keresel?
           </h2>
-          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="\_blank" rel="noopener noreferrer">
+          <Link href="https://app.minup.io/book/munkavedelmiszaki/service/46358" target="_blank" rel="noopener noreferrer">
              <button
                 className={`
-                    inline-flex items-center gap-3
+                    inline-flex items-center justify-center gap-2
                     ${ACCENT_COLOR_RED.bg} ${ACCENT_COLOR_RED.textOnAccent}
-                    font-bold py-8 px-12 rounded-xl text-3xl
+                    font-bold py-8 px-10 sm:py-6 sm:px-10 lg:py-8 lg:px-12 rounded-xl text-2xl sm:text-xl lg:text-3xl
                     shadow-lg ${ACCENT_COLOR_RED.shadow} ${ACCENT_COLOR_RED.hoverShadow}
                     transition-all duration-300 ease-in-out
                     focus:outline-none focus:ring-4 ${ACCENT_COLOR_RED.ring} focus:ring-offset-2 focus:ring-offset-slate-50
                     cta-button
                 `}
             >
-                Foglalj egy ingyenes konzultációt!
+                <span className="hidden sm:inline">Foglalj egy ingyenes konzultációt!</span>
+                <span className="sm:hidden text-center leading-tight text-2xl">Ingyenes<br/>Konzultáció</span>
             </button>
           </Link>
         </motion.div>
