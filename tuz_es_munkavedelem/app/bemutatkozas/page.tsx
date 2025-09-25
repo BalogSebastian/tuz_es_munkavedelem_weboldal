@@ -210,8 +210,8 @@ const Bemutatkozas = () => {
         </div>
 
         <motion.section className="mb-16" variants={sectionVariants}>
-             <FounderCard name="Németh János" role="A MunkavédelmiSzakí ügyvezetője">
-                 "Sziasztok! Azért hoztam létre a <strong>MunkavédelmiSzakí</strong>-t, hogy egy <strong>átlátható képet</strong> tudjunk adni a <strong>Tűz- és Munkavédelmi előírásokról</strong>. Fontosnak tartom, hogy megfelelő képviselete legyen minden vállalkozásnak ebben a szakmában is. Szeretném ha az ügyfelek nem csak egy “papírt” kapnának, hanem valódi szolgáltatást, ami valóban védi őket, mert személyre szabottan készül a munka."
+             <FounderCard name="Németh János" role="A MunkavédelmiSzaki ügyvezetője">
+                 "Sziasztok! Azért hoztam létre a <strong>MunkavédelmiSzaki</strong>-t, hogy egy <strong>átlátható képet</strong> tudjunk adni a <strong>Tűz- és Munkavédelmi előírásokról</strong>. Fontosnak tartom, hogy megfelelő képviselete legyen minden vállalkozásnak ebben a szakmában is. Szeretném ha az ügyfelek nem csak egy “papírt” kapnának, hanem valódi szolgáltatást, ami valóban védi őket, mert személyre szabottan készül a munka."
              </FounderCard>
         </motion.section>
         

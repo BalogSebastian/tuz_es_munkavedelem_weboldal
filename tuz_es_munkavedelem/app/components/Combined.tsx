@@ -168,6 +168,14 @@ const CombinedSections: React.FC = () => {
                         display: none !important;
                     }
                 }
+
+                /* Mobil timeline vonal középre igazítása */
+                @media (max-width: 1023px) {
+                    .mobile-timeline-line {
+                        left: 50% !important;
+                        transform: translateX(-50%);
+                    }
+                }
             `}</style>
 
             {/* --- PROCESS STEPS SZEKCIÓ --- */}
@@ -193,8 +201,8 @@ const CombinedSections: React.FC = () => {
                             style={{ transformOrigin: 'top' }}
                         />
                         
-                        {/* Mobil timeline vonal */}
-                        <div className="block lg:hidden absolute left-8 top-16 bottom-16 w-0.5 bg-gradient-to-b from-cyan-400 via-cyan-300 to-cyan-200 rounded-full" />
+                        {/* Mobil timeline vonal - középre igazítva */}
+                        <div className="block lg:hidden absolute top-16 bottom-16 w-0.5 bg-gradient-to-b from-cyan-400 via-cyan-300 to-cyan-200 rounded-full mobile-timeline-line" />
                         
                         <div className="space-y-12 sm:space-y-16 lg:space-y-20">
                             {steps.map((step, index) => (
@@ -218,8 +226,8 @@ const CombinedSections: React.FC = () => {
                                         </div>
                                     </div>
 
-                                    {/* Mobil layout */}
-                                    <div className="flex lg:hidden items-start mb-6 relative">
+                                    {/* Mobil layout - középre igazítva */}
+                                    <div className="flex lg:hidden items-start mb-6 relative justify-center">
                                         <div className="flex-shrink-0 relative">
                                             <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full z-10 transform -translate-x-1/2 -translate-y-1/2" style={{ borderColor: 'rgb(34 211 238)', borderWidth: '2px' }} />
                                             <div className="bg-gradient-to-br from-white to-slate-100 p-4 rounded-full inline-flex items-center justify-center shadow-lg border border-gray-100 ring-4 ring-cyan-400 relative">
@@ -233,7 +241,7 @@ const CombinedSections: React.FC = () => {
 
                                     {/* Content */}
                                     <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pr-10' : 'lg:pl-10'} ml-0 lg:ml-0 pl-0 lg:pl-0`}>
-                                        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full ml-4 lg:ml-0">
+                                        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow duration-300 h-full lg:ml-0">
                                             <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 mb-3">{step.title}</h3>
                                             <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{step.description}</p>
                                         </div>
@@ -270,7 +278,7 @@ const CombinedSections: React.FC = () => {
                             Készen állsz a biztonságra?
                         </h2>
                         <p
-                            className="text-base sm:text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
+                            className="hidden sm:block text-base sm:text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
                         >
                             Tedd meg az első lépést, és tudd biztonságban minden értékedet, előzd meg az esetleges tüzet, és a baleseteket!
                         </p>
@@ -298,7 +306,7 @@ const CombinedSections: React.FC = () => {
             {/* --- FAQ ACCORDION SZEKCIÓ --- */}
             <section
                 ref={faqSectionRef}
-                className={`py-12 sm:py-16 lg:py-24 font-['Poppins',_sans_serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
+                className={`py-12 sm:py-16 lg:py-24 font-['Poppins',_sans-serif] relative bg-white grid-pattern grid-pattern-light faq-full-height ${isFaqVisible ? 'is-visible' : ''}`}
             >
                 {/* Nyilak elrejtése mobilon */}
                 <div className="mobile-hide-arrows absolute w-20 sm:w-36 h-20 sm:h-36 text-cyan-500 pointer-events-none z-20"

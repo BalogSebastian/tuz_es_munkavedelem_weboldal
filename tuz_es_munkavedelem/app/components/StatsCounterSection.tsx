@@ -161,7 +161,7 @@ const StatsCounterSection = () => {
                         className={`mt-16 sm:mt-20 p-6 sm:p-8 sm:p-10 bg-gradient-to-br from-red-600 to-red-800 rounded-2xl sm:rounded-3xl shadow-2xl border-2 border-red-500 text-center relative overflow-hidden cta-card block cursor-pointer ${isInView ? 'visible' : ''} mx-2 sm:mx-0`}
                     >
                         <div className="absolute inset-0 bg-white/5 opacity-20 transform -skew-y-12 scale-150"></div>
-                        <p className="text-white text-xl sm:text-2xl sm:text-3xl lg:text-4xl font-black leading-tight relative z-10">
+                        <p className="text-white text-2xl sm:text-2xl sm:text-3xl lg:text-4xl font-black leading-tight relative z-10">
                             Egyetlen büntetés akár
                         </p>
                         <p className="text-white text-3xl sm:text-4xl sm:text-5xl lg:text-6xl font-black mt-2 relative z-10">
